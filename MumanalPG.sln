@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.28010.2003
+VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MumanalPG", "MumanalPG\MumanalPG.csproj", "{0AD9B624-61B0-4436-9B2F-B92559441D03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MumanalPG", "MumanalPG\MumanalPG.csproj", "{4D4151F1-0A40-4BFA-B9FA-0AEE9FA0BC23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0AD9B624-61B0-4436-9B2F-B92559441D03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0AD9B624-61B0-4436-9B2F-B92559441D03}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0AD9B624-61B0-4436-9B2F-B92559441D03}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0AD9B624-61B0-4436-9B2F-B92559441D03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D4151F1-0A40-4BFA-B9FA-0AEE9FA0BC23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D4151F1-0A40-4BFA-B9FA-0AEE9FA0BC23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D4151F1-0A40-4BFA-B9FA-0AEE9FA0BC23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D4151F1-0A40-4BFA-B9FA-0AEE9FA0BC23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {FBCBF383-48B1-4D21-8C71-EA527268C43D}
+		SolutionGuid = {BB6E1063-9C76-4D4B-A1FE-114BBDBA580A}
 	EndGlobalSection
 EndGlobal
