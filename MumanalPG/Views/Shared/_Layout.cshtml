@@ -34,27 +34,85 @@
                 <li class="nav-item"><a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Inicio</a></li>
                 @if (User.IsInRole(SD.SuperAdminEndUser))
                 {
-
-
-
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Activos Fijos
+                            Planificacion
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Lista de Activos</a>
-                            <a class="dropdown-item" href="#"></a>
+                            <a class="dropdown-item" href="#">Plan de Procesos</a>
+                            <a class="dropdown-item" href="#">Plan Operativo</a>
+                            <a class="dropdown-item" href="#">Presupuesto</a>
+                            <a class="dropdown-item" href="#">Plan de Adquisiciones</a>
+                            <a class="dropdown-item" href="#">Reportes</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Prestaciones
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Afiliaciones</a>
+                            <a class="dropdown-item" href="#">Ayuda Social Reversible</a>
+                            <a class="dropdown-item" href="#">Bono Cesantia</a>
+                            <a class="dropdown-item" href="#">Cuota Mortuoria</a>
+                            <a class="dropdown-item" href="#">ASR Vivienda</a>
+                            <a class="dropdown-item" href="#">Otros Servicios</a>
+                            <a class="dropdown-item" href="#">Reportes</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            RRHH
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Administracion de Personal</a>
+                            <a class="dropdown-item" href="#">Control Personal</a>
+                            <a class="dropdown-item" href="#">Planillas</a>
+                            <a class="dropdown-item" href="#">Reportes</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Administrativo
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Compras</a>
+                            <a class="dropdown-item" href="#">Almacenes</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Tipos de Bien</a>
-                            <a class="dropdown-item" href="#">Rubros</a>
-                            <a class="dropdown-item" href="#">Estados</a>
+                            <a class="dropdown-item" href="#">Activos Fijos</a>
+                            <a class="dropdown-item" href="#">Reportes</a>
                         </div>
                     </li>
 
-                    <li class="nav-item"><a class="nav-link" asp-area="Admin" asp-controller="ProductTypes" asp-action="Index">Tipos de Producto</a></li>
-                    <li class="nav-item"><a class="nav-link" asp-area="Admin" asp-controller="SpecialTags" asp-action="Index">Etiquetas Especiales</a></li>
-                    <li class="nav-item"><a class="nav-link" asp-area="Admin" asp-controller="Products" asp-action="Index">Productos</a></li>
-                    <li class="nav-item"><a class="nav-link" asp-area="Admin" asp-controller="AdminUsers" asp-action="Index">Admin Usuarios</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Financiero
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Administración de Fondos</a>
+                            <a class="dropdown-item" href="#">Cobranzas</a>
+                            <a class="dropdown-item" href="#">Alquileres</a>
+                            <a class="dropdown-item" href="#">Pagos</a>
+                            <a class="dropdown-item" href="#">Contabilidad</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Demo Productos
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" asp-area="Admin" asp-controller="ProductTypes" asp-action="Index">Tipos de Producto</a>
+                            <a class="dropdown-item" asp-area="Admin" asp-controller="SpecialTags" asp-action="Index">Etiquetas Especiales</a>
+                            <a class="dropdown-item" asp-area="Admin" asp-controller="Products" asp-action="Index">Productos</a>
+                            <a class="dropdown-item" asp-area="Admin" asp-controller="AdminUsers" asp-action="Index">Admin Usuarios</a>
+                        </div>
+                    </li>
+
+                    @*<li class="nav-item"><a class="nav-link" asp-area="Admin" asp-controller="ProductTypes" asp-action="Index">Tipos de Producto</a></li>*@
+                    @*<li class="nav-item"><a class="nav-link" asp-area="Admin" asp-controller="SpecialTags" asp-action="Index">Etiquetas Especiales</a></li>*@
+                    @*<li class="nav-item"><a class="nav-link" asp-area="Admin" asp-controller="Products" asp-action="Index">Productos</a></li>*@
+                    @*<li class="nav-item"><a class="nav-link" asp-area="Admin" asp-controller="AdminUsers" asp-action="Index">Admin Usuarios</a></li>*@
                 }
                 @if (User.IsInRole(SD.SuperAdminEndUser) || User.IsInRole(SD.AdminEndUser))
                 {
