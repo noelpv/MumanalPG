@@ -4,12 +4,23 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>LISTA DE ACTIVOS</h2>
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-info">LISTA DE ACTIVOS</h2>
+    </div>
+    <div class="col-6 text-right">
+        <a asp-action="Create" class="btn btn-info">&nbsp; Nuevo Activo</a>
+    </div>
+</div>
 
-<p>
-    <a asp-action="Create">Nuevo Activo</a>
-</p>
-<table class="table">
+@*<table class="table table-striped border>
+*@
+@*<table class="table table-striped border>*@
+@*<table class="table table-striped border>*@
+@*<table class="table table-striped border>*@
+@*<table class="table table-striped border>*@
+@*<table class="table table-striped border>*@
+<table class="table table-striped border">
     <thead>
         <tr>
             <th>
@@ -22,20 +33,32 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Codigo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ActivoId">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.ActivoId">Detalle</a> |
-                <a asp-action="Delete" asp-route-id="@item.ActivoId">Eliminar</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Codigo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ActivoId">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.ActivoId">Detalle</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ActivoId">Eliminar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+
+
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-info">LISTA DE ACTIVOS</h2>
+    </div>
+    <div class="col-6 text-right">
+        <a asp-action="Create" class="btn btn-info">&nbsp; Nuevo Activo</a>
+    </div>
+</div>

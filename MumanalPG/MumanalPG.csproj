@@ -13,4 +13,15 @@
 
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\AFRubro\Controllers\" />
+    <Folder Include="Areas\AFRubro\Data\" />
+    <Folder Include="Areas\AFRubro\Models\" />
+    <Folder Include="Areas\AFRubro\Views\" />
+    <Folder Include="Areas\AFTipoBien\Controllers\" />
+    <Folder Include="Areas\AFTipoBien\Data\" />
+    <Folder Include="Areas\AFTipoBien\Models\" />
+    <Folder Include="Areas\AFTipoBien\Views\" />
+  </ItemGroup>
+
 </Project>
