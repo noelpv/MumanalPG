@@ -1,27 +1,86 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <UserSecretsId>aspnet-MumanalPG-601CFE43-4D01-4521-9CD1-6E93525D127C</UserSecretsId>
+    <UserSecretsId>aspnet-GraniteHouse-83EDD744-3EF2-4FBD-878F-AD13649EC34E</UserSecretsId>
+    <AssemblyName>MumanalPG</AssemblyName>
+    <RootNamespace>MumanalPG</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.4" PrivateAssets="All" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.2" />
-
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.2" />
+    <PackageReference Include="SmartBreadcrumbs" Version="1.0.3.3" />    
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\AFRubro\Controllers\" />
-    <Folder Include="Areas\AFRubro\Data\" />
-    <Folder Include="Areas\AFRubro\Models\" />
-    <Folder Include="Areas\AFRubro\Views\" />
-    <Folder Include="Areas\AFTipoBien\Controllers\" />
-    <Folder Include="Areas\AFTipoBien\Data\" />
-    <Folder Include="Areas\AFTipoBien\Models\" />
-    <Folder Include="Areas\AFTipoBien\Views\" />
+    <Content Update="Areas\Administra\Views\_ViewImports.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Administra\Views\_ViewStart.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\SpecialTags\Create.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\SpecialTags\Delete.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\SpecialTags\Details.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\SpecialTags\Edit.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\SpecialTags\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\_ViewImports.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\_ViewStart.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Customer\Views\_ViewImports.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Customer\Views\_ViewStart.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\FinanzasParam\Views\_ViewImports.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\FinanzasParam\Views\_ViewStart.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Administra\Controllers\" />
+    <Folder Include="Areas\Administra\Data\" />
+    <Folder Include="Areas\Administra\Models\" />
+    <Folder Include="Areas\Identity\Services\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Data\Migrations" />
+    <Folder Include="Models\Administra\" />
+    <Folder Include="Models\AdministraParam\" />
+    <Folder Include="Models\ContableParam\" />
+    <Folder Include="Models\Contable\" />
+    <Folder Include="Models\Finanzas\" />
+    <Folder Include="Models\GeneralesParam\" />
+    <Folder Include="Models\Generales\" />
+    <Folder Include="Models\RRHHParam\" />
+    <Folder Include="Models\RRHH\" />
+    <Folder Include="Models\VentasParam\" />
+    <Folder Include="Models\Ventas\" />
+    <Folder Include="Models\PlanificacionParam\" />
+    <Folder Include="Models\Planificacion\" />
+    <Folder Include="wwwroot\images\ProductImage\" />
   </ItemGroup>
 
 </Project>

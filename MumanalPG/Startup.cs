@@ -12,62 +12,76 @@ using Microsoft.EntityFrameworkCore;
 using MumanalPG.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SmartBreadcrumbs;
 
 namespace MumanalPG
 {
-	public class Startup
-	{
-		public Startup(IConfiguration configuration)
-		{
-			Configuration = configuration;
-		}
+    public class Startup
+    {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration; 
+        }
 
-		public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.Configure<CookiePolicyOptions>(options =>
+			var connectionString = Configuration.GetConnectionString("DefaultConnection");
+			
+			services.Configure<CookiePolicyOptions>(options =>	
 			{
 				// This lambda determines whether user consent for non-essential cookies is needed for a given request.
 				options.CheckConsentNeeded = context => true;
 				options.MinimumSameSitePolicy = SameSiteMode.None;
 			});
 
-			//services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-			services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+			services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
+            services.AddIdentity<IdentityUser,IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultUI()
+                .AddDefaultTokenProviders();
 
-			services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddScoped<IDbInitializer, DbInitializer>();
 
-			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-		}
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-		{
-			if (env.IsDevelopment())
-			{
-				app.UseDeveloperExceptionPage();
-				app.UseDatabaseErrorPage();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+            });
+		    services.UseBreadcrumbs(GetType().Assembly);
+
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IDbInitializer dbInitializer)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
+				
 			}
-			else
-			{
-				app.UseExceptionHandler("/Home/Error");
-				app.UseHsts();
-			}
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
+            }
 
-			app.UseHttpsRedirection();
-			app.UseStaticFiles();
-			app.UseCookiePolicy();
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseCookiePolicy();
 
-			app.UseAuthentication();
+            dbInitializer.Initialize();
+	        app.UseAuthentication();
+            app.UseSession();
+			app.UseMvc(routes => { routes.MapRoute(name: "areas", template: "{area=Customer}/{controller=Home}/{action=Index}/{id?}"); });
+			app.UseMvc(routes => { routes.MapRoute(name: "areas", template: "{area=Administra}/{controller=Home}/{action=Index}/{id?}"); });
 
-			app.UseMvc(routes =>
-			{
-				routes.MapRoute(
-					name: "default",
-					template: "{controller=Home}/{action=Index}/{id?}");
-			});
+
 		}
 	}
 }

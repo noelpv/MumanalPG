@@ -1,0 +1,18 @@
+﻿@model object
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<td style="width:150px">
+    <div class="btn-group" role="group">
+        <a type="button" class="btn btn-secondary" data-toggle="tooltip" title="Editar" href="@Url.Action("Edit/"+Model)">
+            <i class="far fa-edit"></i>
+        </a>
+        <a type="button" class="btn btn-secondary" data-toggle="tooltip" title="Detalle" href="@Url.Action("Details/"+Model)">
+            <i class="far fa-list-alt"></i>
+        </a>
+        <a type="button" class="btn btn-secondary" data-toggle="tooltip" title="Eliminar" href="@Url.Action("Delete/"+Model)">
+            <i class="far fa-trash-alt"></i>
+        </a>
+    </div>
+</td>
