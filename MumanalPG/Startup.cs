@@ -80,7 +80,7 @@ namespace MumanalPG
             app.UseSession();
 			app.UseMvc(routes => { routes.MapRoute(name: "areas", template: "{area=Customer}/{controller=Home}/{action=Index}/{id?}"); });
 			app.UseMvc(routes => { routes.MapRoute(name: "areas", template: "{area=Administra}/{controller=Home}/{action=Index}/{id?}"); });
-
+			app.UseMvc(routes => { routes.MapRoute(name: "areas", template: "{area=AdministraParam}/{controller=Home}/{action=Index}/{id?}"); });
 
 		}
 	}

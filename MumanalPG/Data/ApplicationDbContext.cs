@@ -5,6 +5,7 @@ using MumanalPG.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MumanalPG.Models.FinanzasParam;
+using MumanalPG.Models.AdministraParam;
 
 namespace MumanalPG.Data
 {
@@ -25,6 +26,8 @@ namespace MumanalPG.Data
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
 
         public DbSet<MumanalPG.Models.FinanzasParam.Partida> Partida { get; set; }
+
+        public DbSet<MumanalPG.Models.AdministraParam.Grupo> Grupo { get; set; }
 
        
     }

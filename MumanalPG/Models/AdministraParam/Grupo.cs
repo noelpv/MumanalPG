@@ -2,17 +2,14 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MumanalPG.Models.FinanzasParam
+namespace MumanalPG.Models.AdministraParam
 {
-	[Table("Partida", Schema = "FinanzasParam")]
-	public class Partida
+	[Table("Grupo", Schema = "AdministraParam")]
+	public class Grupo
 	{
 		[DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
 		[Key]
-		public int IdPartida { get; set; }
-		public Int16 IdSubGrupo { get; set; }
+		public int IdGrupo { get; set; }
 		public String Descripcion { get; set; }
-		public Int32 Gestion { get; set; }
-		public Int16 VidaUtil { get; set; }
 	}
 }
