@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MumanalPG.Models.FinanzasParam;
 using MumanalPG.Models.AdministraParam;
+using MumanalPG.Models.Planificacion;
 
 namespace MumanalPG.Data
 {
@@ -30,5 +31,6 @@ namespace MumanalPG.Data
         public DbSet<MumanalPG.Models.AdministraParam.Grupo> Grupo { get; set; }
 
        
+        public DbSet<MumanalPG.Models.Planificacion.TipoBeneficiario> TipoBeneficiario { get; set; }
     }
 }

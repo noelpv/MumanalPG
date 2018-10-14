@@ -493,8 +493,12 @@ $.extend( $.validator, {
 				result = result && rs;
 				if ( rs ) {
 					this.invalid[ checkElement.name ] = false;
+                    $( element ).parents('div').first().removeClass('has-danger').addClass('has-success');
+                    $( element ).removeClass('form-control-danger').addClass('form-control-success');
 				} else {
 					this.invalid[ checkElement.name ] = true;
+                    $( element ).parents('div').first().removeClass('has-success').addClass('has-danger');
+                    $( element ).removeClass('form-control-success').addClass('form-control-danger');
 				}
 
 				if ( !this.numberOfInvalids() ) {
@@ -506,6 +510,7 @@ $.extend( $.validator, {
 
 				// Add aria-invalid status for screen readers
 				$( element ).attr( "aria-invalid", !rs );
+				
 			}
 
 			return result;

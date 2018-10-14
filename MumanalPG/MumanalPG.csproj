@@ -12,6 +12,7 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.2" />
+    <PackageReference Include="ReflectionIT.Mvc.Paging" Version="3.0.1" />
     <PackageReference Include="SmartBreadcrumbs" Version="1.0.3.3" />    
   </ItemGroup>
   <ItemGroup>

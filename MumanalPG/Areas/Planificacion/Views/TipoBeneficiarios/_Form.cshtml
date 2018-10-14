@@ -1,0 +1,29 @@
+@model MumanalPG.Models.Planificacion.TipoBeneficiario
+<form asp-action="@ViewData["Action"]">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @{
+        string hasError = "has-danger";
+       if (ViewData.ModelState.IsValid){hasError = "";}
+    }
+    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group m-b-40 @hasError">     
+        <label asp-for="Denominacion" class="form-control-label"></label>
+        <input asp-for="Denominacion"  class="form-control"  />
+        <span asp-validation-for="Denominacion" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        @if ((string) ViewData["Action"] == "Edit")
+        {
+            <input asp-for="Activo" class="bootstrap-switch" data-size="small"
+                   data-on-text="Activo" data-off-text="Inactivo" type="checkbox"/>    
+        }
+        else
+        {
+            <input asp-for="Activo" class="bootstrap-switch" checked="" data-size="small"
+                   data-on-text="Activo" data-off-text="Inactivo" type="checkbox"/>
+        }
+        
+    </div>
+</form>
