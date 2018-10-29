@@ -84,9 +84,7 @@
     <Folder Include="Models\RRHHParam\" />
     <Folder Include="Models\RRHH\" />
     <Folder Include="Models\VentasParam\" />
-    <Folder Include="Models\Ventas\" />
     <Folder Include="Models\PlanificacionParam\" />
-    <Folder Include="Models\Planificacion\" />
     <Folder Include="wwwroot\images\ProductImage\" />
   </ItemGroup>
 

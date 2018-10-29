@@ -24,10 +24,10 @@ namespace MumanalPG.Data
 
         public async void Initialize()
         {
-            if (_db.Database.GetPendingMigrations().Any())
-            {
-                _db.Database.Migrate();
-            }
+            //if (_db.Database.GetPendingMigrations().Any())
+            //{
+            //    _db.Database.Migrate();
+            //}
 
             if (_db.Roles.Any(r => r.Name == SD.SuperAdminEndUser)) return;
 
