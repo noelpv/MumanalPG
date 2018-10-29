@@ -26,6 +26,9 @@
             <link rel="stylesheet" href="~/lib/theme-elegant/css/c3.min.css"/>
             <link rel="stylesheet" href="~/lib/theme-elegant/css/style.css"/>
             <link rel="stylesheet" href="~/lib/theme-elegant/css/sweetalert.css"/>
+            <link rel="stylesheet" href="~/lib/theme-elegant/css/floating-label.css"/>
+            <link rel="stylesheet" href="~/lib/theme-elegant/css/bootstrap-switch.min.css"/>
+            
         </environment>
     }
     else
@@ -55,6 +58,7 @@
 
     @if (SignInManager.IsSignedIn(User))
     {
+        <partial name="_Modal"/>
         <!-- ============================================================== -->
         <!-- Topbar header - style you can find in pages.scss -->
         <!-- ============================================================== -->
@@ -156,9 +160,10 @@
     <script src="~/lib/theme-elegant/js/c3.min.js"></script>
     <script src="~/lib/theme-elegant/js/jquery.toast.js"></script>
     <script src="~/lib/theme-elegant/js/sweetalert.min.js"></script>
+    <script src="~/lib/theme-elegant/js/bootstrap-switch.min.js"></script>
+    <script src="~/lib/theme-elegant/js/site.js"></script>
 
 </environment>
-
 
 @RenderSection("Scripts", required: false)
 <script>

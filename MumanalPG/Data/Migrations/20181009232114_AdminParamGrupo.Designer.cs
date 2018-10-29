@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MumanalPG.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -9,14 +10,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MumanalPG.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181009232114_AdminParamGrupo")]
+    partial class AdminParamGrupo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
+                .HasAnnotation("ProductVersion", "2.1.2-rtm-30932")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -235,22 +237,6 @@ namespace MumanalPG.Data.Migrations
                     b.ToTable("Partida","FinanzasParam");
                 });
 
-            modelBuilder.Entity("MumanalPG.Models.Planificacion.TipoBeneficiario", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<bool>("Activo");
-
-                    b.Property<string>("Denominacion")
-                        .IsRequired()
-                        .HasMaxLength(100);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TiposBeneficiario","Planificacion");
-                });
-
             modelBuilder.Entity("MumanalPG.Models.Products", b =>
                 {
                     b.Property<int>("Id")
@@ -308,22 +294,6 @@ namespace MumanalPG.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductTypes");
-                });
-
-            modelBuilder.Entity("MumanalPG.Models.RecursosHumanos.UnidadGeneral", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<bool>("Activo");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasMaxLength(100);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UnidadGeneral","Rrhh");
                 });
 
             modelBuilder.Entity("MumanalPG.Models.SpecialTags", b =>

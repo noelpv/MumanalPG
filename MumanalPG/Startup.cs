@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using MumanalPG.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ReflectionIT.Mvc.Paging;
 using SmartBreadcrumbs;
 
 namespace MumanalPG
@@ -46,7 +47,9 @@ namespace MumanalPG
             services.AddScoped<IDbInitializer, DbInitializer>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
+			services.AddPaging(options => {
+				options.ViewName = "Bootstrap4";
+			});
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);

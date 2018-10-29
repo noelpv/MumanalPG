@@ -448,7 +448,7 @@ if ( typeof Object.create !== 'function' ) {
         bgColor: false,
         textColor: false,
         textAlign: 'left',
-        hideAfter: 7000,
+        hideAfter: 5000,
         stack: 6,
         beforeShow: function () {},
         afterShown: function () {},
