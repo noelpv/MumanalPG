@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using MumanalPG.Models.FinanzasParam;
 using MumanalPG.Models.AdministraParam;
 using MumanalPG.Models.Planificacion;
+using MumanalPG.Models.Ventas;
 
 namespace MumanalPG.Data
 {
@@ -32,5 +33,14 @@ namespace MumanalPG.Data
 
        
         public DbSet<MumanalPG.Models.Planificacion.TipoBeneficiario> TipoBeneficiario { get; set; }
+
+       
+        public DbSet<MumanalPG.Models.AdministraParam.SubGrupo> SubGrupo { get; set; }
+
+       
+        public DbSet<MumanalPG.Models.Ventas.TablaPDF> TablaPDF { get; set; }
+
+       
+        public DbSet<MumanalPG.Models.Ventas.VentaContratacion> VentaContratacion { get; set; }
     }
 }

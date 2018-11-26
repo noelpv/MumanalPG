@@ -79,11 +79,16 @@
                 <i class="fas fa-hand-holding-usd"></i><span class="hide-menu">Prestaciones</span>
             </a>
             <ul aria-expanded="false" class="collapse">
+
                 <li>
                     <a href="app-email.html">Afiliaciones <i class="fas fa-handshake"></i></a>
                 </li>
                 <li>
-                    <a href="app-email-detail.html">ASR <i class="fas fa-hands-helping"></i></a>
+                    <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">ASR<i class="ti-align-left"></i></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a asp-area="Ventas" asp-controller="VentaContratacion" asp-action="Index">Contratación<i class="ti-layout-menu-separated"></i></a></li>
+                        <li><a href="javascript:void(0)">Otros 2<i class="ti-list-ol"></i></a></li>
+                    </ul>
                 </li>
                 <li>
                     <a href="app-compose.html">Bono Cesantia <i class="icon-note"></i></a>
@@ -94,7 +99,7 @@
                 <li>
                     <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Otros Servicios<i class="ti-align-left"></i></a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a href="javascript:void(0)">Otros 1<i class="ti-list-ol"></i></a></li>
+                        <li><a asp-area="Ventas" asp-controller="TablaPDF" asp-action="Index">TablaPDF<i class="ti-layout-menu-separated"></i></a></li>
                         <li><a href="javascript:void(0)">Otros 2<i class="ti-list-ol"></i></a></li>
                     </ul>
                 </li>
@@ -147,7 +152,7 @@
                         <li><a href="javascript:void(0)">Bienes<i class="ti-list-ol"></i></a></li>
                         <li><a href="javascript:void(0)">Depreciación<i class="ti-list-ol"></i></a></li>
                         <li><a asp-area="AdministraParam" asp-controller="Grupo" asp-action="Index">Grupos<i class="ti-layout-menu-separated"></i></a></li>
-                        <li><a href="javascript:void(0)">Subgrupos<i class="ti-list-ol"></i></a></li>
+                        <li><a asp-area="AdministraParam" asp-controller="SubGrupo" asp-action="Index">Sub Grupos<i class="ti-layout-menu-separated"></i></a></li>
                         <li><a href="javascript:void(0)">Modelos<i class="ti-list-ol"></i></a></li>
                         <li><a href="javascript:void(0)">Unidades de Medida<i class="ti-list-ol"></i></a></li>
                         <li><a href="javascript:void(0)">Marcas<i class="ti-list-ol"></i></a></li>

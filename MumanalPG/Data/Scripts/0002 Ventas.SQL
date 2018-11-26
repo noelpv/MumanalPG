@@ -1,0 +1,264 @@
+﻿
+--create table "Ventas"."Beneficiario" (
+--    "IdBeneficiario" integer,
+--    "IdBeneficiarioClasificacion" integer,
+--    "DocumentoIdentidad" character varying (20),
+--    "Nit" character varying (20),
+--    "DepartamentoSigla" character varying (5),
+--    "Iniciales" character varying (4),
+--    "IdDocumentoRespaldo" integer,
+--    "PrimerApellido" character varying (35),
+--    "SegundoApellido" character varying (30),
+--    "Nombres" character varying (30),
+--    "Denominacion" character varying (100),
+--    "FechaNacimiento" timestamp,
+--    "TelefonoFijo" character varying (30),
+--    "TelefonoOficina" character varying (30),
+--    "TelefonoCelular" character varying (30),
+--    "EmailPersonal" character varying (50),
+--    "EmailOficina" character varying (50),
+--    "DomicilioLegal" character varying (150),
+--    "IdMunicipio" integer,
+--    "IdZona" integer,
+--    "IdCalle" integer,
+--    "IdEdificio" integer,
+--    "EdificioNumero" character varying (10),
+--    "EdificioNumeroPiso" character varying (10),
+--    "EdificioNumeroDepto" character varying (10),
+--    "EsDeudor" Boolean,
+--    "IdEstadoRegistro" integer,
+--    "IdUsuario" integer,
+--    "FechaRegistro" timestamp
+--);
+--ALTER TABLE "Ventas"."Beneficiario" OWNER TO postgres;
+--CREATE SEQUENCE "Ventas"."Beneficiario_IdBeneficiario_seq" AS Integer START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
+--ALTER TABLE "Ventas"."Beneficiario_IdBeneficiario_seq" OWNER TO postgres;
+--ALTER SEQUENCE "Ventas"."Beneficiario_IdBeneficiario_seq" OWNED BY "Ventas"."Beneficiario"."IdBeneficiario";
+--ALTER TABLE ONLY "Ventas"."Beneficiario" ALTER COLUMN "IdBeneficiario" SET DEFAULT nextval('"Ventas"."Beneficiario_IdBeneficiario_seq"'::regclass);
+--SELECT pg_catalog.setval('"Ventas"."Beneficiario_IdBeneficiario_seq"', 1, false);
+--ALTER TABLE ONLY "Ventas"."Beneficiario" add constraint "Beneficiario_pkey" primary key ("IdBeneficiario");
+
+--create table "Ventas"."Departamento" (
+--    "IdDepartamento" integer,
+--    "IdPais" integer,
+--    "Descripcion" character varying (50),
+--    "Sigla" character varying (5),
+--    "EstadoCodigo" char (3),
+--    "UsuarioCodigo" character varying (20),
+--    "FechaRegistro" timestamp
+--);
+--ALTER TABLE "Ventas"."Departamento" OWNER TO postgres;
+--CREATE SEQUENCE "Ventas"."Departamento_IdDepartamento_seq" AS Integer START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
+--ALTER TABLE "Ventas"."Departamento_IdDepartamento_seq" OWNER TO postgres;
+--ALTER SEQUENCE "Ventas"."Departamento_IdDepartamento_seq" OWNED BY "Ventas"."Departamento"."IdDepartamento";
+--ALTER TABLE ONLY "Ventas"."Departamento" ALTER COLUMN "IdDepartamento" SET DEFAULT nextval('"Ventas"."Departamento_IdDepartamento_seq"'::regclass);
+--SELECT pg_catalog.setval('"Ventas"."Departamento_IdDepartamento_seq"', 1, false);
+--ALTER TABLE ONLY "Ventas"."Departamento" add constraint "Departamento_pkey" primary key ("IdDepartamento");
+
+--create table "Ventas"."DocumentoFormato" (
+--    "IdDocumentoFormato" integer,
+--    "Descripcion" character varying (30),
+--    "IdEstadoRegistro" integer,
+--    "IdUsuario" integer,
+--    "FechaRegistro" timestamp
+--);
+--ALTER TABLE "Ventas"."DocumentoFormato" OWNER TO postgres;
+--CREATE SEQUENCE "Ventas"."DocumentoFormato_IdDocumentoFormato_seq" AS Integer START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
+--ALTER TABLE "Ventas"."DocumentoFormato_IdDocumentoFormato_seq" OWNER TO postgres;
+--ALTER SEQUENCE "Ventas"."DocumentoFormato_IdDocumentoFormato_seq" OWNED BY "Ventas"."DocumentoFormato"."IdDocumentoFormato";
+--ALTER TABLE ONLY "Ventas"."DocumentoFormato" ALTER COLUMN "IdDocumentoFormato" SET DEFAULT nextval('"Ventas"."DocumentoFormato_IdDocumentoFormato_seq"'::regclass);
+--SELECT pg_catalog.setval('"Ventas"."DocumentoFormato_IdDocumentoFormato_seq"', 1, false);
+--ALTER TABLE ONLY "Ventas"."DocumentoFormato" add constraint "DocumentoFormato_pkey" primary key ("IdDocumentoFormato");
+
+--create table "Ventas"."DocumentoRespaldo" (
+--    "IdDocumentoRespaldo" integer,
+--    "IdDocumentoClasificacion" integer,
+--    "Sigla" character varying (6),
+--    "Descripcion" character varying (100),
+--    "IdFrecuenciaUso" integer,
+--    "IdDocumentoFormato" integer,
+--    "NumeroCopias" integer,
+--    "LugarFisicoArchivado" character varying (20),
+--    "EsUsadoComoRequisito" Boolean,
+--    "IdEstadoRegistro" integer,
+--    "IdUsuario" integer,
+--    "FechaRegistro" timestamp
+--);
+--ALTER TABLE "Ventas"."DocumentoRespaldo" OWNER TO postgres;
+--CREATE SEQUENCE "Ventas"."DocumentoRespaldo_IdDocumentoRespaldo_seq" AS Integer START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
+--ALTER TABLE "Ventas"."DocumentoRespaldo_IdDocumentoRespaldo_seq" OWNER TO postgres;
+--ALTER SEQUENCE "Ventas"."DocumentoRespaldo_IdDocumentoRespaldo_seq" OWNED BY "Ventas"."DocumentoRespaldo"."IdDocumentoRespaldo";
+--ALTER TABLE ONLY "Ventas"."DocumentoRespaldo" ALTER COLUMN "IdDocumentoRespaldo" SET DEFAULT nextval('"Ventas"."DocumentoRespaldo_IdDocumentoRespaldo_seq"'::regclass);
+--SELECT pg_catalog.setval('"Ventas"."DocumentoRespaldo_IdDocumentoRespaldo_seq"', 1, false);
+--ALTER TABLE ONLY "Ventas"."DocumentoRespaldo" add constraint "DocumentoRespaldo_pkey" primary key ("IdDocumentoRespaldo");
+
+--create table "Ventas"."EstadoRegistro" (
+--    "IdEstadoRegistro" integer,
+--    "Descripcion" character varying (50),
+--    "IdEstadoRegistroTabla" integer,
+--    "IdUsuario" integer,
+--    "FechaRegistro" timestamp
+--);
+--ALTER TABLE "Ventas"."EstadoRegistro" OWNER TO postgres;
+--CREATE SEQUENCE "Ventas"."EstadoRegistro_IdEstadoRegistro_seq" AS Integer START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
+--ALTER TABLE "Ventas"."EstadoRegistro_IdEstadoRegistro_seq" OWNER TO postgres;
+--ALTER SEQUENCE "Ventas"."EstadoRegistro_IdEstadoRegistro_seq" OWNED BY "Ventas"."EstadoRegistro"."IdEstadoRegistro";
+--ALTER TABLE ONLY "Ventas"."EstadoRegistro" ALTER COLUMN "IdEstadoRegistro" SET DEFAULT nextval('"Ventas"."EstadoRegistro_IdEstadoRegistro_seq"'::regclass);
+--SELECT pg_catalog.setval('"Ventas"."EstadoRegistro_IdEstadoRegistro_seq"', 1, false);
+--ALTER TABLE ONLY "Ventas"."EstadoRegistro" add constraint "EstadoRegistro_pkey" primary key ("IdEstadoRegistro");
+
+--create table "Ventas"."Proceso" (
+--    "IdProceso" integer,
+--    "Descripcion" character varying (100),
+--    "IdProcesoPadre" integer,
+--    "Nivel" integer,
+--    "EsUltimoNivel" Boolean,
+--    "NumeroDiasHabiles" integer,
+--    "NumeroDiasCalendario" integer,
+--    "IdDocumentoRespaldo" integer,
+--    "IdSistemaFormulario" integer,
+--    "IdEstadoRegistro" integer,
+--    "IdUsuario" integer,
+--    "FechaRegistro" timestamp
+--);
+--ALTER TABLE "Ventas"."Proceso" OWNER TO postgres;
+--CREATE SEQUENCE "Ventas"."Proceso_IdProceso_seq" AS Integer START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
+--ALTER TABLE "Ventas"."Proceso_IdProceso_seq" OWNER TO postgres;
+--ALTER SEQUENCE "Ventas"."Proceso_IdProceso_seq" OWNED BY "Ventas"."Proceso"."IdProceso";
+--ALTER TABLE ONLY "Ventas"."Proceso" ALTER COLUMN "IdProceso" SET DEFAULT nextval('"Ventas"."Proceso_IdProceso_seq"'::regclass);
+--SELECT pg_catalog.setval('"Ventas"."Proceso_IdProceso_seq"', 1, false);
+--ALTER TABLE ONLY "Ventas"."Proceso" add constraint "Proceso_pkey" primary key ("IdProceso");
+
+--create table "Ventas"."UnidadEjecutora" (
+--    "IdUnidadEjecutora" integer,
+--    "Descripcion" character varying (150),
+--    "Sigla" character varying (10),
+--    "IdUnidadEjecutoraPadre" integer,
+--    "Nivel" integer,
+--    "EsUltimoNivel" Boolean,
+--    "IdDepartamento" integer,
+--    "Gestion" character varying (4),
+--    "IdEstadoRegistro" integer,
+--    "IdUsuario" integer,
+--    "FechaRegistro" timestamp
+--);
+--ALTER TABLE "Ventas"."UnidadEjecutora" OWNER TO postgres;
+--CREATE SEQUENCE "Ventas"."UnidadEjecutora_IdUnidadEjecutora_seq" AS Integer START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
+--ALTER TABLE "Ventas"."UnidadEjecutora_IdUnidadEjecutora_seq" OWNER TO postgres;
+--ALTER SEQUENCE "Ventas"."UnidadEjecutora_IdUnidadEjecutora_seq" OWNED BY "Ventas"."UnidadEjecutora"."IdUnidadEjecutora";
+--ALTER TABLE ONLY "Ventas"."UnidadEjecutora" ALTER COLUMN "IdUnidadEjecutora" SET DEFAULT nextval('"Ventas"."UnidadEjecutora_IdUnidadEjecutora_seq"'::regclass);
+--SELECT pg_catalog.setval('"Ventas"."UnidadEjecutora_IdUnidadEjecutora_seq"', 1, false);
+--ALTER TABLE ONLY "Ventas"."UnidadEjecutora" add constraint "UnidadEjecutora_pkey" primary key ("IdUnidadEjecutora");
+
+--create table "Ventas"."Usuario" (
+--    "IdUsuario" integer,
+--    "IdBeneficiario" integer,
+--    "BeneficiarioDescripcion" character varying (100),
+--    "Contrasena" character varying (20),
+--    "Observaciones" character varying (100),
+--    "IdNivelAcceso" integer,
+--    "IdEstadoRegistro" integer,
+--    "IdUsuarioTabla" integer,
+--    "FechaRegistro" timestamp
+--);
+--ALTER TABLE "Ventas"."Usuario" OWNER TO postgres;
+--CREATE SEQUENCE "Ventas"."Usuario_IdUsuario_seq" AS Integer START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
+--ALTER TABLE "Ventas"."Usuario_IdUsuario_seq" OWNER TO postgres;
+--ALTER SEQUENCE "Ventas"."Usuario_IdUsuario_seq" OWNED BY "Ventas"."Usuario"."IdUsuario";
+--ALTER TABLE ONLY "Ventas"."Usuario" ALTER COLUMN "IdUsuario" SET DEFAULT nextval('"Ventas"."Usuario_IdUsuario_seq"'::regclass);
+--SELECT pg_catalog.setval('"Ventas"."Usuario_IdUsuario_seq"', 1, false);
+--ALTER TABLE ONLY "Ventas"."Usuario" add constraint "Usuario_pkey" primary key ("IdUsuario");
+
+--create table "Ventas"."VentaContratacion" (
+--    "IdVentaContratacion" integer,
+--    "IdVentaSolicitud" integer,
+--    "IdProcesoNivel2" integer,
+--    "Gestion" character varying (4),
+--    "IdUnidadEjecutora" integer,
+--    "CorrelativoUnidad" integer,
+--    "IdDepartamento" integer,
+--    "FechaVenta" timestamp,
+--    "IdBeneficiario" integer,
+--    "IdBeneficiarioGarante" integer,
+--    "IdBeneficiarioResponsable" integer,
+--    "IdVentaTarifario" integer,
+--    "Concepto" character varying (250),
+--    "Observaciones" character varying (250),
+--    "CiteTramite" character varying (20),
+--    "IdAsrSiver" character varying (20),
+--    "MesNumero" integer,
+--    "FechaInicio" timestamp,
+--    "FechaFinal" timestamp,
+--    "CantidadTotal" Decimal,
+--    "TotalBs" Decimal,
+--    "TotalDolares" Decimal,
+--    "IdTipoMoneda" integer,
+--    "TipoCambio" Decimal,
+--    "TotalPrevisionBs" Decimal,
+--    "Literal" character varying (200),
+--    "PlazoMeses" integer,
+--    "MesInicioCronograma" integer,
+--    "IdPoa" integer,
+--    "IdProceso" integer,
+--    "IdDocumentoRespaldo" integer,
+--    "NumeroDocumento" integer,
+--    "ArchivoRespaldo" character varying (25),
+--    "ArchivoRespaldoCargado" Boolean,
+--    "IdEstadoRegistro" integer,
+--    "IdUsuario" integer,
+--    "IdUsuarioAprueba" integer,
+--    "FechaRegistro" timestamp,
+--    "FechaAprueba" timestamp
+--);
+--ALTER TABLE "Ventas"."VentaContratacion" OWNER TO postgres;
+--CREATE SEQUENCE "Ventas"."VentaContratacion_IdVentaContratacion_seq" AS Integer START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
+--ALTER TABLE "Ventas"."VentaContratacion_IdVentaContratacion_seq" OWNER TO postgres;
+--ALTER SEQUENCE "Ventas"."VentaContratacion_IdVentaContratacion_seq" OWNED BY "Ventas"."VentaContratacion"."IdVentaContratacion";
+--ALTER TABLE ONLY "Ventas"."VentaContratacion" ALTER COLUMN "IdVentaContratacion" SET DEFAULT nextval('"Ventas"."VentaContratacion_IdVentaContratacion_seq"'::regclass);
+--SELECT pg_catalog.setval('"Ventas"."VentaContratacion_IdVentaContratacion_seq"', 1, false);
+--ALTER TABLE ONLY "Ventas"."VentaContratacion" add constraint "VentaContratacion_pkey" primary key ("IdVentaContratacion");
+
+--create table "Ventas"."VentaRequisito" (
+--    "IdVentaRequisito" integer,
+--    "IdVentaContratacion" integer,
+--    "IdBeneficiario" integer,
+--    "IdDocumentoRespaldo" integer,
+--    "IdDocumentoFormato" integer,
+--    "DocumentoEntregado" Boolean,
+--    "PathArchivo" character varying (50),
+--    "ArchivoCargado" Boolean,
+--    "IdEstadoRegistro" integer,
+--    "IdUsuario" integer,
+--    "FechaRegistro" timestamp
+--);
+--ALTER TABLE "Ventas"."VentaRequisito" OWNER TO postgres;
+--CREATE SEQUENCE "Ventas"."VentaRequisito_IdVentaRequisito_seq" AS Integer START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
+--ALTER TABLE "Ventas"."VentaRequisito_IdVentaRequisito_seq" OWNER TO postgres;
+--ALTER SEQUENCE "Ventas"."VentaRequisito_IdVentaRequisito_seq" OWNED BY "Ventas"."VentaRequisito"."IdVentaRequisito";
+--ALTER TABLE ONLY "Ventas"."VentaRequisito" ALTER COLUMN "IdVentaRequisito" SET DEFAULT nextval('"Ventas"."VentaRequisito_IdVentaRequisito_seq"'::regclass);
+--SELECT pg_catalog.setval('"Ventas"."VentaRequisito_IdVentaRequisito_seq"', 1, false);
+--ALTER TABLE ONLY "Ventas"."VentaRequisito" add constraint "VentaRequisito_pkey" primary key ("IdVentaRequisito");
+
+--create table "Ventas"."VentaTarifario" (
+--    "IdVentaTarifario" integer,
+--    "Descripcion" character varying (100),
+--    "IdProcesoNivel2" integer,
+--    "IdBeneficiarioCategoria" integer,
+--    "NumeroCuotas" integer,
+--    "NuemroPeriodos" integer,
+--    "ValorInicialBs" Decimal,
+--    "InteresBs" Decimal,
+--    "ValorFinalBs" Decimal,
+--    "Porcentaje" Decimal,
+--    "IdEstadoRegistro" integer,
+--    "IdUsuario" integer,
+--    "FechaRegistro" timestamp
+--);
+--ALTER TABLE "Ventas"."VentaTarifario" OWNER TO postgres;
+--CREATE SEQUENCE "Ventas"."VentaTarifario_IdVentaTarifario_seq" AS Integer START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;
+--ALTER TABLE "Ventas"."VentaTarifario_IdVentaTarifario_seq" OWNER TO postgres;
+--ALTER SEQUENCE "Ventas"."VentaTarifario_IdVentaTarifario_seq" OWNED BY "Ventas"."VentaTarifario"."IdVentaTarifario";
+--ALTER TABLE ONLY "Ventas"."VentaTarifario" ALTER COLUMN "IdVentaTarifario" SET DEFAULT nextval('"Ventas"."VentaTarifario_IdVentaTarifario_seq"'::regclass);
+--SELECT pg_catalog.setval('"Ventas"."VentaTarifario_IdVentaTarifario_seq"', 1, false);
+--ALTER TABLE ONLY "Ventas"."VentaTarifario" add constraint "VentaTarifario_pkey" primary key ("IdVentaTarifario");
+

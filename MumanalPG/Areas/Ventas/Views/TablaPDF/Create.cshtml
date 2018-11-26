@@ -1,0 +1,62 @@
+﻿@model MumanalPG.Models.Ventas.TablaPDF
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4>TablaPDF</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+
+                <table>
+                    <tr>
+                        <td> <label asp-for="IdDocumento" class="control-label"></label> </td>
+                        <td>
+                            <input asp-for="IdDocumento" class="form-control" />
+                            <span asp-validation-for="IdDocumento" class="text-danger"></span>
+                        </td>
+                    </tr>
+                </table>
+
+                @*<label asp-for="IdDocumento" class="control-label"></label>
+            <input asp-for="IdDocumento" class="form-control" />
+            <span asp-validation-for="IdDocumento" class="text-danger"></span>*@
+            </div>
+            @*<div class="form-group">
+            <label asp-for="RutaDocumento" class="control-label"></label>
+            <input asp-for="RutaDocumento" class="form-control" />
+            <span asp-validation-for="RutaDocumento" class="text-danger"></span>
+        </div>*@
+            <input type="file" name="PDFFile" required accept="application/pdf" />
+            @*<div class="form-group">
+            <div class="checkbox">
+                <label>
+                    <input asp-for="Cargado" /> @Html.DisplayNameFor(model => model.Cargado)
+                </label>
+            </div>
+        </div>*@
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class="form-group">
+                <input type="submit" value="Grabar" class="btn btn-default" />
+            </div>
+            @*<button type="submit">alserver</button>*@
+        </form>
+        <br/>
+        @*<label>Archivo subido=@ViewData["RutaDocumento"]</label>*@
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -38,7 +38,7 @@ namespace MumanalPG.Data
             {
                 UserName = "admin@gmail.com",
                 Email = "admin@gmail.com",
-                Name = "Bhrugen Patel",
+                Name = "Admin Admin",
                 EmailConfirmed = true
             }, "Admin123*").GetAwaiter().GetResult();
 

@@ -20,11 +20,11 @@ namespace MumanalPG.Areas.Planificacion.Controllers
     public class TipoBeneficiariosController : BaseController
     {
         
-       public TipoBeneficiariosController(ApplicationDbContext db): base(db)
+		public TipoBeneficiariosController(ApplicationDbContext db): base(db)
         {
         }
 
-        // GET: Planificacion/TipoBeneficiarios
+		// GET: Planificacion/TipoBeneficiarios
         [Breadcrumb("Tipos de Beneficiario")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Denominacion")
         {
