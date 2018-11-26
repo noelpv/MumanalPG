@@ -59,7 +59,27 @@ namespace MumanalPG.Areas.Ventas
         {
             if (ModelState.IsValid)
             {
-                _context.Add(ventaContratacion);
+				ventaContratacion.IdVentaSolicitud = 0;
+				ventaContratacion.IdProcesoNivel2 = 0;
+				ventaContratacion.Gestion = DateTime.Now.Year.ToString();
+				ventaContratacion.IdDepartamento = 2;
+				ventaContratacion.IdBeneficiarioResponsable = 0;
+				ventaContratacion.IdVentaTarifario = 0;
+				ventaContratacion.Concepto = "Solicitud de Reposición de Ayuda Social reversible";
+				ventaContratacion.Observaciones = "Digitalización";
+				ventaContratacion.MesNumero = DateTime.Now.Month;
+				ventaContratacion.FechaInicio = DateTime.Now.Date;
+				ventaContratacion.FechaFinal = DateTime.Now.Date;
+				ventaContratacion.CantidadTotal = 1;
+				ventaContratacion.TotalBs = 0;
+				ventaContratacion.TotalDolares = 0;
+				ventaContratacion.IdTipoMoneda = 1;
+				ventaContratacion.TipoCambio = 0;
+				ventaContratacion.TotalPrevisionBs = 0;
+				ventaContratacion.IdUsuario = 1;
+				ventaContratacion.FechaRegistro= DateTime.Now.Date;
+
+				_context.Add(ventaContratacion);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
