@@ -1,0 +1,78 @@
+﻿@model MumanalPG.Models.Ventas.VentaRequisito
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>VentaRequisito</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdVentaContratacion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdVentaContratacion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdBeneficiario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdBeneficiario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdDocumentoRespaldo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdDocumentoRespaldo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdDocumentoFormato)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdDocumentoFormato)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DocumentoEntregado)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DocumentoEntregado)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PathArchivo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PathArchivo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ArchivoCargado)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ArchivoCargado)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdEstadoRegistro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdEstadoRegistro)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdUsuario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdUsuario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaRegistro)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.IdVentaRequisito">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,84 @@
+﻿@model MumanalPG.Models.Ventas.DocumentoRespaldo
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DocumentoRespaldo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdDocumentoClasificacion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdDocumentoClasificacion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Sigla)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sigla)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdFrecuenciaUso)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdFrecuenciaUso)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdDocumentoFormato)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdDocumentoFormato)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroCopias)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumeroCopias)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LugarFisicoArchivado)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LugarFisicoArchivado)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EsUsadoComoRequisito)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EsUsadoComoRequisito)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdEstadoRegistro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdEstadoRegistro)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdUsuario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdUsuario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaRegistro)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.IdDocumentoRespaldo">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

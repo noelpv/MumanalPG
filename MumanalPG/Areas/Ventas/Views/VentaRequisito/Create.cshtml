@@ -1,0 +1,51 @@
+﻿@model MumanalPG.Models.Ventas.VentaRequisito
+
+@{
+    ViewData["Title"] = "Prestaciones / ASR / Contratación / Requisitos";
+}
+
+<h2>Nuevo Requisito</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <table>
+                    <tr>
+                        <td>Documento Respaldo</td>
+                        @*<td> <label asp-for="IDocumentoRespaldo" class="control-label"></label> </td>*@
+                        <td>
+                            @Html.DropDownList("Cities")
+                         </td>
+                    </tr>
+                    <tr>
+                        <td> <label asp-for="IdDocumentoFormato" class="control-label"></label> </td>
+                        <td>
+                            <input asp-for="IdDocumentoFormato" class="form-control" />
+                            <span asp-validation-for="IdDocumentoFormato" class="text-danger"></span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+@*            <input type="file" name="ArchivoPDF" required accept="application/pdf" />*@
+            <input type="file" name="ArchivoPDF" />
+            <br>
+            <br>
+            <div class="form-group">
+                <input type="submit" asp-route-id="@ViewBag.id" value="Grabar" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Regreso a lista de Requisitos</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

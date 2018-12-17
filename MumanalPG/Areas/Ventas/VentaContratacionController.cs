@@ -20,13 +20,11 @@ namespace MumanalPG.Areas.Ventas
             _context = context;
         }
 
-        // GET: Ventas/VentaContratacion
         public async Task<IActionResult> Index()
         {
-            return View(await _context.VentaContratacion.ToListAsync());
+			return View(await _context.vContratacion.ToListAsync());
         }
 
-        // GET: Ventas/VentaContratacion/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,26 +41,49 @@ namespace MumanalPG.Areas.Ventas
 
             return View(ventaContratacion);
         }
-
-        // GET: Ventas/VentaContratacion/Create
+		
+		//----------------------------------------------------------
         public IActionResult Create()
         {
-            return View();
+			var items = new List<SelectListItem>();
+
+			items = _context.Beneficiario.
+				   Where(f => f.DepartamentoSigla == "LPZ").
+				   //OrderBy(x => new {x.Denominacion}).
+				   Select(c => new SelectListItem()
+							{
+								Text = c.Denominacion,
+								Value = c.IdBeneficiario.ToString()
+							}).
+				   ToList();
+			ViewBag.Beneficiarios = items;
+
+			var items2 = new List<SelectListItem>();
+
+			items2 = _context.UnidadEjecutora.
+				   Select(c => new SelectListItem()
+				   {
+					   Text = c.Descripcion,
+					   Value = c.IdUnidadEjecutora.ToString()
+				   }).
+				   ToList();
+			ViewBag.UnidadesEjecutoras = items2;
+
+			return View();
         }
 
-        // POST: Ventas/VentaContratacion/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdVentaContratacion,IdVentaSolicitud,IdProcesoNivel2,Gestion,IdUnidadEjecutora,CorrelativoUnidad,IdDepartamento,FechaVenta,IdBeneficiario,IdBeneficiarioGarante,IdBeneficiarioResponsable,IdVentaTarifario,Concepto,Observaciones,CiteTramite,IdAsrSiver,MesNumero,FechaInicio,FechaFinal,CantidadTotal,TotalBs,TotalDolares,IdTipoMoneda,TipoCambio,TotalPrevisionBs,Literal,PlazoMeses,MesInicioCronograma,IdPoa,IdProceso,IdDocumentoRespaldo,NumeroDocumento,ArchivoRespaldo,ArchivoRespaldoCargado,IdEstadoRegistro,IdUsuario,IdUsuarioAprueba,FechaRegistro,FechaAprueba")] VentaContratacion ventaContratacion)
+        public async Task<IActionResult> Create([Bind("IdVentaContratacion,IdVentaSolicitud,IdProcesoNivel2,Gestion,IdUnidadEjecutora,CorrelativoUnidad,IdDepartamento,FechaVenta,IdBeneficiario,IdBeneficiarioGarante,IdBeneficiarioResponsable,IdVentaTarifario,Concepto,Observaciones,CiteTramite,IdAsrSiver,MesNumero,FechaInicio,FechaFinal,CantidadTotal,TotalBs,TotalDolares,IdTipoMoneda,TipoCambio,TotalPrevisionBs,Literal,PlazoMeses,MesInicioCronograma,IdPoa,IdProceso,IdDocumentoRespaldo,NumeroDocumento,ArchivoRespaldo,ArchivoRespaldoCargado,IdEstadoRegistro,IdUsuario,IdUsuarioAprueba,FechaRegistro,FechaAprueba")] VentaContratacion ventaContratacion, string Beneficiarios, string UnidadesEjecutoras)
         {
             if (ModelState.IsValid)
             {
+				ventaContratacion.IdUnidadEjecutora = Convert.ToInt32(UnidadesEjecutoras);
 				ventaContratacion.IdVentaSolicitud = 0;
 				ventaContratacion.IdProcesoNivel2 = 0;
 				ventaContratacion.Gestion = DateTime.Now.Year.ToString();
 				ventaContratacion.IdDepartamento = 2;
+				ventaContratacion.IdBeneficiario = Convert.ToInt32(Beneficiarios);
 				ventaContratacion.IdBeneficiarioResponsable = 0;
 				ventaContratacion.IdVentaTarifario = 0;
 				ventaContratacion.Concepto = "Solicitud de Reposición de Ayuda Social reversible";
@@ -86,8 +107,8 @@ namespace MumanalPG.Areas.Ventas
             return View(ventaContratacion);
         }
 
-        // GET: Ventas/VentaContratacion/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+		//----------------------------------------------------------
+		public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -102,9 +123,6 @@ namespace MumanalPG.Areas.Ventas
             return View(ventaContratacion);
         }
 
-        // POST: Ventas/VentaContratacion/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdVentaContratacion,IdVentaSolicitud,IdProcesoNivel2,Gestion,IdUnidadEjecutora,CorrelativoUnidad,IdDepartamento,FechaVenta,IdBeneficiario,IdBeneficiarioGarante,IdBeneficiarioResponsable,IdVentaTarifario,Concepto,Observaciones,CiteTramite,IdAsrSiver,MesNumero,FechaInicio,FechaFinal,CantidadTotal,TotalBs,TotalDolares,IdTipoMoneda,TipoCambio,TotalPrevisionBs,Literal,PlazoMeses,MesInicioCronograma,IdPoa,IdProceso,IdDocumentoRespaldo,NumeroDocumento,ArchivoRespaldo,ArchivoRespaldoCargado,IdEstadoRegistro,IdUsuario,IdUsuarioAprueba,FechaRegistro,FechaAprueba")] VentaContratacion ventaContratacion)
@@ -136,9 +154,9 @@ namespace MumanalPG.Areas.Ventas
             }
             return View(ventaContratacion);
         }
-
-        // GET: Ventas/VentaContratacion/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+		
+		//----------------------------------------------------------
+		public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -155,7 +173,6 @@ namespace MumanalPG.Areas.Ventas
             return View(ventaContratacion);
         }
 
-        // POST: Ventas/VentaContratacion/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -165,8 +182,24 @@ namespace MumanalPG.Areas.Ventas
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+		
+		//----------------------------------------------------------
+		public async Task<IActionResult> Requisitos(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
 
-        private bool VentaContratacionExists(int id)
+			TempData["IdContratacion"] = id;
+			return RedirectToAction("Index", "VentaRequisito", new { Id = id });
+
+			//MumanalPG.Areas.Ventas.VentaRequisitoController.
+			//return View("NameOfView", Model);
+			//return View(ventaContratacion);
+		}
+
+		private bool VentaContratacionExists(int id)
         {
             return _context.VentaContratacion.Any(e => e.IdVentaContratacion == id);
         }

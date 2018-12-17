@@ -1,15 +1,15 @@
-﻿@model IEnumerable<MumanalPG.Models.Ventas.VentaContratacion>
+﻿@model IEnumerable<MumanalPG.Models.Ventas.vContratacion>
 
 @{
-    ViewData["Title"] = "Prestaciones / ASR / Contratacion";
+    ViewData["Title"] = "Prestaciones / ASR / Registro";
 }
 
 <div class="row">
     <div class="col-6">
-        <h2 class="text-info">Lista de Contrataciones</h2>
+        <h2 class="text-info">Lista de Registros ASR</h2>
     </div>
     <div class="col-6 text-right">
-        <a asp-action="Create" class="btn btn-info">&nbsp; Nuevo Contratación</a>
+        <a asp-action="Create" class="btn btn-info">&nbsp; Nueva Registro</a>
     </div>
 </div>
 
@@ -17,26 +17,25 @@
     <thead>
         <tr>
             <th>
+                Numero ASR
+            </th>
+            <th>
+                Num. Solicitud
+            </th>
+            <th>
+                Regional o Agencia
+            </th>
+            <th>
+                Fecha Registro
+            </th>
+            <th>
+                Solicitante
+            </th>
+            <th>
+                Garante
+            </th>
+            <th>
                 Gestión
-                @*@Html.DisplayNameFor(model => model.Gestion)*@
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdUnidadEjecutora)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CorrelativoUnidad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaVenta)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdBeneficiario)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdBeneficiarioGarante)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdAsrSiver)
             </th>
             <th></th>
         </tr>
@@ -44,34 +43,35 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Gestion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdUnidadEjecutora)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CorrelativoUnidad)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaVenta)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdBeneficiario)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdBeneficiarioGarante)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdAsrSiver)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.IdVentaContratacion">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.IdVentaContratacion">Detalle</a> |
-                    <a asp-action="Delete" asp-route-id="@item.IdVentaContratacion">Eliminar</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdAsrSiver)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CorrelativoUnidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnidadEjecutora)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaVenta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Beneficiario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Garante)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gestion)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdVentaContratacion">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.IdVentaContratacion">Detalle</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdVentaContratacion">Eliminar</a> |
+                <a asp-action="Requisitos" asp-route-id="@item.IdVentaContratacion">Requisitos</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

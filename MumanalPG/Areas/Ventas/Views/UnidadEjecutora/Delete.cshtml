@@ -1,0 +1,81 @@
+﻿@model MumanalPG.Models.Ventas.UnidadEjecutora
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>UnidadEjecutora</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Sigla)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sigla)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdUnidadEjecutoraPadre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdUnidadEjecutoraPadre)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Nivel)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nivel)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EsUltimoNivel)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EsUltimoNivel)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdDepartamento)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdDepartamento)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Gestion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Gestion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdEstadoRegistro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdEstadoRegistro)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdUsuario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdUsuario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaRegistro)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="IdUnidadEjecutora" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.IO;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,25 +11,22 @@ using MumanalPG.Models.Ventas;
 namespace MumanalPG.Areas.Ventas
 {
     [Area("Ventas")]
-    public class TablaPDFController : Controller
+    public class DocumentoRespaldoController : Controller
     {
         private readonly ApplicationDbContext _context;
-		private readonly IHostingEnvironment he;
 
-
-        public TablaPDFController(ApplicationDbContext context, IHostingEnvironment HE)
+        public DocumentoRespaldoController(ApplicationDbContext context)
         {
             _context = context;
-			he = HE;
-        } 
-
-        // GET: Ventas/TablaPDF
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.TablaPDF.ToListAsync());
         }
 
-        // GET: Ventas/TablaPDF/Details/5
+        // GET: Ventas/DocumentoRespaldo
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.DocumentoRespaldo.ToListAsync());
+        }
+
+        // GET: Ventas/DocumentoRespaldo/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -39,52 +34,39 @@ namespace MumanalPG.Areas.Ventas
                 return NotFound();
             }
 
-            var tablaPDF = await _context.TablaPDF
-                .FirstOrDefaultAsync(m => m.IdTablaPDF == id);
-            if (tablaPDF == null)
+            var documentoRespaldo = await _context.DocumentoRespaldo
+                .FirstOrDefaultAsync(m => m.IdDocumentoRespaldo == id);
+            if (documentoRespaldo == null)
             {
                 return NotFound();
             }
 
-            return View(tablaPDF);
+            return View(documentoRespaldo);
         }
 
-        // GET: Ventas/TablaPDF/Create
+        // GET: Ventas/DocumentoRespaldo/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Ventas/TablaPDF/Create
+        // POST: Ventas/DocumentoRespaldo/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdTablaPDF,IdDocumento,RutaDocumento,Cargado")] TablaPDF tablaPDF, IFormFile PDFfile)
+        public async Task<IActionResult> Create([Bind("IdDocumentoRespaldo,IdDocumentoClasificacion,Sigla,Descripcion,IdFrecuenciaUso,IdDocumentoFormato,NumeroCopias,LugarFisicoArchivado,EsUsadoComoRequisito,IdEstadoRegistro,IdUsuario,FechaRegistro")] DocumentoRespaldo documentoRespaldo)
         {
             if (ModelState.IsValid)
-			{
-				String fileName = "";
-				if (PDFfile != null)
-				{
-					fileName = Path.Combine(he.WebRootPath, Path.GetFileName(PDFfile.FileName));
-					PDFfile.CopyTo(new FileStream(fileName, FileMode.Create));
-				}
-
-
-				//ViewData["message"] = $"{file.Length} bytes uploaded successfully!";
-
-				tablaPDF.RutaDocumento = fileName;
-				tablaPDF.Cargado = true;
-
-				_context.Add(tablaPDF);
+            {
+                _context.Add(documentoRespaldo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(tablaPDF);
+            return View(documentoRespaldo);
         }
 
-        // GET: Ventas/TablaPDF/Edit/5
+        // GET: Ventas/DocumentoRespaldo/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -92,22 +74,22 @@ namespace MumanalPG.Areas.Ventas
                 return NotFound();
             }
 
-            var tablaPDF = await _context.TablaPDF.FindAsync(id);
-            if (tablaPDF == null)
+            var documentoRespaldo = await _context.DocumentoRespaldo.FindAsync(id);
+            if (documentoRespaldo == null)
             {
                 return NotFound();
             }
-            return View(tablaPDF);
+            return View(documentoRespaldo);
         }
 
-        // POST: Ventas/TablaPDF/Edit/5
+        // POST: Ventas/DocumentoRespaldo/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdTablaPDF,IdDocumento,RutaDocumento,Cargado")] TablaPDF tablaPDF)
+        public async Task<IActionResult> Edit(int id, [Bind("IdDocumentoRespaldo,IdDocumentoClasificacion,Sigla,Descripcion,IdFrecuenciaUso,IdDocumentoFormato,NumeroCopias,LugarFisicoArchivado,EsUsadoComoRequisito,IdEstadoRegistro,IdUsuario,FechaRegistro")] DocumentoRespaldo documentoRespaldo)
         {
-            if (id != tablaPDF.IdTablaPDF)
+            if (id != documentoRespaldo.IdDocumentoRespaldo)
             {
                 return NotFound();
             }
@@ -116,12 +98,12 @@ namespace MumanalPG.Areas.Ventas
             {
                 try
                 {
-                    _context.Update(tablaPDF);
+                    _context.Update(documentoRespaldo);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TablaPDFExists(tablaPDF.IdTablaPDF))
+                    if (!DocumentoRespaldoExists(documentoRespaldo.IdDocumentoRespaldo))
                     {
                         return NotFound();
                     }
@@ -132,10 +114,10 @@ namespace MumanalPG.Areas.Ventas
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(tablaPDF);
+            return View(documentoRespaldo);
         }
 
-        // GET: Ventas/TablaPDF/Delete/5
+        // GET: Ventas/DocumentoRespaldo/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -143,30 +125,30 @@ namespace MumanalPG.Areas.Ventas
                 return NotFound();
             }
 
-            var tablaPDF = await _context.TablaPDF
-                .FirstOrDefaultAsync(m => m.IdTablaPDF == id);
-            if (tablaPDF == null)
+            var documentoRespaldo = await _context.DocumentoRespaldo
+                .FirstOrDefaultAsync(m => m.IdDocumentoRespaldo == id);
+            if (documentoRespaldo == null)
             {
                 return NotFound();
             }
 
-            return View(tablaPDF);
+            return View(documentoRespaldo);
         }
 
-        // POST: Ventas/TablaPDF/Delete/5
+        // POST: Ventas/DocumentoRespaldo/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tablaPDF = await _context.TablaPDF.FindAsync(id);
-            _context.TablaPDF.Remove(tablaPDF);
+            var documentoRespaldo = await _context.DocumentoRespaldo.FindAsync(id);
+            _context.DocumentoRespaldo.Remove(documentoRespaldo);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TablaPDFExists(int id)
+        private bool DocumentoRespaldoExists(int id)
         {
-            return _context.TablaPDF.Any(e => e.IdTablaPDF == id);
+            return _context.DocumentoRespaldo.Any(e => e.IdDocumentoRespaldo == id);
         }
     }
 }

@@ -30,17 +30,20 @@ namespace MumanalPG.Data
         public DbSet<MumanalPG.Models.FinanzasParam.Partida> Partida { get; set; }
 
         public DbSet<MumanalPG.Models.AdministraParam.Grupo> Grupo { get; set; }
-
-       
+		       
         public DbSet<MumanalPG.Models.Planificacion.TipoBeneficiario> TipoBeneficiario { get; set; }
-
-       
+		       
         public DbSet<MumanalPG.Models.AdministraParam.SubGrupo> SubGrupo { get; set; }
-
-       
+		       
         public DbSet<MumanalPG.Models.Ventas.TablaPDF> TablaPDF { get; set; }
 
-       
+		public DbSet<MumanalPG.Models.Ventas.Beneficiario> Beneficiario { get; set; }
+		public DbSet<MumanalPG.Models.Ventas.DocumentoRespaldo> DocumentoRespaldo { get; set; }
+		public DbSet<MumanalPG.Models.Ventas.vContratacion> vContratacion { get; set; }
+		public DbSet<MumanalPG.Models.Ventas.vRequisito> vRequisito { get; set; }
         public DbSet<MumanalPG.Models.Ventas.VentaContratacion> VentaContratacion { get; set; }
+		public DbSet<MumanalPG.Models.Ventas.VentaRequisito> VentaRequisito { get; set; }
+        public DbSet<MumanalPG.Models.Ventas.UnidadEjecutora> UnidadEjecutora { get; set; }
+
     }
 }

@@ -1,0 +1,95 @@
+﻿@model IEnumerable<MumanalPG.Models.Ventas.DocumentoRespaldo>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdDocumentoClasificacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sigla)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdFrecuenciaUso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdDocumentoFormato)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroCopias)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LugarFisicoArchivado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EsUsadoComoRequisito)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEstadoRegistro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUsuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaRegistro)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdDocumentoClasificacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sigla)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdFrecuenciaUso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdDocumentoFormato)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroCopias)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LugarFisicoArchivado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EsUsadoComoRequisito)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEstadoRegistro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUsuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaRegistro)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdDocumentoRespaldo">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdDocumentoRespaldo">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdDocumentoRespaldo">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

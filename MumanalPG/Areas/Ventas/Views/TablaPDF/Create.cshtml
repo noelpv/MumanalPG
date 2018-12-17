@@ -8,8 +8,9 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <form method="post" asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
 
                 <table>
@@ -21,24 +22,10 @@
                         </td>
                     </tr>
                 </table>
+            </div>
 
-                @*<label asp-for="IdDocumento" class="control-label"></label>
-            <input asp-for="IdDocumento" class="form-control" />
-            <span asp-validation-for="IdDocumento" class="text-danger"></span>*@
-            </div>
-            @*<div class="form-group">
-            <label asp-for="RutaDocumento" class="control-label"></label>
-            <input asp-for="RutaDocumento" class="form-control" />
-            <span asp-validation-for="RutaDocumento" class="text-danger"></span>
-        </div>*@
             <input type="file" name="PDFFile" required accept="application/pdf" />
-            @*<div class="form-group">
-            <div class="checkbox">
-                <label>
-                    <input asp-for="Cargado" /> @Html.DisplayNameFor(model => model.Cargado)
-                </label>
-            </div>
-        </div>*@
+
             <br>
             <br>
             <br>
