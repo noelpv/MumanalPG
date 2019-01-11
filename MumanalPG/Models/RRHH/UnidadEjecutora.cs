@@ -2,9 +2,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MumanalPG.Models.Ventas
+
+namespace MumanalPG.Models.RRHH
 {
-	[Table("UnidadEjecutora", Schema = "Ventas")]
+	[Table("UnidadEjecutora", Schema = "RRHH")]
 	public class UnidadEjecutora
 	{
 		[DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
@@ -15,7 +16,7 @@ namespace MumanalPG.Models.Ventas
 		public Int32 IdUnidadEjecutoraPadre { get; set; }
 		public Int32 Nivel { get; set; }
 		public Boolean EsUltimoNivel { get; set; }
-		public Int32 IdDepartamento { get; set; }
+		public Int32 IdMunicipio { get; set; }
 		public string Gestion { get; set; }
 		public Int32 IdEstadoRegistro { get; set; }
 		public Int32 IdUsuario { get; set; }

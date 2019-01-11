@@ -2,7 +2,7 @@
 -- DROP VIEW "Ventas"."vContratacion";
 /*
 CREATE OR REPLACE VIEW "Ventas"."vContratacion" AS
- SELECT a."IdVentaContratacion",
+SELECT a."IdVentaContratacion",
     a."Gestion",
     u."Sigla" AS "UnidadEjecutora",
     a."CorrelativoUnidad",
@@ -10,10 +10,10 @@ CREATE OR REPLACE VIEW "Ventas"."vContratacion" AS
     b."Denominacion" AS "Beneficiario",
     c."Denominacion" AS "Garante",
     a."IdAsrSiver"
-   FROM "Ventas"."VentaContratacion" a
-     JOIN "Ventas"."Beneficiario" b ON a."IdBeneficiario" = b."IdBeneficiario"
-     JOIN "Ventas"."Beneficiario" c ON a."IdBeneficiarioGarante" = c."IdBeneficiario"
-     JOIN "Ventas"."UnidadEjecutora" u ON a."IdUnidadEjecutora" = u."IdUnidadEjecutora";
+FROM "Ventas"."VentaContratacion" a
+JOIN "RRHH"."Beneficiario" b ON a."IdBeneficiario" = b."IdBeneficiario"
+JOIN "RRHH"."Beneficiario" c ON a."IdBeneficiarioGarante" = c."IdBeneficiario"
+JOIN "RRHH"."UnidadEjecutora" u ON a."IdUnidadEjecutora" = u."IdUnidadEjecutora";
 
 ALTER TABLE "Ventas"."vContratacion" OWNER TO postgres;
 ------------------------------------------

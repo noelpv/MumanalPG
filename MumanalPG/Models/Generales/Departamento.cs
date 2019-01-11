@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MumanalPG.Models.Ventas
+namespace MumanalPG.Models.Generales
 {
 	[Table("Departamento", Schema = "Ventas")]
 	public class Departamento

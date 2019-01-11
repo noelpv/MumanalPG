@@ -2,9 +2,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MumanalPG.Models.Ventas
+
+namespace MumanalPG.Models.RRHH
 {
-	[Table("Beneficiario", Schema = "Ventas")]
+	[Table("Beneficiario", Schema = "RRHH")]
 	public class Beneficiario
 	{
 		[DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]

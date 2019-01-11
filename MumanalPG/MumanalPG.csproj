@@ -87,9 +87,7 @@
     <Folder Include="Models\Contable\" />
     <Folder Include="Models\Finanzas\" />
     <Folder Include="Models\GeneralesParam\" />
-    <Folder Include="Models\Generales\" />
     <Folder Include="Models\RRHHParam\" />
-    <Folder Include="Models\RRHH\" />
     <Folder Include="Models\VentasParam\" />
     <Folder Include="Models\PlanificacionParam\" />
     <Folder Include="wwwroot\images\ProductImage\" />

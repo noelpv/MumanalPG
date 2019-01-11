@@ -47,7 +47,7 @@ namespace MumanalPG.Areas.Ventas
         {
 			var items = new List<SelectListItem>();
 
-			items = _context.Beneficiario.
+			items = _context.RRHH_Beneficiario.
 				   Where(f => f.DepartamentoSigla == "LPZ").
 				   //OrderBy(x => new {x.Denominacion}).
 				   Select(c => new SelectListItem()
@@ -60,7 +60,7 @@ namespace MumanalPG.Areas.Ventas
 
 			var items2 = new List<SelectListItem>();
 
-			items2 = _context.UnidadEjecutora.
+			items2 = _context.RRHH_UnidadEjecutora.
 				   Select(c => new SelectListItem()
 				   {
 					   Text = c.Descripcion,
