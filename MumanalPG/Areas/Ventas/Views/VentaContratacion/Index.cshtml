@@ -66,10 +66,10 @@
                 @Html.DisplayFor(modelItem => item.Gestion)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.IdVentaContratacion">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.IdVentaContratacion">Detalle</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdVentaContratacion">Eliminar</a> |
-                <a asp-action="Requisitos" asp-route-id="@item.IdVentaContratacion">Requisitos</a>
+                <a class="btn btn-success" asp-action="Edit" asp-route-id="@item.IdVentaContratacion">Editar</a>
+                @*<a class="btn btn-info" asp-action="Details" asp-route-id="@item.IdVentaContratacion">Detalle</a>*@
+                @*<a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.IdVentaContratacion">Eliminar</a>*@
+                <a class="btn btn-skype" asp-action="Requisitos" asp-route-id="@item.IdVentaContratacion">Requisitos</a>
             </td>
         </tr>
         }

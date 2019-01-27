@@ -29,15 +29,13 @@ namespace MumanalPG.Controllers
         public async Task<IActionResult> Index()
         {
             var productList = await DB.Products.Include(m => m.ProductTypes).Include(m => m.SpecialTags).ToListAsync();
-            SetFlashInfo("Esto es una prueba");
+            //SetFlashInfo("Esto es una prueba");
             return View(productList);
         }
 
         public async Task<IActionResult> Details(int id)
         {
             var product = await DB.Products.Include(m => m.ProductTypes).Include(m => m.SpecialTags).Where(m=>m.Id==id).FirstOrDefaultAsync();
-
-
             return View(product);
         }
 
@@ -54,7 +52,6 @@ namespace MumanalPG.Controllers
             HttpContext.Session.Set("ssShoppingCart", lstShoppingCart);
 
             return RedirectToAction("Index", "Home", new { area = "Customer" });
-
         }
 
         public IActionResult Remove(int id)

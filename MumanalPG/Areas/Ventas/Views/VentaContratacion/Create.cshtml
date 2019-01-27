@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" onsubmit="return ValidaAntesGrabar()">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <table>
                 <tr>
@@ -27,8 +27,7 @@
                 <tr>
                     <td><label asp-for="IdBeneficiarioGarante" class="control-label"></label></td>
                     <td>
-                        <input asp-for="IdBeneficiarioGarante" class="form-control" />
-                        <span asp-validation-for="IdBeneficiarioGarante" class="text-danger"></span>
+                        @Html.DropDownList("Garantes", (IEnumerable<SelectListItem>)ViewBag.Garantes, new { size = "1", style = "width: 300px" })
                     </td>
                 </tr>
                 <tr>

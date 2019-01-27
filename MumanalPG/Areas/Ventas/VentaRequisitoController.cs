@@ -14,21 +14,22 @@ using MumanalPG.Models.Ventas;
 namespace MumanalPG.Areas.Ventas
 {
     [Area("Ventas")]
-    public class VentaRequisitoController : Controller
+    public class VentaRequisitoController : BaseController
     {
-        private readonly ApplicationDbContext _context;
+        //private readonly ApplicationDbContext _context;
+
 		private readonly IHostingEnvironment he;
 		
-        public VentaRequisitoController(ApplicationDbContext context, IHostingEnvironment HE)
+        public VentaRequisitoController(ApplicationDbContext db, IHostingEnvironment HE) : base(db)
         {
-            _context = context;
+            //_context = context;
 			he = HE;
 		}
 		        
         public async Task<IActionResult> Index(Int32? Id) // GET: Ventas/VentaRequisito
 		{
-			Id = Convert.ToInt32(TempData["IdContratacion"]);
-			return View(await _context.vRequisito.Where(f => f.IdVentaContratacion == Id).ToListAsync());
+			//Id = Convert.ToInt32(TempData["IdContratacion"]);
+			return View(await DB.Ventas_vRequisito.Where(f => f.IdVentaContratacion == Id).ToListAsync());
         }
 				
 		public async Task<IActionResult> Details(int? id) // GET: Ventas/VentaRequisito/Details/5
@@ -38,7 +39,7 @@ namespace MumanalPG.Areas.Ventas
                 return NotFound();
             }
 
-            var ventaRequisito = await _context.VentaRequisito
+            var ventaRequisito = await DB.Ventas_VentaRequisito
                 .FirstOrDefaultAsync(m => m.IdVentaRequisito == id);
             if (ventaRequisito == null)
             {
@@ -54,7 +55,7 @@ namespace MumanalPG.Areas.Ventas
 			TempData["IdContratacion"] = id;
 			var items = new List<SelectListItem>();
 
-			items = _context.DocumentoRespaldo.Select(c => new SelectListItem()
+			items = DB.Ventas_DocumentoRespaldo.Select(c => new SelectListItem()
 			{
 				Text = c.Descripcion,
 				Value = c.IdDocumentoRespaldo.ToString()
@@ -89,8 +90,8 @@ namespace MumanalPG.Areas.Ventas
 				ventaRequisito.IdUsuario = 1;
 				ventaRequisito.FechaRegistro = DateTime.Now;
 
-				_context.Add(ventaRequisito);
-                await _context.SaveChangesAsync();
+				DB.Add(ventaRequisito);
+                await DB.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(ventaRequisito);
@@ -104,7 +105,7 @@ namespace MumanalPG.Areas.Ventas
                 return NotFound();
             }
 
-            var ventaRequisito = await _context.VentaRequisito.FindAsync(id);
+            var ventaRequisito = await DB.Ventas_VentaRequisito.FindAsync(id);
             if (ventaRequisito == null)
             {
                 return NotFound();
@@ -125,8 +126,8 @@ namespace MumanalPG.Areas.Ventas
             {
                 try
                 {
-                    _context.Update(ventaRequisito);
-                    await _context.SaveChangesAsync();
+                    DB.Update(ventaRequisito);
+                    await DB.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -152,7 +153,7 @@ namespace MumanalPG.Areas.Ventas
                 return NotFound();
             }
 
-            var ventaRequisito = await _context.VentaRequisito
+            var ventaRequisito = await DB.Ventas_VentaRequisito
                 .FirstOrDefaultAsync(m => m.IdVentaRequisito == id);
             if (ventaRequisito == null)
             {
@@ -166,38 +167,152 @@ namespace MumanalPG.Areas.Ventas
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var ventaRequisito = await _context.VentaRequisito.FindAsync(id);
-            _context.VentaRequisito.Remove(ventaRequisito);
-            await _context.SaveChangesAsync();
+            var ventaRequisito = await DB.Ventas_VentaRequisito.FindAsync(id);
+            DB.Ventas_VentaRequisito.Remove(ventaRequisito);
+            await DB.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
 		//----------------------------------------------------------
 		private bool VentaRequisitoExists(int id)
         {
-            return _context.VentaRequisito.Any(e => e.IdVentaRequisito == id);
+            return DB.Ventas_VentaRequisito.Any(e => e.IdVentaRequisito == id);
         }
 
-		public async Task<IActionResult> VerPDF(int? id, int? idContratacion)
+		public async Task<IActionResult> VerPDF(int? id//, int? idContratacion
+			)
 		{
 			if (id == null)
 			{
 				return NotFound();
 			}
 
-			ViewBag.idContratacion = idContratacion;
-
-			var ventaRequisito = await _context.VentaRequisito.FindAsync(id);
+			
+			var ventaRequisito = await DB.Ventas_VentaRequisito.FindAsync(id);
 			if (ventaRequisito == null)
 			{
 				return NotFound();
 			}
+
+			ViewBag.idContratacion = ventaRequisito.IdVentaContratacion;
 
 			string x = ventaRequisito.PathArchivo;
 			x = Path.GetFileName(x);
 			ViewData["ArchivoPDF2"] = "/" + x;
 
 			return View("VerPDF");
+		}
+
+		//----------------------------------------------------------
+		public async Task<IActionResult> CargaArchivo(int? id) // GET: Ventas/VentaRequisito/Edit/5
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+
+			var ventaRequisito = await DB.Ventas_VentaRequisito.FindAsync(id);
+			if (ventaRequisito == null)
+			{
+				return NotFound();
+			}
+			return View(ventaRequisito);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> CargaArchivo(int id, [Bind("IdVentaRequisito,IdVentaContratacion,IdBeneficiario,IdDocumentoRespaldo,IdDocumentoFormato,DocumentoEntregado,PathArchivo,ArchivoCargado,IdEstadoRegistro,IdUsuario,FechaRegistro")] VentaRequisito ventaRequisito, IFormFile ArchivoPDF)
+		{
+			//if (id != ventaRequisito.IdVentaRequisito)
+			//{
+			//	return NotFound();
+			//}
+			Int32 IdVentaContratacion;
+
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					String fileName = "";
+					if (ArchivoPDF != null)
+					{
+						fileName = Path.Combine(he.WebRootPath, Path.GetFileName(ArchivoPDF.FileName));
+						ArchivoPDF.CopyTo(new FileStream(fileName, FileMode.Create));
+					}
+
+					ventaRequisito.PathArchivo = fileName;
+					ventaRequisito.ArchivoCargado = true;
+					IdVentaContratacion = ventaRequisito.IdVentaContratacion;
+
+					DB.Update(ventaRequisito);
+					await DB.SaveChangesAsync();
+				}
+				catch (DbUpdateConcurrencyException)
+				{
+					if (!VentaRequisitoExists(ventaRequisito.IdVentaRequisito))
+					{
+						return NotFound();
+					}
+					else
+					{
+						throw;
+					}
+				}
+				return RedirectToAction("Index", "VentaRequisito", new { Id = IdVentaContratacion });
+			}
+			return View(ventaRequisito);
+		}
+
+		//----------------------------------------------------------
+		public async Task<IActionResult> Escanear(int? id) // GET: Ventas/VentaRequisito/Edit/5
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+
+			var ventaRequisito = await DB.Ventas_VentaRequisito.FindAsync(id);
+			if (ventaRequisito == null)
+			{
+				return NotFound();
+			}
+			return View(ventaRequisito);
+		}
+
+		//----------------------------------------------------------
+		public async Task<IActionResult> Aprobar(int? id) // GET: Ventas/VentaRequisito/Edit/5
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+
+			var ventaRequisito = await DB.Ventas_VentaRequisito.FindAsync(id);
+			if (ventaRequisito == null)
+			{
+				return NotFound();
+			}
+
+			Int32 IdVentaContratacion = ventaRequisito.IdVentaContratacion;
+
+			if (!ventaRequisito.Aprobado)
+			{
+				if (ventaRequisito.ArchivoCargado)
+				{
+					ventaRequisito.Aprobado = true;
+					DB.Update(ventaRequisito);
+					await DB.SaveChangesAsync();
+					SetFlashInfo("Documento aprobado satisfactoriamente");
+				}
+				else
+				{
+					SetFlashInfo("Hay que cargar en archivo antes de aprobar");
+				}
+			}
+			else
+				SetFlashWarning("El documento ya esta Aprobado");
+			
+			return RedirectToAction("Index", "VentaRequisito", new { Id = IdVentaContratacion });
 		}
 	}
 }

@@ -8,7 +8,7 @@
 <section id="wrapper" class="login-register login-sidebar" style="background-image: url(../../lib/theme-elegant/img/background-login.jpg);">
     <div class="login-box card">
         <div class="card-body">
-            <form class="form-horizontal form-material"method="post">
+            <form class="form-horizontal form-material no-ajax" method="post">
                 <h4>@ViewData["Title"]</h4>
                 <hr/>
 
@@ -42,7 +42,7 @@
                             <input asp-for="Input.RememberMe" class="custom-control-input" id="customCheck1" type="checkbox">
                             <label class="custom-control-label" for="customCheck1">Recuerdame</label>
 
-                            <a asp-page="./ForgotPassword" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> ¿Olvidaste tu contraseña?</a>
+                          @*  <a asp-page="./ForgotPassword" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> ¿Olvidaste tu contraseña?</a>*@
 
                         </div>
                     </div>
@@ -53,14 +53,14 @@
                     </div>
                 </div>
 
-                <div class="form-group m-b-0">
+                @*<div class="form-group m-b-0">
                     <div class="col-sm-12 text-center">
                         Don't have an account?
                         <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="text-primary m-l-5">
                             <b>Sign Up</b>
                         </a>
                     </div>
-                </div>
+                </div>*@
 
 
             </form>

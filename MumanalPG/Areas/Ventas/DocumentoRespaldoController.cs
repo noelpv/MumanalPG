@@ -23,7 +23,7 @@ namespace MumanalPG.Areas.Ventas
         // GET: Ventas/DocumentoRespaldo
         public async Task<IActionResult> Index()
         {
-            return View(await _context.DocumentoRespaldo.ToListAsync());
+            return View(await _context.Ventas_DocumentoRespaldo.ToListAsync());
         }
 
         // GET: Ventas/DocumentoRespaldo/Details/5
@@ -34,7 +34,7 @@ namespace MumanalPG.Areas.Ventas
                 return NotFound();
             }
 
-            var documentoRespaldo = await _context.DocumentoRespaldo
+            var documentoRespaldo = await _context.Ventas_DocumentoRespaldo
                 .FirstOrDefaultAsync(m => m.IdDocumentoRespaldo == id);
             if (documentoRespaldo == null)
             {
@@ -74,7 +74,7 @@ namespace MumanalPG.Areas.Ventas
                 return NotFound();
             }
 
-            var documentoRespaldo = await _context.DocumentoRespaldo.FindAsync(id);
+            var documentoRespaldo = await _context.Ventas_DocumentoRespaldo.FindAsync(id);
             if (documentoRespaldo == null)
             {
                 return NotFound();
@@ -125,7 +125,7 @@ namespace MumanalPG.Areas.Ventas
                 return NotFound();
             }
 
-            var documentoRespaldo = await _context.DocumentoRespaldo
+            var documentoRespaldo = await _context.Ventas_DocumentoRespaldo
                 .FirstOrDefaultAsync(m => m.IdDocumentoRespaldo == id);
             if (documentoRespaldo == null)
             {
@@ -140,15 +140,15 @@ namespace MumanalPG.Areas.Ventas
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var documentoRespaldo = await _context.DocumentoRespaldo.FindAsync(id);
-            _context.DocumentoRespaldo.Remove(documentoRespaldo);
+            var documentoRespaldo = await _context.Ventas_DocumentoRespaldo.FindAsync(id);
+            _context.Ventas_DocumentoRespaldo.Remove(documentoRespaldo);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool DocumentoRespaldoExists(int id)
         {
-            return _context.DocumentoRespaldo.Any(e => e.IdDocumentoRespaldo == id);
+            return _context.Ventas_DocumentoRespaldo.Any(e => e.IdDocumentoRespaldo == id);
         }
     }
 }

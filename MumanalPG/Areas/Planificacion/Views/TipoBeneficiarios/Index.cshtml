@@ -1,4 +1,4 @@
-@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Planificacion.TipoBeneficiario>
+@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.RRHHParam.TipoBeneficiario>
 @using ReflectionIT.Mvc.Paging
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @{
@@ -22,8 +22,7 @@
                 <button type="submit" class="btn btn-secondary input-group-append">
                     <span class="fas fa-search" aria-hidden="true"></span>
                 </button>
-            </div>
-            
+            </div>            
         </form>
     </div>
 </div>
@@ -42,7 +41,7 @@
         {
             <tr>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.Id" title="Detalle" 
+                    <a asp-action="Details" asp-route-id="@item.IdTipoBeneficiario" title="Detalle" 
                        data-modal="link" data-modal-read="True">
                         @Html.DisplayFor(modelItem => item.Denominacion)
                     </a>
@@ -50,7 +49,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Activo)
                 </td>
-                <partial name="_TableOptionsPartial" model="item.Id"/>
+                <partial name="_TableOptionsPartial" model="item.IdTipoBeneficiario"/>
             </tr>
         }
     </table>

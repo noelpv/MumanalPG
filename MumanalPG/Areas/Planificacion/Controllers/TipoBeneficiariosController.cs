@@ -1,25 +1,21 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using MumanalPG.Data;
-using MumanalPG.Models.Planificacion;
 using MumanalPG.Utility;
 using ReflectionIT.Mvc.Paging;
 using SmartBreadcrumbs;
 
 namespace MumanalPG.Areas.Planificacion.Controllers
 {
-    [Authorize(Roles = SD.SuperAdminEndUser)]
+    //[Authorize(Roles = SD.SuperAdminEndUser)]
     [Area("Planificacion")]
     public class TipoBeneficiariosController : BaseController
-    {
-        
+    {        
 		public TipoBeneficiariosController(ApplicationDbContext db): base(db)
         {
         }
@@ -27,31 +23,27 @@ namespace MumanalPG.Areas.Planificacion.Controllers
 		// GET: Planificacion/TipoBeneficiarios
         [Breadcrumb("Tipos de Beneficiario")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Denominacion")
-        {
- 
-            var consulta = DB.TipoBeneficiario.AsNoTracking()
-                .AsQueryable();
+        { 
+            var consulta = DB.RRHHParam_TipoBeneficiario.AsNoTracking().AsQueryable();
             
-            if (!string.IsNullOrWhiteSpace(filter)) {
+            if (!string.IsNullOrWhiteSpace(filter))
+			{
                 consulta = consulta.Where(m => EF.Functions.ILike(m.Denominacion, $"%{filter}%"));
             }
             var modelo = await PagingList.CreateAsync(consulta, Constantes.TamanoPaginacion, page, sortExpression,"Denominacion");
-            modelo.RouteValue = new RouteValueDictionary {
-                { "filter", filter}
-            };
+            modelo.RouteValue = new RouteValueDictionary {{ "filter", filter}};
             return View(modelo);
         }
 
         // GET: Planificacion/TipoBeneficiarios/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Int16? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var tipoBeneficiario = await DB.TipoBeneficiario
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var tipoBeneficiario = await DB.RRHHParam_TipoBeneficiario.FirstOrDefaultAsync(m => m.IdTipoBeneficiario == id);
             if (tipoBeneficiario == null)
             {
                 return NotFound();
@@ -63,7 +55,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
         // GET: Planificacion/TipoBeneficiarios/Create
         public IActionResult Create()
         {
-            var model = new TipoBeneficiario();
+            var model = new Models.RRHHParam.TipoBeneficiario();
             return PartialView("_Create", model);
         }
 
@@ -72,7 +64,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(TipoBeneficiario tipoBeneficiario)
+        public async Task<IActionResult> Create(Models.RRHHParam.TipoBeneficiario tipoBeneficiario)
         {
             if (ModelState.IsValid)
             {
@@ -84,14 +76,14 @@ namespace MumanalPG.Areas.Planificacion.Controllers
         }
 
         // GET: Planificacion/TipoBeneficiarios/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(Int16? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var tipoBeneficiario = await DB.TipoBeneficiario.FindAsync(id);
+            var tipoBeneficiario = await DB.RRHHParam_TipoBeneficiario.FindAsync(id);
             if (tipoBeneficiario == null)
             {
                 return NotFound();
@@ -104,9 +96,9 @@ namespace MumanalPG.Areas.Planificacion.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Denominacion,Activo")] TipoBeneficiario tipoBeneficiario)
+        public async Task<IActionResult> Edit(Int16 id, [Bind("IdTipoBeneficiario,Denominacion,Activo")] Models.RRHHParam.TipoBeneficiario tipoBeneficiario)
         {
-            if (id != tipoBeneficiario.Id)
+            if (id != tipoBeneficiario.IdTipoBeneficiario)
             {
                 return NotFound();
             }
@@ -120,7 +112,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TipoBeneficiarioExists(tipoBeneficiario.Id))
+                    if (!TipoBeneficiarioExists(tipoBeneficiario.IdTipoBeneficiario))
                     {
                         return NotFound();
                     }
@@ -135,15 +127,14 @@ namespace MumanalPG.Areas.Planificacion.Controllers
         }
 
         // GET: Planificacion/TipoBeneficiarios/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Int16? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var tipoBeneficiario = await DB.TipoBeneficiario
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var tipoBeneficiario = await DB.RRHHParam_TipoBeneficiario.FirstOrDefaultAsync(m => m.IdTipoBeneficiario == id);
             if (tipoBeneficiario == null)
             {
                 return NotFound();
@@ -155,18 +146,18 @@ namespace MumanalPG.Areas.Planificacion.Controllers
         // POST: Planificacion/TipoBeneficiarios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Int16 id)
         {
-            var tipoBeneficiario = await DB.TipoBeneficiario.FindAsync(id);
-            DB.TipoBeneficiario.Remove(tipoBeneficiario);
+            var tipoBeneficiario = await DB.RRHHParam_TipoBeneficiario.FindAsync(id);
+            DB.RRHHParam_TipoBeneficiario.Remove(tipoBeneficiario);
             await DB.SaveChangesAsync();
             SetFlashSuccess("Registro eliminado satisfactoriamente");
             return PartialView("_Delete",tipoBeneficiario);
         }
 
-        private bool TipoBeneficiarioExists(int id)
+        private bool TipoBeneficiarioExists(Int16 id)
         {
-            return DB.TipoBeneficiario.Any(e => e.Id == id);
+            return DB.RRHHParam_TipoBeneficiario.Any(e => e.IdTipoBeneficiario == id);
         }
     }
 }

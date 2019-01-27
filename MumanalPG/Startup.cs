@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ReflectionIT.Mvc.Paging;
 using SmartBreadcrumbs;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 namespace MumanalPG
 {
@@ -35,8 +36,11 @@ namespace MumanalPG
 			{
 				// This lambda determines whether user consent for non-essential cookies is needed for a given request.
 				options.CheckConsentNeeded = context => true;
-				options.MinimumSameSitePolicy = SameSiteMode.None;
+				options.MinimumSameSitePolicy = SameSiteMode.Lax;
 			});
+
+			//services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 
 			services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
             services.AddIdentity<IdentityUser,IdentityRole>()
@@ -71,10 +75,10 @@ namespace MumanalPG
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
+                //app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
@@ -82,12 +86,19 @@ namespace MumanalPG
 			dbInitializer.Initialize();
 	        app.UseAuthentication();
             app.UseSession();
+
+			//app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
+			//{
+			//	AuthenticationScheme = "oidc",
+			//	SignInScheme = "Cookies"
+			//	// other options omitted...
+			//});
+
 			app.UseMvc(routes => { routes.MapRoute(name: "areas", template: "{area=Customer}/{controller=Home}/{action=Index}/{id?}"); });
 			app.UseMvc(routes => { routes.MapRoute(name: "areas", template: "{area=Administra}/{controller=Home}/{action=Index}/{id?}"); });
 			app.UseMvc(routes => { routes.MapRoute(name: "areas", template: "{area=AdministraParam}/{controller=Home}/{action=Index}/{id?}"); });
 
 			app.UseStaticFiles();
-
 		}
 	}
 }

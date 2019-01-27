@@ -1,6 +1,6 @@
-@model MumanalPG.Models.Planificacion.TipoBeneficiario
+@model MumanalPG.Models.RRHHParam.TipoBeneficiario
 <partial name="_MensajeEliminar"/>
 <form asp-action="Delete">
     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
-    <input type="hidden" asp-for="Id"/>
+    <input type="hidden" asp-for="IdTipoBeneficiario"/>
 </form>

@@ -4,14 +4,18 @@
     ViewData["Title"] = "Prestaciones / ASR / Contratacion / Requisitos";
 }
 
+
 <div class="row">
     <div class="col-6">
-        <h2 class="text-info">Lista de Requisitos</h2>
+        <h2 class="text-info">dsfgdsfgsdfgcera</h2>
+        <h3 "ViewBag.DatosCabecera"</h3>
     </div>
-    <div class="col-6 text-right">
-        <a asp-action="Create" asp-route-id="@TempData["IdContratacion"]" class="btn btn-info">&nbsp; Nuevo Requisito</a>
-    </div>
+    @*<div class="col-6 text-right">
+            <a asp-action="Create" asp-route-id="@TempData["IdContratacion"]" class="btn btn-info">&nbsp; Nuevo Requisito</a>
+        </div>*@
 </div>
+
+
 
 <table class="table">
     <thead>
@@ -20,13 +24,13 @@
                 Documento
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DocumentoEntregado)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.PathArchivo)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ArchivoCargado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Aprobado)
             </th>
             <th></th>
         </tr>
@@ -39,19 +43,22 @@
                     @Html.DisplayFor(modelItem => item.Descripcion)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DocumentoEntregado)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.PathArchivo)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ArchivoCargado)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.IdVentaRequisito">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.IdVentaRequisito">Detalle</a> |
-                    <a asp-action="Delete" asp-route-id="@item.IdVentaRequisito">Eliminar</a> |
-                    <a asp-action="VerPDF" asp-route-id="@item.IdVentaRequisito">Ver Doc.</a>
+                    @Html.DisplayFor(modelItem => item.Aprobado)
+                </td>
+                <td>
+                    @*<a asp-action="Edit" asp-route-id="@item.IdVentaRequisito">Editar</a> |*@
+                    @*<a asp-action="Details" asp-route-id="@item.IdVentaRequisito">Detalle</a> |*@
+                    @*<a asp-action="Delete" asp-route-id="@item.IdVentaRequisito">Eliminar</a> |*@
+                    <a class="btn btn-info" asp-action="CargaArchivo" asp-route-id="@item.IdVentaRequisito">Cargar</a>
+                    <a class="btn btn-info" asp-action="Escanear" asp-route-id="@item.IdVentaRequisito">Scan</a>
+                    <a class="btn btn-info" asp-action="VerPDF" asp-route-id="@item.IdVentaRequisito">Ver</a>
+                    <a class="btn btn-success" asp-action="Aprobar" asp-route-id="@item.IdVentaRequisito">Aprobar</a>
                 </td>
             </tr>
         }

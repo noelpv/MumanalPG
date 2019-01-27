@@ -9,34 +9,34 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=7;IE=8;IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="img/favicon.png">
-    <title>@ViewData["Title"] - MumanalPG</title>
+    <title>@ViewData["Title"] - Mumanal</title>
 
     @if (SignInManager.IsSignedIn(User))
     {
         <environment include="Development">
-            <link rel="stylesheet" href="~/lib/theme-elegant/css/morris.css"/>
-            <link rel="stylesheet" href="~/lib/theme-elegant/css/jquery.toast.css"/>
-            <link rel="stylesheet" href="~/lib/theme-elegant/css/c3.min.css"/>
-            <link rel="stylesheet" href="~/lib/theme-elegant/css/style.css"/>
-            <link rel="stylesheet" href="~/lib/theme-elegant/css/sweetalert.css"/>
-            <link rel="stylesheet" href="~/lib/theme-elegant/css/floating-label.css"/>
-            <link rel="stylesheet" href="~/lib/theme-elegant/css/bootstrap-switch.min.css"/>
-            
+            <link rel="stylesheet" href="~/lib/theme-elegant/css/morris.css" />
+            <link rel="stylesheet" href="~/lib/theme-elegant/css/jquery.toast.css" />
+            <link rel="stylesheet" href="~/lib/theme-elegant/css/c3.min.css" />
+            <link rel="stylesheet" href="~/lib/theme-elegant/css/style.css" />
+            <link rel="stylesheet" href="~/lib/theme-elegant/css/sweetalert.css" />
+            <link rel="stylesheet" href="~/lib/theme-elegant/css/floating-label.css" />
+            <link rel="stylesheet" href="~/lib/theme-elegant/css/bootstrap-switch.min.css" />
+
         </environment>
     }
     else
     {
         <environment include="Development">
-            <link rel="stylesheet" href="~/lib/theme-elegant/css/login-register-lock.css"/>
-            <link rel="stylesheet" href="~/lib/theme-elegant/css/style.css"/>
-            <link rel="stylesheet" href="~/lib/theme-elegant/css/sweetalert.css"/>
+            <link rel="stylesheet" href="~/lib/theme-elegant/css/login-register-lock.css" />
+            <link rel="stylesheet" href="~/lib/theme-elegant/css/style.css" />
+            <link rel="stylesheet" href="~/lib/theme-elegant/css/sweetalert.css" />
         </environment>
     }
 
@@ -129,6 +129,8 @@
         <!-- footer -->
         <!-- ============================================================== -->
         <footer class="footer">
+            <script src="~/lib/theme-elegant/js/bootstrap.min.js"></script>
+
             © @DateTime.Now.Year - Sistema Integrado Mumanal SI.VER 2.0
         </footer>
         <!-- ============================================================== -->
@@ -147,22 +149,21 @@
 
 <environment include="Development">
     <script src="~/lib/theme-elegant/js/jquery-3.2.1.min.js"></script>
+    <script src="~/lib/theme-elegant/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="~/lib/theme-elegant/js/jquery.toast.js"></script>
+    <script src="~/lib/theme-elegant/js/jquery.sparkline.min.js"></script>
     <script src="~/lib/theme-elegant/js/popper.min.js"></script>
     <script src="~/lib/theme-elegant/js/bootstrap.min.js"></script>
-    <script src="~/lib/theme-elegant/js/perfect-scrollbar.jquery.min.js"></script>
     <script src="~/lib/theme-elegant/js/waves.js"></script>
     <script src="~/lib/theme-elegant/js/sidebarmenu.js"></script>
     <script src="~/lib/theme-elegant/js/custom.min.js"></script>
     <script src="~/lib/theme-elegant/js/raphael-min.js"></script>
     <script src="~/lib/theme-elegant/js/morris.min.js"></script>
-    <script src="~/lib/theme-elegant/js/jquery.sparkline.min.js"></script>
     <script src="~/lib/theme-elegant/js/d3.min.js"></script>
     <script src="~/lib/theme-elegant/js/c3.min.js"></script>
-    <script src="~/lib/theme-elegant/js/jquery.toast.js"></script>
     <script src="~/lib/theme-elegant/js/sweetalert.min.js"></script>
     <script src="~/lib/theme-elegant/js/bootstrap-switch.min.js"></script>
     <script src="~/lib/theme-elegant/js/site.js"></script>
-
 </environment>
 
 @RenderSection("Scripts", required: false)
@@ -170,8 +171,7 @@
     $(function() {
         var type = '@TempData["FlashMsgType"]';
         var message = '@TempData["FlashMsg"]';
-        $.toastMsg(type, message);
-        
+        $.toastMsg(type, message);        
     });
 </script>
 </body>

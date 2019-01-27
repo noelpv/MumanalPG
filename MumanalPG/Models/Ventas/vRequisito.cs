@@ -11,8 +11,8 @@ namespace MumanalPG.Models.Ventas
 		public Int32 IdVentaRequisito { get; set; }
 		public Int32 IdVentaContratacion { get; set; }
 		public string Descripcion { get; set; }
-		public Boolean DocumentoEntregado { get; set; }
 		public string PathArchivo { get; set; }
 		public Boolean ArchivoCargado { get; set; }
+		public Boolean Aprobado { get; set; }
 	}
 }

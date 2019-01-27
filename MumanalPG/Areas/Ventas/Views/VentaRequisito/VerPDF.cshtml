@@ -4,9 +4,13 @@
     ViewData["Title"] = "Ver Documento";
 }
 
+<input type="hidden" asp-for="IdVentaContratacion" />
+
 <div>
-    <a asp-action="Index" asp-route-id="@ViewBag.id" >Regreso a lista de Requisitos</a>
+    <a asp-action="Index" asp-route-id="@ViewBag.idContratacion">Regreso a lista de Requisitos</a>
+    @*<a asp-action="Index" asp-route-id="IdVentaContratacion">Regreso a lista de Requisitos</a>*@
 </div>
+<br />
 
 <img src="@ViewData["ArchivoPDF2"]" />
 

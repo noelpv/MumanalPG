@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewData["Title"] = "Escanear";
+}
+
+<head>
+    <title>Hello World</title>
+    <script type="text/javascript" src="Resources/dynamsoft.webtwain.initiate.js"></script>
+    <script type="text/javascript" src="Resources/dynamsoft.webtwain.config.js"></script>
+</head>
+<h2>View</h2>
+
+<div id="dwtcontrolContainer"></div>
+<input type="button" value="Scan" onclick="AcquireImage();" />
+<script type="text/javascript">
+    function AcquireImage() {
+        var DWObject = Dynamsoft.WebTwainEnv.GetWebTwain('dwtcontrolContainer');
+        if (DWObject) {
+            DWObject.SelectSource(function () {
+                var OnAcquireImageSuccess = OnAcquireImageFailure = function () {
+                    DWObject.CloseSource();
+                };
+                DWObject.OpenSource();
+                DWObject.IfDisableSourceAfterAcquire = true;
+                DWObject.AcquireImage(OnAcquireImageSuccess, OnAcquireImageFailure);
+            }, function () {
+                console.log('SelectSource failed!');
+            });
+        }
+    }
+</script>
+@*https://www.codepool.biz/web-document-scanning-dotnet-core.html*@

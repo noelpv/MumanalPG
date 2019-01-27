@@ -30,20 +30,20 @@ namespace MumanalPG.Data
         public DbSet<MumanalPG.Models.FinanzasParam.Partida> Partida { get; set; }
 
         public DbSet<MumanalPG.Models.AdministraParam.Grupo> Grupo { get; set; }
-		       
-        public DbSet<MumanalPG.Models.Planificacion.TipoBeneficiario> TipoBeneficiario { get; set; }
-		       
         public DbSet<MumanalPG.Models.AdministraParam.SubGrupo> SubGrupo { get; set; }
-		       
-        public DbSet<MumanalPG.Models.Ventas.TablaPDF> TablaPDF { get; set; }
+	       
 
 		public DbSet<MumanalPG.Models.RRHH.Beneficiario> RRHH_Beneficiario { get; set; }
 		public DbSet<MumanalPG.Models.RRHH.UnidadEjecutora> RRHH_UnidadEjecutora { get; set; }
-		public DbSet<MumanalPG.Models.Ventas.DocumentoRespaldo> DocumentoRespaldo { get; set; }
-		public DbSet<MumanalPG.Models.Ventas.vContratacion> vContratacion { get; set; }
-		public DbSet<MumanalPG.Models.Ventas.vRequisito> vRequisito { get; set; }
-        public DbSet<MumanalPG.Models.Ventas.VentaContratacion> VentaContratacion { get; set; }
-		public DbSet<MumanalPG.Models.Ventas.VentaRequisito> VentaRequisito { get; set; }
-     
-    }
+		public DbSet<MumanalPG.Models.RRHHParam.TipoBeneficiario> RRHHParam_TipoBeneficiario { get; set; }
+		public DbSet<MumanalPG.Models.Ventas.DocumentoRespaldo> Ventas_DocumentoRespaldo { get; set; }
+		public DbSet<MumanalPG.Models.Ventas.vContratacion> Ventas_vContratacion { get; set; }
+		public DbSet<MumanalPG.Models.Ventas.vRequisito> Ventas_vRequisito { get; set; }
+        public DbSet<MumanalPG.Models.Ventas.VentaContratacion> Ventas_VentaContratacion { get; set; }
+		public DbSet<MumanalPG.Models.Ventas.VentaRequisito> Ventas_VentaRequisito { get; set; }
+
+		public DbSet<MumanalPG.Models.Ventas.pVerificaLimite> Ventas_pVerificaLimite { get; set; }
+
+		public DbSet<MumanalPG.Models.Ventas.TablaPDF> TablaPDF { get; set; }
+	}
 }

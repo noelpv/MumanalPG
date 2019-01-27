@@ -11,18 +11,18 @@ using MumanalPG.Models.Ventas;
 namespace MumanalPG.Areas.Ventas
 {
     [Area("Ventas")]
-    public class VentaContratacionController : Controller
+    public class VentaContratacionController : BaseController
     {
-        private readonly ApplicationDbContext _context;
+        //private readonly ApplicationDbContext _context;
 
-        public VentaContratacionController(ApplicationDbContext context)
+        public VentaContratacionController(ApplicationDbContext db) : base(db)
         {
-            _context = context;
+            //_context = context;
         }
 
         public async Task<IActionResult> Index()
         {
-			return View(await _context.vContratacion.ToListAsync());
+			return View(await DB.Ventas_vContratacion.ToListAsync());
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -32,8 +32,7 @@ namespace MumanalPG.Areas.Ventas
                 return NotFound();
             }
 
-            var ventaContratacion = await _context.VentaContratacion
-                .FirstOrDefaultAsync(m => m.IdVentaContratacion == id);
+            var ventaContratacion = await DB.Ventas_VentaContratacion.FirstOrDefaultAsync(m => m.IdVentaContratacion == id);
             if (ventaContratacion == null)
             {
                 return NotFound();
@@ -45,11 +44,12 @@ namespace MumanalPG.Areas.Ventas
 		//----------------------------------------------------------
         public IActionResult Create()
         {
-			var items = new List<SelectListItem>();
 
-			items = _context.RRHH_Beneficiario.
+			// BENEFICIARIOS -----------------------------------------
+			var items = new List<SelectListItem>();
+			items = DB.RRHH_Beneficiario.
 				   Where(f => f.DepartamentoSigla == "LPZ").
-				   //OrderBy(x => new {x.Denominacion}).
+				   OrderBy(x => x.Denominacion).
 				   Select(c => new SelectListItem()
 							{
 								Text = c.Denominacion,
@@ -58,9 +58,23 @@ namespace MumanalPG.Areas.Ventas
 				   ToList();
 			ViewBag.Beneficiarios = items;
 
+			// GARANTES -----------------------------------------
+			var items3 = new List<SelectListItem>();
+			items3 = DB.RRHH_Beneficiario.
+				   Where(f => f.DepartamentoSigla == "LPZ").
+				   OrderBy(x => x.Denominacion).
+				   Select(c => new SelectListItem()
+				   {
+					   Text = c.Denominacion,
+					   Value = c.IdBeneficiario.ToString()
+				   }).
+				   ToList();
+			ViewBag.Garantes = items3;
+
+			// UNIDAD EJECUTORA ------------------------------------------
 			var items2 = new List<SelectListItem>();
 
-			items2 = _context.RRHH_UnidadEjecutora.
+			items2 = DB.RRHH_UnidadEjecutora.
 				   Select(c => new SelectListItem()
 				   {
 					   Text = c.Descripcion,
@@ -72,18 +86,32 @@ namespace MumanalPG.Areas.Ventas
 			return View();
         }
 
-        [HttpPost]
+		public Boolean ValidaAntesGrabar()
+		{
+			Int16 IdUnidadEjecutora = 22;
+			var VerificaLimite = DB.Ventas_pVerificaLimite.FromSql($"SELECT * FROM \"Ventas\".\"pVerificaLimite\"({IdUnidadEjecutora})").ToList();
+			Int16 CantidadLimite = VerificaLimite.First().CantidadLimite;
+			if (4 > CantidadLimite)
+			{
+				return false;
+			}
+			else
+				return true;
+		}
+
+		[HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdVentaContratacion,IdVentaSolicitud,IdProcesoNivel2,Gestion,IdUnidadEjecutora,CorrelativoUnidad,IdDepartamento,FechaVenta,IdBeneficiario,IdBeneficiarioGarante,IdBeneficiarioResponsable,IdVentaTarifario,Concepto,Observaciones,CiteTramite,IdAsrSiver,MesNumero,FechaInicio,FechaFinal,CantidadTotal,TotalBs,TotalDolares,IdTipoMoneda,TipoCambio,TotalPrevisionBs,Literal,PlazoMeses,MesInicioCronograma,IdPoa,IdProceso,IdDocumentoRespaldo,NumeroDocumento,ArchivoRespaldo,ArchivoRespaldoCargado,IdEstadoRegistro,IdUsuario,IdUsuarioAprueba,FechaRegistro,FechaAprueba")] VentaContratacion ventaContratacion, string Beneficiarios, string UnidadesEjecutoras)
+        public async Task<IActionResult> Create([Bind("IdVentaContratacion,IdVentaSolicitud,IdProcesoNivel2,Gestion,IdUnidadEjecutora,CorrelativoUnidad,IdDepartamento,FechaVenta,IdBeneficiario,IdBeneficiarioGarante,IdBeneficiarioResponsable,IdVentaTarifario,Concepto,Observaciones,CiteTramite,IdAsrSiver,MesNumero,FechaInicio,FechaFinal,CantidadTotal,TotalBs,TotalDolares,IdTipoMoneda,TipoCambio,TotalPrevisionBs,Literal,PlazoMeses,MesInicioCronograma,IdPoa,IdProceso,IdDocumentoRespaldo,NumeroDocumento,ArchivoRespaldo,ArchivoRespaldoCargado,IdEstadoRegistro,IdUsuario,IdUsuarioAprueba,FechaRegistro,FechaAprueba")] VentaContratacion ventaContratacion, string Beneficiarios, string Garantes, string UnidadesEjecutoras)
         {
-            if (ModelState.IsValid)
-            {
+			if (ModelState.IsValid)
+			{
 				ventaContratacion.IdUnidadEjecutora = Convert.ToInt32(UnidadesEjecutoras);
 				ventaContratacion.IdVentaSolicitud = 0;
 				ventaContratacion.IdProcesoNivel2 = 0;
 				ventaContratacion.Gestion = DateTime.Now.Year.ToString();
 				ventaContratacion.IdDepartamento = 2;
 				ventaContratacion.IdBeneficiario = Convert.ToInt32(Beneficiarios);
+				ventaContratacion.IdBeneficiarioGarante = Convert.ToInt32(Garantes);
 				ventaContratacion.IdBeneficiarioResponsable = 0;
 				ventaContratacion.IdVentaTarifario = 0;
 				ventaContratacion.Concepto = "Solicitud de Reposición de Ayuda Social reversible";
@@ -98,12 +126,13 @@ namespace MumanalPG.Areas.Ventas
 				ventaContratacion.TipoCambio = 0;
 				ventaContratacion.TotalPrevisionBs = 0;
 				ventaContratacion.IdUsuario = 1;
-				ventaContratacion.FechaRegistro= DateTime.Now.Date;
+				ventaContratacion.FechaRegistro = DateTime.Now.Date;
 
-				_context.Add(ventaContratacion);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+				DB.Add(ventaContratacion);
+				await DB.SaveChangesAsync();
+				return RedirectToAction(nameof(Index));				
+			}
+		
             return View(ventaContratacion);
         }
 
@@ -115,7 +144,7 @@ namespace MumanalPG.Areas.Ventas
                 return NotFound();
             }
 
-            var ventaContratacion = await _context.VentaContratacion.FindAsync(id);
+            var ventaContratacion = await DB.Ventas_VentaContratacion.FindAsync(id);
             if (ventaContratacion == null)
             {
                 return NotFound();
@@ -136,8 +165,8 @@ namespace MumanalPG.Areas.Ventas
             {
                 try
                 {
-                    _context.Update(ventaContratacion);
-                    await _context.SaveChangesAsync();
+                    DB.Update(ventaContratacion);
+                    await DB.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -163,7 +192,7 @@ namespace MumanalPG.Areas.Ventas
                 return NotFound();
             }
 
-            var ventaContratacion = await _context.VentaContratacion
+            var ventaContratacion = await DB.Ventas_VentaContratacion
                 .FirstOrDefaultAsync(m => m.IdVentaContratacion == id);
             if (ventaContratacion == null)
             {
@@ -177,9 +206,9 @@ namespace MumanalPG.Areas.Ventas
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var ventaContratacion = await _context.VentaContratacion.FindAsync(id);
-            _context.VentaContratacion.Remove(ventaContratacion);
-            await _context.SaveChangesAsync();
+            var ventaContratacion = await DB.Ventas_VentaContratacion.FindAsync(id);
+            DB.Ventas_VentaContratacion.Remove(ventaContratacion);
+            await DB.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 		
@@ -191,17 +220,23 @@ namespace MumanalPG.Areas.Ventas
 				return NotFound();
 			}
 
-			TempData["IdContratacion"] = id;
-			return RedirectToAction("Index", "VentaRequisito", new { Id = id });
+			await DB.Database.ExecuteSqlCommandAsync($"CALL \"Ventas\".\"pGeneraRequisitos\"({id})");
 
-			//MumanalPG.Areas.Ventas.VentaRequisitoController.
-			//return View("NameOfView", Model);
-			//return View(ventaContratacion);
+			var ventaContratacion = await DB.Ventas_vContratacion.FirstOrDefaultAsync(m => m.IdVentaContratacion == id);
+			if (ventaContratacion == null)
+			{
+				return NotFound();
+			}
+
+			ViewBag.DatosCabecera = "Lista de Requisitos ASR Nro: " + ventaContratacion.IdAsrSiver + " / " +  ventaContratacion.Beneficiario;
+
+			TempData["IdContratacion"] = id;
+			return RedirectToAction( "Index", "VentaRequisito", new { Id = id });
 		}
 
 		private bool VentaContratacionExists(int id)
         {
-            return _context.VentaContratacion.Any(e => e.IdVentaContratacion == id);
+            return DB.Ventas_VentaContratacion.Any(e => e.IdVentaContratacion == id);
         }
     }
 }

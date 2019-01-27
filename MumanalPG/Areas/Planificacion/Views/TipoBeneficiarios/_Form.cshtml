@@ -1,4 +1,4 @@
-@model MumanalPG.Models.Planificacion.TipoBeneficiario
+@model MumanalPG.Models.RRHHParam.TipoBeneficiario
 <form asp-action="@ViewData["Action"]">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     @{
@@ -6,7 +6,7 @@
        if (ViewData.ModelState.IsValid){hasError = "";}
     }
     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
-    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="IdTipoBeneficiario" />
     <div class="form-group m-b-40 @hasError">     
         <label asp-for="Denominacion" class="form-control-label"></label>
         <input asp-for="Denominacion"  class="form-control"  />

@@ -1,6 +1,5 @@
-﻿
--- DROP VIEW "Ventas"."vContratacion";
-/*
+DROP VIEW "Ventas"."vContratacion";
+
 CREATE OR REPLACE VIEW "Ventas"."vContratacion" AS
 SELECT a."IdVentaContratacion",
     a."Gestion",
@@ -16,12 +15,6 @@ JOIN "RRHH"."Beneficiario" c ON a."IdBeneficiarioGarante" = c."IdBeneficiario"
 JOIN "RRHH"."UnidadEjecutora" u ON a."IdUnidadEjecutora" = u."IdUnidadEjecutora";
 
 ALTER TABLE "Ventas"."vContratacion" OWNER TO postgres;
-------------------------------------------
 
-CREATE OR REPLACE VIEW "Ventas"."vRequisito" AS
-select "IdVentaRequisito", "IdVentaContratacion", "Descripcion", "DocumentoEntregado", "PathArchivo", "ArchivoCargado"
-from "Ventas"."VentaRequisito" R
-inner join "Ventas"."DocumentoRespaldo" L on R."IdDocumentoRespaldo" = L."IdDocumentoRespaldo";
-
-ALTER TABLE "Ventas"."vRequisito" OWNER TO postgres;
-*/
+select * from "Ventas"."vContratacion";
+select * from "Ventas"."VentaContratacion";
