@@ -7,6 +7,6 @@ namespace MumanalPG.Models.Ventas
 	{
 		public Decimal MontoLimite { get; set; }
 		[Key]
-		public Int16	CantidadLimite { get; set; }
+		public Int16   CantidadLimite { get; set; }
 	}
 }

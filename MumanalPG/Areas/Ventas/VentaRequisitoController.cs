@@ -31,7 +31,7 @@ namespace MumanalPG.Areas.Ventas
 			//Id = Convert.ToInt32(TempData["IdContratacion"]);
 			return View(await DB.Ventas_vRequisito.Where(f => f.IdVentaContratacion == Id).ToListAsync());
         }
-				
+		
 		public async Task<IActionResult> Details(int? id) // GET: Ventas/VentaRequisito/Details/5
         {
             if (id == null)

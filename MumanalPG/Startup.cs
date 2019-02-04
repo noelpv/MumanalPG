@@ -1,4 +1,6 @@
-﻿using System;
+﻿//dotnet publish --configuration Release
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -97,6 +99,7 @@ namespace MumanalPG
 			app.UseMvc(routes => { routes.MapRoute(name: "areas", template: "{area=Customer}/{controller=Home}/{action=Index}/{id?}"); });
 			app.UseMvc(routes => { routes.MapRoute(name: "areas", template: "{area=Administra}/{controller=Home}/{action=Index}/{id?}"); });
 			app.UseMvc(routes => { routes.MapRoute(name: "areas", template: "{area=AdministraParam}/{controller=Home}/{action=Index}/{id?}"); });
+			//app.UseMvc(routes => { routes.MapRoute(name: "areas", template: "{area=Ventas}/{controller=VentaContratacion}/{action=BuscaPersona}/{id?}"); });
 
 			app.UseStaticFiles();
 		}

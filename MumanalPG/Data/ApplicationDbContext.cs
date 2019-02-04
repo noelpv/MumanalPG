@@ -38,6 +38,7 @@ namespace MumanalPG.Data
 		public DbSet<MumanalPG.Models.RRHHParam.TipoBeneficiario> RRHHParam_TipoBeneficiario { get; set; }
 		public DbSet<MumanalPG.Models.Ventas.DocumentoRespaldo> Ventas_DocumentoRespaldo { get; set; }
 		public DbSet<MumanalPG.Models.Ventas.vContratacion> Ventas_vContratacion { get; set; }
+		public DbSet<MumanalPG.Models.Ventas.vPersona> Ventas_vPersona { get; set; }
 		public DbSet<MumanalPG.Models.Ventas.vRequisito> Ventas_vRequisito { get; set; }
         public DbSet<MumanalPG.Models.Ventas.VentaContratacion> Ventas_VentaContratacion { get; set; }
 		public DbSet<MumanalPG.Models.Ventas.VentaRequisito> Ventas_VentaRequisito { get; set; }

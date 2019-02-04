@@ -19,25 +19,20 @@
     <title>@ViewData["Title"] - Mumanal</title>
 
     @if (SignInManager.IsSignedIn(User))
-    {
-        <environment include="Development">
-            <link rel="stylesheet" href="~/lib/theme-elegant/css/morris.css" />
-            <link rel="stylesheet" href="~/lib/theme-elegant/css/jquery.toast.css" />
-            <link rel="stylesheet" href="~/lib/theme-elegant/css/c3.min.css" />
-            <link rel="stylesheet" href="~/lib/theme-elegant/css/style.css" />
-            <link rel="stylesheet" href="~/lib/theme-elegant/css/sweetalert.css" />
-            <link rel="stylesheet" href="~/lib/theme-elegant/css/floating-label.css" />
-            <link rel="stylesheet" href="~/lib/theme-elegant/css/bootstrap-switch.min.css" />
-
-        </environment>
+    {        
+        <link rel="stylesheet" href="~/lib/theme-elegant/css/morris.css" />
+        <link rel="stylesheet" href="~/lib/theme-elegant/css/jquery.toast.css" />
+        <link rel="stylesheet" href="~/lib/theme-elegant/css/c3.min.css" />
+        <link rel="stylesheet" href="~/lib/theme-elegant/css/style.css" />
+        <link rel="stylesheet" href="~/lib/theme-elegant/css/sweetalert.css" />
+        <link rel="stylesheet" href="~/lib/theme-elegant/css/floating-label.css" />
+        <link rel="stylesheet" href="~/lib/theme-elegant/css/bootstrap-switch.min.css" />
     }
     else
     {
-        <environment include="Development">
-            <link rel="stylesheet" href="~/lib/theme-elegant/css/login-register-lock.css" />
-            <link rel="stylesheet" href="~/lib/theme-elegant/css/style.css" />
-            <link rel="stylesheet" href="~/lib/theme-elegant/css/sweetalert.css" />
-        </environment>
+        <link rel="stylesheet" href="~/lib/theme-elegant/css/login-register-lock.css" />
+        <link rel="stylesheet" href="~/lib/theme-elegant/css/style.css" />
+        <link rel="stylesheet" href="~/lib/theme-elegant/css/sweetalert.css" />
     }
 
 </head>
@@ -129,8 +124,7 @@
         <!-- footer -->
         <!-- ============================================================== -->
         <footer class="footer">
-            <script src="~/lib/theme-elegant/js/bootstrap.min.js"></script>
-
+          /
             © @DateTime.Now.Year - Sistema Integrado Mumanal SI.VER 2.0
         </footer>
         <!-- ============================================================== -->
@@ -147,11 +141,11 @@
 <!-- End Wrapper -->
 <!-- ============================================================== -->
 
-<environment include="Development">
+
     <script src="~/lib/theme-elegant/js/jquery-3.2.1.min.js"></script>
-    <script src="~/lib/theme-elegant/js/perfect-scrollbar.jquery.min.js"></script>
     <script src="~/lib/theme-elegant/js/jquery.toast.js"></script>
     <script src="~/lib/theme-elegant/js/jquery.sparkline.min.js"></script>
+    <script src="~/lib/theme-elegant/js/perfect-scrollbar.jquery.min.js"></script>
     <script src="~/lib/theme-elegant/js/popper.min.js"></script>
     <script src="~/lib/theme-elegant/js/bootstrap.min.js"></script>
     <script src="~/lib/theme-elegant/js/waves.js"></script>
@@ -164,7 +158,7 @@
     <script src="~/lib/theme-elegant/js/sweetalert.min.js"></script>
     <script src="~/lib/theme-elegant/js/bootstrap-switch.min.js"></script>
     <script src="~/lib/theme-elegant/js/site.js"></script>
-</environment>
+
 
 @RenderSection("Scripts", required: false)
 <script>

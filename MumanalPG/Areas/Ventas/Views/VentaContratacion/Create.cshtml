@@ -19,16 +19,22 @@
                         @Html.DropDownList("Beneficiarios", (IEnumerable<SelectListItem>)ViewBag.Beneficiarios, new { size = "1", style = "width: 300px" })
                         @*@Html.DropDownList("Beneficiarios")*@
                     </td>
+                    <td>
+                        <a class="btn btn-skype" asp-action="BuscaPersona" asp-route-id="111">Beneficiario</a>
+                        @*<a class="btn btn-success" asp-action="Edit" asp-route-id="11111">Beneficiario</a>*@
+                    </td>
                 </tr>
                 <tr>
                     <td>.</td>
                     <td>.</td>
+                    <td> </td>
                 </tr>
                 <tr>
                     <td><label asp-for="IdBeneficiarioGarante" class="control-label"></label></td>
                     <td>
                         @Html.DropDownList("Garantes", (IEnumerable<SelectListItem>)ViewBag.Garantes, new { size = "1", style = "width: 300px" })
                     </td>
+                    <td> </td>
                 </tr>
                 <tr>
                     <td><label asp-for="FechaVenta" class="control-label"></label></td>
@@ -36,6 +42,7 @@
                         <input asp-for="FechaVenta" class="form-control" type="date" />
                         <span asp-validation-for="FechaVenta" class="text-danger"></span>
                     </td>
+                    <td> </td>
                 </tr>
                 <tr>
                     <td>Regional</td>
@@ -43,6 +50,7 @@
                         @*@Html.DropDownList("UnidadesEjecutoras")*@
                         @Html.DropDownList("UnidadesEjecutoras", (IEnumerable<SelectListItem>)ViewBag.UnidadesEjecutoras, new { size = "1", style = "width: 300px" })
                     </td>
+                    <td> </td>
                 </tr>
                 <br>
                 <tr>
@@ -51,6 +59,7 @@
                         <input asp-for="CorrelativoUnidad" class="form-control" />
                         <span asp-validation-for="CorrelativoUnidad" class="text-danger"></span>
                     </td>
+                    <td> </td>
                 </tr>
                 <tr>
                     <td><label asp-for="IdAsrSiver" class="control-label"></label></td>
@@ -58,15 +67,9 @@
                         <input asp-for="IdAsrSiver" class="form-control" />
                         <span asp-validation-for="IdAsrSiver" class="text-danger"></span>
                     </td>
+                    <td> </td>
                 </tr>
             </table>
-
-            @*<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
-                <label asp-for="Name" class="control-label"></label>
-                <select asp-for="IdUnidadEjecutora"
-                        class="form-control"
-                        asp-items="@(new SelectList(@ViewBag.listaUnidadEjecutora,"IdUnidadEjecutora", "Descripcion"))"></select>
-            </div>*@
 
             <br>
             <div class="form-group">

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,10 +23,22 @@ namespace MumanalPG.Areas.Ventas
 
         public async Task<IActionResult> Index()
         {
-			return View(await DB.Ventas_vContratacion.ToListAsync());
+			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+			return View(await DB.Ventas_vContratacion.FromSql($"SELECT * FROM \"Ventas\".\"pContratacion\"({userId})").ToListAsync());
+
+			//SELECT * FROM "Ventas"."pContratacion"('0eb3655e-dc53-4950-9414-455d8d1329be');
+			//return View(await DB.Ventas_vContratacion.ToListAsync());
         }
 
-        public async Task<IActionResult> Details(int? id)
+		public async Task<IActionResult> BuscaPersona()
+		{
+			//var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+			//return RedirectToAction("BuscaPersona", "VentaContratacion", new { Id = 1 });
+			return View("BuscaPersona");
+		}
+		public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
