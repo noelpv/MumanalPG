@@ -19,9 +19,9 @@
             <th>
                 Numero ASR
             </th>
-            <th>
+            @*<th>
                 Num. Solicitud
-            </th>
+            </th>*@
             <th>
                 Regional o Agencia
             </th>
@@ -31,9 +31,9 @@
             <th>
                 Solicitante
             </th>
-            <th>
+            @*<th>
                 Garante
-            </th>
+            </th>*@
             <th>
                 Gestión
             </th>
@@ -47,9 +47,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IdAsrSiver)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.CorrelativoUnidad)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.UnidadEjecutora)
             </td>
@@ -59,17 +59,17 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Beneficiario)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Garante)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Gestion)
             </td>
             <td>
-                <a class="btn btn-success" asp-action="Edit" asp-route-id="@item.IdVentaContratacion">Editar</a>
+                <a class="btn btn-skype" asp-action="Requisitos" asp-route-id="@item.IdVentaContratacion">Requisitos</a>
+                <a class="btn btn-success" asp-action="Enviar" asp-route-id="@item.IdVentaContratacion">Enviar</a>
                 @*<a class="btn btn-info" asp-action="Details" asp-route-id="@item.IdVentaContratacion">Detalle</a>*@
                 @*<a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.IdVentaContratacion">Eliminar</a>*@
-                <a class="btn btn-skype" asp-action="Requisitos" asp-route-id="@item.IdVentaContratacion">Requisitos</a>
             </td>
         </tr>
         }

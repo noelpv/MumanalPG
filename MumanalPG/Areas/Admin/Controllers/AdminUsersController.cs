@@ -7,19 +7,31 @@ using MumanalPG.Models;
 using MumanalPG.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
+using MumanalPG.Models.Seguridad;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MumanalPG.Areas.Admin.Controllers
 {
-    [Authorize(Roles = SD.SuperAdminEndUser)]
+    [Authorize(Roles = SD.SuperAdminEndUser)]  // aqui se limita aun rol x
     [Area("Admin")]
-    public class AdminUsersController : Controller
+	public class AdminUsersController : Controller
     {
 
         private readonly ApplicationDbContext _db;
+		//UserManager<ApplicationUser> _userManager;
+		//RoleManager<IdentityRole> _roleManager;
+		//UsuarioRole _usuarioRole;
+		//public List<SelectListItem> usuarioRole;
 
-        public AdminUsersController(ApplicationDbContext db)
-        {
-            _db = db;
+		//public AdminUsersController(ApplicationDbContext db, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+		public AdminUsersController(ApplicationDbContext db)
+		{
+			_db = db;
+			//_userManager = userManager;
+			//_roleManager = roleManager;
+			//_usuarioRole = new UsuarioRole();
+			//usuarioRole = new List<SelectListItem>();
         }
 
         public IActionResult Index()
@@ -27,8 +39,22 @@ namespace MumanalPG.Areas.Admin.Controllers
             return View(_db.ApplicationUser.ToList());
         }
 
-        //Get Edit
-        public async Task<IActionResult> Edit(string id)
+		//public async Task<IActionResult> Index2()
+		//{
+		//	var ID = "";
+		//	List<Usuario> usuario = new List<Usuario>();
+		//	var appUsuario = _db.ApplicationUser.ToList();
+		//	foreach (var Data in appUsuario)
+		//	{
+		//		ID = Data.Id;
+		//		usuarioRole = await _usuarioRole.GetRole(_userManager, _roleManager, ID);
+		//	}
+
+		//	return View(usuario.ToList());
+		//}
+
+		//Get Edit
+		public async Task<IActionResult> Edit(string id)
         {
             if(id==null || id.Trim().Length==0)
             {
@@ -98,5 +124,5 @@ namespace MumanalPG.Areas.Admin.Controllers
                 _db.SaveChanges();
                 return RedirectToAction(nameof(Index));
         }
-    }
+	}
 }

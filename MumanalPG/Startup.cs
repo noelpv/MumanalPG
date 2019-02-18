@@ -33,8 +33,8 @@ namespace MumanalPG
 		public void ConfigureServices(IServiceCollection services)
 		{
 			var connectionString = Configuration.GetConnectionString("DefaultConnection");
-			
-			services.Configure<CookiePolicyOptions>(options =>	
+
+			services.Configure<CookiePolicyOptions>(options =>
 			{
 				// This lambda determines whether user consent for non-essential cookies is needed for a given request.
 				options.CheckConsentNeeded = context => true;
@@ -45,24 +45,38 @@ namespace MumanalPG
 
 
 			services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
-            services.AddIdentity<IdentityUser,IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultUI()
-                .AddDefaultTokenProviders();
 
-            services.AddScoped<IDbInitializer, DbInitializer>();
+			services.AddIdentity<IdentityUser, IdentityRole>()
+				.AddEntityFrameworkStores<ApplicationDbContext>()
+				.AddDefaultUI()
+				.AddDefaultTokenProviders();
+			//services.AddIdentity<MumanalPG.Models.ApplicationUser, IdentityRole>()
+			//	.AddEntityFrameworkStores<ApplicationDbContext>()
+			//	.AddDefaultUI()
+			//	.AddDefaultTokenProviders();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+			services.AddScoped<IDbInitializer, DbInitializer>();
+
+			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
 			services.AddPaging(options => {
 				options.ViewName = "Bootstrap4";
 			});
-            services.AddSession(options =>
-            {
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
-                options.Cookie.HttpOnly = true;
-            });
-		    services.UseBreadcrumbs(GetType().Assembly);
 
+			services.AddSession(options =>
+			{
+				options.IdleTimeout = TimeSpan.FromMinutes(30);
+				options.Cookie.HttpOnly = true;
+			});
+
+			services.UseBreadcrumbs(GetType().Assembly);
+
+			services.AddDistributedMemoryCache();
+			services.AddSession(options =>
+			{
+				options.IdleTimeout = TimeSpan.FromSeconds(30);
+				options.Cookie.HttpOnly = true;
+			});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

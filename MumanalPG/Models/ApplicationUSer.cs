@@ -10,7 +10,7 @@ namespace MumanalPG.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        [Display(Name = "Sales Person")]
+        [Display(Name = "Nombre Usuario")]
         public string Name { get; set; }
 
         [NotMapped]

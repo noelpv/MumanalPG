@@ -14,20 +14,20 @@
 
             <div class="form-group">
                 <table>
-                    <tr>
+                    @*<tr>
                         <td>Documento Respaldo</td>
-                        @*<td> <label asp-for="IDocumentoRespaldo" class="control-label"></label> </td>*@
+                        <td> <label asp-for="IDocumentoRespaldo" class="control-label"></label> </td>
                         <td>
                             @Html.DropDownList("Cities")
                          </td>
-                    </tr>
-                    <tr>
+                    </tr>*@
+                    @*<tr>
                         <td> <label asp-for="IdDocumentoFormato" class="control-label"></label> </td>
                         <td>
                             <input asp-for="IdDocumentoFormato" class="form-control" />
                             <span asp-validation-for="IdDocumentoFormato" class="text-danger"></span>
                         </td>
-                    </tr>
+                    </tr>*@
                 </table>
             </div>
 
@@ -36,7 +36,7 @@
             <br>
             <br>
             <div class="form-group">
-                <input type="submit" asp-route-id="@ViewBag.id" value="Grabar" class="btn btn-default" />
+                <input type="submit" asp-route-id="@ViewBag.id" value="Grabar" class="btn btn-success" />
             </div>
         </form>
     </div>

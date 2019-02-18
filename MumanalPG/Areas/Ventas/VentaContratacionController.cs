@@ -3,26 +3,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MumanalPG.Data;
 using MumanalPG.Models.Ventas;
+using MumanalPG.Extensions;
 
 namespace MumanalPG.Areas.Ventas
 {
     [Area("Ventas")]
     public class VentaContratacionController : BaseController
     {
-        //private readonly ApplicationDbContext _context;
+		//private readonly ApplicationDbContext _context;
+		const string SessionIdBeneficiario = "_IdBeneficiario";
+		const string SessionBeneficiario = "_Beneficiario";
+		const string SessionIdBeneficiarioGarante = "_IdBeneficiariogarante";
+		const string SessionGarante = "_Garante";
+		const string SessionKeyDate = "_Date";
 
-        public VentaContratacionController(ApplicationDbContext db) : base(db)
+		public VentaContratacionController(ApplicationDbContext db) : base(db)
         {
-            //_context = context;
-        }
+			//_context = context;
+			
+		}
 
-        public async Task<IActionResult> Index()
+		public async Task<IActionResult> Index()
         {
+			HttpContext.Session.SetString(SessionIdBeneficiario, "");
+			HttpContext.Session.SetString(SessionBeneficiario, "");
+			HttpContext.Session.SetString(SessionIdBeneficiarioGarante, "");
+			HttpContext.Session.SetString(SessionGarante, "");
+			HttpContext.Session.Set<DateTime>(SessionKeyDate, DateTime.Now);
+
 			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
 			return View(await DB.Ventas_vContratacion.FromSql($"SELECT * FROM \"Ventas\".\"pContratacion\"({userId})").ToListAsync());
@@ -30,61 +44,115 @@ namespace MumanalPG.Areas.Ventas
 			//SELECT * FROM "Ventas"."pContratacion"('0eb3655e-dc53-4950-9414-455d8d1329be');
 			//return View(await DB.Ventas_vContratacion.ToListAsync());
         }
-
-		public async Task<IActionResult> BuscaPersona()
-		{
-			//var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-			//return RedirectToAction("BuscaPersona", "VentaContratacion", new { Id = 1 });
-			return View("BuscaPersona");
-		}
-		public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var ventaContratacion = await DB.Ventas_VentaContratacion.FirstOrDefaultAsync(m => m.IdVentaContratacion == id);
-            if (ventaContratacion == null)
-            {
-                return NotFound();
-            }
-
-            return View(ventaContratacion);
-        }
 		
+		public async Task<IActionResult> BuscaPersona(string searchString, Int32 IdBeneficiario, String Beneficiario, Int32 IdBeneficiarioGarante, String Garante)
+		{
+			String InternalSearchString = "-";
+			ViewData["CurrentFilter"] = searchString;
+			ViewBag.IdBeneficiario = IdBeneficiario;
+			ViewBag.Beneficiario = Beneficiario;
+			ViewBag.IdBeneficiarioGarante = IdBeneficiarioGarante;
+			ViewBag.Garante = Garante;
+
+			//IQueryable<vContratacion> categorias;
+
+			if (!String.IsNullOrEmpty(searchString))
+				InternalSearchString = searchString;
+
+			return View(await DB.RRHH_vPersona.FromSql($"SELECT * FROM \"RRHH\".\"fBuscaPersona\"({InternalSearchString})").ToListAsync());
+		}
+		
+		public async Task<IActionResult> BuscaPersona2(string searchString, Int32 IdBeneficiario, String Beneficiario, Int32 IdBeneficiarioGarante, String Garante)
+		{
+			String InternalSearchString = "-";
+			ViewData["CurrentFilter"] = searchString;
+			ViewBag.IdBeneficiario = IdBeneficiario;
+			ViewBag.Beneficiario = Beneficiario;
+			ViewBag.IdBeneficiarioGarante = IdBeneficiarioGarante;
+			ViewBag.Garante = Garante;
+
+			//IQueryable<vContratacion> categorias;
+
+			if (!String.IsNullOrEmpty(searchString))
+				InternalSearchString = searchString;
+
+			return View(await DB.RRHH_vPersona.FromSql($"SELECT * FROM \"RRHH\".\"fBuscaPersona\"({InternalSearchString})").ToListAsync());
+		}
+
 		//----------------------------------------------------------
-        public IActionResult Create()
+        public IActionResult Create(String IdBeneficiario, String IdBeneficiarioGarante, String Beneficiario, String Garante)
         {
+			//Models.Ventas.VentaContratacion Contratacion = new VentaContratacion();
+			//Contratacion.IdBeneficiario = Convert.ToInt32(IdBeneficiario);
+			if (IdBeneficiario == null && IdBeneficiarioGarante == null)
+			{
+				ViewBag.IdBeneficiario = IdBeneficiario;
+				ViewBag.Beneficiario = Beneficiario;
+				ViewBag.IdBeneficiarioGarante = IdBeneficiarioGarante;
+				ViewBag.Garante = Garante;
+			}
+			else if (IdBeneficiario != null && IdBeneficiarioGarante == "0")
+			{
+				HttpContext.Session.SetString(SessionIdBeneficiario, IdBeneficiario);
+				HttpContext.Session.SetString(SessionBeneficiario, Beneficiario);
 
-			// BENEFICIARIOS -----------------------------------------
-			var items = new List<SelectListItem>();
-			items = DB.RRHH_Beneficiario.
-				   Where(f => f.DepartamentoSigla == "LPZ").
-				   OrderBy(x => x.Denominacion).
-				   Select(c => new SelectListItem()
-							{
-								Text = c.Denominacion,
-								Value = c.IdBeneficiario.ToString()
-							}).
-				   ToList();
-			ViewBag.Beneficiarios = items;
+				ViewBag.IdBeneficiario = IdBeneficiario;
+				ViewBag.Beneficiario = Beneficiario;
+				ViewBag.IdBeneficiarioGarante = IdBeneficiarioGarante;
+				ViewBag.Garante = Garante;
+			}
+			else if (IdBeneficiario == "0" && IdBeneficiarioGarante != null)
+			{
+				HttpContext.Session.SetString(SessionIdBeneficiarioGarante, IdBeneficiarioGarante);
+				HttpContext.Session.SetString(SessionGarante, Garante);
 
-			// GARANTES -----------------------------------------
-			var items3 = new List<SelectListItem>();
-			items3 = DB.RRHH_Beneficiario.
-				   Where(f => f.DepartamentoSigla == "LPZ").
-				   OrderBy(x => x.Denominacion).
-				   Select(c => new SelectListItem()
-				   {
-					   Text = c.Denominacion,
-					   Value = c.IdBeneficiario.ToString()
-				   }).
-				   ToList();
-			ViewBag.Garantes = items3;
+				ViewBag.IdBeneficiario = HttpContext.Session.GetString(SessionIdBeneficiario);
+				ViewBag.Beneficiario = HttpContext.Session.GetString(SessionBeneficiario);
+				ViewBag.IdBeneficiarioGarante = HttpContext.Session.GetString(SessionIdBeneficiarioGarante);
+				ViewBag.Garante = HttpContext.Session.GetString(SessionGarante);
+			}
+
+			//// BENEFICIARIOS --------------------------------------------
+			//var items = new List<SelectListItem>();
+			//items = DB.RRHH_Beneficiario.
+			//	   Where(f => f.DepartamentoSigla == "LPZ").
+			//	   OrderBy(x => x.Denominacion).
+			//	   Select(c => new SelectListItem()
+			//				{
+			//					Text = c.Denominacion,
+			//					Value = c.IdBeneficiario.ToString()
+			//				}).
+			//	   ToList();
+			//ViewBag.Beneficiarios = items;
+
+			//// GARANTES --------------------------------------------------
+			//var items3 = new List<SelectListItem>();
+			//items3 = DB.RRHH_Beneficiario.
+			//	   Where(f => f.DepartamentoSigla == "LPZ").
+			//	   OrderBy(x => x.Denominacion).
+			//	   Select(c => new SelectListItem()
+			//	   {
+			//		   Text = c.Denominacion,
+			//		   Value = c.IdBeneficiario.ToString()
+			//	   }).
+			//	   ToList();
+			//ViewBag.Garantes = items3;
 
 			// UNIDAD EJECUTORA ------------------------------------------
+
+			//var entryPoint = (from u in DB.RRHH_UnidadEjecutora
+			//				  join e in dbContext.tbl_Entry on ep.EID equals e.EID
+			//				  join t in dbContext.tbl_Title on e.TID equals t.TID
+			//				  where e.OwnerID == user.UID
+			//				  select new
+			//				  {
+			//					  UID = e.OwnerID,
+			//					  TID = e.TID,
+			//					  Title = t.Title,
+			//					  EID = e.EID
+			//				  }).Take(10);
+
+
 			var items2 = new List<SelectListItem>();
 
 			items2 = DB.RRHH_UnidadEjecutora.
@@ -96,7 +164,7 @@ namespace MumanalPG.Areas.Ventas
 				   ToList();
 			ViewBag.UnidadesEjecutoras = items2;
 
-			return View();
+			return View(/*Contratacion*/);
         }
 
 		public Boolean ValidaAntesGrabar()
@@ -114,7 +182,7 @@ namespace MumanalPG.Areas.Ventas
 
 		[HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdVentaContratacion,IdVentaSolicitud,IdProcesoNivel2,Gestion,IdUnidadEjecutora,CorrelativoUnidad,IdDepartamento,FechaVenta,IdBeneficiario,IdBeneficiarioGarante,IdBeneficiarioResponsable,IdVentaTarifario,Concepto,Observaciones,CiteTramite,IdAsrSiver,MesNumero,FechaInicio,FechaFinal,CantidadTotal,TotalBs,TotalDolares,IdTipoMoneda,TipoCambio,TotalPrevisionBs,Literal,PlazoMeses,MesInicioCronograma,IdPoa,IdProceso,IdDocumentoRespaldo,NumeroDocumento,ArchivoRespaldo,ArchivoRespaldoCargado,IdEstadoRegistro,IdUsuario,IdUsuarioAprueba,FechaRegistro,FechaAprueba")] VentaContratacion ventaContratacion, string Beneficiarios, string Garantes, string UnidadesEjecutoras)
+        public async Task<IActionResult> Create([Bind("IdVentaContratacion,IdVentaSolicitud,IdProcesoNivel2,Gestion,IdUnidadEjecutora,CorrelativoUnidad,IdDepartamento,FechaVenta,IdBeneficiario,IdBeneficiarioGarante,IdBeneficiarioResponsable,IdVentaTarifario,Concepto,Observaciones,CiteTramite,IdAsrSiver,MesNumero,FechaInicio,FechaFinal,CantidadTotal,TotalBs,TotalDolares,IdTipoMoneda,TipoCambio,TotalPrevisionBs,Literal,PlazoMeses,MesInicioCronograma,IdPoa,IdProceso,IdDocumentoRespaldo,NumeroDocumento,ArchivoRespaldo,ArchivoRespaldoCargado,IdEstadoRegistro,IdUsuario,IdUsuarioAprueba,FechaRegistro,FechaAprueba")] VentaContratacion ventaContratacion, string Beneficiarios, string Garantes, string UnidadesEjecutoras, String IdBeneficiario, String IdBeneficiarioGarante)
         {
 			if (ModelState.IsValid)
 			{
@@ -123,8 +191,8 @@ namespace MumanalPG.Areas.Ventas
 				ventaContratacion.IdProcesoNivel2 = 0;
 				ventaContratacion.Gestion = DateTime.Now.Year.ToString();
 				ventaContratacion.IdDepartamento = 2;
-				ventaContratacion.IdBeneficiario = Convert.ToInt32(Beneficiarios);
-				ventaContratacion.IdBeneficiarioGarante = Convert.ToInt32(Garantes);
+				//ventaContratacion.IdBeneficiario = Convert.ToInt32(HttpContext.Session.GetString(SessionIdBeneficiario));               //Convert.ToInt32(Beneficiarios);
+				ventaContratacion.IdBeneficiarioGarante = 0;// Convert.ToInt32(HttpContext.Session.GetString(SessionIdBeneficiarioGarante)); //Convert.ToInt32(Garantes);
 				ventaContratacion.IdBeneficiarioResponsable = 0;
 				ventaContratacion.IdVentaTarifario = 0;
 				ventaContratacion.Concepto = "Solicitud de Reposición de Ayuda Social reversible";
@@ -224,7 +292,24 @@ namespace MumanalPG.Areas.Ventas
             await DB.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-		
+
+		// href
+		public async Task<IActionResult> Details(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+
+			var ventaContratacion = await DB.Ventas_VentaContratacion.FirstOrDefaultAsync(m => m.IdVentaContratacion == id);
+			if (ventaContratacion == null)
+			{
+				return NotFound();
+			}
+
+			return View(ventaContratacion);
+		}
+
 		//----------------------------------------------------------
 		public async Task<IActionResult> Requisitos(int? id)
 		{
@@ -251,5 +336,7 @@ namespace MumanalPG.Areas.Ventas
         {
             return DB.Ventas_VentaContratacion.Any(e => e.IdVentaContratacion == id);
         }
-    }
+
+		
+	}
 }

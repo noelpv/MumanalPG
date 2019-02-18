@@ -194,7 +194,7 @@
             </ul>
         </li>
 
-        <li class="nav-small-cap"></li>
+        @*<li class="nav-small-cap"></li>
         <li>
             <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                 <i class="ti-gallery"></i><span class="hide-menu">Demo Productos</span>
@@ -215,8 +215,28 @@
                 </li>
 
             </ul>
-        </li>
+        </li>*@
+
         @if (User.IsInRole(SD.SuperAdminEndUser) || User.IsInRole(SD.AdminEndUser))
+        {
+            <li class="nav-small-cap"></li>
+            <li>
+                <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                    <i class="ti-gallery"></i><span class="hide-menu">Seguridad</span>
+                </a>
+                <ul aria-expanded="false" class="collapse">
+
+                    <li>
+                        <a asp-area="Admin" asp-controller="AdminUsers" asp-action="Index">Usuarios<i class="ti-layout-menu-separated"></i></a>
+                    </li>
+                    <li>
+                        <a asp-area="Admin" asp-controller="RoleViewModel" asp-action="GetAllRoles">Roles<i class="mdi mdi-page-layout-header"></i></a>
+                    </li>
+                </ul>
+            </li>
+        }
+
+        @*@if (User.IsInRole(SD.SuperAdminEndUser) || User.IsInRole(SD.AdminEndUser))
         {
             <li>
                 <a class="waves-effect waves-dark" asp-area="Admin" asp-controller="Appointments" asp-action="Index">
@@ -225,7 +245,7 @@
                 </a>
             </li>
 
-        }
+        }*@
 
         <li class="nav-small-cap"></li>
     </ul>

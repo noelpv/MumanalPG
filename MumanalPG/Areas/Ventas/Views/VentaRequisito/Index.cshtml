@@ -5,15 +5,14 @@
 }
 
 
-<div class="row">
+@*<div class="row">
     <div class="col-6">
-        <h2 class="text-info">dsfgdsfgsdfgcera</h2>
-        <h3 "ViewBag.DatosCabecera"</h3>
+        <h3 @ViewBag.DatosCabecera"</h3>
     </div>
-    @*<div class="col-6 text-right">
+    <div class="col-6 text-right">
             <a asp-action="Create" asp-route-id="@TempData["IdContratacion"]" class="btn btn-info">&nbsp; Nuevo Requisito</a>
-        </div>*@
-</div>
+    </div>
+</div>*@
 
 
 
@@ -52,9 +51,6 @@
                     @Html.DisplayFor(modelItem => item.Aprobado)
                 </td>
                 <td>
-                    @*<a asp-action="Edit" asp-route-id="@item.IdVentaRequisito">Editar</a> |*@
-                    @*<a asp-action="Details" asp-route-id="@item.IdVentaRequisito">Detalle</a> |*@
-                    @*<a asp-action="Delete" asp-route-id="@item.IdVentaRequisito">Eliminar</a> |*@
                     <a class="btn btn-info" asp-action="CargaArchivo" asp-route-id="@item.IdVentaRequisito">Cargar</a>
                     <a class="btn btn-info" asp-action="Escanear" asp-route-id="@item.IdVentaRequisito">Scan</a>
                     <a class="btn btn-info" asp-action="VerPDF" asp-route-id="@item.IdVentaRequisito">Ver</a>

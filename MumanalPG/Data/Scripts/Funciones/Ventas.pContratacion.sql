@@ -32,6 +32,5 @@ begin
 end;
 $$ 
 LANGUAGE 'plpgsql';
-	
 
 SELECT * FROM "Ventas"."pContratacion"('0eb3655e-dc53-4950-9414-455d8d1329be');

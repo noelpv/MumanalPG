@@ -1,9 +1,10 @@
 ﻿@model MumanalPG.Models.Ventas.VentaRequisito
 
 @{
-    ViewData["Title"] = "Prestaciones / ASR / Contratación / Requisitos / CargaArchivo";
+    ViewData["Title"] = "Prestaciones / ASR / Contratación / Requisitos / Carga Archivo";
 }
 
+<h3>@ViewBag.Documento</h3>
 
 <hr />
 <div class="row">
@@ -14,7 +15,8 @@
             <input type="hidden" asp-for="IdVentaRequisito" />
             <input type="hidden" asp-for="IdVentaContratacion" />
             <input type="hidden" asp-for="IdDocumentoRespaldo" />
-            <div class="form-group">
+            <input type="hidden" asp-for="IdDocumentoFormato" />
+            @*<div class="form-group">
                 <table>
                     <tr>
                         <td> <label asp-for="IdDocumentoFormato" class="control-label"></label> </td>
@@ -24,14 +26,18 @@
                         </td>
                     </tr>
                 </table>
-            </div>
+            </div>*@
 
-            @*            <input type="file" name="ArchivoPDF" required accept="application/pdf" />*@
-            <input type="file" name="ArchivoPDF" title="Escanear Archivo" />
+            @*<input type="file" name="ArchivoPDF" required accept="application/pdf" />*@
+            @*<input type="file" name="ArchivoPDF" title="Escanear Archivo" />*@
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/ratchet/2.0.2/css/ratchet.css" rel="stylesheet" />
+            <label for="ArchivoPDF" class="btn btn-primary btn-block btn-outlined">Seleccionar Documento</label>
+            <input type="file" id="ArchivoPDF" name="ArchivoPDF" accept="image/*" style="display: none">
+
             <br>
             <br>
             <div class="form-group">
-                <input type="submit" asp-route-id="@ViewBag.id" value="Grabar" class="btn btn-default" />
+                <input type="submit" asp-route-id="@ViewBag.id" value="Grabar" class="btn btn-success" />
             </div>
         </form>
     </div>

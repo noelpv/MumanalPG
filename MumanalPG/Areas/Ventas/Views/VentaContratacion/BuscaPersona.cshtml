@@ -1,7 +1,56 @@
-﻿
+﻿@model IEnumerable<MumanalPG.Models.RRHH.vPersona>
+
 @{
-    ViewData["Title"] = "BuscaPersona";
+    ViewData["Title"] = "Busca Beneficiario";
 }
 
-<h2>BuscaPersona</h2>
+<form asp-action="BuscaPersona" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Buscar por Carnet o primeras letras del Apellido: <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Buscar" class="btn btn-facebook" />
+    
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                CI
+            </th>
+            <th>
+                Nombres
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @*<a asp-action="Create" asp-route-id="@Html.DisplayFor(modelItem => item.IdBeneficiario)+@Html.DisplayFor(modelItem => item.IdBeneficiario)" >@Html.DisplayFor(modelItem => item.IdBeneficiario)</a>*@
+
+                    @Html.DisplayFor(modelItem => item.IdBeneficiario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DocumentoIdentidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Denominacion)
+                </td>
+                <td>
+                    @Html.ActionLink("Elegir", "Create", new { IdBeneficiario = item.IdBeneficiario, IdBeneficiarioGarante = @ViewBag.IdBeneficiarioGarante, Beneficiario = item.Denominacion, Garante = @ViewBag.Garante})
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 

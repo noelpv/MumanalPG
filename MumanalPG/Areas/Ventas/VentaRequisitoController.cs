@@ -28,7 +28,7 @@ namespace MumanalPG.Areas.Ventas
 		        
         public async Task<IActionResult> Index(Int32? Id) // GET: Ventas/VentaRequisito
 		{
-			//Id = Convert.ToInt32(TempData["IdContratacion"]);
+			Id = Convert.ToInt32(TempData["IdContratacion"]);
 			return View(await DB.Ventas_vRequisito.Where(f => f.IdVentaContratacion == Id).ToListAsync());
         }
 		
@@ -83,7 +83,7 @@ namespace MumanalPG.Areas.Ventas
 				ventaRequisito.IdVentaContratacion = Convert.ToInt32(id);
 				ventaRequisito.IdBeneficiario = 1;
 				ventaRequisito.DocumentoEntregado = true;
-				ventaRequisito.IdDocumentoRespaldo =Convert.ToInt32(Cities);
+				ventaRequisito.IdDocumentoRespaldo = 1; Convert.ToInt32(Cities);
 				ventaRequisito.PathArchivo = fileName;
 				ventaRequisito.ArchivoCargado = true;
 				ventaRequisito.IdEstadoRegistro = 1;
@@ -204,12 +204,15 @@ namespace MumanalPG.Areas.Ventas
 		}
 
 		//----------------------------------------------------------
+		//public async Task<IActionResult> CargaArchivo(int? idVentaRequisito, String Documento) // GET: Ventas/VentaRequisito/Edit/5
 		public async Task<IActionResult> CargaArchivo(int? id) // GET: Ventas/VentaRequisito/Edit/5
 		{
+
 			if (id == null)
 			{
 				return NotFound();
 			}
+			ViewBag.Documento = "Documento";
 
 			var ventaRequisito = await DB.Ventas_VentaRequisito.FindAsync(id);
 			if (ventaRequisito == null)

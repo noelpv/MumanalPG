@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MumanalPG.Models.Ventas
+namespace MumanalPG.Models.RRHH
 {
-	[Table("vPersona", Schema = "Ventas")]
 	public class vPersona
 	{
 		[Key]
@@ -16,3 +14,4 @@ namespace MumanalPG.Models.Ventas
 		public string Denominacion { get; set; }
 	}
 }
+
