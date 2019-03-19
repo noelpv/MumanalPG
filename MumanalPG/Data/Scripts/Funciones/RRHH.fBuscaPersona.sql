@@ -9,9 +9,7 @@ CREATE OR REPLACE FUNCTION "RRHH"."fBuscaPersona"(Busca varchar(100))
 AS $$
 begin
  	RETURN QUERY 
- 	SELECT "IdBeneficiario",
-    "DocumentoIdentidad",
-    "Denominacion"
+ 	SELECT "IdBeneficiario", "DocumentoIdentidad", "Denominacion"
 	from "RRHH"."Beneficiario"
   where "DocumentoIdentidad" like Busca || '%' or "Denominacion" like Busca || '%';
 end;

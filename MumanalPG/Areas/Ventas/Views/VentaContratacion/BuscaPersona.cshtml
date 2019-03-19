@@ -47,7 +47,7 @@
                     @Html.DisplayFor(modelItem => item.Denominacion)
                 </td>
                 <td>
-                    @Html.ActionLink("Elegir", "Create", new { IdBeneficiario = item.IdBeneficiario, IdBeneficiarioGarante = @ViewBag.IdBeneficiarioGarante, Beneficiario = item.Denominacion, Garante = @ViewBag.Garante})
+                    @Html.ActionLink("Elegir", "Create", new { IdBeneficiario = item.IdBeneficiario, IdBeneficiarioGarante = @ViewBag.IdBeneficiarioGarante, Beneficiario = item.Denominacion, Garante = @ViewBag.Garante }, new { @class = "btn btn-primary" })
                 </td>
             </tr>
         }

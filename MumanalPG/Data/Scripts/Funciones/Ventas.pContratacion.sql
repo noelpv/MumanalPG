@@ -1,3 +1,7 @@
+-- Ventas."VentaContratacion"."IdEstadoRegistro":
+-- 1. Registrado
+-- 2. Enviado
+-- 3. 
 DROP FUNCTION "Ventas"."pContratacion"(text);
  
 CREATE OR REPLACE FUNCTION "Ventas"."pContratacion"(IdAspUser text)
@@ -9,7 +13,8 @@ CREATE OR REPLACE FUNCTION "Ventas"."pContratacion"(IdAspUser text)
     FechaVenta timestamp,
     Beneficiario varchar(100),
     Garante varchar(100),
-    IdAsrSiver varchar(20)
+    IdAsrSiver varchar(20),
+		Estado varchar(20)
 ) 
 AS $$
 begin
@@ -21,16 +26,21 @@ begin
     a."FechaVenta",
     b."Denominacion" AS "Beneficiario",
     c."Denominacion" AS "Garante",
-    a."IdAsrSiver"
+    a."IdAsrSiver",
+		ER."Descripcion" as Estado
 	FROM "Ventas"."VentaContratacion" a
 	JOIN "RRHH"."Beneficiario" b ON a."IdBeneficiario" = b."IdBeneficiario"
 	JOIN "RRHH"."Beneficiario" c ON a."IdBeneficiarioGarante" = c."IdBeneficiario"
 	JOIN "RRHH"."UnidadEjecutora" u ON a."IdUnidadEjecutora" = u."IdUnidadEjecutora"
 	join "Seguridad"."UsuarioUnidadEjecutora" R on u."IdUnidadEjecutora" = R."IdUnidadEjecutora"
 	join "AspNetUsers" S on S."IdUsuario" = R."IdUsuario"
-  where S."Id" = IdAspUser;
+	join "AspNetUserRoles" UR on S."Id" = UR."UserId"
+	join "Seguridad"."RoleEstadoRegistro" RER on UR."RoleId" = RER."IdRole" and A."IdEstadoRegistro" = RER."IdEstadoRegistro"
+	join "Ventas"."EstadoRegistro" ER on A."IdEstadoRegistro" = ER."IdEstadoRegistro"
+  where S."Id" = IdAspUser
+	order by "IdVentaContratacion" desc;
 end;
-$$ 
+$$
 LANGUAGE 'plpgsql';
 
-SELECT * FROM "Ventas"."pContratacion"('0eb3655e-dc53-4950-9414-455d8d1329be');
+SELECT * FROM "Ventas"."pContratacion"('23157b87-10db-4118-a711-3f94d8f5e13e');

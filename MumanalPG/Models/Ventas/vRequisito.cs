@@ -13,6 +13,7 @@ namespace MumanalPG.Models.Ventas
 		public string Descripcion { get; set; }
 		public string PathArchivo { get; set; }
 		public Boolean ArchivoCargado { get; set; }
-		public Boolean Aprobado { get; set; }
+		public Boolean EsObligatorio { get; set; }
+		public Int16 Orden { get; set; }
 	}
 }

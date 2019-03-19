@@ -1,7 +1,7 @@
 drop view "Ventas"."vRequisito";
 
 CREATE OR REPLACE VIEW "Ventas"."vRequisito" AS
-select "IdVentaRequisito", "IdVentaContratacion", "Descripcion", "PathArchivo", "ArchivoCargado", "Aprobado"
+select "IdVentaRequisito", "IdVentaContratacion", "Descripcion", "PathArchivo", "ArchivoCargado", "EsObligatorio", "Orden"
 from "Ventas"."VentaRequisito" R
 inner join "Ventas"."DocumentoRespaldo" L on R."IdDocumentoRespaldo" = L."IdDocumentoRespaldo";
 

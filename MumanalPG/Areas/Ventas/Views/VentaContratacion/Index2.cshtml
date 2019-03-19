@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewData["Title"] = "Index2";
+}
+
+<h2>Index2</h2>
+
+<div style="width:90%; margin:0 auto">
+    <div style="background-color:#f5f5f5; padding:20px">
+        <h2>Buscar</h2>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Nro ASR</td>
+                    <td><input type"text" id="txtEmployeName" /></td>
+                    <td>UE</td>
+                    <td>
+                        <select id="ddcountry" style="width:200px">
+                            <option value="">Todos</option>
+                            <option value="La Paz">La Paz</option>
+                        </select>
+                    </td>
+                    <td><input type="button" value="Buscar" id="btnSearch" /></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <table id="myTable" class="table table-responsive table-striped">
+            <thead>
+                <tr>
+                    <th>NroASR</th>
+                    <th>Titular</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<link href="//cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" rel="stylesheet"/>
+@section Scripts{ 
+    <script src="//cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('myTable').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "orderMulti": false, // deshabilita orden por multicolumna
+                "dom": '<"top"i>rt<"bottom"lp><"clear">', // deshabilita busqueda global
+                "ajax": {
+                    "url": 'Url.Action("LoadData", "VentaContratacion")',
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "IdAsrSiver", "name": "IdAsrSiver", "autoWidth": true },           //0
+                    { "data": "UnidadEjecutora", "name": "UnidadEjecutora", "autoWidth": true }, //1
+                    { "data": "FechaVenta", "name": "FechaVenta", "autoWidth": true },           //2
+                    { "data": "Beneficiario", "name": "Beneficiario", "autoWidth": true }        //3
+                ]
+            });
+
+            oTable = $('#myTable').DataTable();
+            $('#btnSearch').click(function () {
+                oTable.columns(0).search($('#txtEmployeeName').val());
+                oTable.columns(1).search($('#ddcountry').val());
+                oTable.draw();
+            });
+        });
+    </script>
+}

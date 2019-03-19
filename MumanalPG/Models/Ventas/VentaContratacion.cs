@@ -20,7 +20,7 @@ namespace MumanalPG.Models.Ventas
 		public Int32 IdDepartamento { get; set; }
 		[Display(Name = "Fecha")]
 		[Required(ErrorMessage = "Se requiere la Fecha")]
-		public DateTime FechaVenta { get; set; }
+		public DateTime FechaVenta { get; set; } = DateTime.Now.Date;
 		public Int32 IdBeneficiario { get; set; }
 		[Display(Name = "Garante")]
 		[Required(ErrorMessage = "Se requiere el Garante")]

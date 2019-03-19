@@ -20,5 +20,6 @@ namespace MumanalPG.Models.Ventas
 		public string Beneficiario { get; set; }
 		public string Garante { get; set; }
 		public string IdAsrSiver { get; set; }
+		public string Estado { get; set; }
 	}
 }

@@ -4,12 +4,17 @@
     ViewData["Title"] = "Prestaciones / ASR / Registro";
 }
 
+<h3>@ViewBag.Mensaje</h3>
+
 <div class="row">
     <div class="col-6">
         <h2 class="text-info">Lista de Registros ASR</h2>
     </div>
     <div class="col-6 text-right">
-        <a asp-action="Create" class="btn btn-info">&nbsp; Nuevo Registro</a>
+        @if (ViewContext.HttpContext.User.IsInRole("SUPER ADMIN") || ViewContext.HttpContext.User.IsInRole("AGENTE"))
+        {
+            <a asp-action="Create" class="btn btn-info">&nbsp; Nuevo Registro</a>
+        }
     </div>
 </div>
 
@@ -35,7 +40,7 @@
                 Garante
             </th>*@
             <th>
-                Gestión
+                Estado
             </th>
             <th></th>
         </tr>
@@ -43,35 +48,38 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdAsrSiver)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.CorrelativoUnidad)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.UnidadEjecutora)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaVenta)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Beneficiario)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Garante)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.Gestion)
-            </td>
-            <td>
-                <a class="btn btn-skype" asp-action="Requisitos" asp-route-id="@item.IdVentaContratacion">Requisitos</a>
-                <a class="btn btn-success" asp-action="Enviar" asp-route-id="@item.IdVentaContratacion">Enviar</a>
-                @*<a class="btn btn-info" asp-action="Details" asp-route-id="@item.IdVentaContratacion">Detalle</a>*@
-                @*<a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.IdVentaContratacion">Eliminar</a>*@
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdAsrSiver)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.CorrelativoUnidad)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnidadEjecutora)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaVenta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Beneficiario)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Garante)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+                <td>
+                    <a class="btn btn-skype" asp-action="Requisitos" asp-route-id="@item.IdVentaContratacion" asp-route-Beneficiario="@item.Beneficiario" asp-route-IdAsrSiver="@item.IdAsrSiver">Requisitos</a>
+                    @if (ViewContext.HttpContext.User.IsInRole("SUPER ADMIN") || ViewContext.HttpContext.User.IsInRole("AGENTE"))
+                    {
+                        <a class="btn btn-success" asp-action="Enviar" asp-route-id="@item.IdVentaContratacion">Enviar</a>
+                    }
+                    @*<a class="btn btn-info" asp-action="Details" asp-route-id="@item.IdVentaContratacion">Detalle</a>*@
+                    @*<a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.IdVentaContratacion">Eliminar</a>*@
+                </td>
+            </tr>
         }
     </tbody>
 </table>

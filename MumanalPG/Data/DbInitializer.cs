@@ -45,8 +45,6 @@ namespace MumanalPG.Data
             IdentityUser user = await _db.Users.Where(u => u.Email == "admin@gmail.com").FirstOrDefaultAsync();
 
             await _userManager.AddToRoleAsync(user, SD.SuperAdminEndUser);
-        }
-            
-
+        }          
     }
 }

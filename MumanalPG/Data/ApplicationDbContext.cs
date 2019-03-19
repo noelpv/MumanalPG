@@ -31,7 +31,11 @@ namespace MumanalPG.Data
 
         public DbSet<MumanalPG.Models.AdministraParam.Grupo> Grupo { get; set; }
         public DbSet<MumanalPG.Models.AdministraParam.SubGrupo> SubGrupo { get; set; }
-	       
+
+
+		public DbSet<MumanalPG.Models.Generales.fBuscaId> Generales_fBuscaId { get; set; }
+		public DbSet<MumanalPG.Models.Generales.fRetornaEntero> Generales_fRetornaEntero { get; set; }
+		public DbSet<MumanalPG.Models.Generales.fRetornaCadena> Generales_fRetornaCadena { get; set; }
 
 		public DbSet<MumanalPG.Models.RRHH.Beneficiario> RRHH_Beneficiario { get; set; }
 		public DbSet<MumanalPG.Models.RRHH.UnidadEjecutora> RRHH_UnidadEjecutora { get; set; }
@@ -46,6 +50,9 @@ namespace MumanalPG.Data
 		public DbSet<MumanalPG.Models.Ventas.pVerificaLimite> Ventas_pVerificaLimite { get; set; }
 
 		public DbSet<MumanalPG.Models.Ventas.TablaPDF> TablaPDF { get; set; }
+
+		public DbSet<MumanalPG.Models.Seguridad.UsuarioUnidadEjecutora> Seguridad_UsuarioUnidadEjecutora { get; set; }
+		public DbSet<MumanalPG.Models.Seguridad.Usuario> Seguridad_Usuario { get; set; }
 
 		public DbSet<MumanalPG.Models.RoleViewModel> RoleViewModel { get; set; }
 	}

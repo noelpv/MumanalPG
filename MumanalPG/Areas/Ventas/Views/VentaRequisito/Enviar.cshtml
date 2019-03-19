@@ -1,0 +1,27 @@
+﻿@model MumanalPG.Models.Ventas.VentaContratacion
+@{
+    ViewData["Title"] = "Enviar";
+}
+
+
+<h3>@ViewBag.Mensaje</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Nro ASR
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdAsrSiver)
+        </dd>
+    </dl>
+
+    <form asp-action="Enviar">
+        <input type="hidden" asp-for="IdVentaContratacion" />
+        @if (@ViewBag.Mensaje == "Esta Seguro de enviar?")
+        {
+            <input type="submit" value="Enviar" class="btn btn-default" />
+        }
+        <a asp-action="Index" class="btn btn-default" asp-route-Id="@ViewBag.IdVentaContratacion">Regresar a la lista</a>
+    </form>
+</div>

@@ -7,8 +7,6 @@ namespace MumanalPG.Models.Seguridad
 {
 	public class Usuario
 	{
-
-
 		public virtual DateTimeOffset? LockoutEnd { get; set; }
 		public virtual bool TwoFactorEnabled { get; set; }
 		public virtual bool PhoneNumberConfirmed { get; set; }
@@ -29,6 +27,6 @@ namespace MumanalPG.Models.Seguridad
 
 		public virtual string Role { get; set; }
 		public virtual string RoleId { get; set; }
-
+		//public virtual Int32 IdUsuario { get; set; }
 	}
 }
