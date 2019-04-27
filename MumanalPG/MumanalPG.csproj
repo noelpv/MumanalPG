@@ -126,7 +126,6 @@
     <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Controllers\" />
     <Folder Include="Data\Migrations" />
-    <Folder Include="Models\Administra\" />
     <Folder Include="Models\ContableParam\" />
     <Folder Include="Models\Contable\" />
     <Folder Include="Models\Finanzas\" />
