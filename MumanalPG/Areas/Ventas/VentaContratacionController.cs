@@ -33,17 +33,16 @@ namespace MumanalPG.Areas.Ventas
 			
 		}
 
-		public async Task<IActionResult> Index()
+		public async Task<IActionResult> Index(string searchString)
         {
-			//HttpContext.Session.SetString(SessionIdBeneficiario, "");
-			//HttpContext.Session.SetString(SessionBeneficiario, "");
-			//HttpContext.Session.SetString(SessionIdBeneficiarioGarante, "");
-			//HttpContext.Session.SetString(SessionGarante, "");
-			//HttpContext.Session.Set<DateTime>(SessionKeyDate, DateTime.Now);
+			String InternalSearchString = "";
+			ViewData["CurrentFilter"] = searchString;
+			if (!String.IsNullOrEmpty(searchString))
+				InternalSearchString = searchString;
 
 			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-			return View(await DB.Ventas_vContratacion.FromSql($"SELECT * FROM \"Ventas\".\"pContratacion\"({userId})").ToListAsync());
+			return View(await DB.Ventas_vContratacion.FromSql($"SELECT * FROM \"Ventas\".\"pContratacion\"({userId}, {InternalSearchString})").ToListAsync());
 
 			//SELECT * FROM "Ventas"."pContratacion"('0eb3655e-dc53-4950-9414-455d8d1329be');
 			//return View(await DB.Ventas_vContratacion.ToListAsync());

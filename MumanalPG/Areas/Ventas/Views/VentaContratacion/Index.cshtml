@@ -18,6 +18,20 @@
     </div>
 </div>
 
+
+<form asp-action="index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Buscar por Nro ASR o primeras letras del Apellido: <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Buscar" class="btn btn-facebook" />
+        </p>
+
+    </div>
+</form>
+
+
+
+
 <table class="table">
     <thead>
         <tr>
@@ -25,8 +39,8 @@
                 Numero ASR
             </th>
             @*<th>
-                Num. Solicitud
-            </th>*@
+                    Num. Solicitud
+                </th>*@
             <th>
                 Regional o Agencia
             </th>
@@ -37,8 +51,8 @@
                 Solicitante
             </th>
             @*<th>
-                Garante
-            </th>*@
+                    Garante
+                </th>*@
             <th>
                 Estado
             </th>

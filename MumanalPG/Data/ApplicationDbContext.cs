@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 using MumanalPG.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using MumanalPG.Models.FinanzasParam;
-using MumanalPG.Models.AdministraParam;
-using MumanalPG.Models.Planificacion;
-using MumanalPG.Models.Ventas;
+using MumanalPG.Models.Generales;
+
 
 namespace MumanalPG.Data
 {
@@ -55,5 +51,7 @@ namespace MumanalPG.Data
 		public DbSet<MumanalPG.Models.Seguridad.Usuario> Seguridad_Usuario { get; set; }
 
 		public DbSet<MumanalPG.Models.RoleViewModel> RoleViewModel { get; set; }
+
+		public DbSet<MumanalPG.Models.Generales.Departamento> Departamento { get; set; }
 	}
 }

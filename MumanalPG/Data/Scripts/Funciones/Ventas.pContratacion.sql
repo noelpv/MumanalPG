@@ -2,9 +2,9 @@
 -- 1. Registrado
 -- 2. Enviado
 -- 3. 
-DROP FUNCTION "Ventas"."pContratacion"(text);
+--DROP FUNCTION "Ventas"."pContratacion"(text);
  
-CREATE OR REPLACE FUNCTION "Ventas"."pContratacion"(IdAspUser text)
+CREATE OR REPLACE FUNCTION "Ventas"."pContratacion"(IdAspUser text, searchString TEXT)
  RETURNS TABLE (
 		IdVentaContratacion int4,
     Gestion varchar(4),
@@ -38,9 +38,10 @@ begin
 	join "Seguridad"."RoleEstadoRegistro" RER on UR."RoleId" = RER."IdRole" and A."IdEstadoRegistro" = RER."IdEstadoRegistro"
 	join "Ventas"."EstadoRegistro" ER on A."IdEstadoRegistro" = ER."IdEstadoRegistro"
   where S."Id" = IdAspUser
+	and (b."PrimerApellido" like searchString || '%' or a."IdAsrSiver" = searchString or searchString = '')
 	order by "IdVentaContratacion" desc;
 end;
 $$
 LANGUAGE 'plpgsql';
 
-SELECT * FROM "Ventas"."pContratacion"('23157b87-10db-4118-a711-3f94d8f5e13e');
+SELECT * FROM "Ventas"."pContratacion"('23157b87-10db-4118-a711-3f94d8f5e13e', 'AREVALO');

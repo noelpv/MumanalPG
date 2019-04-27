@@ -85,6 +85,12 @@
     <Content Update="Areas\FinanzasParam\Views\_ViewStart.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Areas\Generales\Views\_ViewImports.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Generales\Views\_ViewStart.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Areas\Ventas\Views\VentaRequisito\Rechazar.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
