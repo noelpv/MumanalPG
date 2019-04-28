@@ -1,0 +1,99 @@
+﻿@model IEnumerable<MumanalPG.Models.Ventas.VentaTarifario>
+
+@{
+    ViewData["Title"] = "Tarifario";
+}
+
+<p>
+    <a asp-action="Create">Nuevo registro</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdProcesoNivel2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdBeneficiarioCategoria)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroCuotas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NuemroPeriodos)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValorInicialBs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InteresBs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValorFinalBs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Porcentaje)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEstadoRegistro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUsuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaRegistro)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdProcesoNivel2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdBeneficiarioCategoria)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroCuotas)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NuemroPeriodos)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValorInicialBs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InteresBs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValorFinalBs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Porcentaje)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEstadoRegistro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUsuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaRegistro)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdVentaTarifario">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdVentaTarifario">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdVentaTarifario">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
