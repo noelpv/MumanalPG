@@ -1,0 +1,114 @@
+﻿@model MumanalPG.Models.Administra.CompraContratacionCotiza
+
+@{
+    ViewData["Title"] = "CompraCotizacion";
+}
+
+<h2>Detalle</h2>
+
+<div>
+    <h4>CompraContratacionCotiza</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdCompraContratacion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdCompraContratacion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaCotiza)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaCotiza)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroVentaPliego)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumeroVentaPliego)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CiteCarta)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CiteCarta)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroCotizacionProveedor)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumeroCotizacionProveedor)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdBeneficiario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdBeneficiario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NombreProveedorQueCotiza)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NombreProveedorQueCotiza)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaEstimadaCompra)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaEstimadaCompra)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaLimiteCotizacion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaLimiteCotizacion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdPoa)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdPoa)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdProceso)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdProceso)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdDocumentoRespaldo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdDocumentoRespaldo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroDocumento)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumeroDocumento)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdEstadoRegistro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdEstadoRegistro)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdUsuario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdUsuario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaRegistro)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.IdCompraContratacionCotiza">Editar</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

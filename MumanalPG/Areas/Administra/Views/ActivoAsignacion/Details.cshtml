@@ -1,0 +1,156 @@
+﻿@model MumanalPG.Models.Administra.ActivoAsignacion
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ActivoAsignacion</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdAlmacenInventario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdAlmacenInventario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdBienes)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdBienes)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CodigoActivoFijo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CodigoActivoFijo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CodigoAdministrativo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CodigoAdministrativo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdBeneficiario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdBeneficiario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaIncorporacion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaIncorporacion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Ufv)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Ufv)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CostoInicial)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CostoInicial)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DepreciacionAcumuladaInicial)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DepreciacionAcumuladaInicial)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FactorActualizacion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FactorActualizacion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ValorActual)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ValorActual)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DepreciacionAcumulada)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DepreciacionAcumulada)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DepreciacionGestion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DepreciacionGestion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ValorNeto)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ValorNeto)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TiempoVidaEnAnios)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TiempoVidaEnAnios)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TiempoVidaEnDias)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TiempoVidaEnDias)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CodigoRube)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CodigoRube)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdOrganismoFinanciador)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdOrganismoFinanciador)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdEstadoActivoFijo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdEstadoActivoFijo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdEstadoRegistro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdEstadoRegistro)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdUsuario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdUsuario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaRegistro)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.IdActivoFijo">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

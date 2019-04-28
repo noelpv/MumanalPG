@@ -1,0 +1,173 @@
+﻿@model IEnumerable<MumanalPG.Models.Administra.CompraContratacion>
+
+@{
+    ViewData["Title"] = "CompraContratación";
+}
+
+<h2>Lista</h2>
+
+<p>
+    <a asp-action="Create">Nuevo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdCompraSolicitud)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gestion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaCompra)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdBeneficiario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdBeneficiarioResponsable)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Concepto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Observaciones)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CiteTramite)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdModalidadContratacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MesNumero)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdDepartamento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaInicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaFinal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPoa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdProceso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdDocumentoRespaldo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroDocumento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArchivoRespaldo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArchivoRespaldoCargado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEstadoRegistro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUsuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUsuarioAprueba)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaRegistro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaAprueba)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCompraSolicitud)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gestion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaCompra)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdBeneficiario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdBeneficiarioResponsable)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Concepto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Observaciones)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CiteTramite)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdModalidadContratacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MesNumero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdDepartamento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaInicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaFinal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPoa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdProceso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdDocumentoRespaldo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroDocumento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArchivoRespaldo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArchivoRespaldoCargado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEstadoRegistro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUsuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUsuarioAprueba)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaRegistro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaAprueba)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdCompraContratacion">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.IdCompraContratacion">Detalle</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdCompraContratacion">Borrar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

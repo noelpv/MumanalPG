@@ -1,0 +1,125 @@
+﻿@model IEnumerable<MumanalPG.Models.Administra.CompraSolicitudBien>
+
+@{
+    ViewData["Title"] = "CompraSolicitudBien";
+}
+
+<h2>Lista</h2>
+
+<p>
+    <a asp-action="Create">Nuevo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdCompraSolicitud)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdBienes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdModelo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPais)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUnidadMedida)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUnidadMedidaEmpaque)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CantidadSolicitada)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CantidadPorEmpaque)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CantidadAprobada)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrecioUnitario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrecioTotalReferencial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdTipoMoneda)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Observaciones)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEstadoRegistro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUsuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaRegistro)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCompraSolicitud)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdBienes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdModelo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPais)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUnidadMedida)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUnidadMedidaEmpaque)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CantidadSolicitada)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CantidadPorEmpaque)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CantidadAprobada)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioUnitario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioTotalReferencial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdTipoMoneda)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Observaciones)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEstadoRegistro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUsuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaRegistro)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdCompraSolicitudBien">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.IdCompraSolicitudBien">Detalle</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdCompraSolicitudBien">Borrar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

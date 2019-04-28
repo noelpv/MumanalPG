@@ -1,0 +1,203 @@
+﻿@model IEnumerable<MumanalPG.Models.Administra.Bienes>
+
+@{
+    ViewData["Title"] = "Bienes";
+}
+
+<h2>Lista</h2>
+
+<p>
+    <a asp-action="Create">Nuevo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPartidaGasto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodigoBien)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Observacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUnidadMedida)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUnidadMedidaEmpaque)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdModelo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPais)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodigoBienAnterior)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DescripcionAnterior)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdRotacionBien)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreArchivo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Foto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StockMinimo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StockInicial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StockIngreso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StockSalida)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StockActual)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrecioReferenciaCompra)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrecioVentaBase)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrecioVentaFinal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalAcumuladoCompraBs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalAcumuladoVentaBs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalUtilidadBs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEstadoVigente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEstadoRegistro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUsuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaRegistro)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPartidaGasto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodigoBien)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Observacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUnidadMedida)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUnidadMedidaEmpaque)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdModelo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPais)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodigoBienAnterior)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescripcionAnterior)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdRotacionBien)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreArchivo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Foto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StockMinimo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StockInicial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StockIngreso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StockSalida)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StockActual)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioReferenciaCompra)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioVentaBase)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioVentaFinal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalAcumuladoCompraBs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalAcumuladoVentaBs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalUtilidadBs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEstadoVigente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEstadoRegistro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUsuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaRegistro)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdBienes">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.IdBienes">Detalle</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdBienes">Borrar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

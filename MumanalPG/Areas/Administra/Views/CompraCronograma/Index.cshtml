@@ -1,0 +1,143 @@
+﻿@model IEnumerable<MumanalPG.Models.Administra.CompraCronograma>
+
+@{
+    ViewData["Title"] = "CompraCronograma";
+}
+
+<h2>Lista</h2>
+
+<p>
+    <a asp-action="Create">Nuevo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdCompraContratacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdBeneficiario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmiteFactura)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaCronograma)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MontoDolares)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MontoBs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DescuentoBs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompraTotalBs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompraTotalDolares)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoCambio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Literal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPoa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdProceso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdDocumentoRespaldo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroDocumento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEstadoRegistro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUsuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaRegistro)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCompraContratacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdBeneficiario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmiteFactura)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaCronograma)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MontoDolares)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MontoBs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescuentoBs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompraTotalBs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompraTotalDolares)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoCambio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Literal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPoa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdProceso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdDocumentoRespaldo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroDocumento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEstadoRegistro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUsuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaRegistro)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdCompraCronograma">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.IdCompraCronograma">Detalle</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdCompraCronograma">Borrar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

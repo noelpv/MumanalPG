@@ -1,0 +1,102 @@
+﻿@model MumanalPG.Models.Administra.AlmacenInventario
+
+@{
+    ViewData["Title"] = "AlmacenInventario";
+}
+
+<h2>Detalle</h2>
+
+<div>
+    <h4>AlmacenInventario</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdAlmacen)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdAlmacen)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdBienes)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdBienes)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StockIngreso)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StockIngreso)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StockSalida)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StockSalida)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StockActual)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StockActual)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalCompraBs)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TotalCompraBs)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalVentaBs)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TotalVentaBs)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UtilidadBs)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UtilidadBs)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalCompraDolares)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TotalCompraDolares)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalVentaDolares)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TotalVentaDolares)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UtilidadDolares)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UtilidadDolares)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdEstadoRegistro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdEstadoRegistro)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdUsuario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdUsuario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaRegistro)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.IdAlmacenInventario">Editar</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

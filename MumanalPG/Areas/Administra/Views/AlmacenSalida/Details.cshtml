@@ -1,0 +1,126 @@
+﻿@model MumanalPG.Models.Administra.AlmacenSalida
+
+@{
+    ViewData["Title"] = "AlmacenSalida";
+}
+
+<h2>Detalle</h2>
+
+<div>
+    <h4>AlmacenSalida</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdAlmacenInventario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdAlmacenInventario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdAlmacen)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdAlmacen)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdBienes)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdBienes)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdDocumentoRespaldo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdDocumentoRespaldo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroDocumento)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumeroDocumento)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdBeneficiario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdBeneficiario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdBeneficiarioAlmacenero)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdBeneficiarioAlmacenero)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaSalida)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaSalida)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroLote)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumeroLote)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaVencimiento)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaVencimiento)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CantidadSalida)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CantidadSalida)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CostoUnitarioBs)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CostoUnitarioBs)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SubTotalCompraBs)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SubTotalCompraBs)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SubTotalCompraDolares)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SubTotalCompraDolares)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Concepto)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Concepto)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdEstadoRegistro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdEstadoRegistro)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdUsuario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdUsuario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaRegistro)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.IdAlmacenSalida">Editar</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

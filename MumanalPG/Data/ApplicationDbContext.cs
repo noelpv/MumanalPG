@@ -3,6 +3,7 @@ using MumanalPG.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MumanalPG.Models.Generales;
+using MumanalPG.Models.Administra;
 
 
 namespace MumanalPG.Data
@@ -53,5 +54,31 @@ namespace MumanalPG.Data
 		public DbSet<MumanalPG.Models.RoleViewModel> RoleViewModel { get; set; }
 
 		public DbSet<MumanalPG.Models.Generales.Departamento> Departamento { get; set; }
+
+		public DbSet<MumanalPG.Models.Administra.TipoAlmacen> TipoAlmacen { get; set; }
+
+		public DbSet<MumanalPG.Models.Administra.Almacen> Almacen { get; set; }
+
+		public DbSet<MumanalPG.Models.Administra.AlmacenIngreso> AlmacenIngreso { get; set; }
+
+		public DbSet<MumanalPG.Models.Administra.AlmacenInventario> AlmacenInventario { get; set; }
+
+		public DbSet<MumanalPG.Models.Administra.AlmacenSalida> AlmacenSalida { get; set; }
+
+		public DbSet<MumanalPG.Models.Administra.Bienes> Bienes { get; set; }
+
+		public DbSet<MumanalPG.Models.Administra.CompraContratacion> CompraContratacion { get; set; }
+
+		public DbSet<MumanalPG.Models.Administra.CompraContratacionBien> CompraContratacionBien { get; set; }
+
+		public DbSet<MumanalPG.Models.Administra.CompraContratacionCotiza> CompraContratacionCotiza { get; set; }
+
+		public DbSet<MumanalPG.Models.Administra.CompraCronograma> CompraCronograma { get; set; }
+
+		public DbSet<MumanalPG.Models.Administra.CompraSolicitud> CompraSolicitud { get; set; }
+
+		public DbSet<MumanalPG.Models.Administra.CompraSolicitudBien> CompraSolicitudBien { get; set; }
+
+		public DbSet<MumanalPG.Models.Administra.ActivoAsignacion> ActivoAsignacion { get; set; }
 	}
 }

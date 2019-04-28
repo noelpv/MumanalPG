@@ -1,0 +1,105 @@
+﻿@model MumanalPG.Models.Administra.Almacen
+
+@{
+    ViewData["Title"] = "Almacen";
+}
+
+<h2>Borrar</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Almacen</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdTipoAlmacen)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdTipoAlmacen)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdBeneficiario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdBeneficiario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdMunicipio)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdMunicipio)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdBarrio)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdBarrio)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdCalle)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdCalle)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroEdificio)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumeroEdificio)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroPiso)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumeroPiso)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroDepartamento)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumeroDepartamento)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefono)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Telefono)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Observacion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Observacion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdEstadoRegistro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdEstadoRegistro)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdUsuario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdUsuario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaRegistro)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="IdAlmacen" />
+        <input type="submit" value="Borrar" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

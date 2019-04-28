@@ -1,0 +1,113 @@
+﻿@model IEnumerable<MumanalPG.Models.Administra.AlmacenInventario>
+
+@{
+    ViewData["Title"] = "AlmacenInventario";
+}
+
+<h2>Lista</h2>
+
+<p>
+    <a asp-action="Create">Nuevo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdAlmacen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdBienes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StockIngreso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StockSalida)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StockActual)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalCompraBs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalVentaBs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UtilidadBs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalCompraDolares)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalVentaDolares)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UtilidadDolares)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEstadoRegistro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUsuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaRegistro)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdAlmacen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdBienes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StockIngreso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StockSalida)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StockActual)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCompraBs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalVentaBs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UtilidadBs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCompraDolares)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalVentaDolares)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UtilidadDolares)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEstadoRegistro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUsuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaRegistro)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdAlmacenInventario">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.IdAlmacenInventario">Detalle</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdAlmacenInventario">Borrar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

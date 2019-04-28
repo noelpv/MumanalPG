@@ -1,0 +1,167 @@
+﻿@model IEnumerable<MumanalPG.Models.Administra.ActivoAsignacion>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdAlmacenInventario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdBienes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodigoActivoFijo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodigoAdministrativo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdBeneficiario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaIncorporacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ufv)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CostoInicial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepreciacionAcumuladaInicial)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FactorActualizacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValorActual)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepreciacionAcumulada)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepreciacionGestion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValorNeto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TiempoVidaEnAnios)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TiempoVidaEnDias)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodigoRube)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdOrganismoFinanciador)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEstadoActivoFijo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEstadoRegistro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUsuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaRegistro)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdAlmacenInventario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdBienes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodigoActivoFijo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodigoAdministrativo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdBeneficiario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaIncorporacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ufv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CostoInicial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepreciacionAcumuladaInicial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FactorActualizacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValorActual)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepreciacionAcumulada)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepreciacionGestion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValorNeto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TiempoVidaEnAnios)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TiempoVidaEnDias)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodigoRube)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdOrganismoFinanciador)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEstadoActivoFijo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEstadoRegistro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUsuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaRegistro)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdActivoFijo">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdActivoFijo">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdActivoFijo">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

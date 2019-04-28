@@ -32,6 +32,7 @@
                                 Tipo de Beneficiarios <i class="fas fa-th-list"></i>
                             </a>
                         </li>
+                        
                         <li>
                             <a href="javascript:void(0)">Clasif 2<i class="ti-list-ol"></i></a>
                         </li>
@@ -140,30 +141,90 @@
                 <i class="fas fa-place-of-worship"></i><span class="hide-menu">Administrativo</span>
             </a>
             <ul aria-expanded="false" class="collapse">
-                <li>
-                    <a href="form-basic.html">Compras <i class="ti-file"></i></a>
-                </li>
-                <li>
-                    <a href="form-layout.html">Almacenes <i class="ti-files"></i></a>
-                </li>
-                <li>
-                    <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Activos Fijos<i class="ti-align-left"></i></a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a href="javascript:void(0)">Bienes<i class="ti-list-ol"></i></a></li>
-                        <li><a href="javascript:void(0)">Depreciación<i class="ti-list-ol"></i></a></li>
-                        <li><a asp-area="AdministraParam" asp-controller="Grupo" asp-action="Index">Grupos<i class="ti-layout-menu-separated"></i></a></li>
-                        <li><a asp-area="AdministraParam" asp-controller="SubGrupo" asp-action="Index">Sub Grupos<i class="ti-layout-menu-separated"></i></a></li>
-                        <li><a href="javascript:void(0)">Modelos<i class="ti-list-ol"></i></a></li>
-                        <li><a href="javascript:void(0)">Unidades de Medida<i class="ti-list-ol"></i></a></li>
-                        <li><a href="javascript:void(0)">Marcas<i class="ti-list-ol"></i></a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="form-material.html">Reportes <i class="ti-agenda"></i></a>
-                </li>
+                <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Compras<i class="ti-align-left"></i></a>
+                <ul aria-expanded="false" class="collapse">
+                    <li>
+                        <a asp-area="Administra" asp-controller="CompraSolicitud" asp-action="Index">
+                            Compra / Solicitud <i class="fas fa-th-list"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="Administra" asp-controller="CompraSolicitudBien" asp-action="Index">
+                            Compra / Bienes <i class="fas fa-th-list"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="Administra" asp-controller="CompraContratacion" asp-action="Index">
+                            Compra / Contratacion <i class="fas fa-th-list"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="Administra" asp-controller="CompraContratacionBien" asp-action="Index">
+                            Compra / Bienes <i class="fas fa-th-list"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="Administra" asp-controller="CompraContratacionCotiza" asp-action="Index">
+                            Compra / Cotizaciones <i class="fas fa-th-list"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="Administra" asp-controller="CompraCronograma" asp-action="Index">
+                            Compra / Cronograma <i class="fas fa-th-list"></i>
+                        </a>
+                    </li>
 
-            </ul>
-        </li>
+                </ul>
+                <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Almacenes<i class="ti-align-left"></i></a>
+                <ul aria-expanded="false" class="collapse">
+                    <li>
+                        <a asp-area="Administra" asp-controller="TipoAlmacen" asp-action="Index">
+                            Tipo de Almacenes <i class="fas fa-th-list"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="Administra" asp-controller="Almacen" asp-action="Index">
+                            Almacenes <i class="fas fa-th-list"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="Administra" asp-controller="AlmacenIngreso" asp-action="Index">
+                            Almacen Ingreso <i class="fas fa-th-list"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="Administra" asp-controller="AlmacenSalida" asp-action="Index">
+                            Almacen Salida <i class="fas fa-th-list"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="Administra" asp-controller="AlmacenInventario" asp-action="Index">
+                            Almacen Inventario <i class="fas fa-th-list"></i>
+                        </a>
+                    </li>
+
+                </ul>
+                 <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Activos Fijos<i class="ti-align-left"></i></a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li>
+                                <a asp-area="Administra" asp-controller="Bienes" asp-action="Index">
+                                    Bienes <i class="fas fa-th-list"></i>
+                                </a>
+                            </li>
+                            <li><a href="javascript:void(0)">Depreciación<i class="ti-list-ol"></i></a></li>
+                            <li><a asp-area="AdministraParam" asp-controller="Grupo" asp-action="Index">Grupos<i class="ti-layout-menu-separated"></i></a></li>
+                            <li><a asp-area="AdministraParam" asp-controller="SubGrupo" asp-action="Index">Sub Grupos<i class="ti-layout-menu-separated"></i></a></li>
+                            <li><a href="javascript:void(0)">Modelos<i class="ti-list-ol"></i></a></li>
+                            <li><a href="javascript:void(0)">Unidades de Medida<i class="ti-list-ol"></i></a></li>
+                            <li><a href="javascript:void(0)">Marcas<i class="ti-list-ol"></i></a></li>
+                 </ul>
+                 
+                    <li>
+                        <a href="form-material.html">Reportes <i class="ti-agenda"></i></a>
+                    </li>
+
+                </ul>
+</li>
         <li>
             <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                 <i class="fas fa-chart-line"></i><span class="hide-menu">Financiero</span>

@@ -1,0 +1,131 @@
+﻿@model IEnumerable<MumanalPG.Models.Administra.CompraContratacionBien>
+
+@{
+    ViewData["Title"] = "CompraBienes";
+}
+
+<h2>Lista</h2>
+
+<p>
+    <a asp-action="Create">Nuevo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdCompraContratacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdBienes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUnidadMedida)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUnidadMedidaEmpaque)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CantidadCompra)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CantidadRecibida)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrecioUnitarioCompraBs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DescuentoCompraBs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrecioTotalCompraBs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrecioTotalCompraDolares)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio87delTotalBs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdTipoCambio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdTipoMoneda)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Observaciones)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEstadoRegistro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUsuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaRegistro)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCompraContratacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdBienes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUnidadMedida)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUnidadMedidaEmpaque)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CantidadCompra)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CantidadRecibida)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioUnitarioCompraBs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescuentoCompraBs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioTotalCompraBs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioTotalCompraDolares)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio87delTotalBs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdTipoCambio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdTipoMoneda)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Observaciones)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEstadoRegistro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUsuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaRegistro)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdCompraContratacionBien">Edita</a> |
+                <a asp-action="Details" asp-route-id="@item.IdCompraContratacionBien">Detalle</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdCompraContratacionBien">Borrar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

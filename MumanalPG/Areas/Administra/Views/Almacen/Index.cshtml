@@ -1,0 +1,113 @@
+﻿@model IEnumerable<MumanalPG.Models.Administra.Almacen>
+
+@{
+    ViewData["Title"] = "Almacen";
+}
+
+<h2>Lista</h2>
+
+<p>
+    <a asp-action="Create">Nuevo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdTipoAlmacen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdBeneficiario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdMunicipio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdBarrio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdCalle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroEdificio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroPiso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroDepartamento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Observacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEstadoRegistro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUsuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaRegistro)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdTipoAlmacen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdBeneficiario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdMunicipio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdBarrio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCalle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroEdificio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroPiso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroDepartamento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Observacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEstadoRegistro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUsuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaRegistro)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdAlmacen">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.IdAlmacen">Detalle</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdAlmacen">Borrar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
