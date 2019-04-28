@@ -55,13 +55,10 @@ namespace MumanalPG.Areas.Planificacion
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdHojaRuta,IdUnidadNivel3,SolicitudCodigo,CiteTramite,CiteFecha,NroFojas,EstadoCodigo,UsuarioCodigo,FechaRegistro,HoraRegistro")] HojaRuta hojaRuta)
+        public async Task<IActionResult> Create([Bind("IdHojaRuta,IdUnidadEjecutora,SolicitudCodigo,IdUnidadNivel3,CiteTramite,CiteFecha,NroFojas,IdEstadoRegistro,IdUsuario,FechaRegistro,HoraRegistro")] HojaRuta hojaRuta)
         {
             if (ModelState.IsValid)
             {
-                hojaRuta.FechaRegistro = DateTime.Now;
-                hojaRuta.IdEstadoRegistro= '1';
-
                 _context.Add(hojaRuta);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -90,7 +87,7 @@ namespace MumanalPG.Areas.Planificacion
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdHojaRuta,IdUnidadNivel3,SolicitudCodigo,CiteTramite,CiteFecha,NroFojas,EstadoCodigo,UsuarioCodigo,FechaRegistro,HoraRegistro")] HojaRuta hojaRuta)
+        public async Task<IActionResult> Edit(int id, [Bind("IdHojaRuta,IdUnidadEjecutora,SolicitudCodigo,IdUnidadNivel3,CiteTramite,CiteFecha,NroFojas,IdEstadoRegistro,IdUsuario,FechaRegistro,HoraRegistro")] HojaRuta hojaRuta)
         {
             if (id != hojaRuta.IdHojaRuta)
             {
