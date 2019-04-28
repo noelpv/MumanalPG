@@ -60,6 +60,9 @@ namespace MumanalPG.Areas.Administra
         {
             if (ModelState.IsValid)
             {
+                activoAsignacion.FechaRegistro = DateTime.Now;
+                activoAsignacion.IdEstadoRegistro = '1';
+
                 _context.Add(activoAsignacion);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

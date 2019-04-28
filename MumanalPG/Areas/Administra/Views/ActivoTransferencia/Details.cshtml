@@ -1,0 +1,102 @@
+﻿@model MumanalPG.Models.Administra.ActivoTransferencia
+
+@{
+    ViewData["Title"] = "ActivosTrnasferencia";
+}
+
+<h2>Detalle</h2>
+
+<div>
+    <h4>ActivoTransferencia</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdActivoFijo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdActivoFijo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdAlmacen)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdAlmacen)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdAlmacenDestino)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdAlmacenDestino)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdUnidadEjecutora)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdUnidadEjecutora)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdUnidadEjecutoraDestino)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdUnidadEjecutoraDestino)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdBeneficiario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdBeneficiario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdBeneficiarioDestino)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdBeneficiarioDestino)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdBeneficiarioEncargado)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdBeneficiarioEncargado)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Observacion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Observacion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaTransferencia)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaTransferencia)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdEstadoActivoFijo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdEstadoActivoFijo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdEstadoRegistro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdEstadoRegistro)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaRegistro)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdUsuario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdUsuario)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.IdActivoTransferencia">Editar</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

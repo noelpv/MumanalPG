@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MumanalPG.Models.Generales;
 using MumanalPG.Models.Administra;
-using MumanalPG.Models.Ventas;
 
 
 namespace MumanalPG.Data
@@ -81,7 +80,5 @@ namespace MumanalPG.Data
 		public DbSet<MumanalPG.Models.Administra.CompraSolicitudBien> CompraSolicitudBien { get; set; }
 
 		public DbSet<MumanalPG.Models.Administra.ActivoAsignacion> ActivoAsignacion { get; set; }
-
-		public DbSet<MumanalPG.Models.Ventas.VentaTarifario> VentaTarifario { get; set; }
 	}
 }

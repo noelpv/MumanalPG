@@ -150,7 +150,7 @@
                     </li>
                     <li>
                         <a asp-area="Administra" asp-controller="CompraSolicitudBien" asp-action="Index">
-                            Compra / Bienes <i class="fas fa-th-list"></i>
+                            Solicitud / Bienes <i class="fas fa-th-list"></i>
                         </a>
                     </li>
                     <li>
@@ -204,26 +204,39 @@
                     </li>
 
                 </ul>
-                 <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Activos Fijos<i class="ti-align-left"></i></a>
-                        <ul aria-expanded="false" class="collapse">
-                            <li>
-                                <a asp-area="Administra" asp-controller="Bienes" asp-action="Index">
-                                    Bienes <i class="fas fa-th-list"></i>
-                                </a>
-                            </li>
-                            <li><a href="javascript:void(0)">Depreciación<i class="ti-list-ol"></i></a></li>
-                            <li><a asp-area="AdministraParam" asp-controller="Grupo" asp-action="Index">Grupos<i class="ti-layout-menu-separated"></i></a></li>
-                            <li><a asp-area="AdministraParam" asp-controller="SubGrupo" asp-action="Index">Sub Grupos<i class="ti-layout-menu-separated"></i></a></li>
-                            <li><a href="javascript:void(0)">Modelos<i class="ti-list-ol"></i></a></li>
-                            <li><a href="javascript:void(0)">Unidades de Medida<i class="ti-list-ol"></i></a></li>
-                            <li><a href="javascript:void(0)">Marcas<i class="ti-list-ol"></i></a></li>
-                 </ul>
-                 
-                    <li>
-                        <a href="form-material.html">Reportes <i class="ti-agenda"></i></a>
-                    </li>
 
+                <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Activos Fijos<i class="ti-align-left"></i></a>
+                <ul aria-expanded="false" class="collapse">
+                    <li>
+                        <a asp-area="Administra" asp-controller="ActivoAsignacion" asp-action="Index">
+                            Activos Asignacion <i class="fas fa-th-list"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="Administra" asp-controller="ActivoTransferencia" asp-action="Index">
+                            Activos Transferencia <i class="fas fa-th-list"></i>
+                        </a>
+                    </li>
                 </ul>
+                <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Clasificadores<i class="ti-align-left"></i></a>
+                <ul aria-expanded="false" class="collapse">
+                    <li>
+                        <a asp-area="Administra" asp-controller="Bienes" asp-action="Index">
+                            Bienes <i class="fas fa-th-list"></i>
+                        </a>
+                    </li>
+                    <li><a href="javascript:void(0)">Depreciación<i class="ti-list-ol"></i></a></li>
+                    <li><a asp-area="AdministraParam" asp-controller="Grupo" asp-action="Index">Grupos<i class="ti-layout-menu-separated"></i></a></li>
+                    <li><a asp-area="AdministraParam" asp-controller="SubGrupo" asp-action="Index">Sub Grupos<i class="ti-layout-menu-separated"></i></a></li>
+                    <li><a href="javascript:void(0)">Modelos<i class="ti-list-ol"></i></a></li>
+                    <li><a href="javascript:void(0)">Unidades de Medida<i class="ti-list-ol"></i></a></li>
+                    <li><a href="javascript:void(0)">Marcas<i class="ti-list-ol"></i></a></li>
+                </ul>
+                <li>
+                    <a href="form-material.html">Reportes <i class="ti-agenda"></i></a>
+                </li>
+
+            </ul>
 </li>
         <li>
             <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
