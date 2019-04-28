@@ -20,6 +20,7 @@ namespace MumanalPG.Areas.Administra
             _context = context;
         }
 
+
         // GET: Administra/ActivoAsignacion
         public async Task<IActionResult> Index()
         {
