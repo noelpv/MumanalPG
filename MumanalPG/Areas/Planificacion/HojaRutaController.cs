@@ -23,7 +23,7 @@ namespace MumanalPG.Areas.Planificacion
         // GET: Planificacion/HojaRuta
         public async Task<IActionResult> Index()
         {
-            return View(await _context.HojaRuta.ToListAsync());
+            return View(await _context.Planificacion_HojaRuta.ToListAsync());
         }
 
         // GET: Planificacion/HojaRuta/Details/5
@@ -34,7 +34,7 @@ namespace MumanalPG.Areas.Planificacion
                 return NotFound();
             }
 
-            var hojaRuta = await _context.HojaRuta
+            var hojaRuta = await _context.Planificacion_HojaRuta
                 .FirstOrDefaultAsync(m => m.IdHojaRuta == id);
             if (hojaRuta == null)
             {
@@ -77,7 +77,7 @@ namespace MumanalPG.Areas.Planificacion
                 return NotFound();
             }
 
-            var hojaRuta = await _context.HojaRuta.FindAsync(id);
+            var hojaRuta = await _context.Planificacion_HojaRuta.FindAsync(id);
             if (hojaRuta == null)
             {
                 return NotFound();
@@ -128,7 +128,7 @@ namespace MumanalPG.Areas.Planificacion
                 return NotFound();
             }
 
-            var hojaRuta = await _context.HojaRuta
+            var hojaRuta = await _context.Planificacion_HojaRuta
                 .FirstOrDefaultAsync(m => m.IdHojaRuta == id);
             if (hojaRuta == null)
             {
@@ -143,15 +143,15 @@ namespace MumanalPG.Areas.Planificacion
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var hojaRuta = await _context.HojaRuta.FindAsync(id);
-            _context.HojaRuta.Remove(hojaRuta);
+            var hojaRuta = await _context.Planificacion_HojaRuta.FindAsync(id);
+            _context.Planificacion_HojaRuta.Remove(hojaRuta);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool HojaRutaExists(int id)
         {
-            return _context.HojaRuta.Any(e => e.IdHojaRuta == id);
+            return _context.Planificacion_HojaRuta.Any(e => e.IdHojaRuta == id);
         }
     }
 }

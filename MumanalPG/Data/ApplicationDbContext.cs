@@ -43,7 +43,7 @@ namespace MumanalPG.Data
 		public DbSet<MumanalPG.Models.Ventas.vRequisito> Ventas_vRequisito { get; set; }
         public DbSet<MumanalPG.Models.Ventas.VentaContratacion> Ventas_VentaContratacion { get; set; }
         public DbSet<MumanalPG.Models.Ventas.VentaRequisito> Ventas_VentaRequisito { get; set; }
-        public DbSet<MumanalPG.Models.Ventas.VentaTarifario> Ventas_VentaTarifario { get; set; }
+        public DbSet<MumanalPG.Models.Ventas.VentaTarifario> VentaTarifario { get; set; }
 
         public DbSet<MumanalPG.Models.Ventas.pVerificaLimite> Ventas_pVerificaLimite { get; set; }
 
@@ -82,6 +82,6 @@ namespace MumanalPG.Data
 
         public DbSet<MumanalPG.Models.Administra.ActivoAsignacion> ActivoAsignacion { get; set; }
         public DbSet<MumanalPG.Models.Administra.ActivoTransferencia> ActivoTransferencia { get; set; }
-        public DbSet<MumanalPG.Models.Administra.ActivoTransferencia> ActivoTransferencia { get; set; }
+        public DbSet<MumanalPG.Models.Planificacion.HojaRuta> Planificacion_HojaRuta { get; set; }
     }
 }
