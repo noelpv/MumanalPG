@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using MumanalPG.Models.Generales;
 using MumanalPG.Models.Administra;
 using MumanalPG.Models.Planificacion;
+using MumanalPG.Models.Ventas;
 
 
 namespace MumanalPG.Data
@@ -90,5 +91,6 @@ namespace MumanalPG.Data
         public DbSet<MumanalPG.Models.Planificacion.PresupuestoFormulacion> PresupuestoFormulacion { get; set; }
         public DbSet<MumanalPG.Models.Planificacion.PresupuestoModificaciones> PresupuestoModificaciones { get; set; }
         public DbSet<MumanalPG.Models.Planificacion.Instrucciones> Instrucciones { get; set; }
+        public DbSet<MumanalPG.Models.Ventas.VentaSolicitud> VentaSolicitud { get; set; }
     }
 }

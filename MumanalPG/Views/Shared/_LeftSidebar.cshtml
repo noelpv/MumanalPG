@@ -116,23 +116,17 @@
                 <i class="fas fa-hand-holding-usd"></i><span class="hide-menu">Prestaciones</span>
             </a>
             <ul aria-expanded="false" class="collapse">
-
-                <li>
-                    <a href="app-email.html">Afiliaciones <i class="fas fa-handshake"></i></a>
-                </li>
-                <li>
+                        <li><a asp-area="Ventas" asp-controller="VentaSolicitud" asp-action="Index">Afiliacion<i class="ti-layout-menu-separated"></i></a></li>
+                 <li>
                     <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">ASR<i class="ti-align-left"></i></a>
                     <ul aria-expanded="false" class="collapse">
+                        <li><a asp-area="Ventas" asp-controller="VentaContratacion" asp-action="Index">ASR Digital<i class="ti-layout-menu-separated"></i></a></li>
                         <li><a asp-area="Ventas" asp-controller="VentaContratacion" asp-action="Index">Registro ASR<i class="ti-layout-menu-separated"></i></a></li>
-                        <li><a href="javascript:void(0)">Otros 2<i class="ti-list-ol"></i></a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="app-compose.html">Bono Cesantia <i class="icon-note"></i></a>
-                </li>
-                <li>
-                    <a href="app-compose.html">Cuota Mortuoria <i class="icon-note"></i></a>
-                </li>
+
+                <li><a asp-area="Ventas" asp-controller="VentaContratacion" asp-action="Index">Bono Cesantia <i class="ti-layout-menu-separated"></i></a></li>
+                <li><a asp-area="Ventas" asp-controller="VentaContratacion" asp-action="Index">Cuota Mortuoria <i class="ti-layout-menu-separated"></i></a></li>
                 <li>
                     <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Clasificadores<i class="ti-align-left"></i></a>
                     <ul aria-expanded="false" class="collapse">
