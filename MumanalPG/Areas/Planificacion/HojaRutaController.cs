@@ -59,6 +59,9 @@ namespace MumanalPG.Areas.Planificacion
         {
             if (ModelState.IsValid)
             {
+                hojaRuta.FechaRegistro = DateTime.Now;
+                hojaRuta.IdEstadoRegistro = '1';
+
                 _context.Add(hojaRuta);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

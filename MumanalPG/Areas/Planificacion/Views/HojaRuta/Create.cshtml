@@ -1,10 +1,10 @@
 ﻿@model MumanalPG.Models.Planificacion.HojaRuta
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Hoja de Ruta";
 }
 
-<h2>Create</h2>
+<h2>Crear</h2>
 
 <h4>HojaRuta</h4>
 <hr />
@@ -42,28 +42,28 @@
                 <input asp-for="NroFojas" class="form-control" />
                 <span asp-validation-for="NroFojas" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="IdEstadoRegistro" class="control-label"></label>
                 <input asp-for="IdEstadoRegistro" class="form-control" />
                 <span asp-validation-for="IdEstadoRegistro" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="IdUsuario" class="control-label"></label>
                 <input asp-for="IdUsuario" class="form-control" />
                 <span asp-validation-for="IdUsuario" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="FechaRegistro" class="control-label"></label>
                 <input asp-for="FechaRegistro" class="form-control" />
                 <span asp-validation-for="FechaRegistro" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="HoraRegistro" class="control-label"></label>
                 <input asp-for="HoraRegistro" class="form-control" />
                 <span asp-validation-for="HoraRegistro" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Crear" class="btn btn-default" />
             </div>
         </form>
     </div>
