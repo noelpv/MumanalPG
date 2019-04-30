@@ -20,8 +20,8 @@ namespace MumanalPG.Models.Planificacion
 		public Int32 IdPoaDestino { get; set; }
 		public Int32 IdPresupuestoFormulacionDestino { get; set; }
 		public Decimal MontoDestino { get; set; }
-		public string EstadoCodigo { get; set; }
-		public string UsuarioCodigo { get; set; }
+		public Int32 IdEstadoRegistro { get; set; }
+		public Int32 IdUsuario { get; set; }
 		public DateTime FechaRegistro { get; set; }
 	}
 }

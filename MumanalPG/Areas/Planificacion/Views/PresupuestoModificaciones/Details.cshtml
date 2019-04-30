@@ -1,0 +1,96 @@
+﻿@model MumanalPG.Models.Planificacion.PresupuestoModificaciones
+
+@{
+    ViewData["Title"] = "Presupuesto Modificaciones";
+}
+
+<h2>Detalle</h2>
+
+<div>
+    <h4>PresupuestoModificaciones</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Gestion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Gestion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdDocumentoRespaldo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdDocumentoRespaldo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroRespaldo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumeroRespaldo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaAutorizacion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaAutorizacion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdPoa)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdPoa)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdPresupuestoFormulacion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdPresupuestoFormulacion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MontoOrigen)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MontoOrigen)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdPoaDestino)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdPoaDestino)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdPresupuestoFormulacionDestino)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdPresupuestoFormulacionDestino)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MontoDestino)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MontoDestino)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdEstadoRegistro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdEstadoRegistro)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdUsuario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdUsuario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FechaRegistro)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.IdPresupuestoModificaciones">Editar</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

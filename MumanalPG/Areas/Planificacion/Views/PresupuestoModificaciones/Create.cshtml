@@ -1,0 +1,93 @@
+﻿@model MumanalPG.Models.Planificacion.PresupuestoModificaciones
+
+@{
+    ViewData["Title"] = "Presupuesto Modificaciones";
+}
+
+<h2>Crear</h2>
+
+<h4>PresupuestoModificaciones</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Gestion" class="control-label"></label>
+                <input asp-for="Gestion" class="form-control" />
+                <span asp-validation-for="Gestion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdDocumentoRespaldo" class="control-label"></label>
+                <input asp-for="IdDocumentoRespaldo" class="form-control" />
+                <span asp-validation-for="IdDocumentoRespaldo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumeroRespaldo" class="control-label"></label>
+                <input asp-for="NumeroRespaldo" class="form-control" />
+                <span asp-validation-for="NumeroRespaldo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaAutorizacion" class="control-label"></label>
+                <input asp-for="FechaAutorizacion" class="form-control" />
+                <span asp-validation-for="FechaAutorizacion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdPoa" class="control-label"></label>
+                <input asp-for="IdPoa" class="form-control" />
+                <span asp-validation-for="IdPoa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdPresupuestoFormulacion" class="control-label"></label>
+                <input asp-for="IdPresupuestoFormulacion" class="form-control" />
+                <span asp-validation-for="IdPresupuestoFormulacion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MontoOrigen" class="control-label"></label>
+                <input asp-for="MontoOrigen" class="form-control" />
+                <span asp-validation-for="MontoOrigen" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdPoaDestino" class="control-label"></label>
+                <input asp-for="IdPoaDestino" class="form-control" />
+                <span asp-validation-for="IdPoaDestino" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdPresupuestoFormulacionDestino" class="control-label"></label>
+                <input asp-for="IdPresupuestoFormulacionDestino" class="form-control" />
+                <span asp-validation-for="IdPresupuestoFormulacionDestino" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MontoDestino" class="control-label"></label>
+                <input asp-for="MontoDestino" class="form-control" />
+                <span asp-validation-for="MontoDestino" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="IdEstadoRegistro" class="control-label"></label>
+                <input asp-for="IdEstadoRegistro" class="form-control" />
+                <span asp-validation-for="IdEstadoRegistro" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="IdUsuario" class="control-label"></label>
+                <input asp-for="IdUsuario" class="form-control" />
+                <span asp-validation-for="IdUsuario" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="FechaRegistro" class="control-label"></label>
+                <input asp-for="FechaRegistro" class="form-control" />
+                <span asp-validation-for="FechaRegistro" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

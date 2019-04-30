@@ -1,0 +1,107 @@
+﻿@model IEnumerable<MumanalPG.Models.Planificacion.PresupuestoModificaciones>
+
+@{
+    ViewData["Title"] = "Presupuesto Modificaciones";
+}
+
+<h2>Lista</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Gestion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdDocumentoRespaldo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroRespaldo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaAutorizacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPoa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPresupuestoFormulacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MontoOrigen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPoaDestino)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPresupuestoFormulacionDestino)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MontoDestino)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEstadoRegistro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUsuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaRegistro)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gestion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdDocumentoRespaldo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroRespaldo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaAutorizacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPoa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPresupuestoFormulacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MontoOrigen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPoaDestino)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPresupuestoFormulacionDestino)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MontoDestino)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEstadoRegistro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUsuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaRegistro)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdPresupuestoModificaciones">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.IdPresupuestoModificaciones">Detalle</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdPresupuestoModificaciones">Borrar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

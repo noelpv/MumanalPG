@@ -40,8 +40,16 @@
                 <li>
                     <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Presupuesto<i class="ti-align-left"></i></a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a href="javascript:void(0)">Presupuesto 1<i class="ti-list-ol"></i></a></li>
-                        <li><a href="javascript:void(0)">Presupuesto 2<i class="ti-list-ol"></i></a></li>
+                        <li>
+                            <a asp-area="Planificacion" asp-controller="PresupuestoFormulacion" asp-action="Index">
+                                Formulacion Presupuestaria <i class="fas fa-th-list"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="Planificacion" asp-controller="PresupuestoModificaciones" asp-action="Index">
+                                Modificaciones Presupuestarias <i class="fas fa-th-list"></i>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 @*<li>
@@ -59,7 +67,21 @@
                         Hoja de Ruta <i class="fas fa-th-list"></i>
                     </a>
                 </li>
-                
+                <li>
+                    <a asp-area="Planificacion" asp-controller="HojaRutaDetalle" asp-action="Index">
+                        Hoja Ruta Detalle <i class="fas fa-th-list"></i>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Planificacion" asp-controller="HojaRutaInstrucciones" asp-action="Index">
+                        Hoja Ruta Instrucciones <i class="fas fa-th-list"></i>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Planificacion" asp-controller="HojaRutaDocumentos" asp-action="Index">
+                        Hoja Ruta Documentos <i class="fas fa-th-list"></i>
+                    </a>
+                </li>
             </ul>
             </li>
                 <li>
@@ -74,15 +96,17 @@
                         </li>
 
                         <li>
-                            <a href="javascript:void(0)">Clasif 2<i class="ti-list-ol"></i></a>
+                            <a asp-area="Planificacion" asp-controller="Instrucciones" asp-action="Index">
+                                Instrucciones Hoja Ruta <i class="fas fa-th-list"></i>
+                            </a>
                         </li>
                     </ul>
                 </li>
                 <li>
                     <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Reportes<i class="ti-align-left"></i></a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a href="javascript:void(0)">Reportes 1<i class="ti-list-ol"></i></a></li>
-                        <li><a href="javascript:void(0)">Reportes 2<i class="ti-list-ol"></i></a></li>
+                        <li><a href="javascript:void(0)">Reporte 1<i class="ti-list-ol"></i></a></li>
+                        <li><a href="javascript:void(0)">Reporte 2<i class="ti-list-ol"></i></a></li>
                     </ul>
                 </li>
             </ul>

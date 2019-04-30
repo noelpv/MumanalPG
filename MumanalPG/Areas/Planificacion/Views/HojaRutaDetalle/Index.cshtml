@@ -1,0 +1,119 @@
+﻿@model IEnumerable<MumanalPG.Models.Planificacion.HojaRutaDetalle>
+
+@{
+    ViewData["Title"] = "HojaRuta Detalle";
+}
+
+<h2>Lista</h2>
+
+<p>
+    <a asp-action="Create">Nuevo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdHojaRuta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUnidadEjecutora)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUnidadEjecutoraDestino)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUnidadEjecutoraCopia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUnidadEjecutoraCoordinar)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Idbeneficiario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdbeneficiarioDestino)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdbeneficiarioCopia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdbeneficiarioCoordinar)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlazoDias)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Proveido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEstadoRegistro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUsuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaRegistro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HoraRegistro)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdHojaRuta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUnidadEjecutora)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUnidadEjecutoraDestino)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUnidadEjecutoraCopia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUnidadEjecutoraCoordinar)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Idbeneficiario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdbeneficiarioDestino)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdbeneficiarioCopia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdbeneficiarioCoordinar)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlazoDias)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Proveido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEstadoRegistro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUsuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaRegistro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoraRegistro)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdHojaRutaDetalle">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.IdHojaRutaDetalle">Detalle</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdHojaRutaDetalle">Borrar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

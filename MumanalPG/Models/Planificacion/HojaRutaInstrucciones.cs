@@ -12,8 +12,8 @@ namespace MumanalPG.Models.Planificacion
 		public Int32 IdHojaRutaInstruccion { get; set; }
 		public Int32 IdHojaRutaDetalle { get; set; }
 		public Int32 IdInstruccion { get; set; }
-		public string EstadoCodigo { get; set; }
-		public string UsuarioCodigo { get; set; }
+		public Int32 IdEstadoRegistro { get; set; }
+		public Int32 IdUsuario { get; set; }
 		public DateTime FechaRegistro { get; set; }
 		public string HoraRegistro { get; set; }
 	}

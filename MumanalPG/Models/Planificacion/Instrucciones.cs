@@ -9,10 +9,10 @@ namespace MumanalPG.Models.Planificacion
 	{
 		[DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
 		[Key]
-		public Int32 IdIinstruccion { get; set; }
+		public Int32 IdInstruccion { get; set; }
 		public string Descripcion { get; set; }
-		public string EstadoCodigo { get; set; }
-		public string UsuarioCodigo { get; set; }
+		public Int32 IdEstadoRegistro { get; set; }
+		public Int32 IdUsuario { get; set; }
 		public DateTime FechaRegistro { get; set; }
 	}
 }

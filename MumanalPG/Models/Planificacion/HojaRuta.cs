@@ -12,7 +12,7 @@ namespace MumanalPG.Models.Planificacion
 		public Int32 IdHojaRuta { get; set; }
         public Int32 IdUnidadEjecutora { get; set; }
         public Int32 SolicitudCodigo { get; set; }
-        public Int32 IdUnidadNivel3 { get; set; }
+        //public Int32 IdUnidadNivel3 { get; set; }
 		public string CiteTramite { get; set; }
 		public DateTime CiteFecha { get; set; }
 		public Int32 NroFojas { get; set; }

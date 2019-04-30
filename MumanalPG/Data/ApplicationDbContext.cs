@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MumanalPG.Models.Generales;
 using MumanalPG.Models.Administra;
+using MumanalPG.Models.Planificacion;
 
 
 namespace MumanalPG.Data
@@ -83,5 +84,11 @@ namespace MumanalPG.Data
         public DbSet<MumanalPG.Models.Administra.ActivoAsignacion> ActivoAsignacion { get; set; }
         public DbSet<MumanalPG.Models.Administra.ActivoTransferencia> ActivoTransferencia { get; set; }
         public DbSet<MumanalPG.Models.Planificacion.HojaRuta> Planificacion_HojaRuta { get; set; }
+        public DbSet<MumanalPG.Models.Planificacion.HojaRutaDetalle> HojaRutaDetalle { get; set; }
+        public DbSet<MumanalPG.Models.Planificacion.HojaRutaInstrucciones> HojaRutaInstrucciones { get; set; }
+        public DbSet<MumanalPG.Models.Planificacion.HojaRutaDocumentos> HojaRutaDocumentos { get; set; }
+        public DbSet<MumanalPG.Models.Planificacion.PresupuestoFormulacion> PresupuestoFormulacion { get; set; }
+        public DbSet<MumanalPG.Models.Planificacion.PresupuestoModificaciones> PresupuestoModificaciones { get; set; }
+        public DbSet<MumanalPG.Models.Planificacion.Instrucciones> Instrucciones { get; set; }
     }
 }
