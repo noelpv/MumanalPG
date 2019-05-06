@@ -131,7 +131,11 @@
                     <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Clasificadores<i class="ti-align-left"></i></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a asp-area="Ventas" asp-controller="VentaTarifario" asp-action="Index">Tarifario<i class="ti-layout-menu-separated"></i></a></li>
-                        <li><a href="javascript:void(0)">Otros 2<i class="ti-list-ol"></i></a></li>
+                        <li>
+                            <a asp-area="Ventas" asp-controller="DocumentoRespaldo" asp-action="Index">
+                                Documentos Respaldo <i class="fas fa-th-list"></i>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li>
