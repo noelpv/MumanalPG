@@ -21,7 +21,7 @@ namespace MumanalPG.Models.RRHH
 		public Int32 IdEstadoRegistro { get; set; }
 		public Int32 IdUsuario { get; set; }
 		public DateTime FechaRegistro { get; set; }
-        public float MontoLimite { get; set; }
+        public decimal MontoLimite { get; set; }
         public Int32 CantidadLimite { get; set; }
     }
 }

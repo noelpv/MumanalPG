@@ -125,7 +125,6 @@
     <Folder Include="Areas\Administra\Models\" />
     <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Areas\RRHH\Controllers\" />
-    <Folder Include="Areas\RRHH\Data\" />
     <Folder Include="Areas\RRHH\Models\" />
     <Folder Include="Areas\RRHH\Views\" />
     <Folder Include="Controllers\" />
