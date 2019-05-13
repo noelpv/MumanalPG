@@ -10005,7 +10005,7 @@ Preloader
   top: 0px;
   position: fixed;
   z-index: 99999;
-  background: #fff; }
+  background-color: rgba(255,255,255,.8); }
   .preloader .cssload-speeding-wheel {
     position: absolute;
     top: calc(50% - 3.5px);
@@ -11163,8 +11163,12 @@ sidebar navigation
   .sidebar-nav > ul > li {
     margin-bottom: 8px;
     margin-top: 8px; }
+    .sidebar-nav > ul > li.selected {
+      outline: none !important;
+      box-shadow: 0 0 3pt 2pt #ebebeb;
+    }
     .sidebar-nav > ul > li.selected > a {
-      color: #009efb; }
+      color: #009efb !important; }
       .sidebar-nav > ul > li.selected > a i {
         color: #009efb; }
   .sidebar-nav .waves-effect {
@@ -11836,6 +11840,12 @@ File Upload
   background-position: center right 0.5625rem;
   -webkit-background-size: 1.125rem 1.125rem;
   background-size: 1.125rem 1.125rem; }
+
+select.form-control-success,
+select.form-control-warning,
+select.form-control-danger {
+  background-position: center right 1.5625rem;
+ }
 
 .has-success .form-control-feedback,
 .has-success .form-control-label,

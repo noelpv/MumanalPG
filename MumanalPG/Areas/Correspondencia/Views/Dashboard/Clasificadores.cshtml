@@ -1,0 +1,21 @@
+@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.RRHHParam.TipoBeneficiario>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging
+@{
+    ViewData["Title"] = "Correspondencia";
+}
+<div class="row">
+    <div class="col-lg-3 col-md-6 col-sm-4 col-xs-12">
+        <a asp-area="correspondencia" asp-controller="tipodocumento" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-primary ribbon-vertical-l">
+                    <i class="ti-zip"></i>
+                </div>
+                <h4>Tipos de Documento</h4>
+                <p class="ribbon-content">Aqui podra administrar los tipos de documentos.</p>
+            </div>
+        </a>
+
+    </div>
+    
+</div>

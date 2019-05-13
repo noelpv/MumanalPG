@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using MumanalPG.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using ReflectionIT.Mvc.Paging;
 using SmartBreadcrumbs;
 
@@ -67,11 +69,7 @@ namespace MumanalPG
 			services.UseBreadcrumbs(GetType().Assembly);
 
 			services.AddDistributedMemoryCache();
-			services.AddSession(options =>
-			{
-				options.IdleTimeout = TimeSpan.FromSeconds(30);
-				options.Cookie.HttpOnly = true;
-			});
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -105,11 +103,12 @@ namespace MumanalPG
 			//	// other options omitted...
 			//});
 
-			app.UseMvc(routes => { routes.MapRoute(name: "areas", template: "{area=Customer}/{controller=Home}/{action=Index}/{id?}"); });
-			app.UseMvc(routes => { routes.MapRoute(name: "areas", template: "{area=Administra}/{controller=Home}/{action=Index}/{id?}"); });
-			app.UseMvc(routes => { routes.MapRoute(name: "areas", template: "{area=AdministraParam}/{controller=Home}/{action=Index}/{id?}"); });
-			//app.UseMvc(routes => { routes.MapRoute(name: "areas", template: "{area=Ventas}/{controller=VentaContratacion}/{action=BuscaPersona}/{id?}"); });
-
+			app.UseMvc(routes =>
+			{
+				routes.MapRoute(name: "areas",template: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
+				routes.MapRoute(name: "default", template: "{area=Admin}/{controller=Home}/{action=Index}/{id?}");
+			});
+			
 			app.UseStaticFiles();
 		}
 	}
