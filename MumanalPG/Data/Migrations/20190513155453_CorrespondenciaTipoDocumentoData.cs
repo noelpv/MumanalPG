@@ -13,32 +13,32 @@ namespace MumanalPG.Data.Migrations
             migrationBuilder.InsertData(
                 table: "TipoDocumento",
                 schema: "Correspondencia",
-                columns: new[] {"Id", "Nombre", "Descripcion", "Estado"},
-                values: new object[] {1, "Informe", "-", "ACTIVO" });
+                columns: new[] {"Nombre", "Descripcion", "IdEstadoRegistro", "IdUsuario"},
+                values: new object[] {"Informe", "-",0,1});
             
             migrationBuilder.InsertData(
                 table: "TipoDocumento",
                 schema: "Correspondencia",
-                columns: new[] {"Id", "Nombre", "Descripcion", "Estado"},
-                values: new object[] {2, "Nota Interna", "-", "ACTIVO" });
+                columns: new[] {"Nombre", "Descripcion", "IdEstadoRegistro", "IdUsuario"},
+                values: new object[] {"Nota Interna", "-",0,1});
             
             migrationBuilder.InsertData(
                 table: "TipoDocumento",
                 schema: "Correspondencia",
-                columns: new[] {"Id", "Nombre", "Descripcion", "Estado"},
-                values: new object[] {3, "Nota Externa", "-", "ACTIVO" });
+                columns: new[] {"Nombre", "Descripcion", "IdEstadoRegistro", "IdUsuario"},
+                values: new object[] { "Nota Externa", "-" ,0,1});
             
             migrationBuilder.InsertData(
                 table: "TipoDocumento",
                 schema: "Correspondencia",
-                columns: new[] {"Id", "Nombre", "Descripcion", "Estado"},
-                values: new object[] {4, "Memorandum", "-", "ACTIVO" });
+                columns: new[] { "Nombre", "Descripcion", "IdEstadoRegistro", "IdUsuario"},
+                values: new object[] {"Memorandum", "-",0,1});
             
             migrationBuilder.InsertData(
                 table: "TipoDocumento",
                 schema: "Correspondencia",
-                columns: new[] {"Id", "Nombre", "Descripcion", "Estado"},
-                values: new object[] { 5,"Comunicación Interna", "-", "ACTIVO"  });
+                columns: new[] { "Nombre", "Descripcion", "IdEstadoRegistro", "IdUsuario"},
+                values: new object[] {"Comunicación Interna", "-",0,1});
 
         }
 

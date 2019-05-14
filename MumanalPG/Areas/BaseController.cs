@@ -9,6 +9,7 @@ using MumanalPG.Data;
 using Microsoft.EntityFrameworkCore;
 using MumanalPG.Utility;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using MumanalPG.Extensions;
 using SmartBreadcrumbs;
 
@@ -18,10 +19,18 @@ namespace MumanalPG.Areas
     public abstract class BaseController : Controller
     {
         protected ApplicationDbContext DB { get; }
+        private readonly UserManager<IdentityUser> _userManager;
+
 
         protected BaseController(ApplicationDbContext db)
         {
             DB = db;
+        }
+        
+        protected BaseController(ApplicationDbContext db, UserManager<IdentityUser> userManager)
+        {
+            DB = db;
+            _userManager = userManager;
         }
 
         private void SetFlash(string msgType, string msg)
@@ -46,6 +55,13 @@ namespace MumanalPG.Areas
         public void SetFlashError(string msg)
         {
             SetFlash("error", msg);
+        }
+
+        public async Task<ApplicationUser> GetCurrentUser()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            ApplicationUser currentUser = await DB.ApplicationUser.Where(u => u.Id == user.Id).FirstOrDefaultAsync();
+            return currentUser;
         }
     }
 }

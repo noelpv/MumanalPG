@@ -18,14 +18,4 @@
         <textarea asp-for="Descripcion"  class="form-control"></textarea>
         <span asp-validation-for="Descripcion" class="text-danger"></span>
     </div>
-    
-    <div class="form-group m-b-40 @hasError">     
-        <label asp-for="Estado" class="form-control-label"></label>
-        <select asp-for="Estado" class="form-control">
-            <option value="ACTIVO">Activo</option>
-            <option value="INACTIVO">Inactivo</option>
-            <option value="ELIMINADO">Eliminado</option>
-        </select>
-        <span asp-validation-for="Estado" class="text-danger"></span>
-    </div>
 </form>

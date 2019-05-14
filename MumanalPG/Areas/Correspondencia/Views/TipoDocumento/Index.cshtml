@@ -33,7 +33,6 @@
         <tr>
             <th>@Html.SortableHeaderFor(model => model.Nombre)</th>
             <th>Descripción</th>
-            <th>Estado</th>
             <th></th>
         </tr>
 
@@ -49,9 +48,6 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Descripcion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Estado)
                 </td>
                 <partial name="_TableOptionsPartial" model="item.Id"/>
             </tr>

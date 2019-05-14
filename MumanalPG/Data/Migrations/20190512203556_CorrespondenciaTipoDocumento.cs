@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace MumanalPG.Data.Migrations
@@ -19,7 +20,9 @@ namespace MumanalPG.Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Nombre = table.Column<string>(maxLength: 50, nullable: false),
                     Descripcion = table.Column<string>(maxLength: 100, nullable: true),
-                    Estado = table.Column<string>(maxLength: 20, nullable: false)
+                    IdEstadoRegistro = table.Column<Int32>(nullable: false, defaultValue: 0),
+                    IdUsuario = table.Column<Int32>(nullable: true),
+                    FechaRegistro = table.Column<DateTime>(nullable: false, defaultValueSql: "NOW()")
                 },
                 constraints: table =>
                 {

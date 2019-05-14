@@ -2,11 +2,13 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using MumanalPG.Data;
+using MumanalPG.Models;
 using MumanalPG.Utility;
 using ReflectionIT.Mvc.Paging;
 using SmartBreadcrumbs;
@@ -17,9 +19,10 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
     [Area("Correspondencia")]
     public class TipoDocumentoController : BaseController
     {        
-		public TipoDocumentoController(ApplicationDbContext db): base(db)
+        
+		public TipoDocumentoController(ApplicationDbContext db, UserManager<IdentityUser> userManager): base(db, userManager)
         {
-
+            
         }
 
 		// GET: Correspondencia/TipoDocumento
@@ -27,7 +30,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Nombre")
         { 
             var consulta = DB.Correspondencia_TipoDocumento.AsNoTracking().AsQueryable();
-            consulta = consulta.Where(m => m.Estado != "ELIMINADO");
+            consulta = consulta.Where(m => m.IdEstadoRegistro != Constantes.Anulado); // el estado es diferente a ANULADO
             if (!string.IsNullOrWhiteSpace(filter))
 			{
                 consulta = consulta.Where(m => EF.Functions.ILike(m.Nombre, $"%{filter}%"));
@@ -68,9 +71,12 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         {
             if (ModelState.IsValid)
             {
+                ApplicationUser currentUser = await GetCurrentUser();
+                item.IdUsuario =  currentUser.IdUsuario;
                 DB.Add(item);
-                await DB.SaveChangesAsync();
                 SetFlashSuccess("Registro creado satisfactoriamente");
+                await DB.SaveChangesAsync();
+                
             }
             return PartialView("_Create",item);
         }
@@ -94,7 +100,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         // POST: Correspondencia/TipoDocumento/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int16 id, [Bind("Id,Nombre,Descripcion,Estado")] Models.Correspondencia.TipoDocumento item)
+        public async Task<IActionResult> Edit(Int16 id, [Bind("Id,Nombre,Descripcion")] Models.Correspondencia.TipoDocumento item)
         {
             if (id != item.Id)
             {
@@ -119,8 +125,9 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                         throw;
                     }
                 }
-                SetFlashSuccess("Registro modificado satisfactoriamente");
+                
             }
+            SetFlashSuccess("Registro modificado satisfactoriamente");
             return PartialView("_Edit", item);
         }
 
@@ -147,10 +154,10 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         public async Task<IActionResult> DeleteConfirmed(Int16 id)
         {
             var item = await DB.Correspondencia_TipoDocumento.FindAsync(id);
-            item.Estado = "ELIMINADO";
+            item.IdEstadoRegistro = Constantes.Anulado;
             DB.Correspondencia_TipoDocumento.Update(item);
-            await DB.SaveChangesAsync();
             SetFlashSuccess("Registro eliminado satisfactoriamente");
+            await DB.SaveChangesAsync();
             return PartialView("_Delete",item);
         }
 

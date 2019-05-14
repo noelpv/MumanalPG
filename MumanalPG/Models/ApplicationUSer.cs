@@ -15,5 +15,7 @@ namespace MumanalPG.Models
 
         [NotMapped]
         public bool IsSuperAdmin { get; set; }
+        
+        public Int32 IdUsuario { get; set; }
     }
 }

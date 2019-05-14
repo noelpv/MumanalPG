@@ -26,7 +26,7 @@ namespace MumanalPG.Areas.Admin.Controllers
         [DefaultBreadcrumb("")]
         public async Task<IActionResult> Index()
         {
-           //SetFlashInfo("Esto es una prueba");
+           SetFlashInfo("Esto es una prueba");
             return View();
         }
 

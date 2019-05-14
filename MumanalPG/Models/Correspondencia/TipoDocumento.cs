@@ -23,9 +23,8 @@ namespace MumanalPG.Models.Correspondencia
         [Display(Name = "Descripción")]
         public String Descripcion { get; set; }
 
-        [Required]
-        [StringLength(20, ErrorMessage = "Longitud máxima es de {1} caracteres")]
-        //ACTIVO/INACTIVO/ELIMINADO
-        public String Estado { get; set; }
+        public Int32 IdEstadoRegistro { get; set; }
+        public Int32 IdUsuario { get; set; }
+        public DateTime FechaRegistro { get; set; }
     }
 }
