@@ -91,10 +91,11 @@ namespace MumanalPG.Data
         public DbSet<MumanalPG.Models.Planificacion.HojaRutaDocumentos> HojaRutaDocumentos { get; set; }
         public DbSet<MumanalPG.Models.Planificacion.PresupuestoFormulacion> PresupuestoFormulacion { get; set; }
         public DbSet<MumanalPG.Models.Planificacion.PresupuestoModificaciones> PresupuestoModificaciones { get; set; }
-        public DbSet<MumanalPG.Models.Planificacion.Instrucciones> Instrucciones { get; set; }
+        
         public DbSet<MumanalPG.Models.Ventas.VentaSolicitud> VentaSolicitud { get; set; }
 		/*Correspondencia*/
-	    public DbSet<TipoDocumento> Correspondencia_TipoDocumento { get; set; }
+	    public DbSet<TipoDocumento> CorrespondenciaTipoDocumento { get; set; }
+	    public DbSet<MumanalPG.Models.Correspondencia.Instrucciones> CorrespondenciaInstrucciones { get; set; }
 	    /* End Correspondencia*/
 	    
     }

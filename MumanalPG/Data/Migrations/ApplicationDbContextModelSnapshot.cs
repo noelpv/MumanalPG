@@ -871,6 +871,30 @@ namespace MumanalPG.Data.Migrations
                     b.ToTable("Appointments");
                 });
 
+            modelBuilder.Entity("MumanalPG.Models.Correspondencia.Instrucciones", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime>("FechaRegistro");
+
+                    b.Property<int>("IdEstadoRegistro");
+
+                    b.Property<int>("IdUsuario");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Instrucciones","Correspondencia");
+                });
+
             modelBuilder.Entity("MumanalPG.Models.Correspondencia.TipoDocumento", b =>
                 {
                     b.Property<short>("Id")
@@ -880,9 +904,11 @@ namespace MumanalPG.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(100);
 
-                    b.Property<string>("Estado")
-                        .IsRequired()
-                        .HasMaxLength(20);
+                    b.Property<DateTime>("FechaRegistro");
+
+                    b.Property<int>("IdEstadoRegistro");
+
+                    b.Property<int>("IdUsuario");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -1075,24 +1101,6 @@ namespace MumanalPG.Data.Migrations
                     b.HasKey("IdHojaRutaInstruccion");
 
                     b.ToTable("HojaRutaInstrucciones","Planificacion");
-                });
-
-            modelBuilder.Entity("MumanalPG.Models.Planificacion.Instrucciones", b =>
-                {
-                    b.Property<int>("IdInstruccion")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Descripcion");
-
-                    b.Property<DateTime>("FechaRegistro");
-
-                    b.Property<int>("IdEstadoRegistro");
-
-                    b.Property<int>("IdUsuario");
-
-                    b.HasKey("IdInstruccion");
-
-                    b.ToTable("Instrucciones","Planificacion");
                 });
 
             modelBuilder.Entity("MumanalPG.Models.Planificacion.PresupuestoFormulacion", b =>
@@ -1777,6 +1785,8 @@ namespace MumanalPG.Data.Migrations
             modelBuilder.Entity("MumanalPG.Models.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<int>("IdUsuario");
 
                     b.Property<string>("Name");
 
