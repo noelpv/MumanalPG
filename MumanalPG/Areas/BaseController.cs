@@ -57,6 +57,23 @@ namespace MumanalPG.Areas
             SetFlash("error", msg);
         }
 
+        public void ShowFlash(string a)
+        {
+            switch (a)
+            {
+                case Constantes.Creado:
+                    SetFlashSuccess("Registro creado satisfactoriamente");
+                    break;
+                case Constantes.Modificado:
+                    SetFlashSuccess("Registro modificado satisfactoriamente");
+                    break;
+                case Constantes.Eliminado:
+                    SetFlashSuccess("Registro eliminado satisfactoriamente");
+                    break;
+               
+            }
+        }
+
         public async Task<ApplicationUser> GetCurrentUser()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);

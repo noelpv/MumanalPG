@@ -61,5 +61,11 @@ $(function() {
 function InitializeEvents() {
     //Inicializando Bootstrap-Switch 
     $("input.bootstrap-switch").bootstrapSwitch();
-    
+}
+
+function startTour() {
+    var tour = introJs();
+    tour.setOption('tooltipPosition', 'auto');
+    tour.setOption('positionPrecedence', ['left', 'right', 'top', 'bottom']);
+    tour.start();
 }

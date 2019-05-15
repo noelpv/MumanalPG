@@ -1,20 +1,57 @@
-@model object
+@using MumanalPG.Utility
+@model MumanalPG.Models.OptionPartial
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@{
+    string msg_edit = "Click en este botón, para  modificar este registro";
+    string  msg_detalis = "Click en este botón, para  ver los detalles de este registro";
+    string msg_delete = "Click en este botón, para  eliminar este registro";
+    
+}
 
-<td style="width:150px">
-    <div class="btn-group" role="group">
-        <a class="btn btn-secondary btn-outline-secondary waves-effect waves-light" data-modal="link" data-redirect="@Url.Action("Index")" data-toggle="tooltip" title="Editar" asp-action="Edit" asp-route-id="@Model">
-            <i class="fas fa-edit"></i>
-        </a>
-        <a type="button" class="btn btn-secondary btn-outline-secondary waves-effect waves-light" data-toggle="tooltip" title="Detalle" asp-action="Details" asp-route-id="@Model"
-          data-modal="link" data-modal-read="True">
-            <i class="fas fa-list-alt"></i>
-        </a>
-        <a type="button" class="btn btn-outline-secondary waves-effect waves-light" data-toggle="tooltip" title="Eliminar" asp-action="Delete" 
-           asp-route-id="@Model" data-modal="link" data-modal-delete="True" data-redirect="@Url.Action("Index")">
-            <i class="fas fa-trash-alt"></i>
-        </a>
-    </div>
-</td>
+@if (Model.ShowIntroMessages)
+{
+    <td style="width: 150px">
+        <div class="btn-group" role="group">
+            <a class="btn btn-secondary btn-outline-secondary waves-effect waves-light"
+               data-modal="link" data-redirect="@Url.Action("Index", new {@a = Constantes.Modificado})"
+               data-toggle="tooltip" title="Editar" asp-action="Edit" asp-route-id="@Model.Id"
+               data-intro = "@msg_edit">
+                <i class="fas fa-edit"></i>
+            </a>
+            <a type="button" class="btn btn-secondary btn-outline-secondary waves-effect waves-light" data-toggle="tooltip" title="Detalle" asp-action="Details" asp-route-id="@Model.Id"
+               data-modal="link" data-modal-read="True" data-intro="@msg_detalis">
+                <i class="fas fa-list-alt"></i>
+            </a>
+            <a type="button" class="btn btn-outline-secondary waves-effect waves-light"
+               data-toggle="tooltip" title="Eliminar" asp-action="Delete"
+               asp-route-id="@Model.Id" data-modal="link" data-modal-delete="True"
+               data-redirect="@Url.Action("Index", new {@a = Constantes.Eliminado})" data-intro="@msg_delete">
+                <i class="fas fa-trash-alt"></i>
+            </a>
+        </div>
+    </td>
+}
+else
+{
+    <td style="width: 150px">
+        <div class="btn-group" role="group">
+            <a class="btn btn-secondary btn-outline-secondary waves-effect waves-light"
+               data-modal="link" data-redirect="@Url.Action("Index", new {@a = Constantes.Modificado})"
+               data-toggle="tooltip" title="Editar" asp-action="Edit" asp-route-id="@Model.Id">
+                <i class="fas fa-edit"></i>
+            </a>
+            <a type="button" class="btn btn-secondary btn-outline-secondary waves-effect waves-light" data-toggle="tooltip" title="Detalle" asp-action="Details" asp-route-id="@Model.Id"
+               data-modal="link" data-modal-read="True">
+                <i class="fas fa-list-alt"></i>
+            </a>
+            <a type="button" class="btn btn-outline-secondary waves-effect waves-light"
+               data-toggle="tooltip" title="Eliminar" asp-action="Delete"
+               asp-route-id="@Model.Id" data-modal="link" data-modal-delete="True"
+               data-redirect="@Url.Action("Index", new {@a = Constantes.Eliminado})">
+                <i class="fas fa-trash-alt"></i>
+            </a>
+        </div>
+    </td>
+}

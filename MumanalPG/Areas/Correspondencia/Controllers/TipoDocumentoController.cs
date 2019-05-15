@@ -27,7 +27,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
 
 		// GET: Correspondencia/TipoDocumento
         [Breadcrumb("Tipos de Documento", FromController = "Dashboard", FromAction = "Clasificadores")]
-        public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Nombre")
+        public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Nombre", string a = "")
         { 
             var consulta = DB.Correspondencia_TipoDocumento.AsNoTracking().AsQueryable();
             consulta = consulta.Where(m => m.IdEstadoRegistro != Constantes.Anulado); // el estado es diferente a ANULADO
@@ -37,6 +37,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             }
             var resp = await PagingList.CreateAsync(consulta, Constantes.TamanoPaginacion, page, sortExpression,"Nombre");
             resp.RouteValue = new RouteValueDictionary {{ "filter", filter}};
+            ShowFlash(a);
             return View(resp);
         }
 
@@ -74,7 +75,6 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                 ApplicationUser currentUser = await GetCurrentUser();
                 item.IdUsuario =  currentUser.IdUsuario;
                 DB.Add(item);
-                SetFlashSuccess("Registro creado satisfactoriamente");
                 await DB.SaveChangesAsync();
                 
             }
@@ -127,7 +127,6 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                 }
                 
             }
-            SetFlashSuccess("Registro modificado satisfactoriamente");
             return PartialView("_Edit", item);
         }
 
@@ -156,7 +155,6 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             var item = await DB.Correspondencia_TipoDocumento.FindAsync(id);
             item.IdEstadoRegistro = Constantes.Anulado;
             DB.Correspondencia_TipoDocumento.Update(item);
-            SetFlashSuccess("Registro eliminado satisfactoriamente");
             await DB.SaveChangesAsync();
             return PartialView("_Delete",item);
         }

@@ -12,5 +12,10 @@ namespace MumanalPG.Utility
         public const int Archivado = 6;
         public const int Desaprobado = 7;
         public const int Desarchivado = 8;
+        
+        /*Acciones guardar, modificar y eliminar*/
+        public const string Creado = "created";
+        public const string Modificado = "modified";
+        public const string Eliminado = "deleted";
     }
 }

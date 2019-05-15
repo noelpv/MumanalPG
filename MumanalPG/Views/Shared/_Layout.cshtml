@@ -28,6 +28,8 @@
         <link rel="stylesheet" href="~/lib/theme-elegant/css/floating-label.css" />
         <link rel="stylesheet" href="~/lib/theme-elegant/css/bootstrap-switch.min.css" />
         <link rel="stylesheet" href="~/lib/theme-elegant/css/ribbon-page.css" />
+        <link rel="stylesheet" href="~/lib/introjs/introjs.css" />
+        <link rel="stylesheet" href="~/lib/introjs/themes/introjs-modern.css" />
     }
     else
     {
@@ -162,6 +164,7 @@
     <script src="~/lib/theme-elegant/js/c3.min.js"></script>
     <script src="~/lib/theme-elegant/js/sweetalert.min.js"></script>
     <script src="~/lib/theme-elegant/js/bootstrap-switch.min.js"></script>
+    <script src="~/lib/introjs/intro.js"></script>
     <script src="~/lib/theme-elegant/js/site.js"></script>
 
 
@@ -170,7 +173,8 @@
     $(function() {
         var type = '@TempData["FlashMsgType"]';
         var message = '@TempData["FlashMsg"]';
-        $.toastMsg(type, message);        
+        $.toastMsg(type, message);
+       
     });
 </script>
 </body>

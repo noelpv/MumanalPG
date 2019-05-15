@@ -1,21 +1,27 @@
 @model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.RRHHParam.TipoBeneficiario>
+@using MumanalPG.Utility
 @using ReflectionIT.Mvc.Paging
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @{
     ViewData["Title"] = "Tipos de Beneficiario";
+    OptionPartial options = new OptionPartial();
+    string intro_msg_search = "Puede buscar un Tipo de Beneficiario introduciendo el campo '<b>Nombre</b>' en este campo, " +
+                              "luego presionar la tecla <b>'Enter'</b> o el boton <button class='btn-sm btn-secondary'>" +
+                              "<i class='fas fa-search'></i></button>";
 }
 
 <div class="row">
     <div class="col-12 text-right">
         <a asp-action="Create" class="btn btn-info btn-sm" data-toggle="tooltip" title="Nuevo Tipo de Beneficiario"
-           data-modal="link", data-redirect="@Url.Action("Index")">
+           data-modal="link", data-redirect="@Url.Action("Index", new{@a=Constantes.Creado})"
+           data-intro="Click en este botón para crear un nuevo tipo de Beneficiario">
             <i class="fas fa-plus"></i><span class="d-none d-sm-inline">&nbsp; Nuevo </span>
         </a>
     </div>
 </div>
 <div class="row mt-3">
     <div class="col-12">
-        <form method="get" class="form">
+        <form method="get" class="form" data-intro="@intro_msg_search">
             <div class="input-group mb-3">
                 <input name="filter" class="form-control search" placeholder="Buscar por Denominación..."
                        value="@Model.RouteValue["Filter"]"/>
@@ -37,6 +43,7 @@
         </tr>
 
         </thead>
+        @{int index = 0;}
         @foreach (var item in Model)
         {
             <tr>
@@ -49,7 +56,13 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Activo)
                 </td>
-                <partial name="_TableOptionsPartial" model="item.IdTipoBeneficiario"/>
+                @{
+                    options.Id = item.IdTipoBeneficiario;
+                    options.ShowIntroMessages = index == 0 ? true : false;
+                    index++;
+                    
+                }
+                <partial name="_TableOptionsPartial" model="options"/>
             </tr>
         }
     </table>
