@@ -8,9 +8,9 @@ namespace MumanalPG.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-//            migrationBuilder.DropTable(
-//                name: "Instrucciones",
-//                schema: "Planificacion");
+            migrationBuilder.DropTable(
+                name: "Instrucciones",
+                schema: "Planificacion");
             
             migrationBuilder.EnsureSchema(
                 name: "Correspondencia");
