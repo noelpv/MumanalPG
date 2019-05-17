@@ -52,6 +52,12 @@ namespace MumanalPG
 			//	.AddDefaultUI()
 			//	.AddDefaultTokenProviders();
 
+
+
+
+
+
+
 			services.AddScoped<IDbInitializer, DbInitializer>();
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
