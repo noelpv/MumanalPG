@@ -10,19 +10,19 @@ namespace MumanalPG.Data.Migrations
             migrationBuilder.EnsureSchema(
                 name: "AdministraParam");
 
-            migrationBuilder.CreateTable(
-                name: "Grupo",
-                schema: "AdministraParam",
-                columns: table => new
-                {
-                    IdGrupo = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    Descripcion = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Grupo", x => x.IdGrupo);
-                });
+//            migrationBuilder.CreateTable(
+//                name: "Grupo",
+//                schema: "AdministraParam",
+//                columns: table => new
+//                {
+//                    IdGrupo = table.Column<int>(nullable: false)
+//                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+//                    Descripcion = table.Column<string>(nullable: true)
+//                },
+//                constraints: table =>
+//                {
+//                    table.PrimaryKey("PK_Grupo", x => x.IdGrupo);
+//                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
