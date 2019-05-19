@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MumanalPG.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -9,9 +10,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MumanalPG.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190516212658_CorrespondenciaDocumento")]
+    partial class CorrespondenciaDocumento
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1372,11 +1374,11 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<string>("EmailPersonal");
 
-                    b.Property<string>("EsDeudor");
+                    b.Property<bool>("EsDeudor");
 
-                    b.Property<DateTime>("FechaNacimiento").IsRequired(false);
+                    b.Property<DateTime>("FechaNacimiento");
 
-                    b.Property<DateTime>("FechaRegistro").IsRequired(false);
+                    b.Property<DateTime>("FechaRegistro");
 
                     b.Property<int>("IdBeneficiarioClasificacion");
 
@@ -1402,8 +1404,6 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<string>("PrimerApellido");
 
-                    b.Property<int>("PuestoId");
-
                     b.Property<string>("SegundoApellido");
 
                     b.Property<string>("TelefonoCelular");
@@ -1414,46 +1414,7 @@ namespace MumanalPG.Data.Migrations
 
                     b.HasKey("IdBeneficiario");
 
-                    b.HasIndex("PuestoId")
-                        .IsUnique();
-
                     b.ToTable("Beneficiario","RRHH");
-                });
-
-            modelBuilder.Entity("MumanalPG.Models.RRHH.Puesto", b =>
-                {
-                    b.Property<int>("IdPuesto")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Descripcion");
-
-                    b.Property<bool>("EsDePlanilla");
-
-                    b.Property<DateTime>("FechaRegistro");
-
-                    b.Property<string>("Gestion");
-
-                    b.Property<int>("IdCargo");
-
-                    b.Property<int>("IdDepartamento");
-
-                    b.Property<int>("IdEstadoRegistro");
-
-                    b.Property<int>("IdUnidadEjecutora");
-
-                    b.Property<int>("IdUsuario");
-
-                    b.Property<int>("Item");
-
-                    b.Property<string>("Sigla");
-
-                    b.Property<bool>("Vacante");
-
-                    b.HasKey("IdPuesto");
-
-                    b.HasIndex("IdUnidadEjecutora");
-
-                    b.ToTable("Puesto","RRHH");
                 });
 
             modelBuilder.Entity("MumanalPG.Models.RRHH.UnidadEjecutora", b =>
@@ -2020,22 +1981,6 @@ namespace MumanalPG.Data.Migrations
                     b.HasOne("MumanalPG.Models.Products", "Products")
                         .WithMany()
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("MumanalPG.Models.RRHH.Beneficiario", b =>
-                {
-                    b.HasOne("MumanalPG.Models.RRHH.Puesto", "Puesto")
-                        .WithOne("Beneficiario")
-                        .HasForeignKey("MumanalPG.Models.RRHH.Beneficiario", "PuestoId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("MumanalPG.Models.RRHH.Puesto", b =>
-                {
-                    b.HasOne("MumanalPG.Models.RRHH.UnidadEjecutora", "UnidadEjecutora")
-                        .WithMany("Puestos")
-                        .HasForeignKey("IdUnidadEjecutora")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

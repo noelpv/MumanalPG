@@ -32,5 +32,16 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         {
             return View();
         }
+        
+        [Breadcrumb("Documentos", FromAction = "Index")]
+        public async Task<IActionResult> Docs()
+        {
+            var consulta = DB.CorrespondenciaTipoDocumento.AsNoTracking().AsQueryable();
+            consulta = consulta.Where(m => m.IdEstadoRegistro != Constantes.Anulado);
+            
+            var resp = await PagingList.CreateAsync(consulta, 100, 1, "Nombre", "Nombre");
+            //resp.RouteValue = new RouteValueDictionary {{ "filter", filter}};
+            return View(resp);
+        }
     }
 }

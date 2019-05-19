@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using MumanalPG.Models.Correspondencia;
 
 
 namespace MumanalPG.Models.RRHH
@@ -23,5 +25,8 @@ namespace MumanalPG.Models.RRHH
 		public DateTime FechaRegistro { get; set; }
         public decimal MontoLimite { get; set; }
         public Int32 CantidadLimite { get; set; }
+		
+		[InverseProperty("UnidadEjecutora")]
+		public ICollection<Puesto> Puestos { get; set; }
     }
 }

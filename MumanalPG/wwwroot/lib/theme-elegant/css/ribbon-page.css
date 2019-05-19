@@ -38,6 +38,7 @@ ribbons page
     border: 1px solid #ccc;
     box-shadow: 6px 6px 6px #ccc;
     min-height: 150px;
+    max-height: 150px;
     border-radius: 10px 5px 10px 5px;   
     position: relative; }
 .ribbon-vwrapper p {
@@ -61,7 +62,10 @@ ribbons page
     padding: 15px 50px 50px 15px; }
 
 .ribbon-content {
-    margin-bottom: 0px; }
+    margin-bottom: 0px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
 
 .ribbon {
     padding: 0 20px;

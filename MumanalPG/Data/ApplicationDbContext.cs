@@ -38,6 +38,7 @@ namespace MumanalPG.Data
 		public DbSet<MumanalPG.Models.Generales.fRetornaCadena> Generales_fRetornaCadena { get; set; }
 
 		public DbSet<MumanalPG.Models.RRHH.Beneficiario> RRHH_Beneficiario { get; set; }
+		public DbSet<MumanalPG.Models.RRHH.Puesto> RRHH_Puesto { get; set; }
 		public DbSet<MumanalPG.Models.RRHH.UnidadEjecutora> RRHH_UnidadEjecutora { get; set; }
 		public DbSet<MumanalPG.Models.RRHH.vPersona> RRHH_vPersona { get; set; }
 		public DbSet<MumanalPG.Models.RRHHParam.TipoBeneficiario> RRHHParam_TipoBeneficiario { get; set; }
@@ -96,6 +97,7 @@ namespace MumanalPG.Data
 		/*Correspondencia*/
 	    public DbSet<TipoDocumento> CorrespondenciaTipoDocumento { get; set; }
 	    public DbSet<MumanalPG.Models.Correspondencia.Instrucciones> CorrespondenciaInstrucciones { get; set; }
+	    public DbSet<Documento> CorrespondenciaDocumento { get; set; }
 	    /* End Correspondencia*/
 	    
     }

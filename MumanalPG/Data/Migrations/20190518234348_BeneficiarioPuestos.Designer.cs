@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MumanalPG.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -9,9 +10,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MumanalPG.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190518234348_BeneficiarioPuestos")]
+    partial class BeneficiarioPuestos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1372,11 +1374,11 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<string>("EmailPersonal");
 
-                    b.Property<string>("EsDeudor");
+                    b.Property<bool>("EsDeudor");
 
-                    b.Property<DateTime>("FechaNacimiento").IsRequired(false);
+                    b.Property<DateTime>("FechaNacimiento");
 
-                    b.Property<DateTime>("FechaRegistro").IsRequired(false);
+                    b.Property<DateTime>("FechaRegistro");
 
                     b.Property<int>("IdBeneficiarioClasificacion");
 

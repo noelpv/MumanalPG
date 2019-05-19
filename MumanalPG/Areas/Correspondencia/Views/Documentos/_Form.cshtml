@@ -1,0 +1,104 @@
+@model MumanalPG.Models.Correspondencia.Documento
+<form asp-action="@ViewData["Action"]">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @{
+        var hasError = "has-danger";
+        var stringErrors = "";
+        if (ViewData.ModelState.IsValid)
+        {
+            hasError = "";
+        }
+        else
+        {
+            var errorList = ViewData.ModelState.Where(x => x.Value.Errors.Count > 0).ToDictionary(kvp => kvp.Key);
+            stringErrors = string.Join(",", errorList.Select(x => x.Key));
+        }
+    }
+    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()"/>
+    <input type="hidden" asp-for="Id"/>
+
+    <div class="form-group m-b-40 @if (stringErrors.Contains("FuncionarioOrigen"))
+                                  {
+                                      @hasError
+                                  }">
+        <label asp-for="FuncionarioOrigen" class="form-control-label col-"></label>
+        <div>
+            <select asp-for="FuncionarioOrigen" class="form-control remote" id="origen" placeholder="Buscar...." 
+                    data-remote-url="@Url.Action("GetFuncionarios")">
+            </select>
+            
+        </div>    
+        <span asp-validation-for="FuncionarioOrigen" class="text-danger"></span>
+    </div>
+    
+
+    <div class="form-group m-b-40 @if (stringErrors.Contains("Referencia"))
+                                  {
+                                      @hasError
+                                  }">
+        <label asp-for="Referencia" class="form-control-label"></label>
+        <input asp-for="Referencia" class="form-control"/>
+        <span asp-validation-for="Referencia" class="text-danger"></span>
+    </div>
+
+    <div class="form-group m-b-40 @if (stringErrors.Contains("Contenido"))
+                                  {
+                                      @hasError
+                                  }">
+        <label asp-for="Contenido" class="form-control-label"></label>
+        <textarea asp-for="Contenido"  class="form-control"></textarea>
+        <span asp-validation-for="Contenido" class="text-danger"></span>
+    </div>
+</form>
+<script>
+    $(document).ready(function() {
+        var url = $('#origen').data('remote-url');
+        $('#origen').selectize({
+            valueField: 'id',
+            labelField: 'nombre',
+            searchField: 'nombre',
+            create: false,
+            render: {
+                option: function(item, escape) {
+                    $('.selectize-control.remote').removeClass('loading');
+                    return '<div class="row">' +
+                        '<div class="col-2">' +
+                        '<img src="/lib/theme-elegant/img/users/user-male-icon.png" alt="image" class="img-circle" height="64px">' +
+                        '</div>' +
+                        '<div class="col-10">' +
+                        '<span class="nombre">'+ escape(item.nombre) +'</span>' +
+                        '<div class="cargo">'+ escape(item.cargo) +'</span>' +
+                        '<div class="area">'+ escape(item.area) +'</span>' +
+                        '</div>' +
+                        '</div>';
+                }
+            },
+            score: function(search) {
+                var score = this.getScoreFunction(search);
+                return function(item) {
+                    return score(item);
+                };
+            },
+            load: function(query, callback) {
+                $('.selectize-control.remote').addClass('loading');
+                if (!query.length) return callback();
+                $.ajax({
+                    url: url+ '?filter=' + encodeURIComponent(query),
+                    type: 'GET',
+                    error: function() {
+                        callback();
+                    },
+                    success: function(res) {
+                        try {
+                            callback(res.repositories.slice(0, 10));    
+                        } catch (e) {
+
+                        } 
+                        
+                    }
+                });
+            }
+        });
+        
+    });
+</script>
