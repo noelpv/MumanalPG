@@ -244,17 +244,17 @@ namespace MumanalPG.Areas.Ventas
 		//}
 
 		//----------------------------------------------------------
-		public async Task<IActionResult> CargaArchivo(int? idVentaRequisito, String Documento) // GET: Ventas/VentaRequisito/Edit/5
+		public async Task<IActionResult> CargaArchivo(int? id, String Documento) // GET: Ventas/VentaRequisito/Edit/5
 		//public async Task<IActionResult> CargaArchivo(int? id) // GET: Ventas/VentaRequisito/Edit/5
 		{
 
-			if (idVentaRequisito == null)
+			if (id == null)
 			{
 				return NotFound();
 			}
 			ViewBag.Documento = "Cargar: " + Documento;
 
-			var ventaRequisito = await DB.Ventas_VentaRequisito.FindAsync(idVentaRequisito);
+			var ventaRequisito = await DB.Ventas_VentaRequisito.FindAsync(id);
 			if (ventaRequisito == null)
 			{
 				return NotFound();
@@ -276,14 +276,20 @@ namespace MumanalPG.Areas.Ventas
 			{
 				try
 				{
-					String fileName = "";
+                    var uploads = Path.Combine(he.WebRootPath, "docs");
+                    String DocsRutaNombreArchivo = "";
+                    var GeneraNombreArchivo = DB.Generales_fRetornaCadena.FromSql($"SELECT * FROM \"Ventas\".\"fGeneraNombreDocumento\"({ventaRequisito.IdVentaRequisito})").ToList();
+                    String NombreArchivo = GeneraNombreArchivo.FirstOrDefault().Cadena;
+                    DocsRutaNombreArchivo += NombreArchivo;
+
+                    String fileName = "";
 					if (ArchivoPDF != null)
 					{
-						fileName = Path.Combine(he.WebRootPath, Path.GetFileName(ArchivoPDF.FileName));
+						fileName = Path.Combine(uploads, NombreArchivo);//  Path.GetFileName(ArchivoPDF.FileName));
 						ArchivoPDF.CopyTo(new FileStream(fileName, FileMode.Create));
 					}
 
-					ventaRequisito.PathArchivo = fileName;
+					ventaRequisito.PathArchivo = DocsRutaNombreArchivo;
 					ventaRequisito.ArchivoCargado = true;
 					IdVentaContratacion = ventaRequisito.IdVentaContratacion;
 

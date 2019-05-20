@@ -30,7 +30,6 @@
     </div>
 </div>
 
-
 <table class="table">
     <thead>
         <tr>
@@ -67,10 +66,10 @@
                     @Html.DisplayFor(modelItem => item.EsObligatorio)
                 </td>
                 <td>
-                    @*<a class="btn btn-info" asp-action="CargaArchivo" asp-route-idVentaRequisito="@item.IdVentaRequisito" asp-route-Documento="@item.Descripcion">Cargar</a>*@
                     @if (ViewContext.HttpContext.User.IsInRole("SUPER ADMIN") || ViewContext.HttpContext.User.IsInRole("AGENTE"))
                     {
                         <a class="btn btn-info" asp-action="Escanear" asp-route-id="@item.IdVentaRequisito" asp-route-Documento="@item.Descripcion">Scan</a>
+                        <a class="btn btn-info" asp-action="CargaArchivo" asp-route-id="@item.IdVentaRequisito" asp-route-Documento="@item.Descripcion">Cargar</a>
                     }
                     @* <a class="btn btn-info" asp-action="VerJPG" asp-route-id="@item.IdVentaRequisito">Ver JPG</a>*@
                     <a class="btn btn-info" asp-action="VerPDF" asp-route-id="@item.IdVentaRequisito">Ver PDF</a>

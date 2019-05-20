@@ -20,10 +20,10 @@
                 <table>
                     <tr>
                         @*<td> <label asp-for="IdDocumentoFormato" class="control-label"></label> </td>
-                        <td>
-                            <input asp-for="IdDocumentoFormato" class="form-control" />
-                            <span asp-validation-for="IdDocumentoFormato" class="text-danger"></span>
-                        </td>*@
+                    <td>
+                        <input asp-for="IdDocumentoFormato" class="form-control" />
+                        <span asp-validation-for="IdDocumentoFormato" class="text-danger"></span>
+                    </td>*@
                     </tr>
                 </table>
             </div>
@@ -32,7 +32,8 @@
             @*<input type="file" name="ArchivoPDF" title="Escanear Archivo" />*@
             <link href="https://cdnjs.cloudflare.com/ajax/libs/ratchet/2.0.2/css/ratchet.css" rel="stylesheet" />
             <label for="ArchivoPDF" class="btn btn-primary btn-block btn-outlined">Seleccionar Documento</label>
-            <input type="file" id="ArchivoPDF" name="ArchivoPDF" accept="image/*" style="display: none">
+           @* <input type="file" id="ArchivoPDF" name="ArchivoPDF" accept="image/*" style="display: none">*@
+            <input type="file" id="ArchivoPDF" name="ArchivoPDF" accept="application/pdf" style="display: none">
 
             <br>
             <br>
