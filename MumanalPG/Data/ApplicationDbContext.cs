@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MumanalPG.Models.Generales;
 using MumanalPG.Models.Administra;
+using MumanalPG.Models.Correspondencia;
 using MumanalPG.Models.Planificacion;
 using MumanalPG.Models.Ventas;
 
@@ -37,6 +38,7 @@ namespace MumanalPG.Data
 		public DbSet<MumanalPG.Models.Generales.fRetornaCadena> Generales_fRetornaCadena { get; set; }
 
 		public DbSet<MumanalPG.Models.RRHH.Beneficiario> RRHH_Beneficiario { get; set; }
+		public DbSet<MumanalPG.Models.RRHH.Puesto> RRHH_Puesto { get; set; }
 		public DbSet<MumanalPG.Models.RRHH.UnidadEjecutora> RRHH_UnidadEjecutora { get; set; }
 		public DbSet<MumanalPG.Models.RRHH.vPersona> RRHH_vPersona { get; set; }
 		public DbSet<MumanalPG.Models.RRHHParam.TipoBeneficiario> RRHHParam_TipoBeneficiario { get; set; }
@@ -90,7 +92,13 @@ namespace MumanalPG.Data
         public DbSet<MumanalPG.Models.Planificacion.HojaRutaDocumentos> HojaRutaDocumentos { get; set; }
         public DbSet<MumanalPG.Models.Planificacion.PresupuestoFormulacion> PresupuestoFormulacion { get; set; }
         public DbSet<MumanalPG.Models.Planificacion.PresupuestoModificaciones> PresupuestoModificaciones { get; set; }
-        public DbSet<MumanalPG.Models.Planificacion.Instrucciones> Instrucciones { get; set; }
+        
         public DbSet<MumanalPG.Models.Ventas.VentaSolicitud> VentaSolicitud { get; set; }
+		/*Correspondencia*/
+	    public DbSet<TipoDocumento> CorrespondenciaTipoDocumento { get; set; }
+	    public DbSet<MumanalPG.Models.Correspondencia.Instrucciones> CorrespondenciaInstrucciones { get; set; }
+	    public DbSet<Documento> CorrespondenciaDocumento { get; set; }
+	    /* End Correspondencia*/
+	    
     }
 }

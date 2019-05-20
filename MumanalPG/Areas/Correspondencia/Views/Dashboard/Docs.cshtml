@@ -1,0 +1,31 @@
+@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Correspondencia.TipoDocumento>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging
+@{
+    ViewData["Title"] = "Correspondencia";
+    string[] classColors = {"primary", "info", "success", "warning", "danger"};
+    string[] classIcons = {"ti-clipboard", "ti-book","ti-agenda", "ti-notepad", "ti-map", " ti-file", "ti-folder", "ti-zip", "ti-envelope"};
+
+    int indexColors = 0;
+    int indexIcons = 0;
+}
+<div class="row">
+    @foreach (var doc in Model){
+
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <a asp-area="correspondencia" asp-controller="documentos" asp-action="index" asp-route-type="@doc.Id">
+                <div class="ribbon-vwrapper card">
+                    <div class="ribbon ribbon-@classColors[indexColors] ribbon-vertical-l">
+                        <i class="@classIcons[indexIcons]"></i>
+                    </div>
+                    <h4>@doc.Nombre</h4>
+                    <p class="ribbon-content">Aqui podra administrar los documentos de tipo @doc.Nombre</p>
+                </div>
+            </a>
+        </div>
+
+        indexColors = (indexColors < classColors.Length-1) ? indexColors+1 : 0;
+        indexIcons = (indexIcons < classIcons.Length-1) ? indexIcons+1 : 0;
+
+    }
+</div>

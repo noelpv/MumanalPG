@@ -10005,7 +10005,7 @@ Preloader
   top: 0px;
   position: fixed;
   z-index: 99999;
-  background: #fff; }
+  background-color: rgba(255,255,255,.8); }
   .preloader .cssload-speeding-wheel {
     position: absolute;
     top: calc(50% - 3.5px);
@@ -11163,8 +11163,12 @@ sidebar navigation
   .sidebar-nav > ul > li {
     margin-bottom: 8px;
     margin-top: 8px; }
+    .sidebar-nav > ul > li.selected {
+      outline: none !important;
+      box-shadow: 0 0 3pt 2pt #ebebeb;
+    }
     .sidebar-nav > ul > li.selected > a {
-      color: #009efb; }
+      color: #009efb !important; }
       .sidebar-nav > ul > li.selected > a i {
         color: #009efb; }
   .sidebar-nav .waves-effect {
@@ -11836,6 +11840,12 @@ File Upload
   background-position: center right 0.5625rem;
   -webkit-background-size: 1.125rem 1.125rem;
   background-size: 1.125rem 1.125rem; }
+
+select.form-control-success,
+select.form-control-warning,
+select.form-control-danger {
+  background-position: center right 1.5625rem;
+ }
 
 .has-success .form-control-feedback,
 .has-success .form-control-label,
@@ -14015,3 +14025,48 @@ File: scss
     text-align: center;
     margin-top: 10px;
     overflow: hidden; } }
+/**
+ * Dropdown Funcionarios
+ */
+.selectize-control.remote .selectize-dropdown [data-selectable] {
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.selectize-control.remote .selectize-dropdown .area {
+  font-weight: bold;
+  margin-right: 5px;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.selectize-control.remote .selectize-dropdown .cargo {
+  font-weight: bold;
+  margin-right: 5px;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+.selectize-control.remote .selectize-dropdown .nombre {
+  display: block;
+  margin-top: 5px;
+}
+
+.selectize-control.remote::before {
+  -moz-transition: opacity 0.2s;
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+  content: ' ';
+  z-index: 2;
+  position: absolute;
+  display: block;
+  top: -5px;
+  right: 34px;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 0;
+  background: url(../img/spinner.gif);
+  background-size: 16px 16px;
+  opacity: 0;
+}
+.selectize-control.remote.loading::before {
+  opacity: 0.4;
+}

@@ -22,7 +22,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
 
 		// GET: Planificacion/TipoBeneficiarios
         [Breadcrumb("Tipos de Beneficiario")]
-        public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Denominacion")
+        public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Denominacion", string a="")
         { 
             var consulta = DB.RRHHParam_TipoBeneficiario.AsNoTracking().AsQueryable();
             
@@ -32,6 +32,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             }
             var modelo = await PagingList.CreateAsync(consulta, Constantes.TamanoPaginacion, page, sortExpression,"Denominacion");
             modelo.RouteValue = new RouteValueDictionary {{ "filter", filter}};
+            ShowFlash(a);
             return View(modelo);
         }
 

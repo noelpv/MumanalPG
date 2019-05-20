@@ -1,0 +1,97 @@
+@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Correspondencia.Documento>
+@using MumanalPG.Utility
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging
+@{
+    ViewData["Title"] = "Documentos";
+    OptionPartial options = new OptionPartial();
+    string intro_msg_search = "Puede buscar un Documento introduciendo el CITE o la Referencia en este campo, " +
+                              "luego presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
+                              "<i class='fas fa-search'></i></button>";
+}
+<div class="row">
+    <div class="col-12 text-right">
+        <a asp-action="Create" asp-route-type="@ViewBag.docTipoId" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nuevo Documento"
+           data-modal="link", data-redirect="@Url.Action("Index", new{@a=Constantes.Creado})" 
+           data-intro="Click, en este botón para crear un Informe, una Nota, o cualquier otro tipo de documento">
+            <i class="fas fa-plus"></i><span class="d-none d-sm-inline">&nbsp; Nuevo </span>
+        </a>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-12">
+        <form method="get" class="form form-search" data-intro="@intro_msg_search">
+            <div class="input-group mb-3">
+                <input name="filter" class="form-control search" placeholder="Buscar por Cite o Referencia..."
+                       value="@Model.RouteValue["Filter"]"/>
+                <button type="submit" class="btn btn-secondary input-group-append">
+                    <span class="fas fa-search" aria-hidden="true"></span>
+                </button>
+            </div>            
+        </form>
+    </div>
+</div>
+
+<div class="row table-responsive mt-4" data-intro="En esta sección se muestra los resultados encontrados.">
+    <table class="table table-hover table-striped">
+        <thead>
+        <tr>
+            <th>@Html.SortableHeaderFor(model => model.Cite)</th>
+            <th>@Html.SortableHeaderFor(model => model.Fecha)</th>
+            <th>Tipo</th>
+            <th>De</th>
+            <th>A</th>
+            <th>Referencia</th>
+            
+        </tr>
+
+        </thead>
+        @{int index = 0;}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" title="Detalle" 
+                       data-modal="link" data-modal-read="True">
+                        @Html.DisplayFor(modelItem => item.Cite)
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fecha)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tipo.Nombre)
+                </td>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.FuncionarioOrigen.Denominacion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FuncionarioDestino.Denominacion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Referencia)
+                </td>
+                 
+                @{
+                    options.Id = item.Id;
+                    options.ShowIntroMessages = index == 0 ? true : false;
+                    index++;
+                    
+                }
+
+                <partial name="_TableOptionsPartial" model="options"/>
+            </tr>
+        }
+    </table>
+    @if (Model.TotalRecordCount <= 0)
+    {
+        <partial name="_NotFoundPartial" />
+    }
+    
+</div>
+<div class="row justify-content-center">
+    <nav>
+        <vc:pager paging-list="@Model"/>
+    </nav>
+</div>
