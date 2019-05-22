@@ -10,7 +10,9 @@ using Microsoft.EntityFrameworkCore;
 using MumanalPG.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Internal;
 using MumanalPG.Extensions;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.Mapping;
 using SmartBreadcrumbs;
 
 
@@ -79,6 +81,35 @@ namespace MumanalPG.Areas
             var user = await _userManager.GetUserAsync(HttpContext.User);
             ApplicationUser currentUser = await DB.ApplicationUser.Where(u => u.Id == user.Id).FirstOrDefaultAsync();
             return currentUser;
+        }
+        
+        public async Task<string> GetCite(int uEjecutoraId)
+        {
+
+            List<string> cites = await GetCiteList(uEjecutoraId);
+            cites.Reverse();
+            string citesStr = String.Join("/", cites.ToArray());
+            return $"MUM/{citesStr}";
+        }
+
+        public async Task<List<string>> GetCiteList(int uEjecutoraId, List<string> cites = null)
+        {
+            var unidadEjecutora = await DB.RRHH_UnidadEjecutora.FindAsync(uEjecutoraId);
+            if (cites == null)
+            {
+                cites = new List<string>();
+            }
+
+            if (unidadEjecutora != null)
+            {
+                cites.Add(unidadEjecutora.Sigla);
+                if (unidadEjecutora.IdUnidadEjecutoraPadre > 0)
+                {
+                    cites = await GetCiteList(unidadEjecutora.IdUnidadEjecutoraPadre, cites);
+                }
+            }
+
+            return cites;
         }
     }
 }

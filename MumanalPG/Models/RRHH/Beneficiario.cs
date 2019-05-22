@@ -22,8 +22,6 @@ namespace MumanalPG.Models.RRHH
 		public Int32? IdDocumentoRespaldo { get; set; }
 		public string PrimerApellido { get; set; }
 		public string SegundoApellido { get; set; }
-		[NotMapped]
-		public string Nombres { get; set; }
 		public string Denominacion { get; set; }
 		public DateTime? FechaNacimiento { get; set; }
 		public string TelefonoFijo { get; set; }
@@ -33,8 +31,6 @@ namespace MumanalPG.Models.RRHH
 		public string EmailOficina { get; set; }
 		public string DomicilioLegal { get; set; }
 		public Int32? IdMunicipio { get; set; }
-		[NotMapped]
-		public Int32 IdZona { get; set; }
 		public Int32? IdCalle { get; set; }
 		public Int32? IdEdificio { get; set; }
 		public string EdificioNumero { get; set; }

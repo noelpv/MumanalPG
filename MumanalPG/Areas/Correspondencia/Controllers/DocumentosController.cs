@@ -1,24 +1,15 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using MumanalPG.Data;
 using MumanalPG.Models;
-using MumanalPG.Models.RRHH;
 using MumanalPG.Utility;
-using NpgsqlTypes;
 using ReflectionIT.Mvc.Paging;
 using SmartBreadcrumbs;
-using Beneficiario = MumanalPG.Models.RRHH.Beneficiario;
 
 namespace MumanalPG.Areas.Correspondencia.Controllers
 {
@@ -34,19 +25,34 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
 
 		// GET: Correspondencia/Documentos
         [Breadcrumb("Documentos", FromController = "Dashboard", FromAction = "Index")]
-        public async Task<IActionResult> Index(string filter, int type, int page = 1, string sortExpression = "Referencia", string a = "")
-        { 
+        public async Task<IActionResult> Index(string filter, Int16 type, int page = 1, string sortExpression = "-Id", string a = "")
+        {
 
+            if (type == 0)
+            {
+                type = 1;
+            }
             var consulta = DB.CorrespondenciaDocumento.AsNoTracking().AsQueryable();
-            consulta = consulta.Where(m => (m.IdEstadoRegistro != Constantes.Anulado && m.Tipo.Id == type)); // el estado es diferente a ANULADO
+            consulta = consulta.Include(m => m.FuncionarioOrigen)
+                               .Include(m => m.FuncionarioDestino)
+                               .Include(m => m.Tipo)
+                               .Where(m => (m.IdEstadoRegistro != Constantes.Anulado && m.TipoId == type)); // el estado es diferente a ANULADO
+            
             if (!string.IsNullOrWhiteSpace(filter))
 			{
                 consulta = consulta.Where(m => EF.Functions.ILike(m.Referencia, $"%{filter}%"));
             }
-            var resp = await PagingList.CreateAsync(consulta, Constantes.TamanoPaginacion, page, sortExpression,"Referencia");
-            resp.RouteValue = new RouteValueDictionary {{ "filter", filter}};
+
+            var resp = await PagingList.CreateAsync(consulta, Constantes.TamanoPaginacion, page, sortExpression,"-Id");
+            resp.RouteValue = new RouteValueDictionary {{ "filter", filter}, {"type", type}};
+            System.Console.WriteLine("==========================================================");
+            System.Console.WriteLine(resp.TotalRecordCount);
+            System.Console.WriteLine("==========================================================");
             ShowFlash(a);
+            ViewBag.Tipos = DB.CorrespondenciaTipoDocumento.Where(t => t.IdEstadoRegistro != Constantes.Anulado).ToList();
             ViewBag.docTipoId = type;
+            ViewBag.page = page;
+            //resp.Action = $"Index?type={type}";
             return View(resp);
         }
 
@@ -68,10 +74,14 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         }
 
         // GET: Correspondencia/Documentos/Create
-        public IActionResult Create()
+        public IActionResult Create(Int16 type)
         {
             
             var model = new Models.Correspondencia.Documento();
+            model.TipoId = type;
+            model.FuncionarioCCId = -1;
+            model.FuncionarioViaId = -1;
+            model.Fecha = DateTime.Now;
             return PartialView("_Create", model);
         }
 
@@ -80,10 +90,13 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Models.Correspondencia.Documento item)
         {
+            
             if (ModelState.IsValid)
             {
                 ApplicationUser currentUser = await GetCurrentUser();
+                string cite = await GetCite(item.AreaFuncionarioOrigenId);
                 item.IdUsuario =  currentUser.IdUsuario;
+                item.Cite = cite;
                 item.FechaRegistro = DateTime.Now;
                 item.IdEstadoRegistro = Constantes.Registrado;
                 DB.Add(item);
@@ -173,17 +186,18 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
 
         public JsonResult GetFuncionarios(string filter = "")
         {
-            if (filter.Length > 3)
+            if (filter.Length > 2)
             {
                 var beneficiarios = DB.RRHH_Beneficiario
+                    .Include(b => b.Puesto)
+                    .Where(b => b.PuestoId > 1)
                     .Where(b => (b.IdEstadoRegistro != Constantes.Anulado || b.IdEstadoRegistro == null))
-                    .Where(b => EF.Functions.ILike(b.Denominacion, "%" + filter + "%"))
+                    .Where(b => EF.Functions.ILike(b.Denominacion, "%" + filter + "%") || EF.Functions.ILike(b.Puesto.Descripcion, "%" + filter + "%"))
                     .OrderBy(d => d.Denominacion).Take(20)
-                    .Select(c => new {Id=c.IdBeneficiario, Nombre = c.Denominacion})
+                    .Select(c => new {Id=c.IdBeneficiario, Nombre = c.Denominacion, cargo = c.Puesto.Descripcion, 
+                                      area = c.Puesto.UnidadEjecutora.Descripcion, areaId = c.Puesto.UnidadEjecutora.IdUnidadEjecutora})
                     .ToList(); 
-                System.Console.WriteLine("============================================================");
-                System.Console.WriteLine(beneficiarios.Count);
-                System.Console.WriteLine("============================================================");
+                
                 return Json(new {repositories = beneficiarios});
             }
             else
