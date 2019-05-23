@@ -16,6 +16,7 @@ namespace MumanalPG.Models
         [NotMapped]
         public bool IsSuperAdmin { get; set; }
         
+        [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         public Int32 IdUsuario { get; set; }
     }
 }

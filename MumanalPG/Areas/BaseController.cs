@@ -89,7 +89,7 @@ namespace MumanalPG.Areas
             List<string> cites = await GetCiteList(uEjecutoraId);
             cites.Reverse();
             string citesStr = String.Join("/", cites.ToArray());
-            return $"MUM/{citesStr}";
+            return $"MUMANAL/{citesStr}";
         }
 
         public async Task<List<string>> GetCiteList(int uEjecutoraId, List<string> cites = null)

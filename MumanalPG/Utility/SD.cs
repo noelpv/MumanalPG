@@ -12,6 +12,9 @@ namespace MumanalPG.Utility
 
         public const string AdminEndUser = "Admin";
         public const string SuperAdminEndUser = "Super Admin";
+        public const string DefaultUser = "Default";
+        public const string VentanillaUnicaUser = "Ventanilla Unica";
+        public const string SecretariaUser = "Secretaria";
 
     }
 }

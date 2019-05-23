@@ -64,7 +64,13 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                 return NotFound();
             }
 
-            var item = await DB.CorrespondenciaDocumento.FirstOrDefaultAsync(m => m.Id == id);
+            var item = await DB.CorrespondenciaDocumento
+                                .Include(m => m.Tipo)
+                                .Include(m => m.FuncionarioOrigen)
+                                .Include(m => m.FuncionarioDestino)
+                                .Include(m => m.FuncionarioVia)
+                                .Include(m => m.FuncionarioCC)
+                                .FirstOrDefaultAsync(m => m.Id == id);
             if (item == null)
             {
                 return NotFound();
@@ -114,11 +120,31 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                 return NotFound();
             }
 
-            var item = await DB.CorrespondenciaDocumento.FindAsync(id);
+            var item = await DB.CorrespondenciaDocumento
+                .Include(m => m.Tipo)
+                .Include(m => m.FuncionarioOrigen)
+                .Include(m => m.FuncionarioDestino)
+                .Include(m => m.FuncionarioVia)
+                .Include(m => m.FuncionarioCC)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (item == null)
             {
                 return NotFound();
             }
+
+            item.NombreOrigen = item.FuncionarioOrigen.Denominacion;
+            item.NombreDestino = item.FuncionarioDestino.Denominacion;
+
+            if (item.FuncionarioViaId > 0)
+            {
+                item.NombreVia = item.FuncionarioVia.Denominacion;
+            }
+            
+            if (item.FuncionarioCCId > 0)
+            {
+                item.NombreCC = item.FuncionarioCC.Denominacion;
+            }
+
             return PartialView( "_Edit", item);
         }
 

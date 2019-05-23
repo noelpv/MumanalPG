@@ -19,6 +19,7 @@ namespace MumanalPG.Models.RRHH
 		public string Nit { get; set; }
 		public string DepartamentoSigla { get; set; }
 		public string Iniciales { get; set; }
+		public string PrimerNombre { get; set; }
 		public Int32? IdDocumentoRespaldo { get; set; }
 		public string PrimerApellido { get; set; }
 		public string SegundoApellido { get; set; }

@@ -69,7 +69,7 @@
                                           {
                                               @hasError
                                           }">
-                <label asp-for="FuncionarioDestinoId" class="form-control-label col-"></label>
+                <label asp-for="FuncionarioDestinoId" class="form-control-label"></label>
                 <div>
                     <select asp-for="FuncionarioDestino" class="form-control remote" id="destino" placeholder="Escriba Nombre o Cargo......"
                             data-remote-url="@Url.Action("GetFuncionarios")">
@@ -83,7 +83,7 @@
                                           {
                                               @hasError
                                           }">
-                <label asp-for="FuncionarioOrigenId" class="form-control-label col-"></label>
+                <label asp-for="FuncionarioOrigenId" class="form-control-label"></label>
                 <div>
                     <select asp-for="FuncionarioOrigen" class="form-control remote" id="origen" placeholder="Escriba Nombre o Cargo..."
                             data-remote-url="@Url.Action("GetFuncionarios")">
@@ -97,7 +97,7 @@
                                                                    {
                                                                        @hasError
                                                                    }">
-                <label asp-for="FuncionarioViaId" class="form-control-label col-"></label>
+                <label asp-for="FuncionarioViaId" class="form-control-label"></label>
                 <div>
                     <select asp-for="FuncionarioVia" class="form-control remote" id="via" placeholder="Escriba Nombre o Cargo..."
                             data-remote-url="@Url.Action("GetFuncionarios")">
@@ -111,7 +111,7 @@
                                                                    {
                                                                        @hasError
                                                                    }">
-                <label asp-for="FuncionarioCCId" class="form-control-label col-"></label>
+                <label asp-for="FuncionarioCCId" class="form-control-label"></label>
                 <div>
                     <select asp-for="FuncionarioCC" class="form-control remote" id="cc" placeholder="Escriba Nombre o Cargo..."
                             data-remote-url="@Url.Action("GetFuncionarios")">
@@ -189,6 +189,7 @@
         }
 
         function loadDefaultOptions(field) {
+            console.log($('#nombre-' + field + '-id').val());
             $('#' + field + '-selectized').val($('#nombre-' + field + '-id').val().trim());
             $('#' + field + '-selectized').attr("style", "width:100%");
         }

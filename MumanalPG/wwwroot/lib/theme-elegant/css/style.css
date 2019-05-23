@@ -14075,3 +14075,9 @@ File: scss
 .selectize-control.remote.loading::before {
   opacity: 0.4;
 }
+
+.content-large {
+  height:450px;
+  width: 100%;
+  overflow-y: scroll;
+}
