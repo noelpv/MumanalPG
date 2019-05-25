@@ -84,7 +84,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return PartialView("_NoEncontrado");
             }
 
             var item = await DB.CorrespondenciaDocumento
@@ -96,21 +96,26 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                                 .FirstOrDefaultAsync(m => m.Id == id);
             if (item == null)
             {
-                return NotFound();
+                return PartialView("_NoEncontrado");
             }
 
             return PartialView("_Details",item);
         }
 
         // GET: Correspondencia/Documentos/Create
-        public IActionResult Create(Int16 type)
+        public async Task<IActionResult> Create(Int16 type)
         {
-            
+            ApplicationUser  currentUser = await GetCurrentUser();
             var model = new Models.Correspondencia.Documento();
             model.TipoId = type;
             model.FuncionarioCCId = -1;
             model.FuncionarioViaId = -1;
             model.Fecha = DateTime.Now;
+            model.FuncionarioOrigenId = currentUser.Funcionario.IdBeneficiario;
+            model.NombreOrigen = currentUser.Funcionario.Denominacion;
+            model.CargoFuncionarioOrigen = currentUser.Funcionario.Puesto.Descripcion;
+            model.AreaFuncionarioOrigenId = currentUser.Funcionario.Puesto.UnidadEjecutora.IdUnidadEjecutora;
+            model.AreaFuncionarioOrigen = currentUser.Funcionario.Puesto.UnidadEjecutora.Descripcion;
             return PartialView("_Create", model);
         }
 
@@ -140,9 +145,9 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return PartialView("_NoEncontrado");
             }
-
+            
             var item = await DB.CorrespondenciaDocumento
                 .Include(m => m.Tipo)
                 .Include(m => m.FuncionarioOrigen)
@@ -152,23 +157,32 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (item == null)
             {
-                return NotFound();
-            }
-
-            item.NombreOrigen = item.FuncionarioOrigen.Denominacion;
-            item.NombreDestino = item.FuncionarioDestino.Denominacion;
-
-            if (item.FuncionarioViaId > 0)
-            {
-                item.NombreVia = item.FuncionarioVia.Denominacion;
+                return PartialView("_NoEncontrado");
             }
             
-            if (item.FuncionarioCCId > 0)
+            ApplicationUser  currentUser = await GetCurrentUser();
+            if(User.IsInRole(SD.AdminEndUser) || User.IsInRole(SD.SuperAdminEndUser) ||
+               currentUser.AspNetUserId == item.IdUsuario || currentUser.Funcionario.IdBeneficiario == item.FuncionarioOrigenId)
             {
-                item.NombreCC = item.FuncionarioCC.Denominacion;
+                
+                item.NombreOrigen = item.FuncionarioOrigen.Denominacion;
+                item.NombreDestino = item.FuncionarioDestino.Denominacion;
+
+                if (item.FuncionarioViaId > 0)
+                {
+                    item.NombreVia = item.FuncionarioVia.Denominacion;
+                }
+            
+                if (item.FuncionarioCCId > 0)
+                {
+                    item.NombreCC = item.FuncionarioCC.Denominacion;
+                }
+
+                return PartialView( "_Edit", item);
+
             }
 
-            return PartialView( "_Edit", item);
+            return PartialView("_NoAutorizado");
         }
 
         // POST: Correspondencia/Documentos/Edit/5
@@ -178,7 +192,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         {
             if (id != item.Id)
             {
-                return NotFound();
+                return PartialView("_NoEncontrado");
             }
 
             if (ModelState.IsValid)
@@ -192,7 +206,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                 {
                     if (!ItemExists(item.Id))
                     {
-                        return NotFound();
+                        return PartialView("_NoEncontrado");
                     }
                     else
                     {
@@ -209,15 +223,25 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return PartialView("_NoEncontrado");
             }
 
             var item = await DB.CorrespondenciaDocumento.FirstOrDefaultAsync(m => m.Id == id);
             if (item == null)
             {
-                return NotFound();
+                return PartialView("_NoEncontrado");
             }
 
+            if(!(User.IsInRole(SD.AdminEndUser) || User.IsInRole(SD.SuperAdminEndUser)))
+            {
+                ApplicationUser  currentUser = await GetCurrentUser();
+                if (currentUser.AspNetUserId != item.IdUsuario)
+                {
+                    return PartialView("_NoAutorizado");
+                }
+
+            }
+           
             return PartialView("_Delete",item);
         }
 

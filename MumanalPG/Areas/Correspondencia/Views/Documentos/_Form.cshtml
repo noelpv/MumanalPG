@@ -1,3 +1,4 @@
+@using MumanalPG.Utility
 @model MumanalPG.Models.Correspondencia.Documento
 
 <ul class="nav nav-tabs" role="tablist">
@@ -78,20 +79,31 @@
                 </div>
                 <span asp-validation-for="FuncionarioDestinoId" class="text-danger"></span>
             </div>
+            
+            @if (User.IsInRole(SD.SecretariaUser) || User.IsInRole(SD.SuperAdminEndUser))
+            {
+                <div class="form-group m-b-10 @if (stringErrors.Contains("FuncionarioOrigenId"))
+                                              {
+                                                  @hasError
+                                              }">
+                    <label asp-for="FuncionarioOrigenId" class="form-control-label"></label>
+                    <div>
+                        <select asp-for="FuncionarioOrigen" class="form-control remote" id="origen" placeholder="Escriba Nombre o Cargo..."
+                                data-remote-url="@Url.Action("GetFuncionarios")">
+                        </select>
 
-            <div class="form-group m-b-10 @if (stringErrors.Contains("FuncionarioOrigenId"))
-                                          {
-                                              @hasError
-                                          }">
-                <label asp-for="FuncionarioOrigenId" class="form-control-label"></label>
-                <div>
-                    <select asp-for="FuncionarioOrigen" class="form-control remote" id="origen" placeholder="Escriba Nombre o Cargo..."
-                            data-remote-url="@Url.Action("GetFuncionarios")">
-                    </select>
-
+                    </div>
+                    <span asp-validation-for="FuncionarioOrigenId" class="text-danger"></span>
                 </div>
-                <span asp-validation-for="FuncionarioOrigenId" class="text-danger"></span>
-            </div>
+            }
+            else
+            {
+                <div class="form-group m-b-10">
+                    <label asp-for="FuncionarioOrigenId" class="form-control-label"></label>
+                    <input asp-for="NombreOrigen" class="form-control" readonly="readonly"/>
+                </div>
+            }
+            
 
             <div id="via-container"class="form-group m-b-10 d-none @if (stringErrors.Contains("FuncionarioViaId"))
                                                                    {
@@ -167,7 +179,7 @@
             minHeight: '300px'
         });
 
-        var url = $('#origen').data('remote-url');
+        var url = $('#destino').data('remote-url');
         $('#destino').selectize(getOptions());
         $('#origen').selectize(getOptions());
         $('#via').selectize(getOptions());
