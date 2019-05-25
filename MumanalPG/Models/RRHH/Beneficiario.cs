@@ -14,7 +14,7 @@ namespace MumanalPG.Models.RRHH
 		[DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
 		[Key]
 		public Int32 IdBeneficiario { get; set; }
-		public Int32 IdBeneficiarioClasificacion { get; set; }
+		public Int32? IdBeneficiarioClasificacion { get; set; }
 		public string DocumentoIdentidad { get; set; }
 		public string Nit { get; set; }
 		public string DepartamentoSigla { get; set; }
@@ -58,5 +58,7 @@ namespace MumanalPG.Models.RRHH
 		public int PuestoId { get; set; }
 		[DisplayName("Puesto de Trabajo")]
 		public virtual Puesto Puesto { get; set; }
+		
+		public virtual ApplicationUser AspNetUser { get; set; }
 	}
 }

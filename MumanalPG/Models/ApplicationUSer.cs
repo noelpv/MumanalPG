@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using MumanalPG.Models.RRHH;
 
 namespace MumanalPG.Models
 {
@@ -16,7 +17,10 @@ namespace MumanalPG.Models
         [NotMapped]
         public bool IsSuperAdmin { get; set; }
         
-        [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         public Int32 IdUsuario { get; set; }
+        
+        public int AspNetUserId { get; set; }
+        [ForeignKey("AspNetUserId")]
+        public Beneficiario Funcionario { get; set; }
     }
 }

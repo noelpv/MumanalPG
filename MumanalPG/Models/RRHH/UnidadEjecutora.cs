@@ -15,16 +15,16 @@ namespace MumanalPG.Models.RRHH
 		public Int32 IdUnidadEjecutora { get; set; }
 		public string Descripcion { get; set; }
 		public string Sigla { get; set; }
-		public Int32 IdUnidadEjecutoraPadre { get; set; }
-		public Int32 Nivel { get; set; }
-		public Boolean EsUltimoNivel { get; set; }
-		public Int32 IdMunicipio { get; set; }
+		public int IdUnidadEjecutoraPadre { get; set; }
+		public int? Nivel { get; set; }
+		public bool? EsUltimoNivel { get; set; }
+		public int? IdMunicipio { get; set; }
 		public string Gestion { get; set; }
-		public Int32 IdEstadoRegistro { get; set; }
-		public Int32 IdUsuario { get; set; }
-		public DateTime FechaRegistro { get; set; }
-        public decimal MontoLimite { get; set; }
-        public Int32 CantidadLimite { get; set; }
+		public int? IdEstadoRegistro { get; set; }
+		public int? IdUsuario { get; set; }
+		public DateTime? FechaRegistro { get; set; }
+        public decimal? MontoLimite { get; set; }
+        public int? CantidadLimite { get; set; }
 		
 		[InverseProperty("UnidadEjecutora")]
 		public ICollection<Puesto> Puestos { get; set; }

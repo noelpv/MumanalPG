@@ -11,6 +11,7 @@ using MumanalPG.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Internal;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using MumanalPG.Extensions;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.Mapping;
 using SmartBreadcrumbs;
@@ -79,7 +80,13 @@ namespace MumanalPG.Areas
         public async Task<ApplicationUser> GetCurrentUser()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            ApplicationUser currentUser = await DB.ApplicationUser.Where(u => u.Id == user.Id).FirstOrDefaultAsync();
+
+            ApplicationUser currentUser = DB.ApplicationUser
+                .Include(u => u.Funcionario)
+                .Include(u => u.Funcionario.Puesto)
+                .Include(u => u.Funcionario.Puesto.UnidadEjecutora)
+                .FirstOrDefault(u => u.Id == user.Id);
+          
             return currentUser;
         }
         

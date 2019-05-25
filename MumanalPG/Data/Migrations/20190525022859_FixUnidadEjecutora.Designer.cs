@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MumanalPG.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -9,9 +10,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MumanalPG.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190525022859_FixUnidadEjecutora")]
+    partial class FixUnidadEjecutora
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1457,27 +1459,27 @@ namespace MumanalPG.Data.Migrations
                     b.Property<int>("IdUnidadEjecutora")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("CantidadLimite");
+                    b.Property<int>("CantidadLimite");
 
                     b.Property<string>("Descripcion");
 
-                    b.Property<bool?>("EsUltimoNivel");
+                    b.Property<bool>("EsUltimoNivel");
 
-                    b.Property<DateTime?>("FechaRegistro");
+                    b.Property<DateTime>("FechaRegistro");
 
                     b.Property<string>("Gestion");
 
-                    b.Property<int?>("IdEstadoRegistro");
+                    b.Property<int>("IdEstadoRegistro");
 
-                    b.Property<int?>("IdMunicipio");
+                    b.Property<int>("IdMunicipio");
 
                     b.Property<int>("IdUnidadEjecutoraPadre");
 
-                    b.Property<int?>("IdUsuario");
+                    b.Property<int>("IdUsuario");
 
-                    b.Property<decimal?>("MontoLimite");
+                    b.Property<decimal>("MontoLimite");
 
-                    b.Property<int?>("Nivel");
+                    b.Property<int>("Nivel");
 
                     b.Property<string>("Sigla");
 

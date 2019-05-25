@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -14,6 +16,7 @@ using SmartBreadcrumbs;
 namespace MumanalPG.Areas.Correspondencia.Controllers
 {
     //[Authorize(Roles = SD.SuperAdminEndUser)]
+    [Authorize]
     [Area("Correspondencia")]
     public class DocumentosController : BaseController
     {        
@@ -32,6 +35,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             {
                 type = 1;
             }
+            //Admin y Ventanilla pueden ver todos los documentos
             var consulta = DB.CorrespondenciaDocumento.AsNoTracking().AsQueryable();
             consulta = consulta.Include(m => m.FuncionarioOrigen)
                                .Include(m => m.FuncionarioDestino)
@@ -43,11 +47,30 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                 consulta = consulta.Where(m => EF.Functions.ILike(m.Referencia, $"%{filter}%"));
             }
 
+            ApplicationUser  currentUser = await GetCurrentUser();
+            if (User.IsInRole(SD.SecretariaUser))
+            {
+               //Puede ver los documentos del area donde trabaja
+                if (currentUser.Funcionario != null && currentUser.Funcionario.Puesto != null && currentUser.Funcionario.Puesto.UnidadEjecutora != null)
+                {
+                    string currentArea = currentUser.Funcionario.Puesto.UnidadEjecutora.Descripcion;
+                    consulta = consulta.Where(m => m.AreaFuncionarioOrigen == currentArea);
+                }
+                else
+                {
+                    //Puede ver los documentos propios
+                    consulta = consulta.Where(m => m.FuncionarioOrigenId == currentUser.Funcionario.IdBeneficiario);
+                    
+                }
+            } else if (User.IsInRole(SD.DefaultUser))
+            {
+                //Puede ver los documentos propios
+                consulta = consulta.Where(m => m.FuncionarioOrigenId == currentUser.Funcionario.IdBeneficiario);
+            }
+
             var resp = await PagingList.CreateAsync(consulta, Constantes.TamanoPaginacion, page, sortExpression,"-Id");
             resp.RouteValue = new RouteValueDictionary {{ "filter", filter}, {"type", type}};
-            System.Console.WriteLine("==========================================================");
-            System.Console.WriteLine(resp.TotalRecordCount);
-            System.Console.WriteLine("==========================================================");
+
             ShowFlash(a);
             ViewBag.Tipos = DB.CorrespondenciaTipoDocumento.Where(t => t.IdEstadoRegistro != Constantes.Anulado).ToList();
             ViewBag.docTipoId = type;
@@ -101,7 +124,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             {
                 ApplicationUser currentUser = await GetCurrentUser();
                 string cite = await GetCite(item.AreaFuncionarioOrigenId);
-                item.IdUsuario =  currentUser.IdUsuario;
+                item.IdUsuario =  currentUser.AspNetUserId;
                 item.Cite = cite;
                 item.FechaRegistro = DateTime.Now;
                 item.IdEstadoRegistro = Constantes.Registrado;

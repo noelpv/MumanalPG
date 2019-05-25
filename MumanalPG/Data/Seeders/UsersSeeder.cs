@@ -1,6 +1,7 @@
 using System;
 using MumanalPG.Models.RRHH;
 using System.Linq;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
@@ -78,7 +79,8 @@ namespace MumanalPG.Data.Seeders
                     UserName = username,
                     Email = username,
                     Name = ben.Denominacion,
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    AspNetUserId = ben.IdBeneficiario
                 }, "User123*").GetAwaiter().GetResult();
                 
                 if (userCreated.Succeeded && role != null)
@@ -110,14 +112,6 @@ namespace MumanalPG.Data.Seeders
                     userRole.RoleId = role.Id;
                     _context.UserRoles.Update(userRole);
                 }
-            }
-            
-            ApplicationUser currentUser = _context.ApplicationUser.FirstOrDefault(u => u.Id == user.Id);
-
-            if (currentUser != null)
-            {
-                ben.IdUsuario = currentUser.IdUsuario;
-                _context.RRHH_Beneficiario.Update(ben);  
             }
         }
     }
