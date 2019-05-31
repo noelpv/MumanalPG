@@ -86,7 +86,7 @@ namespace MumanalPG.Data
 
         public DbSet<MumanalPG.Models.Administra.ActivoAsignacion> ActivoAsignacion { get; set; }
         public DbSet<MumanalPG.Models.Administra.ActivoTransferencia> ActivoTransferencia { get; set; }
-        public DbSet<MumanalPG.Models.Planificacion.HojaRuta> Planificacion_HojaRuta { get; set; }
+        
         public DbSet<MumanalPG.Models.Planificacion.HojaRutaDetalle> HojaRutaDetalle { get; set; }
         public DbSet<MumanalPG.Models.Planificacion.HojaRutaInstrucciones> HojaRutaInstrucciones { get; set; }
         public DbSet<MumanalPG.Models.Planificacion.HojaRutaDocumentos> HojaRutaDocumentos { get; set; }
@@ -98,6 +98,7 @@ namespace MumanalPG.Data
 	    public DbSet<TipoDocumento> CorrespondenciaTipoDocumento { get; set; }
 	    public DbSet<MumanalPG.Models.Correspondencia.Instrucciones> CorrespondenciaInstrucciones { get; set; }
 	    public DbSet<Documento> CorrespondenciaDocumento { get; set; }
+	    public DbSet<HojaRuta> CorrespondenciaHojaRuta { get; set; }
 	    /* End Correspondencia*/
 	    
     }

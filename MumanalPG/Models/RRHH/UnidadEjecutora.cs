@@ -28,5 +28,7 @@ namespace MumanalPG.Models.RRHH
 		
 		[InverseProperty("UnidadEjecutora")]
 		public ICollection<Puesto> Puestos { get; set; }
-    }
+
+		public HojaRuta HojaRuta { get; set; }
+	}
 }

@@ -257,27 +257,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             return PartialView("_Delete",item);
         }
 
-        public JsonResult GetFuncionarios(string filter = "")
-        {
-            if (filter.Length > 2)
-            {
-                var beneficiarios = DB.RRHH_Beneficiario
-                    .Include(b => b.Puesto)
-                    .Where(b => b.PuestoId > 1)
-                    .Where(b => (b.IdEstadoRegistro != Constantes.Anulado || b.IdEstadoRegistro == null))
-                    .Where(b => EF.Functions.ILike(b.Denominacion, "%" + filter + "%") || EF.Functions.ILike(b.Puesto.Descripcion, "%" + filter + "%"))
-                    .OrderBy(d => d.Denominacion).Take(20)
-                    .Select(c => new {Id=c.IdBeneficiario, Nombre = c.Denominacion, cargo = c.Puesto.Descripcion, 
-                                      area = c.Puesto.UnidadEjecutora.Descripcion, areaId = c.Puesto.UnidadEjecutora.IdUnidadEjecutora})
-                    .ToList(); 
-                
-                return Json(new {repositories = beneficiarios});
-            }
-            else
-            {
-                return Json(new {repositories = new {}});
-            }
-        }
+        
 
         private bool ItemExists(Int32 id)
         {

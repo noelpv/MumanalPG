@@ -951,6 +951,58 @@ namespace MumanalPG.Data.Migrations
                     b.ToTable("Documentos","Correspondencia");
                 });
 
+            modelBuilder.Entity("MumanalPG.Models.Correspondencia.HojaRuta", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CiteFecha");
+
+                    b.Property<string>("CiteHojaRuta")
+                        .IsRequired();
+
+                    b.Property<string>("CiteTramite")
+                        .IsRequired();
+
+                    b.Property<int>("DocumentoId");
+
+                    b.Property<DateTime>("FechaRegistro");
+
+                    b.Property<int>("Gestion");
+
+                    b.Property<int>("IdEstadoRegistro");
+
+                    b.Property<int>("IdUsuario");
+
+                    b.Property<int>("NroFojas");
+
+                    b.Property<int>("OrigenId");
+
+                    b.Property<string>("Prioridad")
+                        .IsRequired();
+
+                    b.Property<string>("Referencia")
+                        .IsRequired();
+
+                    b.Property<int>("SolicitudCodigo");
+
+                    b.Property<string>("TipoHojaRuta");
+
+                    b.Property<int>("UnidadEjecutoraId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DocumentoId")
+                        .IsUnique();
+
+                    b.HasIndex("OrigenId");
+
+                    b.HasIndex("UnidadEjecutoraId")
+                        .IsUnique();
+
+                    b.ToTable("HojaRuta","Correspondencia");
+                });
+
             modelBuilder.Entity("MumanalPG.Models.Correspondencia.Instrucciones", b =>
                 {
                     b.Property<int>("Id")
@@ -1066,34 +1118,6 @@ namespace MumanalPG.Data.Migrations
                     b.HasKey("Entero");
 
                     b.ToTable("Generales_fRetornaEntero");
-                });
-
-            modelBuilder.Entity("MumanalPG.Models.Planificacion.HojaRuta", b =>
-                {
-                    b.Property<int>("IdHojaRuta")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("CiteFecha");
-
-                    b.Property<string>("CiteTramite");
-
-                    b.Property<DateTime>("FechaRegistro");
-
-                    b.Property<string>("HoraRegistro");
-
-                    b.Property<int>("IdEstadoRegistro");
-
-                    b.Property<int>("IdUnidadEjecutora");
-
-                    b.Property<int>("IdUsuario");
-
-                    b.Property<int>("NroFojas");
-
-                    b.Property<int>("SolicitudCodigo");
-
-                    b.HasKey("IdHojaRuta");
-
-                    b.ToTable("HojaRuta","Planificacion");
                 });
 
             modelBuilder.Entity("MumanalPG.Models.Planificacion.HojaRutaDetalle", b =>
@@ -1995,6 +2019,24 @@ namespace MumanalPG.Data.Migrations
                     b.HasOne("MumanalPG.Models.Correspondencia.TipoDocumento", "Tipo")
                         .WithMany("Documentos")
                         .HasForeignKey("TipoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MumanalPG.Models.Correspondencia.HojaRuta", b =>
+                {
+                    b.HasOne("MumanalPG.Models.Correspondencia.Documento", "Documento")
+                        .WithOne("HojaRuta")
+                        .HasForeignKey("MumanalPG.Models.Correspondencia.HojaRuta", "DocumentoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MumanalPG.Models.RRHH.Beneficiario", "Origen")
+                        .WithMany("HojasRuta")
+                        .HasForeignKey("OrigenId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MumanalPG.Models.RRHH.UnidadEjecutora", "UnidadEjecutora")
+                        .WithOne("HojaRuta")
+                        .HasForeignKey("MumanalPG.Models.Correspondencia.HojaRuta", "UnidadEjecutoraId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

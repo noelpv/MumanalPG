@@ -1,0 +1,432 @@
+@using MumanalPG.Models.Correspondencia
+@using MumanalPG.Models.Correspondencia.DTO
+@using MumanalPG.Utility
+@model MumanalPG.Models.Correspondencia.DTO.HojaRutaDTO
+<link rel="stylesheet" href="~/lib/wizard/css/style.css"/>
+<link rel="stylesheet" href="~/lib/wizard/css/nouislider.min.css"/>
+<link rel="stylesheet" href="~/lib/jstree/themes/default/style.css"/>
+
+<form class="wizard-form" asp-action="@ViewData["Action"]">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @{
+        string hasError = "has-danger";
+        string stringErrors = "";
+        if (ViewData.ModelState.IsValid)
+        {
+            hasError = "";
+        }
+        else
+        {
+            var errorList = ViewData.ModelState.Where(x => x.Value.Errors.Count > 0).ToDictionary(kvp => kvp.Key);
+            stringErrors = String.Join(",", errorList.Select(x => x.Key));
+        }
+    }
+    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()"/>
+    <input type="hidden" asp-for="Id"/>
+    
+    <div>
+       
+        <h3>Datos Generales</h3>
+        <fieldset>
+            <h2>Datos Generales</h2>
+            <p class="desc">Por favor ingrese los datos generales de la hoja de ruta</p>
+            <div class="fieldset-content">
+                <div class="form-row">
+                    <label class="form-label">Crear Hoja de Ruta a partir de:</label>
+                    <div class="form-flex">
+                        <div class="col-md-12">
+                            <div class="m-b-10" data-intro="Use esta opción cuando haya creado un documento mediante el sistema">
+                                <label class="custom-control custom-radio">
+                                    <input id="radio1" name="radio-options" type="radio" class="custom-control-input"
+                                           checked="checked" value="created">
+                                    <span class="custom-control-label">Documento Creado en el Sistema</span>
+                                </label>
+                            </div>
+                            <div class="m-b-10" data-intro="Use esta opción si no tiene un documento creado en el sistema 
+                                                    y quiere escanearlo para poder subirlo">
+                                <label class="custom-control custom-radio">
+                                    <input id="radio2" name="radio-options" type="radio" class="custom-control-input"
+                                           value="no-created">
+                                    <span class="custom-control-label">Digitalizar Documento Físico</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-sm-12 col-md-8">
+                        <div id="doc-container" class="form-group m-t-10 @if (stringErrors.Contains("DocumentoId"))
+                                                                         {
+                                                                             @hasError
+                                                                         }">
+                            <label asp-for="DocumentoId" class="form-label">Elegir Documento</label>
+                            <div>
+                                <select asp-for="DocumentoId" class="form-control remote" id="documento" placeholder="Escriba Cite o Remitente..."
+                                        data-remote-url="@Url.Action("GetDocuments")">
+                                </select>
+
+                            </div>
+                            <span asp-validation-for="DocumentoId" class="text-danger"></span>
+                            <span class="text-input">Documento creado en el sistema (Informes, Memorandums, Notas, etc.)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-sm-12 col-md-6">
+                        <div id="rem-input" class="form-group">
+                            <label class="form-label" asp-for="Remitente"></label>
+                            <input id="origen-id" type="hidden" asp-for="OrigenId"/>
+                            <input type="text" class="form-control" id="origen-name" asp-for="Remitente" required/>
+                            <span asp-validation-for="Remitente" class="text-danger"></span>
+                            <span class="text-input">Persona que remite el documento</span>
+                        </div>
+                        <div id="rem-select" class="hide form-group @if (stringErrors.Contains("OrigenId"))
+                                                                    {
+                                                                        @hasError
+                                                                    }">
+                            <label asp-for="OrigenId" class="form-label"></label>
+                            <div>
+                                <select class="form-control remote" id="origen" placeholder="Escriba Nombre o Cargo..."
+                                        data-remote-url="@Url.Action("GetFuncionarios")">
+                                </select>
+
+                            </div>
+                            <span asp-validation-for="OrigenId" class="text-danger"></span>
+                            <span class="text-input">Persona que remite el documento</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="UnidadEjecutoraNombre" class="form-label"></label>
+                            <input id="area-id" type="hidden" asp-for="UnidadEjecutoraId"/>
+                            <input id="area-name" type="text" class="form-control" asp-for="UnidadEjecutoraNombre" required readonly/>
+                            <span asp-validation-for="UnidadEjecutoraNombre" class="text-danger"></span>
+                            <span class="text-input">Área al que pertenece el remitente</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label asp-for="Referencia" class="form-label"></label>
+                        <input id="referencia" asp-for="Referencia" class="form-control" required/>
+                        <span asp-validation-for="Referencia" class="text-danger"></span>
+                        <span class="text-input">Referencia del documento</span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label class="form-label" asp-for="CiteDoc"></label>
+                            <input id="cite-doc" asp-for="CiteDoc" class="form-control" required/>
+                            <span asp-validation-for="CiteDoc" class="text-danger"></span>
+                            <span class="text-input">Cite del documento</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="FechaDoc" class="form-label"></label>
+                            <input id="fecha-doc" type="date"asp-for="FechaDoc" class="form-control" required/>
+                            <span asp-validation-for="FechaDoc" class="text-danger"></span>
+                            <span class="text-input">Fecha del documento</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label class="form-label" asp-for="NroFojas"></label>
+                            <input id="nrofojas-doc" asp-for="NroFojas" class="form-control" required/>
+                            <span asp-validation-for="NroFojas" class="text-danger"></span>
+                            <span class="text-input">Cantidad de hojas del documento</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Prioridad" class="form-label"></label>
+                            <select id="prioridad" asp-for="Prioridad" class="form-control" required>
+                                <option value="@Constantes.PrioridadAlta">Alta</option>
+                                <option value="@Constantes.PrioridadMedia" selected="selected">Media</option>
+                                <option value="@Constantes.PrioridadBaja">Baja</option>
+                            </select>
+                            <span asp-validation-for="Prioridad" class="text-danger"></span>
+                            <span class="text-input">Determine la prioridad (Alta/Media/Baja)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <h3>Derivar e Instruir</h3>
+        <fieldset>
+            <h2>Derivar</h2>
+            <p class="desc">Por favor seleccione la(s) persona(s) a quien va dirigido esta Hoja de Ruta</p>
+            <div class="fieldset-content">
+                <div class="form-row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="jstree" class="form-label">Seleccione destinatario(s) de esta lista</label>
+                            <div id="jstree" class="content-large"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="instrucciones" class="form-label">Instrucciones</label>
+                            <div id="instrucciones-container" class="instrucciones-container" >
+                                <div class="not-selected element-center text-center">
+                                    Seleccione al menos un funcionario
+                                </div>
+                                <div id="instrucciones" class="content-large instrucciones hide">
+                                    <input id="ins_" type="hidden" />
+                                    @* <input id="com_" type="hidden" /> *@
+                                    <div class="form-group row p-t-20">
+
+                                        @foreach (Instrucciones i in ViewBag.instrucciones)
+                                        {
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="m-b-10">
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input data-id="@i.Id" type="checkbox" class="instrucciones-checkbox custom-control-input">
+                                                        <span class="custom-control-label">@i.Nombre</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                        }
+                                        <div class="col-md-12">
+                                            <div class="m-b-10">
+                                                <label class="form-label">Comentarios Adicionales</label>
+                                                <textarea class="form-control comentarios"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+               
+
+            </div>
+        </fieldset>
+
+        <h3>Anexar y Finalizar</h3>
+        <fieldset>
+            <h2>Set Financial Goals</h2>
+            <p class="desc">Set up your money limit to reach the future plan</p>
+            <div class="fieldset-content">
+                <div class="donate-us">
+                    <div class="price_slider ui-slider ui-slider-horizontal">
+                        <div id="slider-margin"></div>
+                        <p class="your-money">
+                            Your money you can spend per month :
+                            <span class="money" id="value-lower"></span>
+                            <span class="money" id="value-upper"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</form>
+
+<script src="~/lib/wizard/js/jquery.steps.min.js"></script>
+<script src="~/lib/wizard/js/dobpicker.js"></script>
+<script src="~/lib/wizard/js/nouislider.min.js"></script>
+<script src="~/lib/wizard/js/wNumb.js"></script>
+<script src="~/lib/jstree/jstree.js"></script>
+<script src="~/lib/wizard/js/main.js"></script>
+
+<script>
+    $(document).ready(function() {
+        var url_origen = $('#origen').data('remote-url');
+        var url_doc = $('#documento').data('remote-url');
+
+        var render = function(item, escape) {
+            $('.selectize-control.remote').removeClass('loading');
+            return '<div class="row">' +
+                '<div class="col-sm-12 col-md-2">' +
+                '<img src="/lib/theme-elegant/img/users/user-male-icon.png" alt="image" class="img-circle" height="64px">' +
+                '</div>' +
+                '<div class="col-sm-12 col-md-10">' +
+                '<span class="nombre">' +
+                escape(item.nombre) +
+                '</span>' +
+                '<div class="cargo">' +
+                escape(item.cargo) +
+                '</div>' +
+                '<div class="area">' +
+                escape(item.area) +
+                '</div>' +
+                '</div>' +
+                '</div>';
+        }
+
+        var on_change = function(selected) {
+
+            var dataSelected = this.options[selected];
+
+            $('#area-id').val(dataSelected.areaId);
+            $('#area-name').val(dataSelected.area);
+            $('#origen-id').val(selected);
+        }
+
+        var on_ini = function(data) {}
+        var search_fields = ['nombre', 'cargo', 'area'];
+        var render_doc = function(item, escape) {
+            $('.selectize-control.remote').removeClass('loading');
+            return '<div class="row">' +
+                '<div class="col-md-12">' +
+                '<span class="nombre text-uppercase">' +
+                escape(item.tipo) +
+                ' - ' +
+                escape(item.cite) +
+                '</span>' +
+                '<div class="small"><b>Remitente:</b> ' +
+                escape(item.remitente) +
+                '</div>' +
+                '<div class="small"><b>Referencia:</b> <span class="font-italic">' +
+                escape(item.referencia) +
+                '</span></div>' +
+                '<div class="small"><b>Fecha:</b> <span class="font-italic">' +
+                escape(item.fechastr) +
+                '</span></div>' +
+                '</div>' +
+                '</div>';
+        }
+
+        var on_change_doc = function(selected) {
+            var dataSelected = this.options[selected];
+            $('#origen-id').val(dataSelected.remitenteId);
+            $('#origen-name').val(dataSelected.remitente);
+            $('#area-id').val(dataSelected.areaId);
+            $('#area-name').val(dataSelected.area);
+            $('#referencia').val(dataSelected.referencia);
+            $('#cite-doc').val(dataSelected.cite);
+            $('#fecha-doc').val(dataSelected.fecha);
+        }
+        var on_ini_doc = function(data) {}
+        var search_fields_doc = ['cite', 'remitente'];
+
+        $('#origen')
+            .selectize(buildOptionsSelectize(url_origen, 'id', 'nombre', search_fields, render, on_change, on_ini));
+        $('#documento').selectize(buildOptionsSelectize(url_doc,
+            'id',
+            'cite',
+            search_fields_doc,
+            render_doc,
+            on_change_doc,
+            on_ini_doc));
+
+        $('input[name=radio-options]').change(function() {
+            if ($(this).val() === 'created') {
+                $('#doc-container').show();
+                $('#rem-input').show();
+                $('#rem-select').hide();
+               // $('#documento-selectized').prop('required',true);
+            } else {
+                $('#doc-container').hide();
+                $('#rem-input').hide();
+                $('#rem-select').show();
+                //$('#documento-selectized').prop('required',false);
+            }
+        });
+        var data = @Html.Raw(Json.Serialize(@ViewBag.areas));
+
+        $('#jstree').jstree({
+            'core': {
+                'data': data,
+                check_callback: false
+            },
+            "checkbox": {       
+                three_state : false, 
+                whole_node : false,//Used to check/uncheck node only if clicked on checkbox icon, and not on the whole node including label
+                tie_selection : false
+            },
+            "plugins": ["checkbox"]
+        }).on("changed.jstree", function (e, data) {
+
+            $('.jstree-active').removeClass('jstree-active');
+            $('li#' + data.node.li_attr.id).addClass('jstree-active');
+            var node_id = $(data.node).attr('id');
+           
+            if (node_id.indexOf('area') === -1) {
+                cloneInstrucciones(node_id);
+            }
+            
+        }).on("check_node.jstree", function(e, data) {
+            $('a#' + data.node.a_attr.id).trigger('click');
+            $('input#ins_' + data.node.id).attr('name', 'Instrucciones');
+            $('input#com_' + data.node.id).attr('name', 'Comentarios');
+        }).on("uncheck_node.jstree", function(e, data) {
+            $('input#ins_' + data.node.id).removeAttr('name');
+            $('input#com_' + data.node.id).removeAttr('name');
+        });
+        
+        function cloneInstrucciones(node_id) {
+            
+            var container = $('#instrucciones-container');
+            var new_instrucciones_id = 'instrucciones_' + node_id;
+            var values = [];
+            var comentarios = "";
+            $('.not-selected').fadeOut();
+            if ($('#' + new_instrucciones_id).length) {
+                $('.instrucciones').fadeOut('slow');
+                var input_ins = $('#' + new_instrucciones_id).find('input[id*=ins_]').first();
+                //var input_com = $('#' + new_instrucciones_id).find('input[id*=com_]').first();
+                
+                if (input_ins.val().length) {
+                    var objTmp = JSON.parse(input_ins.val());
+                    values = objTmp.instrucciones;
+                    comentarios = objTmp.comentarios;
+                }
+                
+//                if (input_com.val().length) {
+//                    var objTmp = JSON.parse(input_com.val());
+//                    comentarios = objTmp.comentarios;
+//                }
+                $('#' + new_instrucciones_id).fadeIn('slow');
+            } else {
+                var inst_clone = $('#instrucciones').clone();
+                $('.instrucciones').fadeOut('slow');
+                inst_clone.attr('id', 'instrucciones_' + node_id);
+                inst_clone.find('input[id*=ins_]').first().attr('id', 'ins_' + node_id);
+                inst_clone.find('input[id*=ins_]').first().attr('data-id', node_id);
+               // inst_clone.find('input[id*=com_]').first().attr('id', 'com_' + node_id);
+               // inst_clone.find('input[id*=com_]').first().attr('data-id', node_id);
+                inst_clone.appendTo(container);
+                inst_clone.fadeIn('slow'); 
+            }
+            
+            $('.instrucciones-checkbox').unbind();
+            $('.instrucciones-checkbox').change(function() {
+                var input_ins = $(this).parents('div.instrucciones').first().find('input[id*=ins_]').first();
+               
+                if ($(this).is(':checked')) {
+                    values.push($(this).data('id'));
+                } else {
+                    values.splice(values.indexOf($(this).data('id')),1);
+                }
+
+                var obj = {id: input_ins.data('id'), instrucciones: values, comentarios: comentarios};                
+                input_ins.val(JSON.stringify(obj));
+            });
+
+            $('.comentarios').unbind();
+            $('.comentarios').on("change keyup paste", function() {
+                var input_ins= $(this).parents('div.instrucciones').first().find('input[id*=ins_]').first();
+                var obj = JSON.parse(input_ins.val());
+                comentarios = $(this).val();
+                obj.comentarios = comentarios;
+                
+                input_ins.val(JSON.stringify(obj));
+            });
+        }
+        
+    });
+</script>

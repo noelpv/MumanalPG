@@ -61,7 +61,7 @@ $.extend( $.fn, {
 			} );
 
 			// Validate the form on submit
-			this.on( "submit.validate", function( event ) {
+			this.on( "submit.validate", function( event ) {				
 				if ( validator.settings.debug ) {
 
 					// Prevent form submit to be able to see console output
@@ -494,11 +494,15 @@ $.extend( $.validator, {
 				if ( rs ) {
 					this.invalid[ checkElement.name ] = false;
                     $( element ).parents('div').first().removeClass('has-danger').addClass('has-success');
+                    $( element ).parents('div').first().find('span.text-danger').first().text('');
                     $( element ).removeClass('form-control-danger').addClass('form-control-success');
 				} else {
+					var error_text = $(element).data('val-required');
 					this.invalid[ checkElement.name ] = true;
                     $( element ).parents('div').first().removeClass('has-success').addClass('has-danger');
+                    $( element ).parents('div').first().find('span.text-danger').first().text(error_text);
                     $( element ).removeClass('form-control-success').addClass('form-control-danger');
+                    
 				}
 
 				if ( !this.numberOfInvalids() ) {
@@ -899,6 +903,8 @@ $.extend( $.validator, {
 			var i, elements, error;
 			for ( i = 0; this.errorList[ i ]; i++ ) {
 				error = this.errorList[ i ];
+				error.message = $(error.element).data('val-required');
+
 				if ( this.settings.highlight ) {
 					this.settings.highlight.call( this, error.element, this.settings.errorClass, this.settings.validClass );
 				}
@@ -939,7 +945,7 @@ $.extend( $.validator, {
 				describedBy = $( element ).attr( "aria-describedby" );
 
 			if ( error.length ) {
-
+	
 				// Refresh error/success class
 				error.removeClass( this.settings.validClass ).addClass( this.settings.errorClass );
 
@@ -947,12 +953,16 @@ $.extend( $.validator, {
 				error.html( message );
 			} else {
 
-				// Create error element
-				error = $( "<" + this.settings.errorElement + ">" )
-					.attr( "id", elementID + "-error" )
-					.addClass( this.settings.errorClass )
-					.html( message || "" );
+				// // Create error element
+				// error = $( "<" + this.settings.errorElement + ">" )
+				// 	.attr( "id", elementID + "-error" )
+				// 	.addClass( this.settings.errorClass )
+				// 	.html( message || "" );
 
+                $( element ).parents('div').first().removeClass('has-success').addClass('has-danger');
+                $( element ).parents('div').first().find('span.text-danger').first().text(message);
+                $( element ).removeClass('form-control-success').addClass('form-control-danger');
+                
 				// Maintain reference to the element to be placed into the DOM
 				place = error;
 				if ( this.settings.wrapper ) {

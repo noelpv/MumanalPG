@@ -95,6 +95,8 @@ namespace MumanalPG.Models.Correspondencia
 		[Required(ErrorMessage = "{0} no puede estar vacío")]
 		[Column(TypeName = "text")]
 		public String Contenido { get; set; }
+		
+		public HojaRuta HojaRuta { get; set; }
 
 		public Int32 IdEstadoRegistro { get; set; }
 		public Int32 IdUsuario { get; set; }

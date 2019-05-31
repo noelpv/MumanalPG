@@ -59,13 +59,13 @@ namespace MumanalPG.Data.Seeders
                 IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UP");
             
             AddNew(new Puesto { Descripcion = "Encargado de Prestaciones", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
-                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UP");
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "PRE");
             
             AddNew(new Puesto { Descripcion = "Encargado de Cotizaciones", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
-                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UP");
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "COT");
             
             AddNew(new Puesto { Descripcion = "Encargado de Servicios Sociales", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
-                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UP");
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "SS");
             
             AddNew(new Puesto { Descripcion = "Auxiliar de Prestaciones", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
                 IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UP");

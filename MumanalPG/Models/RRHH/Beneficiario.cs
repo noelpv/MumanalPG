@@ -54,6 +54,9 @@ namespace MumanalPG.Models.RRHH
 		[InverseProperty("FuncionarioCC")]
 		public ICollection<Documento> DocumentosCC { get; set; }
 		
+		[InverseProperty("Origen")]
+		public ICollection<HojaRuta> HojasRuta { get; set; }
+		
 		
 		public int PuestoId { get; set; }
 		[DisplayName("Puesto de Trabajo")]
