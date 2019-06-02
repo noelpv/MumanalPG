@@ -1,19 +1,19 @@
-@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Planificacion.FuenteFinanciamiento>
+@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Planificacion.OrganismoFinanciador>
 @using MumanalPG.Utility
 @using ReflectionIT.Mvc.Paging
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @{
-    ViewData["Title"] = "FuenteFinanciamiento";
+    ViewData["Title"] = "OrganismoFinanciador";
     OptionPartial options = new OptionPartial();
-    string intro_msg_search = "Puede buscar una FuenteFinanciamiento introduciendo el nombre en este campo, " +
+    string intro_msg_search = "Puede buscar una OrganismoFinanciador introduciendo el nombre en este campo, " +
                               "luego presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
                               "<i class='fas fa-search'></i></button>";
 }
 <div class="row">
     <div class="col-12 text-right">
-        <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nueva FuenteFinanciamiento"
+        <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nuevo OrganismoFinanciador"
            data-modal="link", data-redirect="@Url.Action("Index", new{@a=Constantes.Creado})" 
-           data-intro="Click, en este botón para crear una nueva FuenteFinanciamiento">
+           data-intro="Click, en este botón para crear una nueva OrganismoFinanciador">
             <i class="fas fa-plus"></i><span class="d-none d-sm-inline">&nbsp; Nuevo </span>
         </a>
     </div>
@@ -38,33 +38,34 @@
         <tr>
             <th>@Html.SortableHeaderFor(model => model.Descripcion)</th>
             <th>Sigla</th>
-            <th></th>
+            <th>FuenteFinanciamiento</th>
         </tr>
 
         </thead>
         @{int index = 0;}
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.IdFuenteFinanciamiento" title="Detalle" 
-                       data-modal="link" data-modal-read="True">
-                        @Html.DisplayFor(modelItem => item.Descripcion)
-                    </a>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Sigla)
-                </td>
-                 
-                @{
-                    options.Id = item.IdFuenteFinanciamiento;
-                    options.ShowIntroMessages = index == 0 ? true : false;
-                    index++;
-                    
-                }
+        <tr>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.IdOrganismoFinanciador" title="Detalle"
+                   data-modal="link" data-modal-read="True">
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sigla)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdFuenteFinanciamiento)
+            </td>
+            @{
+                options.Id = item.IdOrganismoFinanciador;
+                options.ShowIntroMessages = index == 0 ? true : false;
+                index++;
 
-                <partial name="_TableOptionsPartial" model="options"/>
-            </tr>
+            }
+            <partial name="_TableOptionsPartial" model="options" />
+        </tr>
         }
     </table>
 </div>

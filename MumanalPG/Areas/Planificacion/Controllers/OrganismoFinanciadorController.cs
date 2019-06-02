@@ -18,19 +18,19 @@ namespace MumanalPG.Areas.Planificacion.Controllers
     //[Authorize(Roles = SD.SuperAdminEndUser)]
     [Authorize]
     [Area("Planificacion")]
-    public class FuenteFinanciamientoController : BaseController
+    public class OrganismoFinanciadorController : BaseController
     {        
         
-		public FuenteFinanciamientoController(ApplicationDbContext db, UserManager<IdentityUser> userManager): base(db, userManager)
+		public OrganismoFinanciadorController(ApplicationDbContext db, UserManager<IdentityUser> userManager): base(db, userManager)
         {
             
         }
 
-		// GET: Planificacion/FuenteFinanciamiento
-        [Breadcrumb("FuenteFinanciamiento", FromController = "DashboardFF", FromAction = "Clasificadores")]
+		// GET: Planificacion/OrganismoFinanciador
+        [Breadcrumb("OrganismoFinanciador", FromController = "DashboardOF", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
-            var consulta = DB.FuenteFinanciamiento.AsNoTracking().AsQueryable();
+            var consulta = DB.OrganismoFinanciador.AsNoTracking().AsQueryable();
             consulta = consulta.Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
             if (!string.IsNullOrWhiteSpace(filter))
 			{
@@ -42,7 +42,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             return View(resp);
         }
 
-        // GET: Planificacion/FuenteFinanciamiento/Details/5
+        // GET: Planificacion/OrganismoFinanciador/Details/5
         public async Task<IActionResult> Details(Int32? id)
         {
             if (id == null)
@@ -50,7 +50,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
                 return NotFound();
             }
 
-            var item = await DB.FuenteFinanciamiento.FirstOrDefaultAsync(m => m.IdFuenteFinanciamiento  == id);
+            var item = await DB.OrganismoFinanciador.FirstOrDefaultAsync(m => m.IdOrganismoFinanciador  == id);
             if (item == null)
             {
                 return NotFound();
@@ -59,22 +59,25 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             return PartialView("Details",item);
         }
 
-        // GET: Planificacion/FuenteFinanciamiento/Create
+        // GET: Planificacion/OrganismoFinanciador/Create
         public IActionResult Create()
         {
-            var model = new Models.Planificacion.FuenteFinanciamiento();
+            var model = new Models.Planificacion.OrganismoFinanciador();
             return PartialView("Create", model);
         }
 
-        // POST: Planificacion/FuenteFinanciamiento/Create
+        // POST: Planificacion/OrganismoFinanciador/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Models.Planificacion.FuenteFinanciamiento item)
+        public async Task<IActionResult> Create(Models.Planificacion.OrganismoFinanciador item)
         {
             if (ModelState.IsValid)
             {
                 //ApplicationUser currentUser = await GetCurrentUser();
                 //item.IdUsuario = currentUser.AspNetUserId;
+                item.Gestion = "2019";
+                item.IdBeneficiario = '0';
+                item.CargoRepresentante = "";
                 item.FechaRegistro = DateTime.Now;
                 DB.Add(item);
                 await DB.SaveChangesAsync();
@@ -83,7 +86,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             return PartialView("Create",item);
         }
 
-        // GET: Planificacion/FuenteFinanciamiento/Edit/5
+        // GET: Planificacion/OrganismoFinanciador/Edit/5
         public async Task<IActionResult> Edit(Int32? id)
         {
             if (id == null)
@@ -91,7 +94,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
                 return NotFound();
             }
 
-            var item = await DB.FuenteFinanciamiento.FindAsync(id);
+            var item = await DB.OrganismoFinanciador.FindAsync(id);
             if (item == null)
             {
                 return NotFound();
@@ -99,12 +102,12 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             return PartialView( "Edit", item);
         }
 
-        // POST: Planificacion/FuenteFinanciamiento/Edit/5
+        // POST: Planificacion/OrganismoFinanciador/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, [Bind("IdFuenteFinanciamiento,Descripcion,Sigla")] Models.Planificacion.FuenteFinanciamiento item)
+        public async Task<IActionResult> Edit(Int32 id, [Bind("IdOrganismoFinanciador,Descripcion,Sigla, IdFuenteFinanciamiento")] Models.Planificacion.OrganismoFinanciador item)
         {
-            if (id != item.IdFuenteFinanciamiento)
+            if (id != item.IdOrganismoFinanciador)
             {
                 return NotFound();
             }
@@ -118,7 +121,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ItemExists(item.IdFuenteFinanciamiento))
+                    if (!ItemExists(item.IdOrganismoFinanciador))
                     {
                         return NotFound();
                     }
@@ -132,7 +135,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             return PartialView("Edit", item);
         }
 
-        // GET: Planificacion/FuenteFinanciamiento/Delete/5
+        // GET: Planificacion/OrganismoFinanciador/Delete/5
         public async Task<IActionResult> Delete(Int32? id)
         {
             if (id == null)
@@ -140,7 +143,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
                 return NotFound();
             }
 
-            var item = await DB.FuenteFinanciamiento.FirstOrDefaultAsync(m => m.IdFuenteFinanciamiento == id);
+            var item = await DB.OrganismoFinanciador.FirstOrDefaultAsync(m => m.IdOrganismoFinanciador == id);
             if (item == null)
             {
                 return NotFound();
@@ -149,21 +152,21 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             return PartialView("Delete",item);
         }
 
-        // POST: Planificacion/FuenteFinanciamiento/Delete/5
+        // POST: Planificacion/OrganismoFinanciador/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Int32 id)
         {
-            var item = await DB.FuenteFinanciamiento.FindAsync(id);
+            var item = await DB.OrganismoFinanciador.FindAsync(id);
             item.IdEstadoRegistro = 2;  //Constantes.Eliminado ;
-            DB.FuenteFinanciamiento.Update(item);
+            DB.OrganismoFinanciador.Update(item);
             await DB.SaveChangesAsync();
             return PartialView("Delete",item);
         }
 
         private bool ItemExists(Int32 id)
         {
-            return DB.FuenteFinanciamiento.Any(e => e.IdFuenteFinanciamiento == id);
+            return DB.OrganismoFinanciador.Any(e => e.IdOrganismoFinanciador == id);
         }
     }
 }

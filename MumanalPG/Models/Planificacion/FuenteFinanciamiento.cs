@@ -12,8 +12,8 @@ namespace MumanalPG.Models.Planificacion
 		public Int32 IdFuenteFinanciamiento { get; set; }
 		public string Descripcion { get; set; }
 		public string Sigla { get; set; }
-		public string IdEstadoRegistro { get; set; }
-		public string IdUsuario { get; set; }
+		public Int32 IdEstadoRegistro { get; set; }
+		public Int32 IdUsuario { get; set; }
 		public DateTime FechaRegistro { get; set; }
 	}
 }
