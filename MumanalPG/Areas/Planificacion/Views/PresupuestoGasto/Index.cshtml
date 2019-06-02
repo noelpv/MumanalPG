@@ -1,0 +1,173 @@
+﻿@model IEnumerable<MumanalPG.Models.Planificacion.PresupuestoGasto>
+
+@{
+    ViewData["Title"] = "Formulacion del Presupuesto";
+}
+
+<h2>Lista</h2>
+
+<p>
+    <a asp-action="Create">Nuevo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Gestion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUnidadEjecutora)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEstructuraProgramatica)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdOrganismoFinanciador)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPartidaGasto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdBeneficiario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdBeneficiarioResponsable)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdDocumentoRespaldo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PptoFormulado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PptoAdiciones)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PptoModificaciones)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PptoVigente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EjecucionCompromiso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EjecucionDevengado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EjecucionPagado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EjecucionDevuelto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EjecucionRevertido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EjecucionAnulado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEstadoRegistro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEstadoPpto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUsuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUsuarioAprueba)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaRegistro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaAprueba)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gestion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUnidadEjecutora)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEstructuraProgramatica)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdOrganismoFinanciador)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPartidaGasto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdBeneficiario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdBeneficiarioResponsable)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdDocumentoRespaldo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PptoFormulado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PptoAdiciones)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PptoModificaciones)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PptoVigente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EjecucionCompromiso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EjecucionDevengado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EjecucionPagado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EjecucionDevuelto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EjecucionRevertido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EjecucionAnulado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEstadoRegistro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEstadoPpto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUsuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUsuarioAprueba)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaRegistro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaAprueba)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdPresupuestoGasto">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.IdPresupuestoGasto">Detalle</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdPresupuestoGasto">Borrar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
