@@ -63,5 +63,11 @@ namespace MumanalPG.Models.RRHH
 		public virtual Puesto Puesto { get; set; }
 		
 		public virtual ApplicationUser AspNetUser { get; set; }
+		
+		[InverseProperty("FunOrg")]
+		public ICollection<HojaRutaDetalle> Originados { get; set; } 
+		
+		[InverseProperty("FunDst")]
+		public ICollection<HojaRutaDetalle> Destinados { get; set; } 
 	}
 }

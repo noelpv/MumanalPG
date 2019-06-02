@@ -172,9 +172,10 @@
 
 @RenderSection("Scripts", required: false)
 <script>
-    $(function() {
+    $(document).ready(function() {
         var type = '@TempData["FlashMsgType"]';
         var message = '@TempData["FlashMsg"]';
+        console.log(message);
         $.toastMsg(type, message);
        
     });

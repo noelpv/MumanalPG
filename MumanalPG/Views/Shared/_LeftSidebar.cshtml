@@ -15,12 +15,12 @@
 <div class="scroll-sidebar">
 <!-- Sidebar navigation-->
 @{
-    var currentArea = ViewContext.RouteData.Values["area"];
+    string currentArea = ViewContext.RouteData.Values["area"].ToString();
 }
 
 <nav class="sidebar-nav">
 <ul id="sidebarnav">
-<li class="@((String.Equals(currentArea, "correspondencia")) ?  "selected" : "-")">
+<li class="@((String.Equals(currentArea.ToLower(), "correspondencia")) ?  "selected" : "")">
     <a asp-area="correspondencia" asp-controller="dashboard" asp-action="index" class="waves-effect waves-dark">
         <i class="mdi mdi-email-open-outline"></i><span class="hide-menu">Correspondencia</span>
     </a>

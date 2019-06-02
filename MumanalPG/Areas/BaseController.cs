@@ -145,7 +145,7 @@ namespace MumanalPG.Areas
             {
                 var nodeRaiz = await DB.RRHH_UnidadEjecutora.FirstOrDefaultAsync(a => a.Sigla == "GG");
                 AreasFunTreeDTO area = new AreasFunTreeDTO();
-                area.DataId = unidadEjecutora.IdUnidadEjecutora;
+                area.areaId = unidadEjecutora.IdUnidadEjecutora;
                 area.id = $"area_{unidadEjecutora.IdUnidadEjecutora}";
                 area.text = unidadEjecutora.Descripcion;
                 area.parent = (unidadEjecutora.IdUnidadEjecutoraPadre == 0) ? "#" : $"area_{unidadEjecutora.IdUnidadEjecutoraPadre}";
@@ -166,7 +166,8 @@ namespace MumanalPG.Areas
                 foreach (var f in funcionarios)
                 {
                     AreasFunTreeDTO fun = new AreasFunTreeDTO();
-                    fun.DataId = f.IdBeneficiario;
+                    fun.areaId = unidadEjecutora.IdUnidadEjecutora;
+                    fun.funId = f.IdBeneficiario;
                     fun.id = $"fun_{f.IdBeneficiario}";
                     fun.text = $"<span class='small jstree-text'>{f.Denominacion}<div class='ml-5'><b>({f.Puesto.Descripcion})</b></div></span>";
                     fun.parent = area.id;

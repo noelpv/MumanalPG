@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -51,6 +52,9 @@ namespace MumanalPG.Models.Correspondencia
 
 		[Required]
 		public string Prioridad { get; set; } // Alta, Media, Baja
+		
+		[InverseProperty("HojaRuta")]
+		public ICollection<HojaRutaDetalle> Derivaciones { get; set; }
 		
 		public int IdEstadoRegistro { get; set; }
 		public int IdUsuario { get; set; }

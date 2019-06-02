@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using MumanalPG.Data;
 using MumanalPG.Utility;
 using Newtonsoft.Json;
 using MumanalPG.Models.Correspondencia;
@@ -10,6 +11,8 @@ namespace MumanalPG.Models.Correspondencia.DTO
 {
     public class HojaRutaDTO
     {
+        //protected ApplicationDbContext DB { get; }
+        
         public int Id { get; set; }
         
         [Required(ErrorMessage = "El campo '{0}' no puede estar en blanco")]
@@ -60,14 +63,13 @@ namespace MumanalPG.Models.Correspondencia.DTO
             foreach (var i in Instrucciones)
             {
                 InstruccionDTO ins = JsonConvert.DeserializeObject<InstruccionDTO>(i);
-                ins.funDstId = Int32.Parse(ins.id.Replace("fun_", ""));
                 list.Add(ins);
             }
 
             return list;
         }
 
-        public HojaRuta prepare(int idUsuario, string tipo = Constantes.HojaRutaInterna)
+        public HojaRuta prepare(int idUsuario, ApplicationDbContext DB, string tipo = Constantes.HojaRutaInterna)
         {
             HojaRuta hojaRuta = new HojaRuta();
             hojaRuta.UnidadEjecutoraId = UnidadEjecutoraId;
@@ -78,12 +80,49 @@ namespace MumanalPG.Models.Correspondencia.DTO
             hojaRuta.NroFojas = NroFojas;
             hojaRuta.CiteHojaRuta = $"MUMANAL/CORR.{tipo} ";
             hojaRuta.TipoHojaRuta = tipo;
-            hojaRuta.IdEstadoRegistro = Constantes.Registrado;
+            hojaRuta.IdEstadoRegistro = Constantes.Enviado;
             hojaRuta.IdUsuario = idUsuario;
             hojaRuta.FechaRegistro = DateTime.Now;
             hojaRuta.Prioridad = Prioridad;
             hojaRuta.DocumentoId = DocumentoId;
+            
+            ICollection<HojaRutaDetalle> detalle = new List<HojaRutaDetalle>();
+            foreach (var i in Instrucciones)
+            {
+                InstruccionDTO ins = JsonConvert.DeserializeObject<InstruccionDTO>(i);
+                ICollection<HRDetalleInstrucciones> listDetIns = new List<HRDetalleInstrucciones>();
+                HojaRutaDetalle d = new HojaRutaDetalle();
+                d.AreaDestinoId = ins.areaId;
+                d.AreaOrigenId = UnidadEjecutoraId;
+                d.FunDstId = ins.funId;
+                d.FunOrgId = OrigenId;
+                d.PlazoDias = 1;
+                d.Proveido = (ins.comentarios != null) ? ins.comentarios : "-";
+                d.IdEstadoRegistro = Constantes.Registrado;
+                d.IdUsuario = idUsuario;
+                d.FechaRegistro = DateTime.Now;
+                foreach (var id in ins.instrucciones)
+                {
+                    Instrucciones instruccion = DB.CorrespondenciaInstrucciones.Find(id);
 
+                    if (instruccion != null)
+                    {
+                        HRDetalleInstrucciones DetIns = new HRDetalleInstrucciones();
+                        DetIns.HRDetalle = d;
+                        DetIns.Instruccion = instruccion;
+                        listDetIns.Add(DetIns);  
+                    }
+                }
+
+                d.HRDetalleInstrucciones = listDetIns;
+                System.Console.WriteLine("////////////////////////////////////////////////");
+                System.Console.WriteLine(d.FunDstId);
+                System.Console.WriteLine("////////////////////////////////////////////////");
+                detalle.Add(d);
+
+            }
+
+            hojaRuta.Derivaciones = detalle;
             return hojaRuta;
         }
     }

@@ -92,7 +92,6 @@ namespace MumanalPG.Data
         public DbSet<MumanalPG.Models.Planificacion.FuenteFinanciamiento> FuenteFinanciamiento { get; set; }
         public DbSet<MumanalPG.Models.Planificacion.OrganismoFinanciador> OrganismoFinanciador { get; set; }
 
-        public DbSet<MumanalPG.Models.Planificacion.HojaRutaDetalle> HojaRutaDetalle { get; set; }
         public DbSet<MumanalPG.Models.Planificacion.HojaRutaInstrucciones> HojaRutaInstrucciones { get; set; }
         public DbSet<MumanalPG.Models.Planificacion.HojaRutaDocumentos> HojaRutaDocumentos { get; set; }
         /*Fin Planificacion*/
@@ -102,6 +101,8 @@ namespace MumanalPG.Data
 	    public DbSet<MumanalPG.Models.Correspondencia.Instrucciones> CorrespondenciaInstrucciones { get; set; }
 	    public DbSet<Documento> CorrespondenciaDocumento { get; set; }
 	    public DbSet<HojaRuta> CorrespondenciaHojaRuta { get; set; }
+	    public DbSet<HojaRutaDetalle> CorrespondenciaHRDetalle { get; set; }
+	    public DbSet<HRDetalleInstrucciones> CorrespondenciaHRDetInst { get; set; }
 	    /* End Correspondencia*/
 	    
     }
