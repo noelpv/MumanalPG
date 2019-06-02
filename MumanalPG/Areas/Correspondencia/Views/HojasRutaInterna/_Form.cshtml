@@ -147,6 +147,7 @@
                         <div class="form-group">
                             <label asp-for="Prioridad" class="form-label"></label>
                             <select id="prioridad" asp-for="Prioridad" class="form-control" required>
+                                <option value="@Constantes.PrioridadUrgente">Urgente</option>
                                 <option value="@Constantes.PrioridadAlta">Alta</option>
                                 <option value="@Constantes.PrioridadMedia" selected="selected">Media</option>
                                 <option value="@Constantes.PrioridadBaja">Baja</option>
@@ -354,9 +355,10 @@
             $('.jstree-active').removeClass('jstree-active');
             $('li#' + data.node.li_attr.id).addClass('jstree-active');
             var node_id = $(data.node).attr('id');
-           
+            var funId = data.node.original.funId;
+            var areaId = data.node.original.areaId;
             if (node_id.indexOf('area') === -1) {
-                cloneInstrucciones(node_id);
+                cloneInstrucciones(node_id, areaId, funId);
             }
             
         }).on("check_node.jstree", function(e, data) {
@@ -368,7 +370,7 @@
             $('input#com_' + data.node.id).removeAttr('name');
         });
         
-        function cloneInstrucciones(node_id) {
+        function cloneInstrucciones(node_id, area, fun) {
             
             var container = $('#instrucciones-container');
             var new_instrucciones_id = 'instrucciones_' + node_id;
@@ -378,7 +380,6 @@
             if ($('#' + new_instrucciones_id).length) {
                 $('.instrucciones').fadeOut('slow');
                 var input_ins = $('#' + new_instrucciones_id).find('input[id*=ins_]').first();
-                //var input_com = $('#' + new_instrucciones_id).find('input[id*=com_]').first();
                 
                 if (input_ins.val().length) {
                     var objTmp = JSON.parse(input_ins.val());
@@ -386,19 +387,15 @@
                     comentarios = objTmp.comentarios;
                 }
                 
-//                if (input_com.val().length) {
-//                    var objTmp = JSON.parse(input_com.val());
-//                    comentarios = objTmp.comentarios;
-//                }
                 $('#' + new_instrucciones_id).fadeIn('slow');
             } else {
                 var inst_clone = $('#instrucciones').clone();
+                var obj = {id: node_id, funId: fun, areaId: area, instrucciones: [], comentarios: null };
                 $('.instrucciones').fadeOut('slow');
                 inst_clone.attr('id', 'instrucciones_' + node_id);
                 inst_clone.find('input[id*=ins_]').first().attr('id', 'ins_' + node_id);
+                inst_clone.find('input[id*=ins_]').first().val(JSON.stringify(obj));
                 inst_clone.find('input[id*=ins_]').first().attr('data-id', node_id);
-               // inst_clone.find('input[id*=com_]').first().attr('id', 'com_' + node_id);
-               // inst_clone.find('input[id*=com_]').first().attr('data-id', node_id);
                 inst_clone.appendTo(container);
                 inst_clone.fadeIn('slow'); 
             }
@@ -406,14 +403,15 @@
             $('.instrucciones-checkbox').unbind();
             $('.instrucciones-checkbox').change(function() {
                 var input_ins = $(this).parents('div.instrucciones').first().find('input[id*=ins_]').first();
-               
+                var obj = JSON.parse(input_ins.val());
+                
                 if ($(this).is(':checked')) {
                     values.push($(this).data('id'));
                 } else {
                     values.splice(values.indexOf($(this).data('id')),1);
                 }
 
-                var obj = {id: input_ins.data('id'), instrucciones: values, comentarios: comentarios};                
+                obj.instrucciones = values;             
                 input_ins.val(JSON.stringify(obj));
             });
 

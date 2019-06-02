@@ -30,5 +30,11 @@ namespace MumanalPG.Models.RRHH
 		public ICollection<Puesto> Puestos { get; set; }
 
 		public HojaRuta HojaRuta { get; set; }
+		
+		[InverseProperty("AreaOrigen")]
+		public ICollection<HojaRutaDetalle> Originados { get; set; } 
+		
+		[InverseProperty("AreaDestino")]
+		public ICollection<HojaRutaDetalle> Destinados { get; set; } 
 	}
 }

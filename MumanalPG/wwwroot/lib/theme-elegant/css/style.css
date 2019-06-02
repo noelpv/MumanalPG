@@ -14131,14 +14131,22 @@ Email inbox Page
   white-space: nowrap; 
 }
 
+.inbox-center td.referencia {
+    max-width: 350px;
+    overflow: hidden;
+    text-overflow: ellipsis !important;
+    white-space: nowrap;
+}
+
 .inbox-center a {
   color: #212529;
   padding: 2px 0 3px 0;
-  overflow: hidden;
+  /*overflow: hidden;*/
   vertical-align: middle;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  display: inline-block; }
+  /*text-overflow: ellipsis;*/
+  /*white-space: nowrap;*/
+  /*display: inline-block;*/
+}
 
 .inbox-center .checkbox {
   margin-top: -13px;
@@ -14147,3 +14155,26 @@ Email inbox Page
 .jstree-text {
   line-height: 5px;
 }
+
+.inbox-center .dropdown-toggle::after {
+    display: none;
+}
+a.dropdown-toggle:hover {
+    color: #01c0c8 !important; 
+}
+
+a.dropdown-item {
+    padding: 0.65rem 1.5rem;
+}
+
+.comentarios-adicionales {
+    max-height: 300px;
+    min-height: 200px;
+    max-width: 350px;
+    border-radius: 25px;
+    border: 2px solid #ccc;
+    background: url(../img/trapper.jpg);
+    line-height: 1.7;
+    padding: 5px 10px;
+}
+

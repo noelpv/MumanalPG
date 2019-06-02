@@ -61,6 +61,11 @@ $(function() {
 function InitializeEvents() {
     //Inicializando Bootstrap-Switch 
     $("input.bootstrap-switch").bootstrapSwitch();
+    
+    $('a.show-loader').click(function(){
+        $(".preloader").fadeIn();        
+    });
+    
 }
 
 function startTour() {

@@ -11,7 +11,6 @@ using MumanalPG.Data;
 using MumanalPG.Models;
 using MumanalPG.Models.Correspondencia;
 using MumanalPG.Utility;
-using Newtonsoft.Json;
 using ReflectionIT.Mvc.Paging;
 using SmartBreadcrumbs;
 
@@ -30,18 +29,56 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
 
 		// GET: Correspondencia/Documentos
         [Breadcrumb("Interna", FromController = "Dashboard", FromAction = "Index")]
-        public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "-Id", string a = "")
+        public async Task<IActionResult> Index(string filter, string type, int page = 1, string sortExpression = "-Id", string a = "")
         {
 
-            var consulta = DB.CorrespondenciaHojaRuta.AsNoTracking().AsQueryable();
-            consulta = consulta.Include(m => m.Origen)
-                               .Include(m => m.UnidadEjecutora)
-                               .Where(m => (m.IdEstadoRegistro != Constantes.Anulado && 
-                                            m.TipoHojaRuta == Constantes.HojaRutaInterna)); 
+            var consulta = DB.CorrespondenciaHRDetalle.AsNoTracking().AsQueryable();
+            consulta = consulta.Include(m => m.AreaOrigen)
+                               .Include(m => m.AreaDestino)
+                               .Include(m => m.FunOrg)
+                               .Include(m => m.FunDst)
+                               .Include(m => m.HojaRuta)
+                               .Where(m => (m.HojaRuta.TipoHojaRuta == Constantes.HojaRutaInterna)); 
+            
+            
+            ApplicationUser currentUser = await GetCurrentUser();
+            switch (type)
+            {
+                case Constantes.HRTipoUrgentes:
+                    consulta = consulta.Where(m => m.HojaRuta.Prioridad == Constantes.PrioridadUrgente &&
+                                                   m.HojaRuta.IdEstadoRegistro != Constantes.Anulado && 
+                                                   m.HojaRuta.IdEstadoRegistro != Constantes.Archivado && 
+                                                   m.IdEstadoRegistro != Constantes.Anulado && 
+                                                   m.IdEstadoRegistro != Constantes.Archivado);
+                    break;
+                case Constantes.HRTipoDespachados:
+                    consulta = consulta.Where(m => m.FunOrgId == currentUser.Funcionario.IdBeneficiario &&
+                                                   m.HojaRuta.IdEstadoRegistro != Constantes.Anulado && 
+                                                   m.HojaRuta.IdEstadoRegistro != Constantes.Archivado && 
+                                                   m.IdEstadoRegistro != Constantes.Anulado && 
+                                                   m.IdEstadoRegistro != Constantes.Archivado);
+                    break;
+                case Constantes.HRTipoArchivados:
+                    consulta = consulta.Where(m => m.HojaRuta.IdEstadoRegistro == Constantes.Archivado ||
+                                                   m.IdEstadoRegistro == Constantes.Archivado);
+                    break;
+                case Constantes.HRTipoEliminados:
+                    consulta = consulta.Where(m => m.HojaRuta.IdEstadoRegistro == Constantes.Anulado ||
+                                              m.IdEstadoRegistro == Constantes.Anulado);
+                    break;
+                default:
+                    consulta = consulta.Where(m => m.FunDstId == currentUser.Funcionario.IdBeneficiario &&
+                                                   m.HojaRuta.IdEstadoRegistro != Constantes.Anulado && 
+                                                   m.HojaRuta.IdEstadoRegistro != Constantes.Archivado && 
+                                                   m.IdEstadoRegistro != Constantes.Anulado && 
+                                                   m.IdEstadoRegistro != Constantes.Archivado);
+                    type = Constantes.HRTipoRecibidos;
+                    break;
+            }
             
             if (!string.IsNullOrWhiteSpace(filter))
-			{
-                consulta = consulta.Where(m => EF.Functions.ILike(m.Referencia, $"%{filter}%"));
+            {
+                consulta = consulta.Where(m => EF.Functions.ILike(m.HojaRuta.Referencia, $"%{filter}%"));
             }
 
 //            ApplicationUser  currentUser = await GetCurrentUser();
@@ -64,32 +101,55 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
 //                //Puede ver los documentos propios
 //                consulta = consulta.Where(m => m.FuncionarioOrigenId == currentUser.Funcionario.IdBeneficiario);
 //            }
-
+            
             var resp = await PagingList.CreateAsync(consulta, Constantes.TamanoPaginacion, page, sortExpression,"-Id");
             resp.RouteValue = new RouteValueDictionary {{ "filter", filter}};
 
             ShowFlash(a);
             ViewBag.page = page;
-            //resp.Action = $"Index?type={type}";
+            ViewBag.type = type;
             return View(resp);
         }
 
         // GET: Correspondencia/Documentos/Details/5
+        [Breadcrumb("Hoja de Ruta", FromAction = "Index")]
         public async Task<IActionResult> Details(Int32? id)
         {
             if (id == null)
             {
-                return PartialView("_NoEncontrado");
+                return View("_NoEncontrado");
             }
 
-            var item = await DB.CorrespondenciaHojaRuta
+            var instrucciones = DB.CorrespondenciaInstrucciones
+                .Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Nombre).ToList();
+            
+            var item = await DB.CorrespondenciaHRDetalle
+                                .Include(m => m.AreaOrigen)
+                                .Include(m => m.AreaDestino)
+                                .Include(m => m.FunOrg)
+                                .Include(m => m.FunDst)
+                                .Include(m => m.HojaRuta)
+                                .Include(m => m.HRDetalleInstrucciones)
                                 .FirstOrDefaultAsync(m => m.Id == id);
             if (item == null)
             {
-                return PartialView("_NoEncontrado");
+                return View("_NoEncontrado");
             }
 
-            return PartialView("_Details",item);
+            if (!item.Leido)
+            {
+                item.Leido = true;
+                if (item.FechaRecepcion == null)
+                {
+                    item.FechaRecepcion = DateTime.Now;
+                }
+
+                DB.Update(item);
+                await DB.SaveChangesAsync();
+            }
+
+            ViewBag.instrucciones = instrucciones;
+            return View("_Details",item);
         }
 
         // GET: Correspondencia/Documentos/Create
@@ -116,28 +176,10 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             if (ModelState.IsValid)
             {
                 ApplicationUser currentUser = await GetCurrentUser();
-                HojaRuta hojaRuta = item.prepare(currentUser.AspNetUserId);
-                System.Console.WriteLine("======================================");
-                System.Console.WriteLine(JsonConvert.SerializeObject(item));
-               
-//                foreach (var ins in item.GetInstrucciones())
-//                {
-//                    System.Console.WriteLine(ins.id);
-//                    System.Console.WriteLine(ins.funDstId);
-//                    System.Console.WriteLine(String.Join(", ", ins.instrucciones));
-//                    System.Console.WriteLine(String.Join(", ", ins.comentarios));
-//                }
-                
-                System.Console.WriteLine("======================================");
-              
-                //ApplicationUser currentUser = await GetCurrentUser();
-//                string cite = await GetCite(item.AreaFuncionarioOrigenId);
-//                item.IdUsuario =  currentUser.AspNetUserId;
-//                item.Cite = cite;
-//                item.FechaRegistro = DateTime.Now;
-//                item.IdEstadoRegistro = Constantes.Registrado;
+                HojaRuta hojaRuta = item.prepare(currentUser.AspNetUserId, DB);
                 DB.Add(hojaRuta);
                 await DB.SaveChangesAsync();
+                SetFlashSuccess("La Hoja de Ruta fue creada correctamente");
                 return RedirectToAction(nameof(Index));
             }
             return View("_Create",item);
@@ -258,6 +300,42 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             DB.CorrespondenciaDocumento.Update(item);
             await DB.SaveChangesAsync();
             return PartialView("_Delete",item);
+        }
+
+        public async Task<IActionResult> CambiarEstado(Int32? id, int nuevoEstado = Constantes.Registrado,
+            string from = null)
+        {
+            if (id == null)
+            {
+                return View("_NoEncontrado");
+            }
+
+            var instrucciones = DB.CorrespondenciaInstrucciones
+                .Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Nombre).ToList();
+            
+            var item = await DB.CorrespondenciaHRDetalle
+               .FirstOrDefaultAsync(m => m.Id == id);
+            if (item == null)
+            {
+                return View("_NoEncontrado");
+            }
+
+            item.IdEstadoRegistro = nuevoEstado;
+            DB.Update(item);
+            await DB.SaveChangesAsync();
+            
+            SetFlashSuccess("El estado ha sido cambiado correctamente.");
+
+            if (String.Equals(from, "index"))
+            {
+                string typeHR = (nuevoEstado == Constantes.Archivado)
+                    ? Constantes.HRTipoArchivados
+                    : Constantes.HRTipoEliminados;
+                
+                return RedirectToAction("Index", new {type = typeHR}); 
+            }
+
+            return RedirectToAction("Details", new {id = item.Id});  
         }
 
         public JsonResult GetDocuments(string filter = "")

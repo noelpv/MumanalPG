@@ -6,7 +6,8 @@ namespace MumanalPG.Models.Correspondencia.DTO
 {
     public class AreasFunTreeDTO
     {
-        public int DataId { get; set; }
+        public int funId { get; set; }
+        public int areaId { get; set; }
         public string id { get; set; }
         public string text { get; set; }
         public string icon { get; set; }
