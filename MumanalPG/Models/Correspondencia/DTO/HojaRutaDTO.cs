@@ -85,7 +85,12 @@ namespace MumanalPG.Models.Correspondencia.DTO
             hojaRuta.FechaRegistro = DateTime.Now;
             hojaRuta.Prioridad = Prioridad;
             hojaRuta.DocumentoId = DocumentoId;
-            
+            hojaRuta = populateDetalle(hojaRuta, idUsuario, DB);
+            return hojaRuta;
+        }
+
+        public HojaRuta populateDetalle(HojaRuta hr, int idUsuario, ApplicationDbContext DB)
+        {
             ICollection<HojaRutaDetalle> detalle = new List<HojaRutaDetalle>();
             foreach (var i in Instrucciones)
             {
@@ -122,8 +127,8 @@ namespace MumanalPG.Models.Correspondencia.DTO
 
             }
 
-            hojaRuta.Derivaciones = detalle;
-            return hojaRuta;
+            hr.Derivaciones = detalle;
+            return hr;
         }
     }
 }

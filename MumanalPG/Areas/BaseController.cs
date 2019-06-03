@@ -124,16 +124,16 @@ namespace MumanalPG.Areas
             return cites;
         }
         
-        public async Task<List<AreasFunTreeDTO>> GetAreas()
+        public async Task<List<AreasFunTreeDTO>> GetAreas(int currentFunId = 0)
         {
 
-            List<AreasFunTreeDTO> areas = await GetAreasList("GG");
+            List<AreasFunTreeDTO> areas = await GetAreasList("GG", null, currentFunId);
             //areas.Reverse();
             
             return areas;
         }
 
-        public async Task<List<AreasFunTreeDTO>> GetAreasList(string uSigla, List<AreasFunTreeDTO> areas = null)
+        public async Task<List<AreasFunTreeDTO>> GetAreasList(string uSigla, List<AreasFunTreeDTO> areas = null, int currentFunId = 0)
         {
             var unidadEjecutora = await DB.RRHH_UnidadEjecutora.FirstOrDefaultAsync(a => a.Sigla == uSigla);
             if (areas == null)
@@ -165,14 +165,17 @@ namespace MumanalPG.Areas
 
                 foreach (var f in funcionarios)
                 {
-                    AreasFunTreeDTO fun = new AreasFunTreeDTO();
-                    fun.areaId = unidadEjecutora.IdUnidadEjecutora;
-                    fun.funId = f.IdBeneficiario;
-                    fun.id = $"fun_{f.IdBeneficiario}";
-                    fun.text = $"<span class='small jstree-text'>{f.Denominacion}<div class='ml-5'><b>({f.Puesto.Descripcion})</b></div></span>";
-                    fun.parent = area.id;
-                    fun.icon = "/lib/theme-elegant/img/users/user-male-iconx24.png";
-                    areas.Add(fun);
+                    if (f.IdBeneficiario != currentFunId)
+                    {
+                        AreasFunTreeDTO fun = new AreasFunTreeDTO();
+                        fun.areaId = unidadEjecutora.IdUnidadEjecutora;
+                        fun.funId = f.IdBeneficiario;
+                        fun.id = $"fun_{f.IdBeneficiario}";
+                        fun.text = $"<span class='small jstree-text'>{f.Denominacion}<div class='ml-5'><b>({f.Puesto.Descripcion})</b></div></span>";
+                        fun.parent = area.id;
+                        fun.icon = "/lib/theme-elegant/img/users/user-male-iconx24.png";
+                        areas.Add(fun);
+                    }
                 }
 
                 var children = DB.RRHH_UnidadEjecutora

@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using MumanalPG.Data;
 using MumanalPG.Models;
 using MumanalPG.Models.Correspondencia;
+using MumanalPG.Models.Correspondencia.DTO;
 using MumanalPG.Utility;
 using ReflectionIT.Mvc.Paging;
 using SmartBreadcrumbs;
@@ -28,7 +29,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         }
 
 		// GET: Correspondencia/Documentos
-        [Breadcrumb("Interna", FromController = "Dashboard", FromAction = "Index")]
+        [Breadcrumb("Correspondencia Interna", FromController = "Dashboard", FromAction = "Index")]
         public async Task<IActionResult> Index(string filter, string type, int page = 1, string sortExpression = "-Id", string a = "")
         {
 
@@ -156,11 +157,12 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         [Breadcrumb("Nueva Hoja de Ruta", FromAction = "Index")]
         public async Task<IActionResult> Create()
         {
-            var model = new Models.Correspondencia.DTO.HojaRutaDTO();
+            var model = new HojaRutaDTO();
             model.FechaDoc = DateTime.Now;
             model.NroFojas = 1;
 
-            var areas = await GetAreas();
+            ApplicationUser currentUser = await GetCurrentUser();
+            var areas = await GetAreas(currentUser.Funcionario.IdBeneficiario);
             var instrucciones = GetInstrucciones();
             ViewBag.areas = areas;
             ViewBag.instrucciones = instrucciones;
@@ -170,7 +172,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         // POST: Correspondencia/Documentos/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Models.Correspondencia.DTO.HojaRutaDTO item)
+        public async Task<IActionResult> Create(HojaRutaDTO item)
         {
             
             if (ModelState.IsValid)
@@ -263,6 +265,55 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             return PartialView("_Edit", item);
         }
 
+        [Breadcrumb("Derivar Hoja de Ruta", FromAction = "Index")]
+        public async Task<IActionResult> Derivar(int id)
+        {
+            var item = await DB.CorrespondenciaHRDetalle
+                .Include(m => m.HojaRuta)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            
+            if (item == null)
+            {
+                return View("_NoEncontrado");
+            }
+            
+            ApplicationUser currentUser = await GetCurrentUser();
+            if (item.FunDstId != currentUser.Funcionario.IdBeneficiario)
+            {
+                return View("_NoAutorizado");
+            }
+
+            var model = new HojaRutaDTO();
+            model.Id = item.HojaRutaId;
+            model.OrigenId = item.FunDstId;
+            model.UnidadEjecutoraId = item.AreaDestinoId;
+
+            var areas = await GetAreas(currentUser.Funcionario.IdBeneficiario);
+            var instrucciones = GetInstrucciones();
+            ViewBag.areas = areas;
+            ViewBag.instrucciones = instrucciones;
+            ViewBag.HojaRuta = item.HojaRuta;
+            return View("_Derivar", model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Derivar(HojaRutaDTO item)
+        {
+            
+            if (item.Instrucciones.Length > 0)
+            {
+                ApplicationUser currentUser = await GetCurrentUser();
+                var hojaRuta = await DB.CorrespondenciaHojaRuta.FirstOrDefaultAsync(m => m.Id == item.Id);
+                item.populateDetalle(hojaRuta, currentUser.AspNetUserId, DB);
+                DB.Update(hojaRuta);
+                await DB.SaveChangesAsync();
+                SetFlashSuccess("La Hoja de Ruta fue derivada correctamente");
+                return RedirectToAction(nameof(Index));
+            }
+            return View("_Derivar",item);
+        }
+        
         // GET: Correspondencia/Documentos/Delete/5
         public async Task<IActionResult> Delete(Int32? id)
         {

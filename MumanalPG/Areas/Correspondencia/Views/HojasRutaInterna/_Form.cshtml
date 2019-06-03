@@ -10,9 +10,17 @@
     <input type="hidden" asp-for="Id"/>
     
     <div>
-        <partial name="_DatosGenerales" view-data="ViewData" />
-        <partial name="_Derivar" view-data="ViewData" />
-        <partial name="_Anexar" view-data="ViewData" />
+        @if (ViewData["Action"] == "Derivar")
+        {
+            <input id="origen-id" type="hidden" asp-for="OrigenId"/>
+            <input id="origen-id" type="hidden" asp-for="UnidadEjecutoraId"/>
+        }
+        else
+        {
+            <partial name="_DatosGenerales" view-data="ViewData"/>
+        }
+        <partial name="_Instrucciones" view-data="ViewData"/>
+        <partial name="_Anexar" view-data="ViewData"/>
     </div>
 </form>
 
