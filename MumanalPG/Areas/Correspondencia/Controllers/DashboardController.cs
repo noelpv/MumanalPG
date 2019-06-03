@@ -13,6 +13,7 @@ using SmartBreadcrumbs;
 namespace MumanalPG.Areas.Correspondencia.Controllers
 {
     //[Authorize(Roles = SD.SuperAdminEndUser)]
+    [Authorize]
     [Area("Correspondencia")]
     public class DashboardController : BaseController
     {        

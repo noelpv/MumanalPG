@@ -1,0 +1,256 @@
+@model MumanalPG.Models.Correspondencia.DTO.HojaRutaDTO
+<link rel="stylesheet" href="~/lib/wizard/css/style.css"/>
+<link rel="stylesheet" href="~/lib/wizard/css/nouislider.min.css"/>
+<link rel="stylesheet" href="~/lib/jstree/themes/default/style.css"/>
+
+<form class="wizard-form" asp-action="@ViewData["Action"]">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+   
+    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()"/>
+    <input type="hidden" asp-for="Id"/>
+    
+    <div>
+        @if (ViewData["Action"] == "Derivar")
+        {
+            <input id="origen-id" type="hidden" asp-for="OrigenId"/>
+            <input id="origen-id" type="hidden" asp-for="UnidadEjecutoraId"/>
+        }
+        else
+        {
+            <partial name="_DatosGenerales" view-data="ViewData"/>
+        }
+        <partial name="_Instrucciones" view-data="ViewData"/>
+        <partial name="_Anexar" view-data="ViewData"/>
+    </div>
+</form>
+
+<script src="~/lib/wizard/js/jquery.steps.min.js"></script>
+<script src="~/lib/wizard/js/dobpicker.js"></script>
+<script src="~/lib/wizard/js/nouislider.min.js"></script>
+<script src="~/lib/wizard/js/wNumb.js"></script>
+<script src="~/lib/jstree/jstree.js"></script>
+<script src="~/lib/wizard/js/main.js"></script>
+
+<script>
+    $(document).ready(function() {
+        var contAnexos = 0;
+        var contAnexosShowing = 0;
+        var url_origen = $('#origen').data('remote-url');
+        var url_doc = $('#documento').data('remote-url');
+
+        var render = function(item, escape) {
+            $('.selectize-control.remote').removeClass('loading');
+            return '<div class="row">' +
+                '<div class="col-sm-12 col-md-2">' +
+                '<img src="/lib/theme-elegant/img/users/user-male-icon.png" alt="image" class="img-circle" height="64px">' +
+                '</div>' +
+                '<div class="col-sm-12 col-md-10">' +
+                '<span class="nombre">' +
+                escape(item.nombre) +
+                '</span>' +
+                '<div class="cargo">' +
+                escape(item.cargo) +
+                '</div>' +
+                '<div class="area">' +
+                escape(item.area) +
+                '</div>' +
+                '</div>' +
+                '</div>';
+        }
+
+        var on_change = function(selected) {
+
+            var dataSelected = this.options[selected];
+
+            $('#area-id').val(dataSelected.areaId);
+            $('#area-name').val(dataSelected.area);
+            $('#origen-id').val(selected);
+        }
+
+        var on_ini = function(data) {}
+        var search_fields = ['nombre', 'cargo', 'area'];
+        var render_doc = function(item, escape) {
+            $('.selectize-control.remote').removeClass('loading');
+            return '<div class="row">' +
+                '<div class="col-md-12">' +
+                '<span class="nombre text-uppercase">' +
+                escape(item.tipo) +
+                ' - ' +
+                escape(item.cite) +
+                '</span>' +
+                '<div class="small"><b>Remitente:</b> ' +
+                escape(item.remitente) +
+                '</div>' +
+                '<div class="small"><b>Referencia:</b> <span class="font-italic">' +
+                escape(item.referencia) +
+                '</span></div>' +
+                '<div class="small"><b>Fecha:</b> <span class="font-italic">' +
+                escape(item.fechastr) +
+                '</span></div>' +
+                '</div>' +
+                '</div>';
+        }
+
+        var on_change_doc = function(selected) {
+            var dataSelected = this.options[selected];
+            $('#origen-id').val(dataSelected.remitenteId);
+            $('#origen-name').val(dataSelected.remitente);
+            $('#area-id').val(dataSelected.areaId);
+            $('#area-name').val(dataSelected.area);
+            $('#referencia').val(dataSelected.referencia);
+            $('#cite-doc').val(dataSelected.cite);
+            $('#fecha-doc').val(dataSelected.fecha);
+        }
+        var on_ini_doc = function(data) {}
+        var search_fields_doc = ['cite', 'remitente'];
+
+        $('#origen')
+            .selectize(buildOptionsSelectize(url_origen, 'id', 'nombre', search_fields, render, on_change, on_ini));
+        $('#documento').selectize(buildOptionsSelectize(url_doc,
+            'id',
+            'cite',
+            search_fields_doc,
+            render_doc,
+            on_change_doc,
+            on_ini_doc));
+
+        $('input[name=radio-options]').change(function() {
+            if ($(this).val() === 'created') {
+                $('#doc-container').show();
+                $('#rem-input').show();
+                $('#rem-select').hide();
+               // $('#documento-selectized').prop('required',true);
+            } else {
+                $('#doc-container').hide();
+                $('#rem-input').hide();
+                $('#rem-select').show();
+                //$('#documento-selectized').prop('required',false);
+            }
+        });
+        var data = @Html.Raw(Json.Serialize(@ViewBag.areas));
+
+        $('#jstree').jstree({
+            'core': {
+                'data': data,
+                check_callback: false
+            },
+            "checkbox": {       
+                three_state : false, 
+                whole_node : false,//Used to check/uncheck node only if clicked on checkbox icon, and not on the whole node including label
+                tie_selection : false
+            },
+            "plugins": ["checkbox"]
+        }).on("changed.jstree", function (e, data) {
+
+            $('.jstree-active').removeClass('jstree-active');
+            $('li#' + data.node.li_attr.id).addClass('jstree-active');
+            var node_id = $(data.node).attr('id');
+            var funId = data.node.original.funId;
+            var areaId = data.node.original.areaId;
+            if (node_id.indexOf('area') === -1) {
+                cloneInstrucciones(node_id, areaId, funId);
+            }
+            
+        }).on("check_node.jstree", function(e, data) {
+            $('a#' + data.node.a_attr.id).trigger('click');
+            $('input#ins_' + data.node.id).attr('name', 'Instrucciones');
+            $('input#com_' + data.node.id).attr('name', 'Comentarios');
+        }).on("uncheck_node.jstree", function(e, data) {
+            $('input#ins_' + data.node.id).removeAttr('name');
+            $('input#com_' + data.node.id).removeAttr('name');
+        });
+
+        $('#agregar-anexo').click(function(e) {
+            e.preventDefault();
+            cloneAnexo();
+        });
+        function cloneInstrucciones(node_id, area, fun) {
+            
+            var container = $('#instrucciones-container');
+            var new_instrucciones_id = 'instrucciones_' + node_id;
+            var values = [];
+            var comentarios = "";
+            $('.not-selected').fadeOut();
+            if ($('#' + new_instrucciones_id).length) {
+                $('.instrucciones').fadeOut('slow');
+                var input_ins = $('#' + new_instrucciones_id).find('input[id*=ins_]').first();
+                
+                if (input_ins.val().length) {
+                    var objTmp = JSON.parse(input_ins.val());
+                    values = objTmp.instrucciones;
+                    comentarios = objTmp.comentarios;
+                }
+                
+                $('#' + new_instrucciones_id).fadeIn('slow');
+            } else {
+                var inst_clone = $('#instrucciones').clone();
+                var obj = {id: node_id, funId: fun, areaId: area, instrucciones: [], comentarios: null };
+                $('.instrucciones').fadeOut('slow');
+                inst_clone.attr('id', 'instrucciones_' + node_id);
+                inst_clone.find('input[id*=ins_]').first().attr('id', 'ins_' + node_id);
+                inst_clone.find('input[id*=ins_]').first().val(JSON.stringify(obj));
+                inst_clone.find('input[id*=ins_]').first().attr('data-id', node_id);
+                inst_clone.appendTo(container);
+                inst_clone.fadeIn('slow'); 
+            }
+            
+            $('.instrucciones-checkbox').unbind();
+            $('.instrucciones-checkbox').change(function() {
+                var input_ins = $(this).parents('div.instrucciones').first().find('input[id*=ins_]').first();
+                var obj = JSON.parse(input_ins.val());
+                
+                if ($(this).is(':checked')) {
+                    values.push($(this).data('id'));
+                } else {
+                    values.splice(values.indexOf($(this).data('id')),1);
+                }
+
+                obj.instrucciones = values;             
+                input_ins.val(JSON.stringify(obj));
+            });
+
+            $('.comentarios').unbind();
+            $('.comentarios').on("change keyup paste", function() {
+                var input_ins= $(this).parents('div.instrucciones').first().find('input[id*=ins_]').first();
+                var obj = JSON.parse(input_ins.val());
+                comentarios = $(this).val();
+                obj.comentarios = comentarios;
+                
+                input_ins.val(JSON.stringify(obj));
+            });
+        }
+        
+        function cloneAnexo() {
+            var container = $('#anexos-container');
+            var rowAnexo = $('#fila-anexo');
+            var newRow = rowAnexo.clone();
+            newRow.attr('id', 'fila-anexo_' + contAnexos);
+            newRow.find('select[id*="tipo_anexo"]').first().attr('id', 'tipo_anexo_' + contAnexos);
+            newRow.find('input[id*="descripcion"]').first().attr('id', 'descripcion_' + contAnexos);;
+            newRow.find('input[id*="archivo"]').first().attr('id', 'archivo_' + contAnexos);;
+            newRow.appendTo(container);
+            newRow.removeClass('hide');
+            $('a[id*="remove-anexo"]').unbind();
+            $('a[id*="remove-anexo"]').click(function(e) {
+                e.preventDefault();
+                $(this).parents('[id*="fila-anexo_"]').first().fadeOut(function() {
+                    $(this).parents('[id*="fila-anexo_"]').first().remove();
+                    contAnexosShowing--;
+                    if (contAnexosShowing <= 0) {
+                        $('.anexos-found').fadeIn('slow');
+                    }
+                });
+                
+            });
+            newRow.find('select[id*="tipo_anexo"]').first().unbind();
+            newRow.find('select[id*="tipo_anexo"]').first().selectize({
+                create: false,
+                sortField: 'text'
+            });
+            $('.anexos-found').hide();
+            contAnexos++;
+            contAnexosShowing++;
+        }
+        
+    });
+</script>

@@ -16,6 +16,7 @@ using SmartBreadcrumbs;
 namespace MumanalPG.Areas.Correspondencia.Controllers
 {
     //[Authorize(Roles = SD.SuperAdminEndUser)]
+    [Authorize]
     [Area("Correspondencia")]
     public class TipoDocumentoController : BaseController
     {        
@@ -73,7 +74,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             if (ModelState.IsValid)
             {
                 ApplicationUser currentUser = await GetCurrentUser();
-                item.IdUsuario =  currentUser.IdUsuario;
+                item.IdUsuario =  currentUser.AspNetUserId;
                 DB.Add(item);
                 await DB.SaveChangesAsync();
                 

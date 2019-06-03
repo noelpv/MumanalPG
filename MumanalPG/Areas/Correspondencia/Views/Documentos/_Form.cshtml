@@ -1,7 +1,28 @@
+@using MumanalPG.Utility
 @model MumanalPG.Models.Correspondencia.Documento
+
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#cabecera" role="tab">
+            <span class="hidden-sm-up">
+                <i class="ti-home"></i>
+            </span> <span class="hidden-xs-down">Cabecera</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#contenido" role="tab">
+            <span class="hidden-sm-up">
+                <i class="ti-user"></i>
+            </span> <span class="hidden-xs-down">Contenido</span>
+        </a>
+    </li>
+
+</ul>
+
 <form asp-action="@ViewData["Action"]">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     @{
+
         var hasError = "has-danger";
         var stringErrors = "";
         if (ViewData.ModelState.IsValid)
@@ -16,89 +37,238 @@
     }
     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()"/>
     <input type="hidden" asp-for="Id"/>
+    <input type="hidden" asp-for="TipoId"/>
+    <input type="hidden" asp-for="Cite"/>
+    <input id="areaId-origen-id"type="hidden" asp-for="AreaFuncionarioOrigenId"/>
+    <input id="destino-id" type="hidden" asp-for="FuncionarioDestinoId"/>
+    <input id="origen-id" type="hidden" asp-for="FuncionarioOrigenId"/>
+    <input id="via-id" type="hidden" asp-for="FuncionarioViaId"/>
+    <input id="cc-id" type="hidden" asp-for="FuncionarioCCId"/>
+    <input id="nombre-origen-id" type="hidden" asp-for="NombreOrigen"/>
+    <input id="nombre-destino-id" type="hidden" asp-for="NombreDestino"/>
+    <input id="nombre-via-id" type="hidden" asp-for="NombreVia"/>
+    <input id="nombre-cc-id" type="hidden" asp-for="NombreCC"/>
+    <input id="cargo-origen-id" type="hidden" asp-for="CargoFuncionarioOrigen"/>
+    <input id="cargo-destino-id" type="hidden" asp-for="CargoFuncionarioDestino"/>
+    <input id="cargo-via-id" type="hidden" asp-for="CargoFuncionarioVia"/>
+    <input id="cargo-cc-id" type="hidden" asp-for="CargoFuncionarioCC"/>
+    <input id="area-origen-id" type="hidden" asp-for="AreaFuncionarioOrigen"/>
+    <input id="area-destino-id" type="hidden" asp-for="AreaFuncionarioDestino"/>
+    <input id="area-via-id" type="hidden" asp-for="AreaFuncionarioVia"/>
+    <input id="area-cc-id" type="hidden" asp-for="AreaFuncionarioCC"/>
 
-    <div class="form-group m-b-40 @if (stringErrors.Contains("FuncionarioOrigen"))
-                                  {
-                                      @hasError
-                                  }">
-        <label asp-for="FuncionarioOrigen" class="form-control-label col-"></label>
-        <div>
-            <select asp-for="FuncionarioOrigen" class="form-control remote" id="origen" placeholder="Buscar...." 
-                    data-remote-url="@Url.Action("GetFuncionarios")">
-            </select>
+    <div class="tab-content tabcontent-border">
+        <div class="tab-pane active" id="cabecera" role="tabpanel">
+            <div class="row justify-content-md-end">
+                <div class=" btn-group">
+                    <button id="opt-via" type="button" data-container="via-container" class="btn waves-effect waves-light btn-outline-secondary">Vía</button>
+                    <button id="opt-cc" type="button" data-container="cc-container" class="btn waves-effect waves-light btn-outline-secondary">CC</button>
+                </div>
+            </div>
+
+            <div class="form-group m-b-10 @if (stringErrors.Contains("FuncionarioDestinoId"))
+                                          {
+                                              @hasError
+                                          }">
+                <label asp-for="FuncionarioDestinoId" class="form-control-label"></label>
+                <div>
+                    <select asp-for="FuncionarioDestino" class="form-control remote" id="destino" placeholder="Escriba Nombre o Cargo......"
+                            data-remote-url="@Url.Action("GetFuncionarios")">
+                    </select>
+
+                </div>
+                <span asp-validation-for="FuncionarioDestinoId" class="text-danger"></span>
+            </div>
             
-        </div>    
-        <span asp-validation-for="FuncionarioOrigen" class="text-danger"></span>
-    </div>
-    
+            @if (User.IsInRole(SD.SecretariaUser) || User.IsInRole(SD.SuperAdminEndUser))
+            {
+                <div class="form-group m-b-10 @if (stringErrors.Contains("FuncionarioOrigenId"))
+                                              {
+                                                  @hasError
+                                              }">
+                    <label asp-for="FuncionarioOrigenId" class="form-control-label"></label>
+                    <div>
+                        <select asp-for="FuncionarioOrigen" class="form-control remote" id="origen" placeholder="Escriba Nombre o Cargo..."
+                                data-remote-url="@Url.Action("GetFuncionarios")">
+                        </select>
 
-    <div class="form-group m-b-40 @if (stringErrors.Contains("Referencia"))
-                                  {
-                                      @hasError
-                                  }">
-        <label asp-for="Referencia" class="form-control-label"></label>
-        <input asp-for="Referencia" class="form-control"/>
-        <span asp-validation-for="Referencia" class="text-danger"></span>
+                    </div>
+                    <span asp-validation-for="FuncionarioOrigenId" class="text-danger"></span>
+                </div>
+            }
+            else
+            {
+                <div class="form-group m-b-10">
+                    <label asp-for="FuncionarioOrigenId" class="form-control-label"></label>
+                    <input asp-for="NombreOrigen" class="form-control" readonly="readonly"/>
+                </div>
+            }
+            
+
+            <div id="via-container"class="form-group m-b-10 d-none @if (stringErrors.Contains("FuncionarioViaId"))
+                                                                   {
+                                                                       @hasError
+                                                                   }">
+                <label asp-for="FuncionarioViaId" class="form-control-label"></label>
+                <div>
+                    <select asp-for="FuncionarioVia" class="form-control remote" id="via" placeholder="Escriba Nombre o Cargo..."
+                            data-remote-url="@Url.Action("GetFuncionarios")">
+                    </select>
+
+                </div>
+                <span asp-validation-for="FuncionarioViaId" class="text-danger"></span>
+            </div>
+
+            <div id="cc-container" class="form-group m-b-10 d-none @if (stringErrors.Contains("FuncionarioCCId"))
+                                                                   {
+                                                                       @hasError
+                                                                   }">
+                <label asp-for="FuncionarioCCId" class="form-control-label"></label>
+                <div>
+                    <select asp-for="FuncionarioCC" class="form-control remote" id="cc" placeholder="Escriba Nombre o Cargo..."
+                            data-remote-url="@Url.Action("GetFuncionarios")">
+                    </select>
+
+                </div>
+                <span asp-validation-for="FuncionarioCCId" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group m-b-20 @if (stringErrors.Contains("Referencia"))
+                                          {
+                                              @hasError
+                                          }">
+                <label asp-for="Referencia" class="form-control-label"></label>
+                <input asp-for="Referencia" class="form-control"/>
+                <span asp-validation-for="Referencia" class="text-danger"></span>
+            </div>
+
+            <div class="form-group m-b-20 @if (stringErrors.Contains("Fecha"))
+                                          {
+                                              @hasError
+                                          }">
+                <label asp-for="Fecha" class="form-control-label"></label>
+                <input asp-for="Fecha" class="form-control"/>
+                <span asp-validation-for="Fecha" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="tab-pane" id="contenido" role="tabpanel">
+            <div class="form-group m-b-40 @if (stringErrors.Contains("Contenido"))
+                                          {
+                                              @hasError
+                                          }">
+                <label asp-for="Contenido" class="form-control-label"></label>
+                <textarea asp-for="Contenido"  class="form-control summernote-textarea"></textarea>
+                <span asp-validation-for="Contenido" class="text-danger"></span>
+            </div>
+        </div>
     </div>
 
-    <div class="form-group m-b-40 @if (stringErrors.Contains("Contenido"))
-                                  {
-                                      @hasError
-                                  }">
-        <label asp-for="Contenido" class="form-control-label"></label>
-        <textarea asp-for="Contenido"  class="form-control"></textarea>
-        <span asp-validation-for="Contenido" class="text-danger"></span>
-    </div>
+
 </form>
 <script>
     $(document).ready(function() {
-        var url = $('#origen').data('remote-url');
-        $('#origen').selectize({
-            valueField: 'id',
-            labelField: 'nombre',
-            searchField: 'nombre',
-            create: false,
-            render: {
-                option: function(item, escape) {
-                    $('.selectize-control.remote').removeClass('loading');
-                    return '<div class="row">' +
-                        '<div class="col-2">' +
-                        '<img src="/lib/theme-elegant/img/users/user-male-icon.png" alt="image" class="img-circle" height="64px">' +
-                        '</div>' +
-                        '<div class="col-10">' +
-                        '<span class="nombre">'+ escape(item.nombre) +'</span>' +
-                        '<div class="cargo">'+ escape(item.cargo) +'</span>' +
-                        '<div class="area">'+ escape(item.area) +'</span>' +
-                        '</div>' +
-                        '</div>';
-                }
-            },
-            score: function(search) {
-                var score = this.getScoreFunction(search);
-                return function(item) {
-                    return score(item);
-                };
-            },
-            load: function(query, callback) {
-                $('.selectize-control.remote').addClass('loading');
-                if (!query.length) return callback();
-                $.ajax({
-                    url: url+ '?filter=' + encodeURIComponent(query),
-                    type: 'GET',
-                    error: function() {
-                        callback();
-                    },
-                    success: function(res) {
-                        try {
-                            callback(res.repositories.slice(0, 10));    
-                        } catch (e) {
 
-                        } 
-                        
-                    }
-                });
-            }
+        $('#opt-via, #opt-cc').click(function() {
+            $(this).toggleClass('active');
+            $('#' + $(this).data('container')).toggleClass('d-none');
         });
-        
+
+        $('.summernote-textarea').summernote({
+            lang: 'es-ES', // default: 'en-US'
+            minHeight: '300px'
+        });
+
+        var url = $('#destino').data('remote-url');
+        $('#destino').selectize(getOptions());
+        $('#origen').selectize(getOptions());
+        $('#via').selectize(getOptions());
+        $('#cc').selectize(getOptions());
+
+        function verifyDefaultOptions() {
+            if ($('#destino-id').val() > 0) {
+                loadDefaultOptions('destino');
+            }
+            if ($('#origen-id').val() > 0) {
+                loadDefaultOptions('origen');
+            }
+            if ($('#via-id').val() > 0) {
+                loadDefaultOptions('via');
+            }
+            if ($('#cc-id').val() > 0) {
+                loadDefaultOptions('cc');
+            }
+        }
+
+        function loadDefaultOptions(field) {
+            console.log($('#nombre-' + field + '-id').val());
+            $('#' + field + '-selectized').val($('#nombre-' + field + '-id').val().trim());
+            $('#' + field + '-selectized').attr("style", "width:100%");
+        }
+
+        function getOptions() {
+            return {
+                valueField: 'id',
+                labelField: 'nombre',
+                searchField: ['nombre', 'cargo', 'area'],
+                create: false,
+                render: {
+                    option: function(item, escape) {
+                        $('.selectize-control.remote').removeClass('loading');
+                        return '<div class="row">' +
+                            '<div class="col-sm-12 col-md-2">' +
+                            '<img src="/lib/theme-elegant/img/users/user-male-icon.png" alt="image" class="img-circle" height="64px">' +
+                            '</div>' +
+                            '<div class="col-sm-12 col-md-10">' +
+                            '<span class="nombre">' + escape(item.nombre) + '</span>' +
+                            '<div class="cargo">' + escape(item.cargo) + '</div>' +
+                            '<div class="area">' + escape(item.area) + '</div>' +
+                            '</div>' +
+                            '</div>';
+                    }
+                },
+                score: function(search) {
+                    var score = this.getScoreFunction(search);
+                    return function(item) {
+                        return score(item);
+                    };
+                },
+                load: function(query, callback) {
+                    //$('.selectize-control.remote').addClass('loading');
+                    if (!query.length) return callback();
+                    $.ajax({
+                        url: url + '?filter=' + encodeURIComponent(query),
+                        type: 'GET',
+                        error: function() {
+                            callback();
+                        },
+                        success: function(res) {
+                            try {
+                                callback(res.repositories.slice(0, 10));
+                            } catch (e) {
+
+                            }
+
+                        }
+                    });
+                },
+                onInitialize: function(data) {
+                    verifyDefaultOptions();
+                }, 
+                onChange: function(selected) {
+                    var idElement = this.$input.attr('id');
+                    var dataSelected = this.options[selected];
+                    //console.log(dataSelected);
+                    $('#' + idElement + '-id').val(selected);
+                    $('#nombre-' + idElement + '-id').val(dataSelected.nombre);
+                    $('#cargo-' + idElement + '-id').val(dataSelected.cargo);
+                    $('#area-' + idElement + '-id').val(dataSelected.area);
+                    $('#areaId-' + idElement + '-id').val(dataSelected.areaId);
+                }
+            }
+        }
+
     });
+
+
 </script>

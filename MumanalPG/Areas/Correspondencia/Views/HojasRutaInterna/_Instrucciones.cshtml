@@ -1,0 +1,65 @@
+@using MumanalPG.Models.Correspondencia
+@using MumanalPG.Utility
+<h3>Derivar e Instruir</h3>
+<fieldset>
+    @if (ViewData["Action"] == "Derivar")
+    {
+        <div class="text-center text-dark">
+            <h4>CORRESPONDENCIA INTERNA</h4>
+            <h6>@ViewBag.HojaRuta.CiteHojaRuta</h6>
+        </div>
+    }
+    
+    <h2>Derivar</h2>
+    <p class="desc">Por favor seleccione la(s) persona(s) a quien va dirigido esta Hoja de Ruta</p>
+    <div class="fieldset-content">
+        <div class="form-row">
+            <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                    <label for="jstree" class="form-label">Seleccione destinatario(s) de esta lista</label>
+                    <div id="jstree" class="content-large"></div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                    <label for="instrucciones" class="form-label">Instrucciones</label>
+                    <div id="instrucciones-container" class="instrucciones-container">
+                        <div class="not-selected element-center text-center">
+                            Seleccione al menos un funcionario
+                        </div>
+                        <div id="instrucciones" class="content-large instrucciones hide">
+                            <input id="ins_" type="hidden"/>
+                            @* <input id="com_" type="hidden" /> *@
+                            <div class="form-group row p-t-20">
+
+                                @foreach (Instrucciones i in ViewBag.instrucciones)
+                                {
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="m-b-10">
+                                            <label class="custom-control custom-checkbox">
+                                                <input data-id="@i.Id" type="checkbox" class="instrucciones-checkbox custom-control-input">
+                                                <span class="custom-control-label">@i.Nombre</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                }
+                                <div class="col-md-12">
+                                    <div class="m-b-10">
+                                        <label class="form-label">Comentarios Adicionales</label>
+                                        <textarea class="form-control comentarios"></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</fieldset>

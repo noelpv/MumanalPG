@@ -25,8 +25,8 @@ namespace MumanalPG.Models.Planificacion
 		public Int32 NumeroRespaldo { get; set; }
 		public string CiteRespaldo { get; set; }
 		public Int32 Nivel { get; set; }
-		public Int32 IdPresupuestoFormulacion { get; set; }
-		public Int32 IdPresupuestoFormulacionContraparte { get; set; }
+		public Int32 IdPresupuestoGasto { get; set; }
+		public Int32 IdPresupuestoGastoContraparte { get; set; }
 		public string GestionAnterior { get; set; }
 		public Int32 IdPoaAnterior { get; set; }
 		public string PoaJustificacion { get; set; }

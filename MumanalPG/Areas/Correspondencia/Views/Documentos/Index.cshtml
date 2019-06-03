@@ -1,4 +1,6 @@
 @model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Correspondencia.Documento>
+@using MumanalPG.Models.Administra
+@using MumanalPG.Models.Correspondencia
 @using MumanalPG.Utility
 @using ReflectionIT.Mvc.Paging
 @addTagHelper *, ReflectionIT.Mvc.Paging
@@ -12,7 +14,7 @@
 <div class="row">
     <div class="col-12 text-right">
         <a asp-action="Create" asp-route-type="@ViewBag.docTipoId" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nuevo Documento"
-           data-modal="link", data-redirect="@Url.Action("Index", new{@a=Constantes.Creado})" 
+           data-modal="link", data-redirect="@Url.Action("Index", new{@a=Constantes.Creado, type=ViewBag.docTipoId})" 
            data-intro="Click, en este botón para crear un Informe, una Nota, o cualquier otro tipo de documento">
             <i class="fas fa-plus"></i><span class="d-none d-sm-inline">&nbsp; Nuevo </span>
         </a>
@@ -24,6 +26,8 @@
             <div class="input-group mb-3">
                 <input name="filter" class="form-control search" placeholder="Buscar por Cite o Referencia..."
                        value="@Model.RouteValue["Filter"]"/>
+                <input id="doc-tipo-id" type="hidden" name="type" value="@ViewBag.docTipoId"/>
+                @* <input id="page-id" type="hidden" name="page" value="@ViewBag.page"/> *@
                 <button type="submit" class="btn btn-secondary input-group-append">
                     <span class="fas fa-search" aria-hidden="true"></span>
                 </button>
@@ -31,18 +35,35 @@
         </form>
     </div>
 </div>
+<div class="row justify-content-center">
+    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+        @foreach (TipoDocumento tipo in ViewBag.Tipos)
+        {
+            if (ViewBag.docTipoId == tipo.Id)
+            {
+                <button data-id="@tipo.Id" type="button" class="btn waves-effect waves-light btn-info active btn-tipo">@tipo.Nombre</button>
+            }
+           else
+            {
+                <button data-id="@tipo.Id" type="button" class="btn btn-secondary btn-tipo">@tipo.Nombre</button>
+            }
+
+        }
+        
+    </div>
+</div>
 
 <div class="row table-responsive mt-4" data-intro="En esta sección se muestra los resultados encontrados.">
-    <table class="table table-hover table-striped">
+    <table class="table table-hover table-striped small">
         <thead>
-        <tr>
-            <th>@Html.SortableHeaderFor(model => model.Cite)</th>
+        <tr class="text-center">
+            <th>Cite</th>
             <th>@Html.SortableHeaderFor(model => model.Fecha)</th>
-            <th>Tipo</th>
+            @* <th>Tipo</th> *@
             <th>De</th>
             <th>A</th>
-            <th>Referencia</th>
-            
+            <th width="250px">Referencia</th>
+            <th></th>
         </tr>
 
         </thead>
@@ -59,9 +80,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Fecha)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Tipo.Nombre)
-                </td>
+                @* <td> *@
+                @*     @Html.DisplayFor(modelItem => item.Tipo.Nombre) *@
+                @* </td> *@
                 
                 <td>
                     @Html.DisplayFor(modelItem => item.FuncionarioOrigen.Denominacion)
@@ -88,10 +109,18 @@
     {
         <partial name="_NotFoundPartial" />
     }
-    
 </div>
 <div class="row justify-content-center">
     <nav>
         <vc:pager paging-list="@Model"/>
     </nav>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('.btn-tipo').click(function() {
+            $('#doc-tipo-id').val($(this).data('id'));
+            $('form.form-search').submit();
+        });
+    });
+</script>    

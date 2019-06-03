@@ -27,77 +27,84 @@ namespace MumanalPG.Data
 
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
 
-        public DbSet<MumanalPG.Models.FinanzasParam.Partida> Partida { get; set; }
-
-        public DbSet<MumanalPG.Models.AdministraParam.Grupo> Grupo { get; set; }
-        public DbSet<MumanalPG.Models.AdministraParam.SubGrupo> SubGrupo { get; set; }
-
-
-		public DbSet<MumanalPG.Models.Generales.fBuscaId> Generales_fBuscaId { get; set; }
+        /*Ini Generales*/
+        public DbSet<MumanalPG.Models.Generales.fBuscaId> Generales_fBuscaId { get; set; }
 		public DbSet<MumanalPG.Models.Generales.fRetornaEntero> Generales_fRetornaEntero { get; set; }
 		public DbSet<MumanalPG.Models.Generales.fRetornaCadena> Generales_fRetornaCadena { get; set; }
+        public DbSet<MumanalPG.Models.Generales.Departamento> Departamento { get; set; }
+        /*Fin Generales*/
 
-		public DbSet<MumanalPG.Models.RRHH.Beneficiario> RRHH_Beneficiario { get; set; }
+        /*Ini RRHH*/
+        public DbSet<MumanalPG.Models.RRHH.Beneficiario> RRHH_Beneficiario { get; set; }
 		public DbSet<MumanalPG.Models.RRHH.Puesto> RRHH_Puesto { get; set; }
 		public DbSet<MumanalPG.Models.RRHH.UnidadEjecutora> RRHH_UnidadEjecutora { get; set; }
 		public DbSet<MumanalPG.Models.RRHH.vPersona> RRHH_vPersona { get; set; }
-		public DbSet<MumanalPG.Models.RRHHParam.TipoBeneficiario> RRHHParam_TipoBeneficiario { get; set; }
-		public DbSet<MumanalPG.Models.Ventas.DocumentoRespaldo> Ventas_DocumentoRespaldo { get; set; }
+        public DbSet<MumanalPG.Models.RRHH.VacacionProgramacion> VacacionProgramacion { get; set; }
+        public DbSet<MumanalPG.Models.RRHHParam.TipoBeneficiario> RRHHParam_TipoBeneficiario { get; set; }
+        /*Fin RRHH*/
+
+        /*Ini Finanzas*/
+        public DbSet<MumanalPG.Models.Finanzas.TipoTransaccion> TipoTransaccion { get; set; }
+        //public DbSet<MumanalPG.Models.Finanzas.Puesto> RRHH_Puesto { get; set; }
+        //public DbSet<MumanalPG.Models.Finanzas.UnidadEjecutora> RRHH_UnidadEjecutora { get; set; }
+        //public DbSet<MumanalPG.Models.Finanzas.vPersona> RRHH_vPersona { get; set; }
+        //public DbSet<MumanalPG.Models.Finanzas.TipoBeneficiario> RRHHParam_TipoBeneficiario { get; set; }
+        /*Fin Finanzas*/
+
+        /*Ini Prestaciones*/
+        public DbSet<MumanalPG.Models.Ventas.DocumentoRespaldo> Ventas_DocumentoRespaldo { get; set; }
 		public DbSet<MumanalPG.Models.Ventas.vContratacion> Ventas_vContratacion { get; set; }
 		public DbSet<MumanalPG.Models.Ventas.vRequisito> Ventas_vRequisito { get; set; }
         public DbSet<MumanalPG.Models.Ventas.VentaContratacion> Ventas_VentaContratacion { get; set; }
         public DbSet<MumanalPG.Models.Ventas.VentaRequisito> Ventas_VentaRequisito { get; set; }
         public DbSet<MumanalPG.Models.Ventas.VentaTarifario> VentaTarifario { get; set; }
-
         public DbSet<MumanalPG.Models.Ventas.pVerificaLimite> Ventas_pVerificaLimite { get; set; }
+        public DbSet<MumanalPG.Models.Ventas.VentaSolicitud> VentaSolicitud { get; set; }
+        public DbSet<MumanalPG.Models.Ventas.TablaPDF> TablaPDF { get; set; }
+        /*Fin Prestaciones*/
 
-		public DbSet<MumanalPG.Models.Ventas.TablaPDF> TablaPDF { get; set; }
-
-		public DbSet<MumanalPG.Models.Seguridad.UsuarioUnidadEjecutora> Seguridad_UsuarioUnidadEjecutora { get; set; }
+        public DbSet<MumanalPG.Models.Seguridad.UsuarioUnidadEjecutora> Seguridad_UsuarioUnidadEjecutora { get; set; }
 		public DbSet<MumanalPG.Models.Seguridad.Usuario> Seguridad_Usuario { get; set; }
 
 		public DbSet<MumanalPG.Models.RoleViewModel> RoleViewModel { get; set; }
 
-		public DbSet<MumanalPG.Models.Generales.Departamento> Departamento { get; set; }
-
-		public DbSet<MumanalPG.Models.Administra.TipoAlmacen> TipoAlmacen { get; set; }
-
-		public DbSet<MumanalPG.Models.Administra.Almacen> Almacen { get; set; }
-
-		public DbSet<MumanalPG.Models.Administra.AlmacenIngreso> AlmacenIngreso { get; set; }
-
-		public DbSet<MumanalPG.Models.Administra.AlmacenInventario> AlmacenInventario { get; set; }
-
-		public DbSet<MumanalPG.Models.Administra.AlmacenSalida> AlmacenSalida { get; set; }
-
-		public DbSet<MumanalPG.Models.Administra.Bienes> Bienes { get; set; }
-
-		public DbSet<MumanalPG.Models.Administra.CompraContratacion> CompraContratacion { get; set; }
-
-		public DbSet<MumanalPG.Models.Administra.CompraContratacionBien> CompraContratacionBien { get; set; }
-
-		public DbSet<MumanalPG.Models.Administra.CompraContratacionCotiza> CompraContratacionCotiza { get; set; }
-
-		public DbSet<MumanalPG.Models.Administra.CompraCronograma> CompraCronograma { get; set; }
-
-		public DbSet<MumanalPG.Models.Administra.CompraSolicitud> CompraSolicitud { get; set; }
-
-		public DbSet<MumanalPG.Models.Administra.CompraSolicitudBien> CompraSolicitudBien { get; set; }
-
+        /*Ini Administrativo*/
+        public DbSet<MumanalPG.Models.Administra.TipoAlmacen> TipoAlmacen { get; set; }
+        public DbSet<MumanalPG.Models.Administra.Almacen> Almacen { get; set; }
+        public DbSet<MumanalPG.Models.Administra.AlmacenIngreso> AlmacenIngreso { get; set; }
+        public DbSet<MumanalPG.Models.Administra.AlmacenInventario> AlmacenInventario { get; set; }
+        public DbSet<MumanalPG.Models.Administra.AlmacenSalida> AlmacenSalida { get; set; }
+        public DbSet<MumanalPG.Models.Administra.Bienes> Bienes { get; set; }
+        public DbSet<MumanalPG.Models.Administra.CompraContratacion> CompraContratacion { get; set; }
+        public DbSet<MumanalPG.Models.Administra.CompraContratacionBien> CompraContratacionBien { get; set; }
+        public DbSet<MumanalPG.Models.Administra.CompraContratacionCotiza> CompraContratacionCotiza { get; set; }
+        public DbSet<MumanalPG.Models.Administra.CompraCronograma> CompraCronograma { get; set; }
+        public DbSet<MumanalPG.Models.Administra.CompraSolicitud> CompraSolicitud { get; set; }
+        public DbSet<MumanalPG.Models.Administra.CompraSolicitudBien> CompraSolicitudBien { get; set; }
         public DbSet<MumanalPG.Models.Administra.ActivoAsignacion> ActivoAsignacion { get; set; }
+        public DbSet<MumanalPG.Models.Administra.ActivoFijo> ActivoFijo { get; set; }
         public DbSet<MumanalPG.Models.Administra.ActivoTransferencia> ActivoTransferencia { get; set; }
-        public DbSet<MumanalPG.Models.Planificacion.HojaRuta> Planificacion_HojaRuta { get; set; }
-        public DbSet<MumanalPG.Models.Planificacion.HojaRutaDetalle> HojaRutaDetalle { get; set; }
+        /*Fin Administrativo*/
+
+        /*Ini Planificacion*/
+        public DbSet<MumanalPG.Models.Planificacion.PresupuestoGasto> PresupuestoGasto { get; set; }
+        public DbSet<MumanalPG.Models.Planificacion.PresupuestoModificaciones> PresupuestoModificaciones { get; set; }
+        public DbSet<MumanalPG.Models.Planificacion.FuenteFinanciamiento> FuenteFinanciamiento { get; set; }
+        public DbSet<MumanalPG.Models.Planificacion.OrganismoFinanciador> OrganismoFinanciador { get; set; }
+        public DbSet<MumanalPG.Models.Planificacion.EstructuraProgramatica> EstructuraProgramatica { get; set; }
+        public DbSet<MumanalPG.Models.Planificacion.PartidaGasto> PartidaGasto { get; set; }
+
         public DbSet<MumanalPG.Models.Planificacion.HojaRutaInstrucciones> HojaRutaInstrucciones { get; set; }
         public DbSet<MumanalPG.Models.Planificacion.HojaRutaDocumentos> HojaRutaDocumentos { get; set; }
-        public DbSet<MumanalPG.Models.Planificacion.PresupuestoFormulacion> PresupuestoFormulacion { get; set; }
-        public DbSet<MumanalPG.Models.Planificacion.PresupuestoModificaciones> PresupuestoModificaciones { get; set; }
-        
-        public DbSet<MumanalPG.Models.Ventas.VentaSolicitud> VentaSolicitud { get; set; }
-		/*Correspondencia*/
-	    public DbSet<TipoDocumento> CorrespondenciaTipoDocumento { get; set; }
+        /*Fin Planificacion*/
+
+        /*Correspondencia*/
+        public DbSet<TipoDocumento> CorrespondenciaTipoDocumento { get; set; }
 	    public DbSet<MumanalPG.Models.Correspondencia.Instrucciones> CorrespondenciaInstrucciones { get; set; }
 	    public DbSet<Documento> CorrespondenciaDocumento { get; set; }
+	    public DbSet<HojaRuta> CorrespondenciaHojaRuta { get; set; }
+	    public DbSet<HojaRutaDetalle> CorrespondenciaHRDetalle { get; set; }
+	    public DbSet<HRDetalleInstrucciones> CorrespondenciaHRDetInst { get; set; }
 	    /* End Correspondencia*/
 	    
     }

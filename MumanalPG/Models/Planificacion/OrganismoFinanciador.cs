@@ -16,10 +16,10 @@ namespace MumanalPG.Models.Planificacion
 		public string Gestion { get; set; }
 		public Int32 IdBeneficiario { get; set; }
 		public string CargoRepresentante { get; set; }
-		public Int32 PaisCodigo { get; set; }
-		public string EsExterno { get; set; }
-		public string EstadoCodigo { get; set; }
-		public string UsuarioCodigo { get; set; }
+		public Int32 IdPais { get; set; }
+		public bool  EsExterno { get; set; }
+		public Int32 IdEstadoRegistro { get; set; }
+		public Int32 IdUsuario { get; set; }
 		public DateTime FechaRegistro { get; set; }
 	}
 }

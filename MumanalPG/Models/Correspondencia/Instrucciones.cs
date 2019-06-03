@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,6 +19,8 @@ namespace MumanalPG.Models.Correspondencia
 		[Display(Name = "Descripción")]
 		public String Descripcion { get; set; }
 
+		public ICollection<HRDetalleInstrucciones> HRDetalleInstrucciones { get; set; }
+		
 		public Int32 IdEstadoRegistro { get; set; }
 		public Int32 IdUsuario { get; set; }
 		public DateTime FechaRegistro { get; set; }

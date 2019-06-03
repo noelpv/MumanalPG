@@ -61,6 +61,16 @@ $(function() {
 function InitializeEvents() {
     //Inicializando Bootstrap-Switch 
     $("input.bootstrap-switch").bootstrapSwitch();
+    
+    $('a.show-loader').click(function(){
+        $(".preloader").fadeIn();        
+    });
+    
+    $('select.selectize-plugin').selectize({
+        create: false,
+        sortField: 'text'
+    });
+    
 }
 
 function startTour() {
@@ -68,4 +78,43 @@ function startTour() {
     tour.setOption('tooltipPosition', 'auto');
     tour.setOption('positionPrecedence', ['left', 'right', 'top', 'bottom']);
     tour.start();
+}
+
+function buildOptionsSelectize(url, valueField, labelField, searchFields, renderTemplate, onChange, onIni) {
+    return {
+        valueField: valueField,
+        labelField: labelField,
+        searchField: searchFields,
+        create: false,
+        render: {
+            option: renderTemplate
+        },
+        score: function(search) {
+            var score = this.getScoreFunction(search);
+            return function(item) {
+                return score(item);
+            };
+        },
+        load: function(query, callback) {
+            //$('.selectize-control.remote').addClass('loading');
+            if (!query.length) return callback();
+            $.ajax({
+                url: url + '?filter=' + encodeURIComponent(query),
+                type: 'GET',
+                error: function() {
+                    callback();
+                },
+                success: function(res) {
+                    try {
+                        callback(res.repositories.slice(0, 10));
+                    } catch (e) {
+
+                    }
+
+                }
+            });
+        },
+        onInitialize: onIni,
+        onChange: onChange
+    }
 }

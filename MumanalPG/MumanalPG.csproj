@@ -8,6 +8,45 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\AdministraParam\**" />
+    <Compile Remove="Areas\Administra\Data\**" />
+    <Compile Remove="Areas\Administra\Models\**" />
+    <Compile Remove="Areas\RRHH\Models\**" />
+    <Compile Remove="Models\ContableParam\**" />
+    <Compile Remove="Models\Contable\**" />
+    <Compile Remove="Models\GeneralesParam\**" />
+    <Compile Remove="Models\PlanificacionParam\**" />
+    <Compile Remove="Models\VentasParam\**" />
+    <Content Remove="Areas\AdministraParam\**" />
+    <Content Remove="Areas\Administra\Data\**" />
+    <Content Remove="Areas\Administra\Models\**" />
+    <Content Remove="Areas\RRHH\Models\**" />
+    <Content Remove="Models\ContableParam\**" />
+    <Content Remove="Models\Contable\**" />
+    <Content Remove="Models\GeneralesParam\**" />
+    <Content Remove="Models\PlanificacionParam\**" />
+    <Content Remove="Models\VentasParam\**" />
+    <EmbeddedResource Remove="Areas\AdministraParam\**" />
+    <EmbeddedResource Remove="Areas\Administra\Data\**" />
+    <EmbeddedResource Remove="Areas\Administra\Models\**" />
+    <EmbeddedResource Remove="Areas\RRHH\Models\**" />
+    <EmbeddedResource Remove="Models\ContableParam\**" />
+    <EmbeddedResource Remove="Models\Contable\**" />
+    <EmbeddedResource Remove="Models\GeneralesParam\**" />
+    <EmbeddedResource Remove="Models\PlanificacionParam\**" />
+    <EmbeddedResource Remove="Models\VentasParam\**" />
+    <None Remove="Areas\AdministraParam\**" />
+    <None Remove="Areas\Administra\Data\**" />
+    <None Remove="Areas\Administra\Models\**" />
+    <None Remove="Areas\RRHH\Models\**" />
+    <None Remove="Models\ContableParam\**" />
+    <None Remove="Models\Contable\**" />
+    <None Remove="Models\GeneralesParam\**" />
+    <None Remove="Models\PlanificacionParam\**" />
+    <None Remove="Models\VentasParam\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Cryptography.Internal" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="2.2.0" />
@@ -25,6 +64,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Primitives" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.2" />
@@ -37,12 +77,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Areas\AdministraParam\Views\_ViewImports.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\AdministraParam\Views\_ViewStart.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
     <Content Update="Areas\Administra\Views\_ViewImports.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
@@ -112,23 +146,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\AdministraParam\Data\" />
-    <Folder Include="Areas\AdministraParam\Models\" />
     <Folder Include="Areas\Administra\Controllers\" />
-    <Folder Include="Areas\Administra\Data\" />
-    <Folder Include="Areas\Administra\Models\" />
     <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Areas\RRHH\Controllers\" />
-    <Folder Include="Areas\RRHH\Models\" />
     <Folder Include="Areas\RRHH\Views\" />
     <Folder Include="Controllers\" />
     <Folder Include="Data\Migrations" />
-    <Folder Include="Models\ContableParam\" />
-    <Folder Include="Models\Contable\" />
     <Folder Include="Models\Finanzas\" />
-    <Folder Include="Models\GeneralesParam\" />
-    <Folder Include="Models\VentasParam\" />
-    <Folder Include="Models\PlanificacionParam\" />
     <Folder Include="wwwroot\images\ProductImage\" />
     <Folder Include="wwwroot\docs\" />
     <Folder Include="wwwroot\uploads\" />

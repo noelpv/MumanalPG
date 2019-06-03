@@ -15,10 +15,10 @@ namespace MumanalPG.Models.Planificacion
 		public Int32 NumeroRespaldo { get; set; }
 		public DateTime FechaAutorizacion { get; set; }
 		public Int32 IdPoa { get; set; }
-		public Int32 IdPresupuestoFormulacion { get; set; }
+		public Int32 IdPresupuestoGasto { get; set; }
 		public Decimal MontoOrigen { get; set; }
 		public Int32 IdPoaDestino { get; set; }
-		public Int32 IdPresupuestoFormulacionDestino { get; set; }
+		public Int32 IdPresupuestoGastoDestino { get; set; }
 		public Decimal MontoDestino { get; set; }
 		public Int32 IdEstadoRegistro { get; set; }
 		public Int32 IdUsuario { get; set; }

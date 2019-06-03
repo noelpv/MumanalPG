@@ -15,12 +15,12 @@
 <div class="scroll-sidebar">
 <!-- Sidebar navigation-->
 @{
-    var currentArea = ViewContext.RouteData.Values["area"];
+    string currentArea = ViewContext.RouteData.Values["area"].ToString();
 }
 
 <nav class="sidebar-nav">
 <ul id="sidebarnav">
-<li class="@((String.Equals(currentArea, "correspondencia")) ?  "selected" : "-")">
+<li class="@((String.Equals(currentArea.ToLower(), "correspondencia")) ?  "selected" : "")">
     <a asp-area="correspondencia" asp-controller="dashboard" asp-action="index" class="waves-effect waves-dark">
         <i class="mdi mdi-email-open-outline"></i><span class="hide-menu">Correspondencia</span>
     </a>
@@ -33,24 +33,24 @@
     <ul aria-expanded="false" class="collapse">
 
         @*<li>
-            <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Plan de Procesos<i class="ti-align-left"></i></a>
-            <ul aria-expanded="false" class="collapse">
-                <li><a href="javascript:void(0)">Procesos 1<i class="ti-list-ol"></i></a></li>
-                <li><a href="javascript:void(0)">Procesos 2<i class="ti-list-ol"></i></a></li>
-            </ul>
-            </li>
-            <li>
-            <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Plan Operativo<i class="ti-align-left"></i></a>
-            <ul aria-expanded="false" class="collapse">
-                <li><a href="javascript:void(0)">Operativo 1<i class="ti-list-ol"></i></a></li>
-                <li><a href="javascript:void(0)">Operativo 2<i class="ti-list-ol"></i></a></li>
-            </ul>
-            </li>*@
+        <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Plan de Procesos<i class="ti-align-left"></i></a>
+        <ul aria-expanded="false" class="collapse">
+            <li><a href="javascript:void(0)">Procesos 1<i class="ti-list-ol"></i></a></li>
+            <li><a href="javascript:void(0)">Procesos 2<i class="ti-list-ol"></i></a></li>
+        </ul>
+        </li>
+        <li>
+        <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Plan Operativo<i class="ti-align-left"></i></a>
+        <ul aria-expanded="false" class="collapse">
+            <li><a href="javascript:void(0)">Operativo 1<i class="ti-list-ol"></i></a></li>
+            <li><a href="javascript:void(0)">Operativo 2<i class="ti-list-ol"></i></a></li>
+        </ul>
+        </li>*@
         <li>
             <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Presupuesto<i class="ti-align-left"></i></a>
             <ul aria-expanded="false" class="collapse">
                 <li>
-                    <a asp-area="Planificacion" asp-controller="PresupuestoFormulacion" asp-action="Index">
+                    <a asp-area="Planificacion" asp-controller="PresupuestoGasto" asp-action="Index">
                         Formulacion Presupuestaria <i class="fas fa-th-list"></i>
                     </a>
                 </li>
@@ -61,61 +61,43 @@
                 </li>
             </ul>
         </li>
-        @*<li>
-            <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Plan de Adquisiciones<i class="ti-align-left"></i></a>
-            <ul aria-expanded="false" class="collapse">
-                <li><a href="javascript:void(0)">Adquisiciones 1<i class="ti-list-ol"></i></a></li>
-                <li><a href="javascript:void(0)">Adquisiciones 2<i class="ti-list-ol"></i></a></li>
-            </ul>
-            </li>*@
-        <li>
-        @* <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Correspondencia<i class="ti-align-left"></i></a> *@
-        @* <ul aria-expanded="false" class="collapse"> *@
-        @*     <li> *@
-        @*         <a asp-area="Planificacion" asp-controller="HojaRuta" asp-action="Index"> *@
-        @*             Hoja de Ruta <i class="fas fa-th-list"></i> *@
-        @*         </a> *@
-        @*     </li> *@
-        @*     <li> *@
-        @*         <a asp-area="Planificacion" asp-controller="HojaRutaDetalle" asp-action="Index"> *@
-        @*             Hoja Ruta Detalle <i class="fas fa-th-list"></i> *@
-        @*         </a> *@
-        @*     </li> *@
-        @*     <li> *@
-        @*         <a asp-area="Planificacion" asp-controller="HojaRutaInstrucciones" asp-action="Index"> *@
-        @*             Hoja Ruta Instrucciones <i class="fas fa-th-list"></i> *@
-        @*         </a> *@
-        @*     </li> *@
-        @*     <li> *@
-        @*         <a asp-area="Planificacion" asp-controller="HojaRutaDocumentos" asp-action="Index"> *@
-        @*             Hoja Ruta Documentos <i class="fas fa-th-list"></i> *@
-        @*         </a> *@
-        @*     </li> *@
-        @* </ul> *@
-        @* </li> *@
+
         <li>
             <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">
                 Clasificadores<i class="fas fa-cogs"></i>
             </a>
             <ul aria-expanded="false" class="collapse">
                 <li>
-                    <a asp-area="Planificacion" asp-controller="TipoBeneficiarios" asp-action="Index">
-                        Tipo de Beneficiarios <i class="fas fa-th-list"></i>
+                    <a asp-area="Planificacion" asp-controller="FuenteFinanciamiento" asp-action="Index">
+                        Fuente de Financiamiento <i class="fas fa-th-list"></i>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Planificacion" asp-controller="OrganismoFinanciador" asp-action="Index">
+                        Organismo Financiador <i class="fas fa-th-list"></i>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Planificacion" asp-controller="EstructuraProgramatica" asp-action="Index">
+                        Estructura Programatica <i class="fas fa-th-list"></i>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Planificacion" asp-controller="PartidaGasto" asp-action="Index">
+                        Partidas del Gasto <i class="fas fa-th-list"></i>
                     </a>
                 </li>
 
-                <li>
-                    <a asp-area="Planificacion" asp-controller="Instrucciones" asp-action="Index">
-                        Instrucciones Hoja Ruta <i class="fas fa-th-list"></i>
-                    </a>
-                </li>
+                <li><a href="javascript:void(0)">Rubros de Ingresos <i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Procesos <i class="ti-list-ol"></i></a></li>
+
             </ul>
         </li>
         <li>
             <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Reportes<i class="ti-align-left"></i></a>
             <ul aria-expanded="false" class="collapse">
-                <li><a href="javascript:void(0)">Reporte 1<i class="ti-list-ol"></i></a></li>
-                <li><a href="javascript:void(0)">Reporte 2<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Reportes Presupuesto<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Reporte Modificaciones Presuspuestarias<i class="ti-list-ol"></i></a></li>
             </ul>
         </li>
     </ul>
@@ -150,8 +132,10 @@
         <li>
             <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Reportes<i class="ti-align-left"></i></a>
             <ul aria-expanded="false" class="collapse">
-                <li><a href="javascript:void(0)">Reportes 1<i class="ti-list-ol"></i></a></li>
-                <li><a href="javascript:void(0)">Reportes 2<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Reportes Afiliaciones<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Reportes ASR<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Reportes Bono Cesantia<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Reportes Cuota Mortuoria<i class="ti-list-ol"></i></a></li>
             </ul>
         </li>
     </ul>
@@ -164,16 +148,64 @@
         <li>
             <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Adm. Personal<i class="ti-align-left"></i></a>
             <ul aria-expanded="false" class="collapse">
-                <li><a href="javascript:void(0)">Personal 1<i class="ti-list-ol"></i></a></li>
-                <li><a href="javascript:void(0)">Personal 2<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Contratos<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">File Personal<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Movilidad Personal<i class="ti-list-ol"></i></a></li>
+            </ul>
+        </li>
+        <li>
+            <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Control Personal<i class="ti-align-left"></i></a>
+            <ul aria-expanded="false" class="collapse">
+                <li><a href="javascript:void(0)">Asistencia<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Vacaciones<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Permisos<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Liquidaciones<i class="ti-list-ol"></i></a></li>
+
             </ul>
         </li>
         <li>
             <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Planillas<i class="ti-align-left"></i></a>
             <ul aria-expanded="false" class="collapse">
-                <li><a href="javascript:void(0)">Planilla de Sueldos<i class="ti-list-ol"></i></a></li>
-                <li><a href="javascript:void(0)">Planilla Impuestos<i class="ti-list-ol"></i></a></li>
-                <li><a href="javascript:void(0)">Papeletas de Pago<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Organizacion Planillas<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Ejecucion Planillas<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Prestamos<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Reportes Planillas<i class="ti-list-ol"></i></a></li>
+            </ul>
+        </li>
+        <li>
+            <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Clasificadores<i class="ti-align-left"></i></a>
+            <ul aria-expanded="false" class="collapse">
+                <li><a href="javascript:void(0)">Estructura Organizacional<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Puestos<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Cargos<i class="ti-list-ol"></i></a></li>
+
+                <li><a href="javascript:void(0)">Funciones<i class="ti-list-ol"></i></a></li>
+
+                <li><a href="javascript:void(0)">Clasificacion Personas<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Registro Personas<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Estado Civil<i class="ti-list-ol"></i></a></li>
+
+                <li><a href="javascript:void(0)">Genero<i class="ti-list-ol"></i></a></li>
+
+                <li><a href="javascript:void(0)">Parentesco<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Profesiones<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Horarios<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Motivos de Procesos<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Clasificacion Permisos<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Parámetros Antiguedad<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Parámetros Descuentos<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Parámetros Planilla<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Parametros Vacacion<i class="ti-list-ol"></i></a></li>
+
+
+            </ul>
+        </li>
+        <li>
+            <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Reportes<i class="ti-align-left"></i></a>
+            <ul aria-expanded="false" class="collapse">
+                <li><a href="javascript:void(0)">Admin. Personal<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Control Personal<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Estadisticas de Planillas<i class="ti-list-ol"></i></a></li>
             </ul>
         </li>
     </ul>
@@ -216,7 +248,6 @@
                     Compra / Cronograma <i class="fas fa-th-list"></i>
                 </a>
             </li>
-
         </ul>
         <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Almacenes<i class="ti-align-left"></i></a>
         <ul aria-expanded="false" class="collapse">
@@ -245,14 +276,17 @@
                     Almacen Inventario <i class="fas fa-th-list"></i>
                 </a>
             </li>
-
         </ul>
-
         <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Activos Fijos<i class="ti-align-left"></i></a>
         <ul aria-expanded="false" class="collapse">
             <li>
                 <a asp-area="Administra" asp-controller="ActivoAsignacion" asp-action="Index">
                     Activos Asignacion <i class="fas fa-th-list"></i>
+                </a>
+            </li>
+            <li>
+                <a asp-area="Administra" asp-controller="ActivoFijos" asp-action="Index">
+                    Registro Activo Fijo <i class="fas fa-th-list"></i>
                 </a>
             </li>
             <li>
@@ -274,8 +308,7 @@
                 </a>
             </li>
             <li><a href="javascript:void(0)">Depreciación<i class="ti-list-ol"></i></a></li>
-            <li><a asp-area="AdministraParam" asp-controller="Grupo" asp-action="Index">Grupos<i class="ti-layout-menu-separated"></i></a></li>
-            <li><a asp-area="AdministraParam" asp-controller="SubGrupo" asp-action="Index">Sub Grupos<i class="ti-layout-menu-separated"></i></a></li>
+         
             <li><a href="javascript:void(0)">Modelos<i class="ti-list-ol"></i></a></li>
             <li><a href="javascript:void(0)">Unidades de Medida<i class="ti-list-ol"></i></a></li>
             <li><a href="javascript:void(0)">Marcas<i class="ti-list-ol"></i></a></li>
@@ -283,7 +316,6 @@
         <li>
             <a href="form-material.html">Reportes <i class="ti-agenda"></i></a>
         </li>
-
     </ul>
 </li>
 <li>
@@ -292,25 +324,62 @@
     </a>
     <ul aria-expanded="false" class="collapse">
         <li>
-            <a href="table-basic.html">Adm. de Fondos <i class="ti-widgetized"></i></a>
+            <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Cobranzas/Inversiones<i class="ti-align-left"></i></a>
+            <ul aria-expanded="false" class="collapse">
+                <li><a href="javascript:void(0)">Facturacion<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Cobranzas<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Alquileres<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Seguimiento<i class="ti-list-ol"></i></a></li>
+            </ul>
         </li>
         <li>
-            <a href="table-layout.html">Cobranzas <i class="ti-layout-accordion-list"></i></a>
+            <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Tesoreria<i class="ti-align-left"></i></a>
+            <ul aria-expanded="false" class="collapse">
+                <li><a href="javascript:void(0)">Registro Pagos<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Seguimiento<i class="ti-list-ol"></i></a></li>
+            </ul>
         </li>
         <li>
-            <a href="table-data-table.html">Alquileres <i class="ti-widget"></i></a>
+            <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Admin. Fondos<i class="ti-align-left"></i></a>
+            <ul aria-expanded="false" class="collapse">
+                <li><a href="javascript:void(0)">Fondos Regionales<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Cargos de Cuenta<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Fondos para Viajes<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Caja Chica<i class="ti-list-ol"></i></a></li>
+            </ul>
         </li>
         <li>
-            <a href="table-footable.html">Pagos <i class="ti-layout-accordion-merged"></i></a>
+            <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Contabilidad<i class="ti-align-left"></i></a>
+            <ul aria-expanded="false" class="collapse">
+                <li><a href="javascript:void(0)">Balance Apertura<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Matriz de Gastos<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Matriz de Ingresos<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Registro Diario<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Libro Copras<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Libro de Ventas<i class="ti-list-ol"></i></a></li>
+            </ul>
         </li>
-        <li>
-            <a href="table-jsgrid.html">Contabilidad <i class="ti-layout-placeholder"></i></a>
-        </li>
+
         <li>
             <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Clasificadores<i class="ti-align-left"></i></a>
             <ul aria-expanded="false" class="collapse">
-                <li><a asp-area="FinanzasParam" asp-controller="Partida" asp-action="Index">Partidas <i class="ti-layout-menu-separated"></i></a></li>
-                <li><a href="javascript:void(0)">Clasif 2<i class="ti-list-ol"></i></a></li>
+                @*<li>
+                        <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Clasificadores<i class="ti-align-left"></i></a>
+                        <ul aria-expanded="false" class="collapse">
+                            <li><a href="javascript:void(0)">Clasif 2<i class="ti-list-ol"></i></a></li>
+                        </ul>
+                    </li>*@
+                <li><a href="javascript:void(0)">Plan de Cuentas<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Auxiliares<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Bancos<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Cuentas Bancarias<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Dosificacion Facturas<i class="ti-list-ol"></i></a></li>
+                <li><a href="javascript:void(0)">Tipos Comprobantes<i class="ti-list-ol"></i></a></li>
+                <li>
+                    <a asp-area="Finanzas" asp-controller="TipoTransaccion" asp-action="Index">
+                        Tipo de Transaccion <i class="fas fa-th-list"></i>
+                    </a>
+                </li>
             </ul>
         </li>
     </ul>
@@ -321,25 +390,13 @@
     </a>
     <ul aria-expanded="false" class="collapse">
         <li><a asp-area="Generales" asp-controller="Departamento" asp-action="Index">Departamento<i class="ti-layout-menu-separated"></i></a></li>
-        <li>
-            <a href="table-layout.html">Cobranzas <i class="ti-layout-accordion-list"></i></a>
-        </li>
-        <li>
-            <a href="table-data-table.html">Alquileres <i class="ti-widget"></i></a>
-        </li>
-        <li>
-            <a href="table-footable.html">Pagos <i class="ti-layout-accordion-merged"></i></a>
-        </li>
-        <li>
-            <a href="table-jsgrid.html">Contabilidad <i class="ti-layout-placeholder"></i></a>
-        </li>
-        <li>
-            <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Clasificadores<i class="ti-align-left"></i></a>
-            <ul aria-expanded="false" class="collapse">
-                <li><a asp-area="FinanzasParam" asp-controller="Partida" asp-action="Index">Partidas <i class="ti-layout-menu-separated"></i></a></li>
-                <li><a href="javascript:void(0)">Clasif 2<i class="ti-list-ol"></i></a></li>
-            </ul>
-        </li>
+
+        @*<li>
+                <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Clasificadores<i class="ti-align-left"></i></a>
+                <ul aria-expanded="false" class="collapse">
+                    <li><a href="javascript:void(0)">Clasif 2<i class="ti-list-ol"></i></a></li>
+                </ul>
+            </li>*@
     </ul>
 </li>
 @*<li class="nav-small-cap"></li>

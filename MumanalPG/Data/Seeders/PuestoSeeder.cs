@@ -59,13 +59,13 @@ namespace MumanalPG.Data.Seeders
                 IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UP");
             
             AddNew(new Puesto { Descripcion = "Encargado de Prestaciones", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
-                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UP");
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "PRE");
             
             AddNew(new Puesto { Descripcion = "Encargado de Cotizaciones", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
-                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UP");
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "COT");
             
             AddNew(new Puesto { Descripcion = "Encargado de Servicios Sociales", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
-                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UP");
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "SS");
             
             AddNew(new Puesto { Descripcion = "Auxiliar de Prestaciones", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
                 IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UP");
@@ -77,25 +77,25 @@ namespace MumanalPG.Data.Seeders
                 IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UAF");
             
             AddNew(new Puesto { Descripcion = "Encargado de Contabilidad", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
-                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UAF");
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "CON");
             
             AddNew(new Puesto { Descripcion = "Encargado de Sistemas", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
-                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UAF");
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "SIS");
             
             AddNew(new Puesto { Descripcion = "Encargado de Tesorería", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
-                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UAF");
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "TES");
             
             AddNew(new Puesto { Descripcion = "Encargado de Activos Fijos", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
-                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UAF");
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "AF");
             
             AddNew(new Puesto { Descripcion = "Auxiliar de Contabilidad", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
-                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UAF");
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "CON");
             
             AddNew(new Puesto { Descripcion = "Auxiliar de Tesorería I", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
-                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UAF");
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "TES");
            
             AddNew(new Puesto { Descripcion = "Auxiliar de Tesorería II", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
-                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UAF");
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "TES");
             
             AddNew(new Puesto { Descripcion = "Kardixta", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
                 IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UAF");

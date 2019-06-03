@@ -1,7 +1,7 @@
 ﻿@model MumanalPG.Models.Planificacion.PresupuestoModificaciones
 
 @{
-    ViewData["Title"] = "Presupuesto Modificaciones";
+    ViewData["Title"] = "Modificaciones Presupuesto";
 }
 
 <h2>Crear</h2>
@@ -38,9 +38,9 @@
                 <span asp-validation-for="IdPoa" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdPresupuestoFormulacion" class="control-label"></label>
-                <input asp-for="IdPresupuestoFormulacion" class="form-control" />
-                <span asp-validation-for="IdPresupuestoFormulacion" class="text-danger"></span>
+                <label asp-for="IdPresupuestoGasto" class="control-label"></label>
+                <input asp-for="IdPresupuestoGasto" class="form-control" />
+                <span asp-validation-for="IdPresupuestoGasto" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MontoOrigen" class="control-label"></label>
@@ -53,9 +53,9 @@
                 <span asp-validation-for="IdPoaDestino" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdPresupuestoFormulacionDestino" class="control-label"></label>
-                <input asp-for="IdPresupuestoFormulacionDestino" class="form-control" />
-                <span asp-validation-for="IdPresupuestoFormulacionDestino" class="text-danger"></span>
+                <label asp-for="IdPresupuestoGastoDestino" class="control-label"></label>
+                <input asp-for="IdPresupuestoGastoDestino" class="form-control" />
+                <span asp-validation-for="IdPresupuestoGastoDestino" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MontoDestino" class="control-label"></label>

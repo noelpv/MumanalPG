@@ -14,16 +14,15 @@ namespace MumanalPG.Models.RRHH
 		[DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
 		[Key]
 		public Int32 IdBeneficiario { get; set; }
-		public Int32 IdBeneficiarioClasificacion { get; set; }
+		public Int32? IdBeneficiarioClasificacion { get; set; }
 		public string DocumentoIdentidad { get; set; }
 		public string Nit { get; set; }
 		public string DepartamentoSigla { get; set; }
 		public string Iniciales { get; set; }
+		public string PrimerNombre { get; set; }
 		public Int32? IdDocumentoRespaldo { get; set; }
 		public string PrimerApellido { get; set; }
 		public string SegundoApellido { get; set; }
-		[NotMapped]
-		public string Nombres { get; set; }
 		public string Denominacion { get; set; }
 		public DateTime? FechaNacimiento { get; set; }
 		public string TelefonoFijo { get; set; }
@@ -33,8 +32,6 @@ namespace MumanalPG.Models.RRHH
 		public string EmailOficina { get; set; }
 		public string DomicilioLegal { get; set; }
 		public Int32? IdMunicipio { get; set; }
-		[NotMapped]
-		public Int32 IdZona { get; set; }
 		public Int32? IdCalle { get; set; }
 		public Int32? IdEdificio { get; set; }
 		public string EdificioNumero { get; set; }
@@ -57,9 +54,20 @@ namespace MumanalPG.Models.RRHH
 		[InverseProperty("FuncionarioCC")]
 		public ICollection<Documento> DocumentosCC { get; set; }
 		
+		[InverseProperty("Origen")]
+		public ICollection<HojaRuta> HojasRuta { get; set; }
+		
 		
 		public int PuestoId { get; set; }
 		[DisplayName("Puesto de Trabajo")]
 		public virtual Puesto Puesto { get; set; }
+		
+		public virtual ApplicationUser AspNetUser { get; set; }
+		
+		[InverseProperty("FunOrg")]
+		public ICollection<HojaRutaDetalle> Originados { get; set; } 
+		
+		[InverseProperty("FunDst")]
+		public ICollection<HojaRutaDetalle> Destinados { get; set; } 
 	}
 }
