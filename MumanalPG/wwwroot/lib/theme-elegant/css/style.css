@@ -2525,7 +2525,7 @@ fieldset:disabled a.btn {
       box-shadow: 0 0 0 0.2rem rgba(248, 249, 250, 0.5); }
 
 .btn-success {
-  color: #fff;
+  color: #fff !important;
   background-color: #00c851;
   border-color: #00c851; }
   .btn-success:hover {
@@ -2550,7 +2550,7 @@ fieldset:disabled a.btn {
       box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15);}
 
 .btn-info {
-  color: #fff;
+  color: #fff !important;
   background-color: #009efb;
   border-color: #009efb; }
   .btn-info:hover {
@@ -2575,7 +2575,7 @@ fieldset:disabled a.btn {
       box-shadow: 0 0 0 0.2rem rgba(0, 158, 251, 0.5); }
 
 .btn-warning {
-  color: #212529;
+  color: #212529 !important;
   background-color: #ffbc34;
   border-color: #ffbc34; }
   .btn-warning:hover {
@@ -2600,7 +2600,7 @@ fieldset:disabled a.btn {
       box-shadow: 0 0 0 0.2rem rgba(255, 188, 52, 0.5); }
 
 .btn-danger {
-  color: #fff;
+  color: #fff !important;
   background-color: #f62d51;
   border-color: #f62d51; }
   .btn-danger:hover {
@@ -2625,7 +2625,7 @@ fieldset:disabled a.btn {
       box-shadow: 0 0 0 0.2rem rgba(246, 45, 81, 0.5); }
 
 .btn-light {
-  color: #212529;
+  color: #212529 !important;
   background-color: #f9fbff;
   border-color: #f9fbff; }
   .btn-light:hover {
@@ -2650,7 +2650,7 @@ fieldset:disabled a.btn {
       box-shadow: 0 0 0 0.2rem rgba(248, 249, 250, 0.5); }
 
 .btn-dark {
-  color: #fff;
+  color: #fff !important;
   background-color: #343a40;
   border-color: #343a40; }
   .btn-dark:hover {
@@ -2675,7 +2675,7 @@ fieldset:disabled a.btn {
       box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.5); }
 
 .btn-cyan {
-  color: #fff;
+  color: #fff !important;
   background-color: #01c0c8;
   border-color: #01c0c8; }
   .btn-cyan:hover {
@@ -2700,7 +2700,7 @@ fieldset:disabled a.btn {
       box-shadow: 0 0 0 0.2rem rgba(1, 192, 200, 0.5); }
 
 .btn-purple {
-  color: #fff;
+  color: #fff !important;
   background-color: #7460ee;
   border-color: #7460ee; }
   .btn-purple:hover {
@@ -2725,7 +2725,7 @@ fieldset:disabled a.btn {
       box-shadow: 0 0 0 0.2rem rgba(116, 96, 238, 0.5); }
 
 .btn-outline-primary {
-  color: #7460ee;
+  color: #7460ee !important;
   background-color: transparent;
   background-image: none;
   border-color: #7460ee; }
@@ -2750,7 +2750,7 @@ fieldset:disabled a.btn {
       box-shadow: 0 0 0 0.2rem rgba(116, 96, 238, 0.5); }
 
 .btn-outline-secondary {
-  color: #f9fbff;
+  color: #f9fbff !important;
   background-color: transparent;
   background-image: none;
   border-color: #f9fbff; }
@@ -14176,5 +14176,12 @@ a.dropdown-item {
     background: url(../img/trapper.jpg);
     line-height: 1.7;
     padding: 5px 10px;
+}
+
+.anexos-found {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 0;
 }
 

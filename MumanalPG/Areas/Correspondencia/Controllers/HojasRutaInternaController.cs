@@ -310,9 +310,6 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                 return View("_NoEncontrado");
             }
 
-            var instrucciones = DB.CorrespondenciaInstrucciones
-                .Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Nombre).ToList();
-            
             var item = await DB.CorrespondenciaHRDetalle
                .FirstOrDefaultAsync(m => m.Id == id);
             if (item == null)
