@@ -18,19 +18,19 @@ namespace MumanalPG.Areas.Planificacion.Controllers
     //[Authorize(Roles = SD.SuperAdminEndUser)]
     [Authorize]
     [Area("Planificacion")]
-    public class EstructuraProgramaticaController : BaseController
+    public class PartidaGastoController : BaseController
     {        
         
-		public EstructuraProgramaticaController(ApplicationDbContext db, UserManager<IdentityUser> userManager): base(db, userManager)
+		public PartidaGastoController(ApplicationDbContext db, UserManager<IdentityUser> userManager): base(db, userManager)
         {
             
         }
 
-		// GET: Planificacion/EstructuraProgramatica
-        [Breadcrumb("EstructuraProgramatica", FromController = "DashboardOF", FromAction = "Clasificadores")]
+		// GET: Planificacion/PartidaGasto
+        [Breadcrumb("PartidaGasto", FromController = "DashboardOF", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
-            var consulta = DB.EstructuraProgramatica.AsNoTracking().AsQueryable();
+            var consulta = DB.PartidaGasto.AsNoTracking().AsQueryable();
             consulta = consulta.Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
             if (!string.IsNullOrWhiteSpace(filter))
 			{
@@ -42,7 +42,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             return View(resp);
         }
 
-        // GET: Planificacion/EstructuraProgramatica/Details/5
+        // GET: Planificacion/PartidaGasto/Details/5
         public async Task<IActionResult> Details(Int32? id)
         {
             if (id == null)
@@ -50,7 +50,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
                 return NotFound();
             }
 
-            var item = await DB.EstructuraProgramatica.FirstOrDefaultAsync(m => m.IdEstructuraProgramatica  == id);
+            var item = await DB.PartidaGasto.FirstOrDefaultAsync(m => m.IdPartidaGasto  == id);
             if (item == null)
             {
                 return NotFound();
@@ -59,25 +59,25 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             return PartialView("Details",item);
         }
 
-        // GET: Planificacion/EstructuraProgramatica/Create
+        // GET: Planificacion/PartidaGasto/Create
         public IActionResult Create()
         {
-            var model = new Models.Planificacion.EstructuraProgramatica();
+            var model = new Models.Planificacion.PartidaGasto();
             return PartialView("Create", model);
         }
 
-        // POST: Planificacion/EstructuraProgramatica/Create
+        // POST: Planificacion/PartidaGasto/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Models.Planificacion.EstructuraProgramatica item)
+        public async Task<IActionResult> Create(Models.Planificacion.PartidaGasto item)
         {
             if (ModelState.IsValid)
             {
                 //ApplicationUser currentUser = await GetCurrentUser();
                 //item.IdUsuario = currentUser.AspNetUserId;
                 item.Gestion = "2019";
-                item.Nivel = "1";
-                item.CodigoSisin = "";
+                item.Nivel = '1';
+                item.VidaUtil = '4';
                 item.FechaRegistro = DateTime.Now;
                 DB.Add(item);
                 await DB.SaveChangesAsync();
@@ -86,7 +86,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             return PartialView("Create",item);
         }
 
-        // GET: Planificacion/EstructuraProgramatica/Edit/5
+        // GET: Planificacion/PartidaGasto/Edit/5
         public async Task<IActionResult> Edit(Int32? id)
         {
             if (id == null)
@@ -94,7 +94,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
                 return NotFound();
             }
 
-            var item = await DB.EstructuraProgramatica.FindAsync(id);
+            var item = await DB.PartidaGasto.FindAsync(id);
             if (item == null)
             {
                 return NotFound();
@@ -102,12 +102,12 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             return PartialView( "Edit", item);
         }
 
-        // POST: Planificacion/EstructuraProgramatica/Edit/5
+        // POST: Planificacion/PartidaGasto/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, [Bind("IdEstructuraProgramatica,Descripcion,Sigla, Nivel")] Models.Planificacion.EstructuraProgramatica item)
+        public async Task<IActionResult> Edit(Int32 id, [Bind("IdPartidaGasto,Descripcion,Sigla, Nivel")] Models.Planificacion.PartidaGasto item)
         {
-            if (id != item.IdEstructuraProgramatica)
+            if (id != item.IdPartidaGasto)
             {
                 return NotFound();
             }
@@ -121,7 +121,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ItemExists(item.IdEstructuraProgramatica))
+                    if (!ItemExists(item.IdPartidaGasto))
                     {
                         return NotFound();
                     }
@@ -135,7 +135,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             return PartialView("Edit", item);
         }
 
-        // GET: Planificacion/EstructuraProgramatica/Delete/5
+        // GET: Planificacion/PartidaGasto/Delete/5
         public async Task<IActionResult> Delete(Int32? id)
         {
             if (id == null)
@@ -143,7 +143,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
                 return NotFound();
             }
 
-            var item = await DB.EstructuraProgramatica.FirstOrDefaultAsync(m => m.IdEstructuraProgramatica == id);
+            var item = await DB.PartidaGasto.FirstOrDefaultAsync(m => m.IdPartidaGasto == id);
             if (item == null)
             {
                 return NotFound();
@@ -152,21 +152,21 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             return PartialView("Delete",item);
         }
 
-        // POST: Planificacion/EstructuraProgramatica/Delete/5
+        // POST: Planificacion/PartidaGasto/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Int32 id)
         {
-            var item = await DB.EstructuraProgramatica.FindAsync(id);
+            var item = await DB.PartidaGasto.FindAsync(id);
             item.IdEstadoRegistro = 2;  //Constantes.Eliminado ;
-            DB.EstructuraProgramatica.Update(item);
+            DB.PartidaGasto.Update(item);
             await DB.SaveChangesAsync();
             return PartialView("Delete",item);
         }
 
         private bool ItemExists(Int32 id)
         {
-            return DB.EstructuraProgramatica.Any(e => e.IdEstructuraProgramatica == id);
+            return DB.PartidaGasto.Any(e => e.IdPartidaGasto == id);
         }
     }
 }

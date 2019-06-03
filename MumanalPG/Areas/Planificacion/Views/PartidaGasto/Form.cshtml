@@ -1,4 +1,4 @@
-@model MumanalPG.Models.Planificacion.EstructuraProgramatica
+@model MumanalPG.Models.Planificacion.PartidaGasto
 <form asp-action="@ViewData["Action"]">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     @{
@@ -13,16 +13,16 @@
 
     }
     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
-    <input type="hidden" asp-for="IdEstructuraProgramatica" />
+    <input type="hidden" asp-for="IdPartidaGasto" />
     <div class="form-group m-b-40 @if(stringErrors.Contains("Descripcion")){@hasError}">
         <label asp-for="Descripcion" class="form-control-label"></label>
         <textarea asp-for="Descripcion" class="form-control"></textarea>
         <span asp-validation-for="Descripcion" class="text-danger"></span>
     </div>
-    <div class="form-group m-b-40 @if(stringErrors.Contains("Sigla")){@hasError}">
-        <label asp-for="Sigla" class="form-control-label"></label>
-        <input asp-for="Sigla" class="form-control" />
-        <span asp-validation-for="Sigla" class="text-danger"></span>
+    <div class="form-group m-b-40 @if(stringErrors.Contains("VidaUtil")){@hasError}">
+        <label asp-for="VidaUtil" class="form-control-label"></label>
+        <input asp-for="VidaUtil" class="form-control" />
+        <span asp-validation-for="VidaUtil" class="text-danger"></span>
     </div>
     <div class="form-group m-b-40 @if(stringErrors.Contains("Nivel")){@hasError}">
         <label asp-for="Nivel" class="form-control-label"></label>

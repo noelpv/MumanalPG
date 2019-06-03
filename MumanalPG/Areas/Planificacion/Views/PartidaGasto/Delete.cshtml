@@ -1,6 +1,6 @@
-@model MumanalPG.Models.Planificacion.EstructuraProgramatica  
+@model MumanalPG.Models.Planificacion.PartidaGasto  
 <partial name="_MensajeEliminar"/>
 <form asp-action="Delete">
     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
-    <input type="hidden" asp-for="IdEstructuraProgramatica"/>
+    <input type="hidden" asp-for="IdPartidaGasto"/>
 </form>

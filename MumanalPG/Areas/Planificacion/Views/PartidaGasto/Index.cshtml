@@ -1,19 +1,19 @@
-@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Planificacion.EstructuraProgramatica>
+@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Planificacion.PartidaGasto>
 @using MumanalPG.Utility
 @using ReflectionIT.Mvc.Paging
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @{
-    ViewData["Title"] = "EstructuraProgramatica";
+    ViewData["Title"] = "PartidaGasto";
     OptionPartial options = new OptionPartial();
-    string intro_msg_search = "Puede buscar una EstructuraProgramatica introduciendo el nombre en este campo, " +
+    string intro_msg_search = "Puede buscar una PartidaGasto introduciendo el nombre en este campo, " +
                               "luego presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
                               "<i class='fas fa-search'></i></button>";
 }
 <div class="row">
     <div class="col-12 text-right">
-        <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nuevo EstructuraProgramatica"
+        <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nuevo PartidaGasto"
            data-modal="link", data-redirect="@Url.Action("Index", new{@a=Constantes.Creado})" 
-           data-intro="Click, en este botón para crear una nueva EstructuraProgramatica">
+           data-intro="Click, en este botón para crear una nueva PartidaGasto">
             <i class="fas fa-plus"></i><span class="d-none d-sm-inline">&nbsp; Nuevo </span>
         </a>
     </div>
@@ -37,7 +37,7 @@
         <thead>
         <tr>
             <th>@Html.SortableHeaderFor(model => model.Descripcion)</th>
-            <th>Sigla</th>
+            <th>Vida.Util</th>
             <th>Nivel</th>
         </tr>
 
@@ -47,19 +47,19 @@
         {
         <tr>
             <td>
-                <a asp-action="Details" asp-route-id="@item.IdEstructuraProgramatica" title="Detalle"
+                <a asp-action="Details" asp-route-id="@item.IdPartidaGasto" title="Detalle"
                    data-modal="link" data-modal-read="True">
                     @Html.DisplayFor(modelItem => item.Descripcion)
                 </a>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Sigla)
+                @Html.DisplayFor(modelItem => item.VidaUtil)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nivel)
             </td>
             @{
-                options.Id = item.IdEstructuraProgramatica;
+                options.Id = item.IdPartidaGasto;
                 options.ShowIntroMessages = index == 0 ? true : false;
                 index++;
 
