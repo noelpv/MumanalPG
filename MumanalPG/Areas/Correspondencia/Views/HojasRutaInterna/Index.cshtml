@@ -154,9 +154,9 @@
                                             }
                                             <div class="dropdown-menu dropdown-menu-lg-right">
                                                 <a asp-action="Details" asp-route-id="@item.Id" class="dropdown-item">Abrir</a>
-                                                <button class="dropdown-item" type="button">Marcar como Urgente</button>
-                                                <button class="dropdown-item" type="button">Derivar</button>
                                                 <button class="dropdown-item" type="button">Adjuntar</button>
+                                                <button class="dropdown-item" type="button">Crear Documento y Derivar</button>
+                                                <button class="dropdown-item" type="button">Solo Derivar</button>
                                                 <a asp-action="CambiarEstado" asp-route-id="@item.Id" asp-route-from="index"
                                                    asp-route-nuevoEstado="@nuevoEstadoArchivar"
                                                    class="dropdown-item">

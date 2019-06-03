@@ -1,0 +1,148 @@
+@using MumanalPG.Utility
+@model MumanalPG.Models.Correspondencia.DTO.HojaRutaDTO
+@{
+    string hasError = "has-danger";
+    string stringErrors = "";
+    if (ViewData.ModelState.IsValid)
+    {
+        hasError = "";
+    }
+    else
+    {
+        var errorList = ViewData.ModelState.Where(x => x.Value.Errors.Count > 0).ToDictionary(kvp => kvp.Key);
+        stringErrors = String.Join(",", errorList.Select(x => x.Key));
+    }
+}
+<h3>Datos Generales</h3>
+        <fieldset>
+            <h2>Datos Generales</h2>
+            <p class="desc">Por favor ingrese los datos generales de la hoja de ruta</p>
+            <div class="fieldset-content">
+                <div class="form-row">
+                    <label class="form-label">Crear Hoja de Ruta a partir de:</label>
+                    <div class="form-flex">
+                        <div class="col-md-12">
+                            <div class="m-b-10" data-intro="Use esta opción cuando haya creado un documento mediante el sistema">
+                                <label class="custom-control custom-radio">
+                                    <input id="radio1" name="radio-options" type="radio" class="custom-control-input"
+                                           checked="checked" value="created">
+                                    <span class="custom-control-label">Documento Creado en el Sistema</span>
+                                </label>
+                            </div>
+                            <div class="m-b-10" data-intro="Use esta opción si no tiene un documento creado en el sistema 
+                                                    y quiere escanearlo para poder subirlo">
+                                <label class="custom-control custom-radio">
+                                    <input id="radio2" name="radio-options" type="radio" class="custom-control-input"
+                                           value="no-created">
+                                    <span class="custom-control-label">Digitalizar Documento Físico</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-sm-12 col-md-8">
+                        <div id="doc-container" class="form-group m-t-10 @if (stringErrors.Contains("DocumentoId"))
+                                                                         {
+                                                                             @hasError
+                                                                         }">
+                            <label asp-for="DocumentoId" class="form-label">Elegir Documento</label>
+                            <div>
+                                <select asp-for="DocumentoId" class="form-control remote" id="documento" placeholder="Escriba Cite o Remitente..."
+                                        data-remote-url="@Url.Action("GetDocuments")">
+                                </select>
+
+                            </div>
+                            <span asp-validation-for="DocumentoId" class="text-danger"></span>
+                            <span class="text-input">Documento creado en el sistema (Informes, Memorandums, Notas, etc.)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-sm-12 col-md-6">
+                        <div id="rem-input" class="form-group">
+                            <label class="form-label" asp-for="Remitente"></label>
+                            <input id="origen-id" type="hidden" asp-for="OrigenId"/>
+                            <input type="text" class="form-control" id="origen-name" asp-for="Remitente" required/>
+                            <span asp-validation-for="Remitente" class="text-danger"></span>
+                            <span class="text-input">Persona que remite el documento</span>
+                        </div>
+                        <div id="rem-select" class="hide form-group @if (stringErrors.Contains("OrigenId"))
+                                                                    {
+                                                                        @hasError
+                                                                    }">
+                            <label asp-for="OrigenId" class="form-label"></label>
+                            <div>
+                                <select class="form-control remote" id="origen" placeholder="Escriba Nombre o Cargo..."
+                                        data-remote-url="@Url.Action("GetFuncionarios")">
+                                </select>
+
+                            </div>
+                            <span asp-validation-for="OrigenId" class="text-danger"></span>
+                            <span class="text-input">Persona que remite el documento</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="UnidadEjecutoraNombre" class="form-label"></label>
+                            <input id="area-id" type="hidden" asp-for="UnidadEjecutoraId"/>
+                            <input id="area-name" type="text" class="form-control" asp-for="UnidadEjecutoraNombre" required readonly/>
+                            <span asp-validation-for="UnidadEjecutoraNombre" class="text-danger"></span>
+                            <span class="text-input">Área al que pertenece el remitente</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label asp-for="Referencia" class="form-label"></label>
+                        <input id="referencia" asp-for="Referencia" class="form-control" required/>
+                        <span asp-validation-for="Referencia" class="text-danger"></span>
+                        <span class="text-input">Referencia del documento</span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label class="form-label" asp-for="CiteDoc"></label>
+                            <input id="cite-doc" asp-for="CiteDoc" class="form-control" required/>
+                            <span asp-validation-for="CiteDoc" class="text-danger"></span>
+                            <span class="text-input">Cite del documento</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="FechaDoc" class="form-label"></label>
+                            <input id="fecha-doc" type="date"asp-for="FechaDoc" class="form-control" required/>
+                            <span asp-validation-for="FechaDoc" class="text-danger"></span>
+                            <span class="text-input">Fecha del documento</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label class="form-label" asp-for="NroFojas"></label>
+                            <input id="nrofojas-doc" asp-for="NroFojas" class="form-control" required/>
+                            <span asp-validation-for="NroFojas" class="text-danger"></span>
+                            <span class="text-input">Cantidad de hojas del documento</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Prioridad" class="form-label"></label>
+                            <select id="prioridad" asp-for="Prioridad" class="form-control" required>
+                                <option value="@Constantes.PrioridadUrgente">Urgente</option>
+                                <option value="@Constantes.PrioridadAlta">Alta</option>
+                                <option value="@Constantes.PrioridadMedia" selected="selected">Media</option>
+                                <option value="@Constantes.PrioridadBaja">Baja</option>
+                            </select>
+                            <span asp-validation-for="Prioridad" class="text-danger"></span>
+                            <span class="text-input">Determine la prioridad (Alta/Media/Baja)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>

@@ -66,6 +66,11 @@ function InitializeEvents() {
         $(".preloader").fadeIn();        
     });
     
+    $('select.selectize-plugin').selectize({
+        create: false,
+        sortField: 'text'
+    });
+    
 }
 
 function startTour() {

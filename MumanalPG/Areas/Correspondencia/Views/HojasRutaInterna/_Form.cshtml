@@ -1,6 +1,3 @@
-@using MumanalPG.Models.Correspondencia
-@using MumanalPG.Models.Correspondencia.DTO
-@using MumanalPG.Utility
 @model MumanalPG.Models.Correspondencia.DTO.HojaRutaDTO
 <link rel="stylesheet" href="~/lib/wizard/css/style.css"/>
 <link rel="stylesheet" href="~/lib/wizard/css/nouislider.min.css"/>
@@ -8,231 +5,14 @@
 
 <form class="wizard-form" asp-action="@ViewData["Action"]">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    @{
-        string hasError = "has-danger";
-        string stringErrors = "";
-        if (ViewData.ModelState.IsValid)
-        {
-            hasError = "";
-        }
-        else
-        {
-            var errorList = ViewData.ModelState.Where(x => x.Value.Errors.Count > 0).ToDictionary(kvp => kvp.Key);
-            stringErrors = String.Join(",", errorList.Select(x => x.Key));
-        }
-    }
+   
     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()"/>
     <input type="hidden" asp-for="Id"/>
     
     <div>
-       
-        <h3>Datos Generales</h3>
-        <fieldset>
-            <h2>Datos Generales</h2>
-            <p class="desc">Por favor ingrese los datos generales de la hoja de ruta</p>
-            <div class="fieldset-content">
-                <div class="form-row">
-                    <label class="form-label">Crear Hoja de Ruta a partir de:</label>
-                    <div class="form-flex">
-                        <div class="col-md-12">
-                            <div class="m-b-10" data-intro="Use esta opción cuando haya creado un documento mediante el sistema">
-                                <label class="custom-control custom-radio">
-                                    <input id="radio1" name="radio-options" type="radio" class="custom-control-input"
-                                           checked="checked" value="created">
-                                    <span class="custom-control-label">Documento Creado en el Sistema</span>
-                                </label>
-                            </div>
-                            <div class="m-b-10" data-intro="Use esta opción si no tiene un documento creado en el sistema 
-                                                    y quiere escanearlo para poder subirlo">
-                                <label class="custom-control custom-radio">
-                                    <input id="radio2" name="radio-options" type="radio" class="custom-control-input"
-                                           value="no-created">
-                                    <span class="custom-control-label">Digitalizar Documento Físico</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-sm-12 col-md-8">
-                        <div id="doc-container" class="form-group m-t-10 @if (stringErrors.Contains("DocumentoId"))
-                                                                         {
-                                                                             @hasError
-                                                                         }">
-                            <label asp-for="DocumentoId" class="form-label">Elegir Documento</label>
-                            <div>
-                                <select asp-for="DocumentoId" class="form-control remote" id="documento" placeholder="Escriba Cite o Remitente..."
-                                        data-remote-url="@Url.Action("GetDocuments")">
-                                </select>
-
-                            </div>
-                            <span asp-validation-for="DocumentoId" class="text-danger"></span>
-                            <span class="text-input">Documento creado en el sistema (Informes, Memorandums, Notas, etc.)</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="col-sm-12 col-md-6">
-                        <div id="rem-input" class="form-group">
-                            <label class="form-label" asp-for="Remitente"></label>
-                            <input id="origen-id" type="hidden" asp-for="OrigenId"/>
-                            <input type="text" class="form-control" id="origen-name" asp-for="Remitente" required/>
-                            <span asp-validation-for="Remitente" class="text-danger"></span>
-                            <span class="text-input">Persona que remite el documento</span>
-                        </div>
-                        <div id="rem-select" class="hide form-group @if (stringErrors.Contains("OrigenId"))
-                                                                    {
-                                                                        @hasError
-                                                                    }">
-                            <label asp-for="OrigenId" class="form-label"></label>
-                            <div>
-                                <select class="form-control remote" id="origen" placeholder="Escriba Nombre o Cargo..."
-                                        data-remote-url="@Url.Action("GetFuncionarios")">
-                                </select>
-
-                            </div>
-                            <span asp-validation-for="OrigenId" class="text-danger"></span>
-                            <span class="text-input">Persona que remite el documento</span>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6">
-                        <div class="form-group">
-                            <label asp-for="UnidadEjecutoraNombre" class="form-label"></label>
-                            <input id="area-id" type="hidden" asp-for="UnidadEjecutoraId"/>
-                            <input id="area-name" type="text" class="form-control" asp-for="UnidadEjecutoraNombre" required readonly/>
-                            <span asp-validation-for="UnidadEjecutoraNombre" class="text-danger"></span>
-                            <span class="text-input">Área al que pertenece el remitente</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label asp-for="Referencia" class="form-label"></label>
-                        <input id="referencia" asp-for="Referencia" class="form-control" required/>
-                        <span asp-validation-for="Referencia" class="text-danger"></span>
-                        <span class="text-input">Referencia del documento</span>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="col-sm-12 col-md-6">
-                        <div class="form-group">
-                            <label class="form-label" asp-for="CiteDoc"></label>
-                            <input id="cite-doc" asp-for="CiteDoc" class="form-control" required/>
-                            <span asp-validation-for="CiteDoc" class="text-danger"></span>
-                            <span class="text-input">Cite del documento</span>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6">
-                        <div class="form-group">
-                            <label asp-for="FechaDoc" class="form-label"></label>
-                            <input id="fecha-doc" type="date"asp-for="FechaDoc" class="form-control" required/>
-                            <span asp-validation-for="FechaDoc" class="text-danger"></span>
-                            <span class="text-input">Fecha del documento</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="col-sm-12 col-md-6">
-                        <div class="form-group">
-                            <label class="form-label" asp-for="NroFojas"></label>
-                            <input id="nrofojas-doc" asp-for="NroFojas" class="form-control" required/>
-                            <span asp-validation-for="NroFojas" class="text-danger"></span>
-                            <span class="text-input">Cantidad de hojas del documento</span>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6">
-                        <div class="form-group">
-                            <label asp-for="Prioridad" class="form-label"></label>
-                            <select id="prioridad" asp-for="Prioridad" class="form-control" required>
-                                <option value="@Constantes.PrioridadUrgente">Urgente</option>
-                                <option value="@Constantes.PrioridadAlta">Alta</option>
-                                <option value="@Constantes.PrioridadMedia" selected="selected">Media</option>
-                                <option value="@Constantes.PrioridadBaja">Baja</option>
-                            </select>
-                            <span asp-validation-for="Prioridad" class="text-danger"></span>
-                            <span class="text-input">Determine la prioridad (Alta/Media/Baja)</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
-
-        <h3>Derivar e Instruir</h3>
-        <fieldset>
-            <h2>Derivar</h2>
-            <p class="desc">Por favor seleccione la(s) persona(s) a quien va dirigido esta Hoja de Ruta</p>
-            <div class="fieldset-content">
-                <div class="form-row">
-                    <div class="col-sm-12 col-md-6">
-                        <div class="form-group">
-                            <label for="jstree" class="form-label">Seleccione destinatario(s) de esta lista</label>
-                            <div id="jstree" class="content-large"></div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6">
-                        <div class="form-group">
-                            <label for="instrucciones" class="form-label">Instrucciones</label>
-                            <div id="instrucciones-container" class="instrucciones-container" >
-                                <div class="not-selected element-center text-center">
-                                    Seleccione al menos un funcionario
-                                </div>
-                                <div id="instrucciones" class="content-large instrucciones hide">
-                                    <input id="ins_" type="hidden" />
-                                    @* <input id="com_" type="hidden" /> *@
-                                    <div class="form-group row p-t-20">
-
-                                        @foreach (Instrucciones i in ViewBag.instrucciones)
-                                        {
-                                            <div class="col-sm-12 col-md-6">
-                                                <div class="m-b-10">
-                                                    <label class="custom-control custom-checkbox">
-                                                        <input data-id="@i.Id" type="checkbox" class="instrucciones-checkbox custom-control-input">
-                                                        <span class="custom-control-label">@i.Nombre</span>
-                                                    </label>
-                                                </div>
-                                            </div>
-
-                                        }
-                                        <div class="col-md-12">
-                                            <div class="m-b-10">
-                                                <label class="form-label">Comentarios Adicionales</label>
-                                                <textarea class="form-control comentarios"></textarea>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-                
-               
-
-            </div>
-        </fieldset>
-
-        <h3>Anexar y Finalizar</h3>
-        <fieldset>
-            <h2>Set Financial Goals</h2>
-            <p class="desc">Set up your money limit to reach the future plan</p>
-            <div class="fieldset-content">
-                <div class="donate-us">
-                    <div class="price_slider ui-slider ui-slider-horizontal">
-                        <div id="slider-margin"></div>
-                        <p class="your-money">
-                            Your money you can spend per month :
-                            <span class="money" id="value-lower"></span>
-                            <span class="money" id="value-upper"></span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
+        <partial name="_DatosGenerales" view-data="ViewData" />
+        <partial name="_Derivar" view-data="ViewData" />
+        <partial name="_Anexar" view-data="ViewData" />
     </div>
 </form>
 
@@ -245,6 +25,8 @@
 
 <script>
     $(document).ready(function() {
+        var contAnexos = 0;
+        var contAnexosShowing = 0;
         var url_origen = $('#origen').data('remote-url');
         var url_doc = $('#documento').data('remote-url');
 
@@ -369,7 +151,11 @@
             $('input#ins_' + data.node.id).removeAttr('name');
             $('input#com_' + data.node.id).removeAttr('name');
         });
-        
+
+        $('#agregar-anexo').click(function(e) {
+            e.preventDefault();
+            cloneAnexo();
+        });
         function cloneInstrucciones(node_id, area, fun) {
             
             var container = $('#instrucciones-container');
@@ -424,6 +210,38 @@
                 
                 input_ins.val(JSON.stringify(obj));
             });
+        }
+        
+        function cloneAnexo() {
+            var container = $('#anexos-container');
+            var rowAnexo = $('#fila-anexo');
+            var newRow = rowAnexo.clone();
+            newRow.attr('id', 'fila-anexo_' + contAnexos);
+            newRow.find('select[id*="tipo_anexo"]').first().attr('id', 'tipo_anexo_' + contAnexos);
+            newRow.find('input[id*="descripcion"]').first().attr('id', 'descripcion_' + contAnexos);;
+            newRow.find('input[id*="archivo"]').first().attr('id', 'archivo_' + contAnexos);;
+            newRow.appendTo(container);
+            newRow.removeClass('hide');
+            $('a[id*="remove-anexo"]').unbind();
+            $('a[id*="remove-anexo"]').click(function(e) {
+                e.preventDefault();
+                $(this).parents('[id*="fila-anexo_"]').first().fadeOut(function() {
+                    $(this).parents('[id*="fila-anexo_"]').first().remove();
+                    contAnexosShowing--;
+                    if (contAnexosShowing <= 0) {
+                        $('.anexos-found').fadeIn('slow');
+                    }
+                });
+                
+            });
+            newRow.find('select[id*="tipo_anexo"]').first().unbind();
+            newRow.find('select[id*="tipo_anexo"]').first().selectize({
+                create: false,
+                sortField: 'text'
+            });
+            $('.anexos-found').hide();
+            contAnexos++;
+            contAnexosShowing++;
         }
         
     });
