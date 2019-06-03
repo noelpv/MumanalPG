@@ -1,20 +1,10 @@
 ﻿/*
 CREATE SCHEMA "Administra" AUTHORIZATION postgres;
-CREATE SCHEMA "Contable" AUTHORIZATION postgres;
 CREATE SCHEMA "Finanzas" AUTHORIZATION postgres;
 CREATE SCHEMA "Generales" AUTHORIZATION postgres;
 CREATE SCHEMA "Planificacion" AUTHORIZATION postgres;
 CREATE SCHEMA "RRHH" AUTHORIZATION postgres;
 CREATE SCHEMA "Ventas" AUTHORIZATION postgres;
-
-CREATE SCHEMA "AdministraParam" AUTHORIZATION postgres;
-CREATE SCHEMA "ContableParam" AUTHORIZATION postgres;
-CREATE SCHEMA "FinanzasParam" AUTHORIZATION postgres;
-CREATE SCHEMA "GeneralesParam" AUTHORIZATION postgres;
-CREATE SCHEMA "PlanificacionParam" AUTHORIZATION postgres;
-CREATE SCHEMA "RRHHParam" AUTHORIZATION postgres;
-CREATE SCHEMA "VentasParam" AUTHORIZATION postgres;
-
 
 
 CREATE TABLE "FinanzasParam"."Partida" (

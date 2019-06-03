@@ -27,7 +27,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
         }
 
 		// GET: Planificacion/PartidaGasto
-        [Breadcrumb("PartidaGasto", FromController = "DashboardOF", FromAction = "Clasificadores")]
+        [Breadcrumb("PartidaGasto", FromController = "DashboardPG", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
             var consulta = DB.PartidaGasto.AsNoTracking().AsQueryable();
@@ -76,8 +76,8 @@ namespace MumanalPG.Areas.Planificacion.Controllers
                 //ApplicationUser currentUser = await GetCurrentUser();
                 //item.IdUsuario = currentUser.AspNetUserId;
                 item.Gestion = "2019";
-                item.Nivel = '1';
-                item.VidaUtil = '4';
+                item.IdPartidaGastoPadre = '1';
+                item.CoeficienteDepreciacion = '1';
                 item.FechaRegistro = DateTime.Now;
                 DB.Add(item);
                 await DB.SaveChangesAsync();
