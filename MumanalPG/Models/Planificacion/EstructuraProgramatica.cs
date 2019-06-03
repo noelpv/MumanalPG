@@ -15,8 +15,8 @@ namespace MumanalPG.Models.Planificacion
 		public string CodigoSisin { get; set; }
 		public string Nivel { get; set; }
 		public string Gestion { get; set; }
-		public string EstadoCodigo { get; set; }
-		public string UsuarioCodigo { get; set; }
+		public Int32 IdEstadoRegistro { get; set; }
+		public Int32 IdUsuario { get; set; }
 		public DateTime FechaRegistro { get; set; }
 	}
 }

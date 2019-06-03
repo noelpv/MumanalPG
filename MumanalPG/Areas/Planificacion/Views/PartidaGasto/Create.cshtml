@@ -1,0 +1,14 @@
+
+@{
+    ViewData["Action"] = "Create";
+}
+<div class="row justify-content-center">
+    <div class="col-10">
+        <div class="card border-info">
+            <div class="card-body">
+                <partial name="Form" view-data="ViewData" />
+            </div>
+        </div>
+    </div>
+</div>
+<partial name="_ValidationScriptsPartial" />

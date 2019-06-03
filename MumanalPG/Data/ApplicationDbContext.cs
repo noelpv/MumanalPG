@@ -91,6 +91,7 @@ namespace MumanalPG.Data
         public DbSet<MumanalPG.Models.Planificacion.PresupuestoModificaciones> PresupuestoModificaciones { get; set; }
         public DbSet<MumanalPG.Models.Planificacion.FuenteFinanciamiento> FuenteFinanciamiento { get; set; }
         public DbSet<MumanalPG.Models.Planificacion.OrganismoFinanciador> OrganismoFinanciador { get; set; }
+        public DbSet<MumanalPG.Models.Planificacion.EstructuraProgramatica> EstructuraProgramatica { get; set; }
 
         public DbSet<MumanalPG.Models.Planificacion.HojaRutaInstrucciones> HojaRutaInstrucciones { get; set; }
         public DbSet<MumanalPG.Models.Planificacion.HojaRutaDocumentos> HojaRutaDocumentos { get; set; }
