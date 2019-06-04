@@ -49,6 +49,9 @@ namespace MumanalPG.Models.Correspondencia
 		[DisplayName("CC")]
 		public virtual int FuncionarioCCId { get; set; }
 		public virtual Beneficiario FuncionarioCC { get; set; }
+
+		public virtual HojaRutaDetalle DerivadoEn { get; set; }
+
 		[NotMapped]
 		public string NombreCC { get; set; }
 

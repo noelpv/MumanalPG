@@ -49,30 +49,29 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                     consulta = consulta.Where(m => m.HojaRuta.Prioridad == Constantes.PrioridadUrgente &&
                                                    m.HojaRuta.IdEstadoRegistro != Constantes.Anulado && 
                                                    m.HojaRuta.IdEstadoRegistro != Constantes.Archivado && 
-                                                   m.IdEstadoRegistro != Constantes.Anulado && 
-                                                   m.IdEstadoRegistro != Constantes.Archivado);
+                                                   m.IdEstadoRegistro == Constantes.Registrado);
                     break;
                 case Constantes.HRTipoDespachados:
                     consulta = consulta.Where(m => m.FunOrgId == currentUser.Funcionario.IdBeneficiario &&
                                                    m.HojaRuta.IdEstadoRegistro != Constantes.Anulado && 
                                                    m.HojaRuta.IdEstadoRegistro != Constantes.Archivado && 
-                                                   m.IdEstadoRegistro != Constantes.Anulado && 
-                                                   m.IdEstadoRegistro != Constantes.Archivado);
+                                                   m.IdEstadoRegistro == Constantes.Registrado);
                     break;
                 case Constantes.HRTipoArchivados:
-                    consulta = consulta.Where(m => m.HojaRuta.IdEstadoRegistro == Constantes.Archivado ||
-                                                   m.IdEstadoRegistro == Constantes.Archivado);
+                    consulta = consulta.Where(m => (m.HojaRuta.IdEstadoRegistro == Constantes.Archivado ||
+                                                   m.IdEstadoRegistro == Constantes.Archivado) &&
+                                                   m.FunOrgId == currentUser.Funcionario.IdBeneficiario);
                     break;
                 case Constantes.HRTipoEliminados:
-                    consulta = consulta.Where(m => m.HojaRuta.IdEstadoRegistro == Constantes.Anulado ||
-                                              m.IdEstadoRegistro == Constantes.Anulado);
+                    consulta = consulta.Where(m => (m.HojaRuta.IdEstadoRegistro == Constantes.Anulado ||
+                                              m.IdEstadoRegistro == Constantes.Anulado) &&
+                                              m.FunOrgId == currentUser.Funcionario.IdBeneficiario);
                     break;
                 default:
                     consulta = consulta.Where(m => m.FunDstId == currentUser.Funcionario.IdBeneficiario &&
                                                    m.HojaRuta.IdEstadoRegistro != Constantes.Anulado && 
                                                    m.HojaRuta.IdEstadoRegistro != Constantes.Archivado && 
-                                                   m.IdEstadoRegistro != Constantes.Anulado && 
-                                                   m.IdEstadoRegistro != Constantes.Archivado);
+                                                   m.IdEstadoRegistro == Constantes.Registrado);
                     type = Constantes.HRTipoRecibidos;
                     break;
             }
@@ -137,7 +136,8 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                 return View("_NoEncontrado");
             }
 
-            if (!item.Leido)
+            ApplicationUser currentUser = await GetCurrentUser();
+            if (!item.Leido && currentUser.Funcionario.IdBeneficiario == item.FunDstId)
             {
                 item.Leido = true;
                 if (item.FechaRecepcion == null)
@@ -160,6 +160,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             var model = new HojaRutaDTO();
             model.FechaDoc = DateTime.Now;
             model.NroFojas = 1;
+            model.Parent = 0;
 
             ApplicationUser currentUser = await GetCurrentUser();
             var areas = await GetAreas(currentUser.Funcionario.IdBeneficiario);
@@ -174,7 +175,6 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(HojaRutaDTO item)
         {
-            
             if (ModelState.IsValid)
             {
                 ApplicationUser currentUser = await GetCurrentUser();
@@ -182,7 +182,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                 DB.Add(hojaRuta);
                 await DB.SaveChangesAsync();
                 SetFlashSuccess("La Hoja de Ruta fue creada correctamente");
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new{type = Constantes.HRTipoDespachados});
             }
             return View("_Create",item);
         }
@@ -235,7 +235,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         // POST: Correspondencia/Documentos/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, Models.Correspondencia.Documento item)
+        public async Task<IActionResult> Edit(Int32 id, Documento item)
         {
             if (id != item.Id)
             {
@@ -284,9 +284,11 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             }
 
             var model = new HojaRutaDTO();
-            model.Id = item.HojaRutaId;
+            model.HojaRutaId = item.HojaRutaId;
             model.OrigenId = item.FunDstId;
             model.UnidadEjecutoraId = item.AreaDestinoId;
+            model.Parent = item.Id;
+            model.DocumentoId = 0;
 
             var areas = await GetAreas(currentUser.Funcionario.IdBeneficiario);
             var instrucciones = GetInstrucciones();
@@ -304,9 +306,16 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             if (item.Instrucciones.Length > 0)
             {
                 ApplicationUser currentUser = await GetCurrentUser();
-                var hojaRuta = await DB.CorrespondenciaHojaRuta.FirstOrDefaultAsync(m => m.Id == item.Id);
-                item.populateDetalle(hojaRuta, currentUser.AspNetUserId, DB);
+                var hojaRuta = await DB.CorrespondenciaHojaRuta.FirstOrDefaultAsync(m => m.Id == item.HojaRutaId);
+                if (hojaRuta == null)
+                {
+                    return View("_NoEncontrado");
+                }
+                var detalle = await DB.CorrespondenciaHRDetalle.FirstOrDefaultAsync(m => m.Id == item.Id);
+                detalle.IdEstadoRegistro = Constantes.Enviado;
+                hojaRuta = item.populateDetalle(hojaRuta, currentUser.AspNetUserId, DB);
                 DB.Update(hojaRuta);
+                DB.Update(detalle);
                 await DB.SaveChangesAsync();
                 SetFlashSuccess("La Hoja de Ruta fue derivada correctamente");
                 return RedirectToAction(nameof(Index));

@@ -12,7 +12,7 @@
            
             <div class="row">
                 <div class=" col-6 btn-toolbar mb-3" role="toolbar">
-                    <div class="btn-group mr-2 " role="group">
+                    <div class="btn-group btn-group-sm mr-2 " role="group">
                         <a asp-action="Index" class="btn btn-secondary" data-intro="Con esta opción podra regresar a la lista principal">
                             <i class="ti-back-left mr-2"></i> <span class="d-none d-sm-inline">Atrás</span>
                         </a>
@@ -26,8 +26,8 @@
                     {
                         opcionDerivar = "disabled";
                     }
-                    <div class="btn-group mr-2" role="group">
-                        <div class="btn-group" role="group" data-intro="Click, para derivar esta hoja de ruta, creando 
+                    <div class="btn-group btn-group-sm mr-2" role="group">
+                        <div class="btn-group btn-group-sm" role="group" data-intro="Click, para derivar esta hoja de ruta, creando 
                                 un nuevo documento digital o ajuntando uno físico">
                             <button type="button" class="btn btn-secondary dropdown-toggle @opcionDerivar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="ti-share mr-2"></i> <span class="d-none d-sm-inline">Derivación</span>
@@ -69,11 +69,17 @@
                         @if (Model.HojaRuta.DocumentoId > 0)
                         {
                             <a asp-controller="Documentos" asp-action="Details" asp-route-id="@Model.HojaRuta.DocumentoId" 
-                               title="Documento Digital Relacionado" data-modal="link" data-modal-read="True" 
+                               title="Documentos Digitales" data-modal="link" data-modal-read="True" 
                                class="btn btn-secondary" data-intro="Con esta opción podrá ver el documento digital anexado a esta Hoja de Ruta">
-                                <i class="ti-bookmark-alt mr-2"></i> <span class="d-none d-sm-inline">Documento Digital</span>
+                                <i class="ti-bookmark-alt mr-2"></i> <span class="d-none d-sm-inline">Documentos</span>
                             </a>   
                         }
+                        
+                        <a asp-action="Flujo" asp-route-id="@Model.Id" 
+                           data-modal="link" data-modal-read="True" title="Flujo de Hoja de Ruta" class="btn btn-secondary" 
+                           data-intro="Haciendo click sobre esta opción podra ver el flujo que seguido esta Hoja de Ruta">
+                            <i class=" fas fa-code-branch mr-2"></i> <span class="d-none d-sm-inline">Flujo</span>
+                        </a>
                     </div>
                 </div>
             </div>

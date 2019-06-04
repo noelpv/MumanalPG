@@ -14188,4 +14188,7 @@ a.dropdown-item {
     left: 50%;
     z-index: 0;
 }
+.no_checkbox > i.jstree-checkbox {
+  display: none;
+}
 

@@ -8,12 +8,14 @@
    
     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()"/>
     <input type="hidden" asp-for="Id"/>
-    
+    <input type="hidden" asp-for="Parent"/>
     <div>
         @if (ViewData["Action"] == "Derivar")
         {
             <input id="origen-id" type="hidden" asp-for="OrigenId"/>
             <input id="origen-id" type="hidden" asp-for="UnidadEjecutoraId"/>
+            <input type="hidden" asp-for="DocumentoId"/>
+            <input type="hidden" asp-for="HojaRutaId"/>
         }
         else
         {
@@ -151,6 +153,8 @@
                 cloneInstrucciones(node_id, areaId, funId);
             }
             
+            $(this).jstree(true).check_node(data.node);
+
         }).on("check_node.jstree", function(e, data) {
             $('a#' + data.node.a_attr.id).trigger('click');
             $('input#ins_' + data.node.id).attr('name', 'Instrucciones');
@@ -158,7 +162,9 @@
         }).on("uncheck_node.jstree", function(e, data) {
             $('input#ins_' + data.node.id).removeAttr('name');
             $('input#com_' + data.node.id).removeAttr('name');
-        });
+        }).on('ready.jstree', function () {
+           $('a[id*="area_"]').addClass("no_checkbox");
+        });;
 
         $('#agregar-anexo').click(function(e) {
             e.preventDefault();
@@ -172,7 +178,7 @@
             var comentarios = "";
             $('.not-selected').fadeOut();
             if ($('#' + new_instrucciones_id).length) {
-                $('.instrucciones').fadeOut('slow');
+                $('.instrucciones').hide();
                 var input_ins = $('#' + new_instrucciones_id).find('input[id*=ins_]').first();
                 
                 if (input_ins.val().length) {
@@ -181,17 +187,17 @@
                     comentarios = objTmp.comentarios;
                 }
                 
-                $('#' + new_instrucciones_id).fadeIn('slow');
+                $('#' + new_instrucciones_id).fadeIn();
             } else {
                 var inst_clone = $('#instrucciones').clone();
                 var obj = {id: node_id, funId: fun, areaId: area, instrucciones: [], comentarios: null };
-                $('.instrucciones').fadeOut('slow');
+                $('.instrucciones').hide();
                 inst_clone.attr('id', 'instrucciones_' + node_id);
                 inst_clone.find('input[id*=ins_]').first().attr('id', 'ins_' + node_id);
                 inst_clone.find('input[id*=ins_]').first().val(JSON.stringify(obj));
                 inst_clone.find('input[id*=ins_]').first().attr('data-id', node_id);
                 inst_clone.appendTo(container);
-                inst_clone.fadeIn('slow'); 
+                inst_clone.fadeIn(); 
             }
             
             $('.instrucciones-checkbox').unbind();

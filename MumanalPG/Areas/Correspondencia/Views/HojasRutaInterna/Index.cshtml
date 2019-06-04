@@ -125,10 +125,15 @@
                                             @item.FechaRegistro.ToString("MMM dd, HH:mm", new CultureInfo("es-ES"))
                                         </td>
                                         <td>
-                                            <div class="btn-group mr-2" role="group" aria-label="First group">
-                                                <a asp-action="Derivar" asp-route-id="@item.Id" class="btn btn-secondary show-loader" title="Derivar">
-                                                    <i class="ti-share"></i>
-                                                </a>
+                                            <div class="btn-group mr-2" role="group">
+                                                @if (ViewBag.type == Constantes.HRTipoRecibidos || 
+                                                     ViewBag.type == Constantes.HRTipoUrgentes)
+                                                {
+                                                    <a asp-action="Derivar" asp-route-id="@item.Id" class="btn btn-secondary show-loader" title="Derivar">
+                                                        <i class="ti-share"></i>
+                                                    </a> 
+                                                }
+                                                
                                             </div>
 
                                             <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -154,8 +159,13 @@
                                             <div class="dropdown-menu dropdown-menu-lg-right">
                                                 <a asp-action="Details" asp-route-id="@item.Id" class="dropdown-item">Abrir</a>
                                                 <button class="dropdown-item" type="button">Adjuntar</button>
-                                                <button class="dropdown-item" type="button">Crear Documento y Derivar</button>
-                                                <button class="dropdown-item" type="button">Solo Derivar</button>
+                                                @if (ViewBag.type == Constantes.HRTipoRecibidos || 
+                                                     ViewBag.type == Constantes.HRTipoUrgentes)
+                                                {
+                                                    <button class="dropdown-item" type="button">Crear Documento y Derivar</button>
+                                                    <button class="dropdown-item" type="button">Solo Derivar</button>
+                                                    
+                                                }
                                                 <a asp-action="CambiarEstado" asp-route-id="@item.Id" asp-route-from="index"
                                                    asp-route-nuevoEstado="@nuevoEstadoArchivar"
                                                    class="dropdown-item">

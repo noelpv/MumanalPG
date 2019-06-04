@@ -19,6 +19,8 @@ namespace MumanalPG.Models.Correspondencia.DTO
         [DisplayName("Documento")]
         public int DocumentoId { get; set; }
         
+        public int HojaRutaId { get; set; }
+        
         [Required(ErrorMessage = "El campo '{0}' no puede estar en blanco")]
         [DisplayName("Remitente")]
         public string Remitente { get; set; }
@@ -56,6 +58,8 @@ namespace MumanalPG.Models.Correspondencia.DTO
         
         [Required(ErrorMessage = "Debe seleccionar almenos una instrucción")]
         public string[] Instrucciones { get; set; }
+        
+        public int Parent { get; set; }
 
         public IList<InstruccionDTO> GetInstrucciones()
         {
@@ -92,6 +96,11 @@ namespace MumanalPG.Models.Correspondencia.DTO
         public HojaRuta populateDetalle(HojaRuta hr, int idUsuario, ApplicationDbContext DB)
         {
             ICollection<HojaRutaDetalle> detalle = new List<HojaRutaDetalle>();
+            if (hr.Id > 0)
+            {
+               detalle = hr.Derivaciones; 
+            }
+
             foreach (var i in Instrucciones)
             {
                 InstruccionDTO ins = JsonConvert.DeserializeObject<InstruccionDTO>(i);
@@ -106,6 +115,8 @@ namespace MumanalPG.Models.Correspondencia.DTO
                 d.IdEstadoRegistro = Constantes.Registrado;
                 d.IdUsuario = idUsuario;
                 d.FechaRegistro = DateTime.Now;
+                d.DocumentoId = DocumentoId;
+                d.Padre = Parent;
                 foreach (var id in ins.instrucciones)
                 {
                     Instrucciones instruccion = DB.CorrespondenciaInstrucciones.Find(id);
@@ -120,11 +131,7 @@ namespace MumanalPG.Models.Correspondencia.DTO
                 }
 
                 d.HRDetalleInstrucciones = listDetIns;
-                System.Console.WriteLine("////////////////////////////////////////////////");
-                System.Console.WriteLine(d.FunDstId);
-                System.Console.WriteLine("////////////////////////////////////////////////");
                 detalle.Add(d);
-
             }
 
             hr.Derivaciones = detalle;

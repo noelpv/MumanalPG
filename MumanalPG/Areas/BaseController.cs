@@ -124,16 +124,16 @@ namespace MumanalPG.Areas
             return cites;
         }
         
-        public async Task<List<AreasFunTreeDTO>> GetAreas(int currentFunId = 0)
+        public async Task<List<AreasFunTreeDTO>> GetAreas(int currentFunId)
         {
 
-            List<AreasFunTreeDTO> areas = await GetAreasList("GG", null, currentFunId);
+            List<AreasFunTreeDTO> areas = await GetAreasList("GG", currentFunId);
             //areas.Reverse();
             
             return areas;
         }
 
-        public async Task<List<AreasFunTreeDTO>> GetAreasList(string uSigla, List<AreasFunTreeDTO> areas = null, int currentFunId = 0)
+        public async Task<List<AreasFunTreeDTO>> GetAreasList(string uSigla, int currentFunId, List<AreasFunTreeDTO> areas = null)
         {
             var unidadEjecutora = await DB.RRHH_UnidadEjecutora.FirstOrDefaultAsync(a => a.Sigla == uSigla);
             if (areas == null)
@@ -160,22 +160,20 @@ namespace MumanalPG.Areas
                 var funcionarios = DB.RRHH_Beneficiario
                     .Include(b => b.Puesto)
                     .Where(b => b.PuestoId > 0)
-                    .Where(b => b.Puesto.IdUnidadEjecutora == unidadEjecutora.IdUnidadEjecutora)
+                    .Where(b => b.Puesto.IdUnidadEjecutora == unidadEjecutora.IdUnidadEjecutora && 
+                                b.IdBeneficiario != currentFunId)
                     .OrderBy(b => b.Denominacion).ToList();
 
                 foreach (var f in funcionarios)
                 {
-                    if (f.IdBeneficiario != currentFunId)
-                    {
-                        AreasFunTreeDTO fun = new AreasFunTreeDTO();
-                        fun.areaId = unidadEjecutora.IdUnidadEjecutora;
-                        fun.funId = f.IdBeneficiario;
-                        fun.id = $"fun_{f.IdBeneficiario}";
-                        fun.text = $"<span class='small jstree-text'>{f.Denominacion}<div class='ml-5'><b>({f.Puesto.Descripcion})</b></div></span>";
-                        fun.parent = area.id;
-                        fun.icon = "/lib/theme-elegant/img/users/user-male-iconx24.png";
-                        areas.Add(fun);
-                    }
+                    AreasFunTreeDTO fun = new AreasFunTreeDTO();
+                    fun.areaId = unidadEjecutora.IdUnidadEjecutora;
+                    fun.funId = f.IdBeneficiario;
+                    fun.id = $"fun_{f.IdBeneficiario}";
+                    fun.text = $"<span class='small jstree-text'>{f.Denominacion}<div class='ml-5'><b>({f.Puesto.Descripcion})</b></div></span>";
+                    fun.parent = area.id;
+                    fun.icon = "/lib/theme-elegant/img/users/user-male-iconx24.png";
+                    areas.Add(fun);
                 }
 
                 var children = DB.RRHH_UnidadEjecutora
@@ -186,7 +184,7 @@ namespace MumanalPG.Areas
                 
                 foreach (var child in children)
                 {
-                    areas = await GetAreasList(child.Sigla, areas);
+                    areas = await GetAreasList(child.Sigla, currentFunId, areas);
                 }
             }
 
