@@ -47,6 +47,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             {
                 case Constantes.HRTipoUrgentes:
                     consulta = consulta.Where(m => m.HojaRuta.Prioridad == Constantes.PrioridadUrgente &&
+                                                   m.FunDstId == currentUser.Funcionario.IdBeneficiario &&
                                                    m.HojaRuta.IdEstadoRegistro != Constantes.Anulado && 
                                                    m.HojaRuta.IdEstadoRegistro != Constantes.Archivado && 
                                                    m.IdEstadoRegistro == Constantes.Registrado);
@@ -59,13 +60,13 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                     break;
                 case Constantes.HRTipoArchivados:
                     consulta = consulta.Where(m => (m.HojaRuta.IdEstadoRegistro == Constantes.Archivado ||
-                                                   m.IdEstadoRegistro == Constantes.Archivado) &&
-                                                   m.FunOrgId == currentUser.Funcionario.IdBeneficiario);
+                                                   m.IdEstadoRegistro == Constantes.Archivado) && 
+                                                   m.FunDstId == currentUser.Funcionario.IdBeneficiario);
                     break;
                 case Constantes.HRTipoEliminados:
                     consulta = consulta.Where(m => (m.HojaRuta.IdEstadoRegistro == Constantes.Anulado ||
                                               m.IdEstadoRegistro == Constantes.Anulado) &&
-                                              m.FunOrgId == currentUser.Funcionario.IdBeneficiario);
+                                              m.FunDstId == currentUser.Funcionario.IdBeneficiario);
                     break;
                 default:
                     consulta = consulta.Where(m => m.FunDstId == currentUser.Funcionario.IdBeneficiario &&
@@ -149,19 +150,46 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                 await DB.SaveChangesAsync();
             }
 
+           
+            ViewBag.isDstUser = false;  
+            if (currentUser.Funcionario.IdBeneficiario == item.FunDstId)
+            {
+                ViewBag.isDstUser = true;    
+            }
+
             ViewBag.instrucciones = instrucciones;
+            
             return View("_Details",item);
         }
 
         // GET: Correspondencia/Documentos/Create
         [Breadcrumb("Nueva Hoja de Ruta", FromAction = "Index")]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(int? idDoc)
         {
             var model = new HojaRutaDTO();
             model.FechaDoc = DateTime.Now;
             model.NroFojas = 1;
             model.Parent = 0;
-
+            model.DocumentoId = 0;
+            
+            if (idDoc > 0)
+            {
+             var doc = await DB.CorrespondenciaDocumento
+                 .Include(d => d.FuncionarioOrigen)
+                 .Include(d => d.FuncionarioOrigen.Puesto.UnidadEjecutora)
+                 .FirstOrDefaultAsync(d => d.Id == idDoc);
+                if (doc != null)
+                {
+                    model.DocumentoId = doc.Id;
+                    model.OrigenId = doc.FuncionarioOrigenId;
+                    model.Remitente = doc.FuncionarioOrigen.Denominacion;
+                    model.UnidadEjecutoraId = doc.FuncionarioOrigen.Puesto.UnidadEjecutora.IdUnidadEjecutora;
+                    model.UnidadEjecutoraNombre = doc.AreaFuncionarioOrigen;
+                    model.Referencia = doc.Referencia;
+                    model.CiteDoc = doc.Cite;
+                    model.FechaDoc = doc.Fecha;
+                }
+            }
             ApplicationUser currentUser = await GetCurrentUser();
             var areas = await GetAreas(currentUser.Funcionario.IdBeneficiario);
             var instrucciones = GetInstrucciones();
@@ -323,44 +351,32 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             return View("_Derivar",item);
         }
         
-        // GET: Correspondencia/Documentos/Delete/5
-        public async Task<IActionResult> Delete(Int32? id)
+        public async Task<IActionResult> Flujo(int id)
         {
-            if (id == null)
-            {
-                return PartialView("_NoEncontrado");
-            }
+            var item = await DB.CorrespondenciaHRDetalle
+                .Include(m => m.HojaRuta)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
-            var item = await DB.CorrespondenciaDocumento.FirstOrDefaultAsync(m => m.Id == id);
             if (item == null)
             {
                 return PartialView("_NoEncontrado");
             }
+            
+            var derivaciones = DB.CorrespondenciaHRDetalle
+                .Include(d => d.HojaRuta)
+                .Include(d => d.HRDetalleInstrucciones)
+                .Where(d => d.HojaRutaId == item.HojaRutaId)
+                .OrderBy(d => d.FechaRegistro)
+                .ToList();
 
-            if(!(User.IsInRole(SD.AdminEndUser) || User.IsInRole(SD.SuperAdminEndUser)))
-            {
-                ApplicationUser  currentUser = await GetCurrentUser();
-                if (currentUser.AspNetUserId != item.IdUsuario)
-                {
-                    return PartialView("_NoAutorizado");
-                }
-
-            }
-           
-            return PartialView("_Delete",item);
+            var flow = await FlujoHojaRuta(item.HojaRutaId, item.Id);
+            var instrucciones = GetInstrucciones();
+            ViewBag.flow = flow;
+            ViewBag.instrucciones = instrucciones;
+            ViewBag.derivaciones = derivaciones;
+            return PartialView("_Flujo", item);
         }
 
-        // POST: Correspondencia/Documentos/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Int32 id)
-        {
-            var item = await DB.CorrespondenciaDocumento.FindAsync(id);
-            item.IdEstadoRegistro = Constantes.Anulado;
-            DB.CorrespondenciaDocumento.Update(item);
-            await DB.SaveChangesAsync();
-            return PartialView("_Delete",item);
-        }
 
         public async Task<IActionResult> CambiarEstado(Int32? id, int nuevoEstado = Constantes.Registrado,
             string from = null)

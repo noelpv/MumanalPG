@@ -4987,6 +4987,10 @@ button.close {
   .modal-lg {
     max-width: 800px; } }
 
+@media (min-width: 1270px) {
+    .modal-xl {
+        max-width: 1100px; } }
+
 .tooltip {
   position: absolute;
   z-index: 1070;
@@ -10285,7 +10289,9 @@ Preloader
 body {
   margin: 0;
   overflow-x: hidden;
-  color: #6c757d; }
+  color: #222;
+  /*color: #6c757d;*/
+}
 
 html {
   position: relative;

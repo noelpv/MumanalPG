@@ -1,0 +1,162 @@
+@model MumanalPG.Models.Correspondencia.HojaRutaDetalle
+@using System.Globalization;
+@using MumanalPG.Utility
+<link rel="stylesheet" href="~/lib/jstree/themes/default/style.css" asp-append-version="true"/>
+
+<div class="text-center">
+    <h2 class="card-title text-uppercase">CORRESPONDENCIA INTERNA</h2>
+    <h5>@Model.HojaRuta.CiteHojaRuta</h5>
+</div>
+<div class="row justify-content-center p-4">
+    <div class="col-sm-12 col-md-6">
+        <div class="row">
+            <label for="jstree" class="form-label">Flujo</label>
+            <div id="jstree" class="content-large"></div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6">
+        <div class="form-group">
+            <label for="instrucciones" class="form-label">Detalle</label>
+            <div id="instrucciones-container" class="instrucciones-container">
+                @* <div class="not-selected element-center text-center"> *@
+                @*     Seleccione al menos un funcionario *@
+                @* </div> *@
+            @foreach (var d in ViewBag.derivaciones)
+            {
+                string visible_class = "";
+                visible_class = (d.Id == Model.Id) ? "" : "hide";
+                
+            <div id="instruccion_@d.Id" class="content-large instruccion @visible_class">
+                    <div class="ribbon-wrapper card float-right" >
+                        @switch (@d.IdEstadoRegistro)
+                        {
+                            case Constantes.Archivado:
+                                <div class="ribbon ribbon-bookmark  ribbon-warning ribbon-right">Archivado</div>
+                                break;
+                            case Constantes.Anulado:
+                                <div class="ribbon ribbon-bookmark  ribbon-danger ribbon-right">Anulado</div>
+                                break;
+                            default:
+                                <div class="ribbon ribbon-bookmark  ribbon-success ribbon-right">Activo</div>
+                                break;
+                                
+                        }
+                    </div>
+                    @{
+                        string label_class = "label-info";
+                        switch (d.HojaRuta.Prioridad)
+                        {
+                            case Constantes.PrioridadUrgente:
+                                label_class = "label-danger";
+                                break;
+                            case Constantes.PrioridadAlta:
+                                label_class = "label-warning";
+                                break;
+                            case Constantes.PrioridadBaja:
+                                label_class = "label-inverse";
+                                break;
+                        }
+                    }
+                    <b>Prioridad:</b>
+                    <span class="label @label_class m-r-10 text-capitalize">
+                        @d.HojaRuta.Prioridad.ToLower()
+                    </span>
+                    <br/>
+                    <b>Fecha de Emisión:</b>
+                    @d.FechaRegistro.ToString("dd - MM - yyyy  HH:mm")
+                    <br/>
+                    @if (d.FechaRecepcion != null)
+                    {
+                        <b>Fecha de Recepción:</b>
+                        @d.FechaRecepcion.ToString("dd - MM - yyyy  HH:mm")
+                    }
+                    else
+                    {
+                        <span class="label label-warning m-r-10">
+                            Aún no ha sido leído
+                        </span>
+                    }
+                    <br/>
+                    <br/>
+                    Instrucciones
+
+                    <div class="form row p-t-20 justify-content-center">
+
+                        @foreach (var i in ViewBag.instrucciones)
+                        {
+                            bool is_in = false;
+                            foreach (var di in d.HRDetalleInstrucciones)
+                            {
+                                if (di.InstruccionId == i.Id)
+                                {
+                                    is_in = true;
+                                    break;
+                                }
+                            }
+                            if (is_in)
+                            {
+                                <div class="col-sm-12 col-md-6 small pr-0">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input"
+                                               readonly="readonly" checked="checked">
+                                        <span class="custom-control-label">@i.Nombre</span>
+                                    </label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-sm-12 col-md-6 small pr-0">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" readonly="readonly">
+                                        <span class="custom-control-label">@i.Nombre</span>
+                                    </label>
+                                </div>
+                            }
+                        }
+
+                        <div class="col-md-11">
+                            <div class="m-b-10">
+                                <label class="form-label">Comentarios Adicionales</label>
+                                <textarea readonly class="form-control comentarios">@d.Proveido</textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="~/lib/jstree/jstree.js"></script>
+<script>
+    $(document).ready(function() {
+        var data = @Html.Raw(Json.Serialize(@ViewBag.flow));
+        $('#jstree').jstree({
+            'core': {
+                'data': data,
+                'multiple': false
+            }
+        }).on("changed.jstree", function (e, data) {
+
+           
+            var node_id = $(data.node).attr('id');
+            var instruccion_id = node_id.replace('hrd_', '');
+            $('.not-selected').fadeOut();
+            if ($('#instruccion_' + instruccion_id).length) {
+                $('.instruccion').hide();
+                $('#instruccion_' + instruccion_id).fadeIn();
+            } else {
+                alert('not found');
+            }
+
+        }).on('ready.jstree', function () {
+//            $('a[id*="area_"]').addClass("no_checkbox");
+        });
+        
+        $(':checkbox[readonly=readonly]').click(function(){
+            return false;         
+        }); 
+    });
+</script>

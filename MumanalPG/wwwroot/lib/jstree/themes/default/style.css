@@ -388,14 +388,14 @@
   background: linear-gradient(to bottom, #beebff 0%, #a8e4ff 100%);
 }
 .jstree-default .jstree-node {
-  min-height: 36px;
+  min-height: 24px;
   line-height: 24px;
   margin-left: 24px;
   min-width: 24px;
 }
 .jstree-default .jstree-anchor {
   line-height: 24px;
-  height: 24px;
+  height: 36px;
 }
 .jstree-default .jstree-icon {
   width: 24px;

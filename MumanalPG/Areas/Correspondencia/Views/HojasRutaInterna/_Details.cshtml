@@ -20,63 +20,70 @@
                 </div>
                 
                 <div class="col-6 btn-toolbar mb-3 justify-content-end" role="toolbar">
-                    @if (Model.IdEstadoRegistro == Constantes.Archivado ||
-                         Model.IdEstadoRegistro == Constantes.Anulado
-                         )
-                    {
-                        opcionDerivar = "disabled";
-                    }
+                   
+                   
                     <div class="btn-group btn-group-sm mr-2" role="group">
-                        <div class="btn-group btn-group-sm" role="group" data-intro="Click, para derivar esta hoja de ruta, creando 
-                                un nuevo documento digital o ajuntando uno físico">
-                            <button type="button" class="btn btn-secondary dropdown-toggle @opcionDerivar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="ti-share mr-2"></i> <span class="d-none d-sm-inline">Derivación</span>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                <a class="dropdown-item" href="#">Generar Documento Digital y Derivar</a>
-                                <a asp-action="Derivar" asp-route-id="@Model.Id" class="dropdown-item">Solo Derivar</a>
-                            </div>
-                        </div>
-                        @{
+
+                        @if (ViewBag.isDstUser)
+                        {
+                            if (Model.IdEstadoRegistro == Constantes.Archivado ||
+                                Model.IdEstadoRegistro == Constantes.Anulado
+                                )
+                            {
+                                opcionDerivar = "disabled";
+                            }
                             int nuevoEstadoArchivar = Constantes.Archivado;
                             int nuevoEstadoAnular = Constantes.Anulado;
                             string archivarText = "Archivar";
                             string anularText = "Anular";
-                                                
+
                             if (Model.IdEstadoRegistro == Constantes.Archivado)
                             {
                                 archivarText = "Restaurar";
                                 nuevoEstadoArchivar = Constantes.Registrado;
-                            } else  if (Model.IdEstadoRegistro == Constantes.Anulado)
+                            }
+                            else if (Model.IdEstadoRegistro == Constantes.Anulado)
                             {
                                 anularText = "Restaurar";
                                 nuevoEstadoAnular = Constantes.Registrado;
                             }
-                                                
+                            <div class="btn-group btn-group-sm" role="group" data-intro="Click, para derivar esta hoja de ruta, creando 
+                                un nuevo documento digital o ajuntando uno físico">
+                                <button type="button" class="btn btn-secondary dropdown-toggle @opcionDerivar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="ti-share mr-2"></i> <span class="d-none d-sm-inline">Derivación</span>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <a class="dropdown-item" href="#">Generar Documento Digital y Derivar</a>
+                                    <a asp-action="Derivar" asp-route-id="@Model.Id" class="dropdown-item">Solo Derivar</a>
+                                </div>
+                            </div>
+                            <a asp-action="CambiarEstado" asp-route-id="@Model.Id" asp-route-nuevoEstado="@nuevoEstadoArchivar"
+                               class="btn btn-secondary" data-intro="Click, para <b>Archivar</b> esta Hoja de Ruta">
+                                <i class="ti-harddrives mr-2"></i> <span class="d-none d-sm-inline">@archivarText</span>
+                            </a>
+                            <a asp-action="CambiarEstado" asp-route-id="@Model.Id" asp-route-nuevoEstado="@nuevoEstadoAnular"
+                               class="btn btn-secondary" data-intro="Click, para <b>Anular</b> esta Hoja de Ruta">
+                                <i class="ti-trash mr-2"></i> <span class="d-none d-sm-inline">@anularText</span>
+                            </a>
+
                         }
-                        <a asp-action="CambiarEstado" asp-route-id="@Model.Id" asp-route-nuevoEstado="@nuevoEstadoArchivar"
-                           class="btn btn-secondary" data-intro="Click, para <b>Archivar</b> esta Hoja de Ruta">
-                            <i class="ti-harddrives mr-2"></i> <span class="d-none d-sm-inline">@archivarText</span>
-                        </a>
-                        <a asp-action="CambiarEstado" asp-route-id="@Model.Id" asp-route-nuevoEstado="@nuevoEstadoAnular"
-                           class="btn btn-secondary" data-intro="Click, para <b>Anular</b> esta Hoja de Ruta">
-                            <i class="ti-trash mr-2"></i> <span class="d-none d-sm-inline">@anularText</span>
-                        </a>
+
+
                         <a asp-action="CambiarEstado" asp-route-id="@Model.Id" asp-route-nuevoEstado="@Constantes.Anulado"
                            class="btn btn-secondary" data-intro="Haciendo click sobre esta opción podra generar la hoja de Ruta en PDF para poder imprimirlo">
                             <i class="far fa-file-pdf mr-2"></i> <span class="d-none d-sm-inline">Hoja de Ruta</span>
                         </a>
                         @if (Model.HojaRuta.DocumentoId > 0)
                         {
-                            <a asp-controller="Documentos" asp-action="Details" asp-route-id="@Model.HojaRuta.DocumentoId" 
-                               title="Documentos Digitales" data-modal="link" data-modal-read="True" 
+                            <a asp-controller="Documentos" asp-action="Details" asp-route-id="@Model.HojaRuta.DocumentoId"
+                               title="Documentos Digitales" data-modal="link" data-modal-read="True"
                                class="btn btn-secondary" data-intro="Con esta opción podrá ver el documento digital anexado a esta Hoja de Ruta">
                                 <i class="ti-bookmark-alt mr-2"></i> <span class="d-none d-sm-inline">Documentos</span>
-                            </a>   
+                            </a>
                         }
-                        
-                        <a asp-action="Flujo" asp-route-id="@Model.Id" 
-                           data-modal="link" data-modal-read="True" title="Flujo de Hoja de Ruta" class="btn btn-secondary" 
+
+                        <a asp-action="Flujo" asp-route-id="@Model.Id" data-modal-size="modal-xl"
+                           data-modal="link" data-modal-read="True" title="Flujo de Hoja de Ruta" class="btn btn-secondary"
                            data-intro="Haciendo click sobre esta opción podra ver el flujo que seguido esta Hoja de Ruta">
                             <i class=" fas fa-code-branch mr-2"></i> <span class="d-none d-sm-inline">Flujo</span>
                         </a>

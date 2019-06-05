@@ -1,5 +1,4 @@
 @model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Correspondencia.Documento>
-@using MumanalPG.Models.Administra
 @using MumanalPG.Models.Correspondencia
 @using MumanalPG.Utility
 @using ReflectionIT.Mvc.Paging
@@ -12,9 +11,17 @@
                               "<i class='fas fa-search'></i></button>";
 }
 <div class="row">
-    <div class="col-12 text-right">
+    <div class=" col-6 text-left">
+        <div class="btn-group btn-group-sm mr-2 " role="group">
+            <a asp-controller="dashboard" asp-action="docs" class="btn btn-secondary" 
+               data-intro="Con esta opción podra regresar a la lista principal">
+                <i class="ti-back-left mr-2"></i> <span class="d-none d-sm-inline">Atrás</span>
+            </a>
+        </div>
+    </div>
+    <div class="col-6 text-right">
         <a asp-action="Create" asp-route-type="@ViewBag.docTipoId" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nuevo Documento"
-           data-modal="link", data-redirect="@Url.Action("Index", new{@a=Constantes.Creado, type=ViewBag.docTipoId})" 
+           data-modal="link", data-redirect="@Url.Action("Index", new {@a = Constantes.Creado, type = ViewBag.docTipoId})"
            data-intro="Click, en este botón para crear un Informe, una Nota, o cualquier otro tipo de documento">
             <i class="fas fa-plus"></i><span class="d-none d-sm-inline">&nbsp; Nuevo </span>
         </a>
@@ -97,10 +104,13 @@
                 @{
                     options.Id = item.Id;
                     options.ShowIntroMessages = index == 0 ? true : false;
+                    options.CustomBtn = $@" <a href='/correspondencia/hojasrutainterna/create?docId={item.Id}' 
+                                            data-toggle='tooltip' class='btn btn-secondary btn-outline-secondary waves-effect waves-light show-loader' 
+                                            title='Crear Hoja de Ruta'><i class='ti-share'></i></a>";
                     index++;
                     
                 }
-
+               
                 <partial name="_TableOptionsPartial" model="options"/>
             </tr>
         }

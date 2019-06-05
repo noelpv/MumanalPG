@@ -120,7 +120,7 @@
                                                 @item.HojaRuta.Referencia
                                             </a>
                                         </td>
-                                     <td class="hidden-xs-down"><i class="icon-paper-clip"></i></td>
+                                        <td class="hidden-xs-down"><i class="icon-paper-clip"></i></td>
                                         <td class=" small text-right text-capitalize">
                                             @item.FechaRegistro.ToString("MMM dd, HH:mm", new CultureInfo("es-ES"))
                                         </td>
@@ -176,22 +176,21 @@
                                                    class="dropdown-item">
                                                     @anularText
                                                 </a>
+                                                <a asp-action="Flujo" asp-route-id="@item.Id" data-modal-size="modal-xl"
+                                                   data-modal="link" data-modal-read="True" title="Flujo de Hoja de Ruta" 
+                                                   class="dropdown-item"> Ver Flujo
+                                                </a>
                                             </div>
                                         </td>
                                     </tr>
                                 }
-                                
-                                <tr class="">
-
-                                    <td class="hidden-xs-down"><i class="fa fa-star text-warning"></i></td>
-                                    <td class="hidden-xs-down">Genelia Roshan</td>
-                                    <td class="max-texts"><a href="app-email-detail.html">Lorem ipsum perspiciatis unde omnis iste natus error sit voluptatem</a></td>
-                                    <td class="hidden-xs-down"><i class="fa fa-paperclip"></i></td>
-                                    <td class="text-right"> May 13 </td>
-                                </tr>
 
                                 </tbody>
                             </table>
+                            @if (Model.TotalRecordCount <= 0)
+                            {
+                                <partial name="_NotFoundPartial" />
+                            }
                         </div>
                     </div>
                 </div>

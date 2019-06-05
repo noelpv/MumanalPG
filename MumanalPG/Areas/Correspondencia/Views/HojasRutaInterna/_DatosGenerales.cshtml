@@ -18,7 +18,9 @@
             <h2>Datos Generales</h2>
             <p class="desc">Por favor ingrese los datos generales de la hoja de ruta</p>
             <div class="fieldset-content">
-                <div class="form-row">
+                @if (Model.DocumentoId <= 0)
+                {
+                     <div class="form-row">
                     <label class="form-label">Crear Hoja de Ruta a partir de:</label>
                     <div class="form-flex">
                         <div class="col-md-12">
@@ -46,6 +48,7 @@
                                                                          {
                                                                              @hasError
                                                                          }">
+                            <input id="doc-id" type="hidden"/>
                             <label asp-for="DocumentoId" class="form-label">Elegir Documento</label>
                             <div>
                                 <select asp-for="DocumentoId" class="form-control remote" id="documento" placeholder="Escriba Cite o Remitente..."
@@ -57,14 +60,15 @@
                             <span class="text-input">Documento creado en el sistema (Informes, Memorandums, Notas, etc.)</span>
                         </div>
                     </div>
-                </div>
+                </div> 
+                }
 
                 <div class="form-row">
                     <div class="col-sm-12 col-md-6">
                         <div id="rem-input" class="form-group">
                             <label class="form-label" asp-for="Remitente"></label>
                             <input id="origen-id" type="hidden" asp-for="OrigenId"/>
-                            <input type="text" class="form-control" id="origen-name" asp-for="Remitente" required/>
+                            <input id="origen-name" type="text" class="form-control" asp-for="Remitente" required/>
                             <span asp-validation-for="Remitente" class="text-danger"></span>
                             <span class="text-input">Persona que remite el documento</span>
                         </div>

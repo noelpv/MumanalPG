@@ -13,7 +13,7 @@
         @if (ViewData["Action"] == "Derivar")
         {
             <input id="origen-id" type="hidden" asp-for="OrigenId"/>
-            <input id="origen-id" type="hidden" asp-for="UnidadEjecutoraId"/>
+            <input id="area-id" type="hidden" asp-for="UnidadEjecutoraId"/>
             <input type="hidden" asp-for="DocumentoId"/>
             <input type="hidden" asp-for="HojaRutaId"/>
         }
@@ -63,10 +63,12 @@
         var on_change = function(selected) {
 
             var dataSelected = this.options[selected];
-
+            
+            $('#origen-name').val(dataSelected.nombre);
             $('#area-id').val(dataSelected.areaId);
             $('#area-name').val(dataSelected.area);
             $('#origen-id').val(selected);
+            
         }
 
         var on_ini = function(data) {}
@@ -121,12 +123,17 @@
                 $('#doc-container').show();
                 $('#rem-input').show();
                 $('#rem-select').hide();
-               // $('#documento-selectized').prop('required',true);
+                $('#origen-name').prop('required',true);
+                $('#doc-id').removeAttr('name');
+                $('#documento').attr('name', 'DocumentoId');
             } else {
                 $('#doc-container').hide();
                 $('#rem-input').hide();
                 $('#rem-select').show();
-                //$('#documento-selectized').prop('required',false);
+                $('#origen-name').prop('required',false);
+                $('#doc-id').attr('name', 'DocumentoId');
+                $('#doc-id').val(0);
+                $('#documento').removeAttr('name');
             }
         });
         var data = @Html.Raw(Json.Serialize(@ViewBag.areas));
@@ -164,7 +171,7 @@
             $('input#com_' + data.node.id).removeAttr('name');
         }).on('ready.jstree', function () {
            $('a[id*="area_"]').addClass("no_checkbox");
-        });;
+        });
 
         $('#agregar-anexo').click(function(e) {
             e.preventDefault();

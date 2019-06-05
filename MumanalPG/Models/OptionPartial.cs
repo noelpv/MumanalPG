@@ -7,5 +7,6 @@ namespace MumanalPG.Models
         public string IntroMsgDetails { get; set; }
         public string IntroMsgDelete { get; set; }
         public bool ShowIntroMessages { get; set; }
+        public string CustomBtn { get; set; }
     }
 }
