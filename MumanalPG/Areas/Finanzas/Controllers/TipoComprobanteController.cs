@@ -27,7 +27,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
         }
 
 		// GET: Finanzas/TipoComprobante
-        [Breadcrumb("TipoComprobante", FromController = "DashboardTC", FromAction = "Clasificadores")]
+        //[Breadcrumb("TipoComprobante", FromController = "DashboardTC", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
             var consulta = DB.TipoComprobante.AsNoTracking().AsQueryable();

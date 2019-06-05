@@ -21,29 +21,29 @@ namespace MumanalPG.Areas.Finanzas.Controllers
         {
         }
 
-		// GET: Finanzas/TipoComprobante
-        [Breadcrumb("Finanzas")]
-        public async Task<IActionResult> Index()
-        { 
-            return View();
-        }
-
-        [Breadcrumb("Clasificadores", FromAction = "Index")]
-        public async Task<IActionResult> Clasificadores()
-        {
-            return View();
-        }
-        
-        [Breadcrumb("TipoComprobante", FromAction = "Index")]
-        public async Task<IActionResult> Docs()
-        {
-            var consulta = DB.TipoComprobante.AsNoTracking().AsQueryable();
-            consulta = consulta.Where(m => m.IdEstadoRegistro != '2'); //!= Constantes.Eliminado );
-            
-            var resp = await PagingList.CreateAsync(consulta, 100, 1, "Descripcion", "Sigla");
-            //resp.RouteValue = new RouteValueDictionary {{ "filter", filter}};
-            return View(resp);
-        }
+//		// GET: Finanzas/TipoComprobante
+//        [Breadcrumb("Finanzas")]
+//        public async Task<IActionResult> Index()
+//        { 
+//            return View();
+//        }
+//
+//        [Breadcrumb("Clasificadores", FromAction = "Index")]
+//        public async Task<IActionResult> Clasificadores()
+//        {
+//            return View();
+//        }
+//        
+//        [Breadcrumb("TipoComprobante", FromAction = "Index")]
+//        public async Task<IActionResult> Docs()
+//        {
+//            var consulta = DB.TipoComprobante.AsNoTracking().AsQueryable();
+//            consulta = consulta.Where(m => m.IdEstadoRegistro != '2'); //!= Constantes.Eliminado );
+//            
+//            var resp = await PagingList.CreateAsync(consulta, 100, 1, "Descripcion", "Sigla");
+//            //resp.RouteValue = new RouteValueDictionary {{ "filter", filter}};
+//            return View(resp);
+//        }
 
     } 
 }

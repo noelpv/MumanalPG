@@ -21,29 +21,29 @@ namespace MumanalPG.Areas.RRHH.Controllers
         {
         }
 
-        // GET: RRHH/Beneficiario
-        [Breadcrumb("RRHH")]
-        public async Task<IActionResult> Index()
-        { 
-            return View();
-        }
-
-        [Breadcrumb("Clasificadores", FromAction = "Index")]
-        public async Task<IActionResult> Clasificadores()
-        {
-            return View();
-        }
-        
-        [Breadcrumb("Beneficiario", FromAction = "Index")]
-        public async Task<IActionResult> DocsO()
-        {
-            var consulta = DB.RRHH_Beneficiario.AsNoTracking().AsQueryable();
-            consulta = consulta.Where(m => m.IdEstadoRegistro != '2'); //!= Constantes.Eliminado );
-
-            var resp = await PagingList.CreateAsync(consulta, 100, 1, "PrimerApellido", "SegundoApellido");
-            //resp.RouteValue = new RouteValueDictionary {{ "filter", filter}};
-            return View(resp);
-        }
+//        // GET: RRHH/Beneficiario
+//        [Breadcrumb("RRHH")]
+//        public async Task<IActionResult> Index()
+//        { 
+//            return View();
+//        }
+//
+//        [Breadcrumb("Clasificadores", FromAction = "Index")]
+//        public async Task<IActionResult> Clasificadores()
+//        {
+//            return View();
+//        }
+//        
+//        [Breadcrumb("Beneficiario", FromAction = "Index")]
+//        public async Task<IActionResult> DocsO()
+//        {
+//            var consulta = DB.RRHH_Beneficiario.AsNoTracking().AsQueryable();
+//            consulta = consulta.Where(m => m.IdEstadoRegistro != '2'); //!= Constantes.Eliminado );
+//
+//            var resp = await PagingList.CreateAsync(consulta, 100, 1, "PrimerApellido", "SegundoApellido");
+//            //resp.RouteValue = new RouteValueDictionary {{ "filter", filter}};
+//            return View(resp);
+//        }
 
     } 
 }

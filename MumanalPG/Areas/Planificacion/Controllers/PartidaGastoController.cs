@@ -27,7 +27,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
         }
 
 		// GET: Planificacion/PartidaGasto
-        [Breadcrumb("PartidaGasto", FromController = "DashboardPG", FromAction = "Clasificadores")]
+        //[Breadcrumb("PartidaGasto", FromController = "DashboardPG", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
             var consulta = DB.PartidaGasto.AsNoTracking().AsQueryable();
