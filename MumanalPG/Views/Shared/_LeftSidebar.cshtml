@@ -175,13 +175,22 @@
         <li>
             <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Clasificadores<i class="ti-align-left"></i></a>
             <ul aria-expanded="false" class="collapse">
-                <li><a href="javascript:void(0)">Estructura Organizacional<i class="ti-list-ol"></i></a></li>
+                <li>
+                    <a asp-area="RRHH" asp-controller="UnidadEjecutora" asp-action="Index">
+                        Estructura Organizacional <i class="fas fa-th-list"></i>
+                    </a>
+                </li>
                 <li><a href="javascript:void(0)">Puestos<i class="ti-list-ol"></i></a></li>
                 <li><a href="javascript:void(0)">Cargos<i class="ti-list-ol"></i></a></li>
 
                 <li><a href="javascript:void(0)">Funciones<i class="ti-list-ol"></i></a></li>
 
                 <li><a href="javascript:void(0)">Clasificacion Personas<i class="ti-list-ol"></i></a></li>
+                <li>
+                    <a asp-area="RRHH" asp-controller="Beneficiario" asp-action="Index">
+                        Registro Personas <i class="fas fa-th-list"></i>
+                    </a>
+                </li>
                 <li><a href="javascript:void(0)">Registro Personas<i class="ti-list-ol"></i></a></li>
                 <li><a href="javascript:void(0)">Estado Civil<i class="ti-list-ol"></i></a></li>
 
@@ -374,7 +383,11 @@
                 <li><a href="javascript:void(0)">Bancos<i class="ti-list-ol"></i></a></li>
                 <li><a href="javascript:void(0)">Cuentas Bancarias<i class="ti-list-ol"></i></a></li>
                 <li><a href="javascript:void(0)">Dosificacion Facturas<i class="ti-list-ol"></i></a></li>
-                <li><a href="javascript:void(0)">Tipos Comprobantes<i class="ti-list-ol"></i></a></li>
+                <li>
+                    <a asp-area="Finanzas" asp-controller="TipoComprobante" asp-action="Index">
+                        Tipos Comprobantes <i class="fas fa-th-list"></i>
+                    </a>
+                </li>
                 <li>
                     <a asp-area="Finanzas" asp-controller="TipoTransaccion" asp-action="Index">
                         Tipo de Transaccion <i class="fas fa-th-list"></i>

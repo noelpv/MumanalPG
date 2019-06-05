@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MumanalPG.Models.Planificacion
 {
-	[Table("FrecuenciaUso", Schema = "Planificacion")]
+	[Table("FrecuenciaUso", Schema = "Generales")]
 	public class FrecuenciaUso
 	{
 		[DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
