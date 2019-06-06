@@ -27,7 +27,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
         }
 
 		// GET: Planificacion/EstructuraProgramatica
-        //[Breadcrumb("EstructuraProgramatica", FromController = "DashboardOF", FromAction = "Clasificadores")]
+        [Breadcrumb("EstructuraProgramatica", FromController = "DashboardPlan", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
             var consulta = DB.EstructuraProgramatica.AsNoTracking().AsQueryable();

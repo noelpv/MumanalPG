@@ -1,0 +1,97 @@
+@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Planificacion.FuenteFinanciamiento>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging
+@{
+    ViewData["Title"] = "Planificacion";
+}
+<div class="row">
+    @* <div class="col-md-4 col-sm-6 col-xs-12"> *@
+    @*     <a href=""> *@
+    @*         <div class="ribbon-vwrapper card"> *@
+    @*             <div class="ribbon ribbon-primary ribbon-vertical-l"> *@
+    @*                 <i class="ti-email"></i> *@
+    @*             </div> *@
+    @*             <h4>Procesos Institucion</h4> *@
+    @*             <p class="ribbon-content">Se registran todos los Procesos de la Institución (Administrtivos, Financieros, Prestaciones, etc.).</p> *@
+    @*         </div> *@
+    @*     </a> *@
+    @* *@
+    @* </div> *@
+
+    @*<div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Planificacion" asp-controller="dashboard" asp-action="docs" >
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-agenda"></i>
+                </div>
+                <h4>Plan de Operaciones</h4>
+                <p class="ribbon-content">Se registra el Plan de Operaciones Anual de la Institución</p>
+            </div>
+        </a>
+    </div>*@
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Planificacion" asp-controller="PresupuestoGasto" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-warning ribbon-vertical-l">
+                    <i class="ti-import"></i>
+                </div>
+                <h4>Presupuesto Gasto</h4>
+                <p class="ribbon-content">Se realiza la Formulación Presupuestaria del Gasto, de la Institución</p>
+            </div>
+        </a>
+
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a href="">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-danger ribbon-vertical-l">
+                    <i class="ti-export"></i>
+                </div>
+                <h4>Modificaciones Presupuestarias</h4>
+                <p class="ribbon-content">Se realizan la Modificaciones Presupuestarias, despues de Aprobar el Presupuesto institucional.</p>
+            </div>
+        </a>
+
+    </div>
+
+    @*<div class="col-md-4 col-sm-6 col-xs-12">
+        <a href="">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-info ribbon-vertical-l">
+                    <i class="ti-map-alt"></i>
+                </div>
+                <h4>Seguimiento</h4>
+                <p class="ribbon-content">Se realiza el Seguimiento del Presupuesto Institucional.</p>
+            </div>
+        </a>
+    </div>*@
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a href="">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-primary ribbon-vertical-l">
+                    <i class="ti-bar-chart"></i>
+                </div>
+                <h4>Reportes</h4>
+                <p class="ribbon-content">Reportes del Sub Sistema de Planificación.</p>
+            </div>
+        </a>
+
+    </div>
+    
+    
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Planificacion" asp-controller="DashboardPlan" asp-action="Clasificadores">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-settings"></i>
+                </div>
+                <h4>Clasificadores</h4>
+                <p class="ribbon-content">Registro de Datos Básicos para el proceso del Subsistema.</p>
+            </div>
+        </a>
+
+    </div>
+</div>

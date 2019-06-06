@@ -1,0 +1,55 @@
+@addTagHelper *, ReflectionIT.Mvc.Paging
+@{
+    ViewData["Title"] = "Planificacion";
+}
+<div class="row">
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Planificacion" asp-controller="FuenteFinanciamiento" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-hand-point-right"></i>
+                </div>
+                <h4>Fuente de Financiamiento</h4>
+                <p class="ribbon-content">Se registran las Fuentes de Financiamiento que utiliza la institución.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Planificacion" asp-controller="OrganismoFinanciador" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-primary ribbon-vertical-l">
+                    <i class="ti-zip"></i>
+                </div>
+                <h4>Organismo Financiador</h4>
+                <p class="ribbon-content">Se registra los Organismos Financiadores que utiliza la institución.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Planificacion" asp-controller="EstructuraProgramatica" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-primary ribbon-vertical-l">
+                    <i class="ti-zip"></i>
+                </div>
+                <h4>Estructura Programatica</h4>
+                <p class="ribbon-content">Se registra la Estructura Programatica para el Presupuesto.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Planificacion" asp-controller="PartidaGasto" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-hand-point-right"></i>
+                </div>
+                <h4>Partidas del Gasto</h4>
+                <p class="ribbon-content">Se registran las Partidas por Objeto del Gasto.</p>
+            </div>
+        </a>
+    </div>
+
+</div>
