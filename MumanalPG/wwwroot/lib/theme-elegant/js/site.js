@@ -12,7 +12,7 @@ $(function() {
         var modalDelete = $(this).data('modal-delete') === 'True';
         var btnSave =  $('#'+ modal_type + '-save');
         var size = $(this).data('modal-size');
-        
+        $('#' + modal_type).find('.modal-dialog').first().removeClass('modal-xl');
         if(size){
             $('#' + modal_type).find('.modal-dialog').first().addClass(size); 
         }

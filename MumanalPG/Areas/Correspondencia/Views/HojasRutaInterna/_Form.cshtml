@@ -97,6 +97,7 @@
 
         var on_change_doc = function(selected) {
             var dataSelected = this.options[selected];
+            $('#doc-id').val(selected);
             $('#origen-id').val(dataSelected.remitenteId);
             $('#origen-name').val(dataSelected.remitente);
             $('#area-id').val(dataSelected.areaId);
@@ -124,16 +125,12 @@
                 $('#rem-input').show();
                 $('#rem-select').hide();
                 $('#origen-name').prop('required',true);
-                $('#doc-id').removeAttr('name');
-                $('#documento').attr('name', 'DocumentoId');
             } else {
                 $('#doc-container').hide();
                 $('#rem-input').hide();
                 $('#rem-select').show();
                 $('#origen-name').prop('required',false);
                 $('#doc-id').attr('name', 'DocumentoId');
-                $('#doc-id').val(0);
-                $('#documento').removeAttr('name');
             }
         });
         var data = @Html.Raw(Json.Serialize(@ViewBag.areas));

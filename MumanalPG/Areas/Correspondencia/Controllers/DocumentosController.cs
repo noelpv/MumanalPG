@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using MumanalPG.Data;
 using MumanalPG.Models;
+using MumanalPG.Models.Correspondencia;
 using MumanalPG.Utility;
 using ReflectionIT.Mvc.Paging;
 using SmartBreadcrumbs;
@@ -103,10 +104,10 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         }
 
         // GET: Correspondencia/Documentos/Create
-        public async Task<IActionResult> Create(Int16 type)
+        public async Task<IActionResult> Create(Int16 type, int? hrdId, string redirect = null)
         {
             ApplicationUser  currentUser = await GetCurrentUser();
-            var model = new Models.Correspondencia.Documento();
+            var model = new Documento();
             model.TipoId = type;
             model.FuncionarioCCId = -1;
             model.FuncionarioViaId = -1;
@@ -116,13 +117,24 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             model.CargoFuncionarioOrigen = currentUser.Funcionario.Puesto.Descripcion;
             model.AreaFuncionarioOrigenId = currentUser.Funcionario.Puesto.UnidadEjecutora.IdUnidadEjecutora;
             model.AreaFuncionarioOrigen = currentUser.Funcionario.Puesto.UnidadEjecutora.Descripcion;
+            model.hojaRutaDetalleId = 0;
+            
+            if (redirect != null)
+            {
+                model.Redirect = redirect;
+                if (hrdId > 0)
+                {
+                    model.hojaRutaDetalleId = hrdId;
+                }
+            }
+
             return PartialView("_Create", model);
         }
 
         // POST: Correspondencia/Documentos/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Models.Correspondencia.Documento item)
+        public async Task<IActionResult> Create(Documento item)
         {
             
             if (ModelState.IsValid)
@@ -137,6 +149,22 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                 await DB.SaveChangesAsync();
                 
             }
+            if (item.Id > 0 && item.Redirect != null)
+            {
+                ViewBag.redirect = item.Redirect;
+                if (item.Redirect == HojasRutaInternaController.RedirectHRSent && item.hojaRutaDetalleId > 0)
+                {
+                    ViewBag.redirect = @Url.Action("Derivar", "HojasRutaInterna", 
+                        new {area="Correspondencia", id=item.hojaRutaDetalleId, idDoc = item.Id});
+                    
+                } else if (item.Redirect == HojasRutaInternaController.RedirectHRCreate)
+                {
+                    ViewBag.redirect = @Url.Action("create", "HojasRutaInterna", new {area="Correspondencia", idDoc = item.Id});
+                }
+               
+                return PartialView("_Redirect");
+            }
+
             return PartialView("_Create",item);
         }
 
@@ -188,7 +216,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         // POST: Correspondencia/Documentos/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, Models.Correspondencia.Documento item)
+        public async Task<IActionResult> Edit(Int32 id, Documento item)
         {
             if (id != item.Id)
             {

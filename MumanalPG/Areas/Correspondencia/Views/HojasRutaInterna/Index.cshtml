@@ -10,6 +10,7 @@
     string intro_msg_search = "Puede buscar una Hoja de ruta Interna introduciendo el Cite o la Referencia en este campo, " +
                               "luego presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
                               "<i class='fas fa-search'></i></button>";
+    int currentHR = 0;
 }
 
 <div class="row">
@@ -83,106 +84,113 @@
                                 <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    string unread_class = (item.Leido) ? "" : "unread";
-                                    
-                                    <tr class="@unread_class">
-                                        <td style="width: 40px" class="small" title="@item.HojaRuta.CiteHojaRuta">
-                                            @item.HojaRuta.SolicitudCodigo/@item.HojaRuta.Gestion
-                                        </td>
-                                        <td class="hidden-xs-down text-capitalize small">
-                                            <div class="">
-                                                <b>De:</b> @item.FunOrg.Denominacion.ToLower()
-                                            </div>
-                                            <div class="">
-                                                <b>Para:</b> @item.FunDst.Denominacion.ToLower()
-                                            </div>
-                                        </td>
-                                        <td class="max-texts referencia">
-                                            <a asp-action="Details" asp-route-id="@item.Id" title=" @item.HojaRuta.Referencia">
-                                                @{
-                                                    string label_class = "label-info";
-                                                    switch (item.HojaRuta.Prioridad)
+                                    if (currentHR != item.HojaRutaId)
+                                    {
+                                        string unread_class = (item.Leido) ? "" : "unread";
+
+                                        <tr class="@unread_class">
+                                            <td style="width: 40px" class="small" title="@item.HojaRuta.CiteHojaRuta">
+                                                @item.HojaRuta.SolicitudCodigo/@item.HojaRuta.Gestion
+                                            </td>
+                                            <td class="hidden-xs-down text-capitalize small">
+                                                <div class="">
+                                                    <b>De:</b> @item.FunOrg.Denominacion.ToLower()
+                                                </div>
+                                                <div class="">
+                                                    <b>Para:</b> @item.FunDst.Denominacion.ToLower()
+                                                </div>
+                                            </td>
+                                            <td class="max-texts referencia">
+                                                <a asp-action="Details" asp-route-id="@item.Id" title=" @item.HojaRuta.Referencia">
+                                                    @{
+                                                        string label_class = "label-info";
+                                                        switch (item.HojaRuta.Prioridad)
+                                                        {
+                                                            case Constantes.PrioridadUrgente:
+                                                                label_class = "label-danger";
+                                                                break;
+                                                            case Constantes.PrioridadAlta:
+                                                                label_class = "label-warning";
+                                                                break;
+                                                            case Constantes.PrioridadBaja:
+                                                                label_class = "label-inverse";
+                                                                break;
+                                                        }
+                                                    }
+                                                    <span class="label @label_class m-r-10 text-capitalize">
+                                                        @item.HojaRuta.Prioridad.ToLower()
+                                                    </span>
+                                                    @item.HojaRuta.Referencia
+                                                </a>
+                                            </td>
+                                            <td class="hidden-xs-down">
+                                                <i class="icon-paper-clip"></i>
+                                            </td>
+                                            <td class=" small text-right text-capitalize">
+                                                @item.FechaRegistro.ToString("MMM dd, HH:mm", new CultureInfo("es-ES"))
+                                            </td>
+                                            <td>
+                                                <div class="btn-group mr-2" role="group">
+                                                    @if (ViewBag.type == Constantes.HRTipoRecibidos ||
+                                                         ViewBag.type == Constantes.HRTipoUrgentes)
                                                     {
-                                                        case Constantes.PrioridadUrgente:
-                                                            label_class = "label-danger";
-                                                            break;
-                                                        case Constantes.PrioridadAlta:
-                                                            label_class = "label-warning";
-                                                            break;
-                                                        case Constantes.PrioridadBaja:
-                                                            label_class = "label-inverse";
-                                                            break;
+                                                        <a asp-action="Derivar" asp-route-id="@item.Id" class="btn btn-secondary show-loader" title="Derivar">
+                                                            <i class="ti-share"></i>
+                                                        </a>
+                                                    }
+
+                                                </div>
+
+                                                <a class="dropdown-toggle btn-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="icon-options-vertical"></i>
+                                                </a>
+                                                @{
+                                                    int nuevoEstadoArchivar = Constantes.Archivado;
+                                                    int nuevoEstadoAnular = Constantes.Anulado;
+                                                    string archivarText = "Archivar";
+                                                    string anularText = "Anular";
+
+                                                    if (item.IdEstadoRegistro == Constantes.Archivado)
+                                                    {
+                                                        archivarText = "Restaurar";
+                                                        nuevoEstadoArchivar = Constantes.Registrado;
+                                                    }
+                                                    else if (item.IdEstadoRegistro == Constantes.Anulado)
+                                                    {
+                                                        anularText = "Restaurar";
+                                                        nuevoEstadoAnular = Constantes.Registrado;
                                                     }
                                                 }
-                                                <span class="label @label_class m-r-10 text-capitalize">
-                                                    @item.HojaRuta.Prioridad.ToLower()
-                                                </span>
-                                                @item.HojaRuta.Referencia
-                                            </a>
-                                        </td>
-                                        <td class="hidden-xs-down"><i class="icon-paper-clip"></i></td>
-                                        <td class=" small text-right text-capitalize">
-                                            @item.FechaRegistro.ToString("MMM dd, HH:mm", new CultureInfo("es-ES"))
-                                        </td>
-                                        <td>
-                                            <div class="btn-group mr-2" role="group">
-                                                @if (ViewBag.type == Constantes.HRTipoRecibidos || 
-                                                     ViewBag.type == Constantes.HRTipoUrgentes)
-                                                {
-                                                    <a asp-action="Derivar" asp-route-id="@item.Id" class="btn btn-secondary show-loader" title="Derivar">
-                                                        <i class="ti-share"></i>
-                                                    </a> 
-                                                }
-                                                
-                                            </div>
-
-                                            <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="icon-options-vertical"></i>
-                                            </a>
-                                            @{
-                                                int nuevoEstadoArchivar = Constantes.Archivado;
-                                                int nuevoEstadoAnular = Constantes.Anulado;
-                                                string archivarText = "Archivar";
-                                                string anularText = "Anular";
-                                                
-                                                if (item.IdEstadoRegistro == Constantes.Archivado)
-                                                {
-                                                    archivarText = "Restaurar";
-                                                    nuevoEstadoArchivar = Constantes.Registrado;
-                                                } else  if (item.IdEstadoRegistro == Constantes.Anulado)
-                                                {
-                                                    anularText = "Restaurar";
-                                                    nuevoEstadoAnular = Constantes.Registrado;
-                                                }
-                                                
-                                            }
-                                            <div class="dropdown-menu dropdown-menu-lg-right">
-                                                <a asp-action="Details" asp-route-id="@item.Id" class="dropdown-item">Abrir</a>
-                                                <button class="dropdown-item" type="button">Adjuntar</button>
-                                                @if (ViewBag.type == Constantes.HRTipoRecibidos || 
-                                                     ViewBag.type == Constantes.HRTipoUrgentes)
-                                                {
-                                                    <button class="dropdown-item" type="button">Crear Documento y Derivar</button>
-                                                    <button class="dropdown-item" type="button">Solo Derivar</button>
-                                                    
-                                                }
-                                                <a asp-action="CambiarEstado" asp-route-id="@item.Id" asp-route-from="index"
-                                                   asp-route-nuevoEstado="@nuevoEstadoArchivar"
-                                                   class="dropdown-item">
-                                                    @archivarText
-                                                </a>
-                                                <a asp-action="CambiarEstado" asp-route-id="@item.Id" asp-route-from="index"
-                                                   asp-route-nuevoEstado="@nuevoEstadoAnular"
-                                                   class="dropdown-item">
-                                                    @anularText
-                                                </a>
-                                                <a asp-action="Flujo" asp-route-id="@item.Id" data-modal-size="modal-xl"
-                                                   data-modal="link" data-modal-read="True" title="Flujo de Hoja de Ruta" 
-                                                   class="dropdown-item"> Ver Flujo
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                                <div class="dropdown-menu dropdown-menu-lg-right">
+                                                    <a asp-action="Details" asp-route-id="@item.Id" class="dropdown-item">Abrir</a>
+                                                    <button class="dropdown-item" type="button">Adjuntar</button>
+                                                    @if (ViewBag.type == Constantes.HRTipoRecibidos ||
+                                                         ViewBag.type == Constantes.HRTipoUrgentes)
+                                                    {
+                                                        <button class="dropdown-item" type="button">Crear Documento y Derivar</button>
+                                                        <button class="dropdown-item" type="button">Solo Derivar</button>
+                                                    }
+                                                    <a asp-action="CambiarEstado" asp-route-id="@item.Id" asp-route-from="index"
+                                                       asp-route-nuevoEstado="@nuevoEstadoArchivar"
+                                                       class="dropdown-item">
+                                                        @archivarText
+                                                    </a>
+                                                    <a asp-action="CambiarEstado" asp-route-id="@item.Id" asp-route-from="index"
+                                                       asp-route-nuevoEstado="@nuevoEstadoAnular"
+                                                       class="dropdown-item">
+                                                        @anularText
+                                                    </a>
+                                                    <a asp-action="Flujo" asp-route-id="@item.Id" data-modal-size="modal-xl"
+                                                       data-modal="link" data-modal-read="True" title="Flujo de Hoja de Ruta"
+                                                       class="dropdown-item">
+                                                        Ver Flujo
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                       currentHR = item.HojaRutaId;
+                                    }
+                                   
                                 }
 
                                 </tbody>

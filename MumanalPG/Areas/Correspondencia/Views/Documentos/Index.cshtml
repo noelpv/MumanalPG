@@ -102,11 +102,11 @@
                 </td>
                  
                 @{
-                    options.Id = item.Id;
-                    options.ShowIntroMessages = index == 0 ? true : false;
                     options.CustomBtn = $@" <a href='/correspondencia/hojasrutainterna/create?idDoc={item.Id}' 
                                             data-toggle='tooltip' class='btn btn-secondary btn-outline-secondary waves-effect waves-light show-loader' 
                                             title='Crear Hoja de Ruta'><i class='ti-share'></i></a>";
+                    options.Id = item.Id;
+                    options.ShowIntroMessages = index == 0 ? true : false;
                     index++;
                     
                 }

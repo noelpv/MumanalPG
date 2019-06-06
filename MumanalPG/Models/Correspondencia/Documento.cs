@@ -104,6 +104,11 @@ namespace MumanalPG.Models.Correspondencia
 		public Int32 IdEstadoRegistro { get; set; }
 		public Int32 IdUsuario { get; set; }
 		public DateTime FechaRegistro { get; set; }
-		
+
+		[NotMapped] 
+		public string Redirect { get; set; }
+		[NotMapped]
+		public int? hojaRutaDetalleId { get; set; }
+
 	}
 }
