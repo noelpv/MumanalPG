@@ -33,7 +33,7 @@ namespace MumanalPG.Models.RRHH
         public Decimal OtroPagoPenultimo { get; set; }
         public Decimal OtroPagoUtimo { get; set; }
         public Decimal Desahucio3Meses { get; set; }
-        public Decimal ImdemnizacionAño { get; set; }
+        public Decimal Imdemnizacion { get; set; }
         public Decimal ImdemnizacionMes { get; set; }
         public Decimal ImdemnizacionDias { get; set; }
         public Decimal AguinaldoNavidad { get; set; }
