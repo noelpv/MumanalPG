@@ -48,6 +48,7 @@ namespace MumanalPG.Data
         //public DbSet<MumanalPG.Models.Finanzas.Puesto> RRHH_Puesto { get; set; }
         //public DbSet<MumanalPG.Models.Finanzas.UnidadEjecutora> RRHH_UnidadEjecutora { get; set; }
         //public DbSet<MumanalPG.Models.Finanzas.vPersona> RRHH_vPersona { get; set; }
+        public DbSet<MumanalPG.Models.Finanzas.TipoMoneda> TipoMoneda { get; set; }
         public DbSet<MumanalPG.Models.Finanzas.TipoComprobante> TipoComprobante { get; set; }
         /*Fin Finanzas*/
 
