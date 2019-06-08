@@ -30,6 +30,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.2" />
     <PackageReference Include="ReflectionIT.Mvc.Paging" Version="3.0.1" />
+    <PackageReference Include="Rotativa.AspNetCore" Version="1.1.1" />
     <PackageReference Include="SmartBreadcrumbs" Version="1.0.3.3" />    
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +131,8 @@
     <Folder Include="Models\GeneralesParam\" />
     <Folder Include="Models\VentasParam\" />
     <Folder Include="Models\PlanificacionParam\" />
+    <Folder Include="Rotativa\Linux" />
+    <Folder Include="Rotativa\Windows" />
     <Folder Include="wwwroot\images\ProductImage\" />
     <Folder Include="wwwroot\docs\" />
     <Folder Include="wwwroot\uploads\" />

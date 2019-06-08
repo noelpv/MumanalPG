@@ -85,7 +85,7 @@
 
                         }
                        
-                        <a asp-action="CambiarEstado" asp-route-id="@Model.Id" asp-route-nuevoEstado="@Constantes.Anulado"
+                        <a asp-action="HojaRutaPDF" asp-route-id="@Model.Id" title="Hoja de Ruta" target="_blank"
                            class="btn btn-secondary" data-intro="Haciendo click sobre esta opción podra generar la hoja de Ruta en PDF para poder imprimirlo">
                             <i class="far fa-file-pdf mr-2"></i> <span class="d-none d-sm-inline">Hoja de Ruta</span>
                         </a>
@@ -100,7 +100,7 @@
                                     {
                                         <a asp-controller="Documentos" asp-action="Details" asp-route-id="@doc.Id"
                                            title="@doc.Tipo.shortName() - @doc.Cite" data-modal="link" data-modal-read="True"
-                                           class="dropdown-item" data-modal="link">
+                                           class="dropdown-item">
                                             @doc.Tipo.shortName() - @doc.Cite
                                         </a>
                                     }
