@@ -26,6 +26,7 @@ namespace MumanalPG.Data
                 new FuncionariosPuestoSeeder(context).SeedData();
                 new RolesSeeder(context, _roleContext).SeedData();
                 new UsersSeeder(context, _userContext).SeedData();
+                new TipoAnexoSeeder(context).SeedData();
 
 //#if DEBUG
 //                // if we are debugging, then let's run the test data seeder
