@@ -53,6 +53,7 @@ namespace MumanalPG.Areas.Ventas
 			return View();
 		}
 
+
 		[HttpGet]
 		public JsonResult LoadData()
 		{
