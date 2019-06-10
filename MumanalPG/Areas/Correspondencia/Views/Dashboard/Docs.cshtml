@@ -13,7 +13,7 @@
     @foreach (var doc in Model){
 
         <div class="col-md-4 col-sm-6 col-xs-12">
-            <a asp-area="correspondencia" asp-controller="documentos" asp-action="index" asp-route-type="@doc.Id">
+            <a asp-area="correspondencia" asp-controller="documentos" asp-action="index" asp-route-type="@doc.Id" class="show-loader">
                 <div class="ribbon-vwrapper card">
                     <div class="ribbon ribbon-@classColors[indexColors] ribbon-vertical-l">
                         <i class="@classIcons[indexIcons]"></i>

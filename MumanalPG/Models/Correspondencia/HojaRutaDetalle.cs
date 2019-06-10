@@ -48,6 +48,8 @@ namespace MumanalPG.Models.Correspondencia
 
 		public int DocumentoId { get; set; }
 		public virtual Documento Documento { get; set; }
+		
+		public ICollection<Anexo>  Anexos { get; set; }
 
 		public int IdEstadoRegistro { get; set; }
 		public int IdUsuario { get; set; }

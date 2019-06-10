@@ -14,6 +14,8 @@ using MumanalPG.Models.Correspondencia;
 using MumanalPG.Models.Correspondencia.DTO;
 using MumanalPG.Utility;
 using ReflectionIT.Mvc.Paging;
+using Rotativa.AspNetCore;
+using Rotativa.AspNetCore.Options;
 using SmartBreadcrumbs;
 
 namespace MumanalPG.Areas.Correspondencia.Controllers
@@ -349,6 +351,47 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             }
 
             return RedirectToAction("Details", new {id = item.Id});  
+        }
+
+        // GET: Correspondencia/HojasRutaInterna/HojaRutaPDF
+        public async Task<IActionResult> HojaRutaPDF(int id)
+        {
+            if (id <= 0)
+            {
+                return View("_NoEncontrado");
+            }
+
+            var instrucciones = DB.CorrespondenciaInstrucciones
+                .Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Nombre).ToList();
+            
+            var item = await DB.CorrespondenciaHRDetalle
+                .Include(m => m.AreaOrigen)
+                .Include(m => m.AreaDestino)
+                .Include(m => m.FunOrg)
+                .Include(m => m.FunDst)
+                .Include(m => m.HojaRuta)
+                .Include(m => m.HRDetalleInstrucciones)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            
+            if (item == null)
+            {
+                return View("_NoEncontrado");
+            }
+
+            HojaRutaPDFDTO dto = new HojaRutaPDFDTO();
+            dto.hojaRuta = item.HojaRuta;
+            dto.detalle = item;
+            dto.instrucciones = instrucciones;
+           // return View(await _context.Customers.ToListAsync());
+            return new ViewAsPdf("_HojaRuta", dto)
+            {
+                PageMargins = new Margins(20, 10, 12, 10),
+                PageSize = Size.Letter,
+                CustomSwitches =  
+                    "--footer-left \" © Sistema Integrado Versión 1.0\" --footer-center \" Página: [page]\" --footer-right \"  Documento generado el: " +  
+                    DateTime.Now.ToString("dd/MM/yyyy HH:mm") + "\"" +  
+                    " --footer-line --footer-font-size \"7\" --footer-spacing 1 --footer-font-name \"Segoe UI\""  
+           };
         }
 
         public JsonResult GetDocuments(string filter = "")

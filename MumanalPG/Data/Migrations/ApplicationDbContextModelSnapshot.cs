@@ -935,6 +935,35 @@ namespace MumanalPG.Data.Migrations
                     b.ToTable("Appointments");
                 });
 
+            modelBuilder.Entity("MumanalPG.Models.Correspondencia.Anexo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Descripcion")
+                        .HasMaxLength(200);
+
+                    b.Property<DateTime>("FechaRegistro");
+
+                    b.Property<int>("HRDetalleId");
+
+                    b.Property<int>("IdEstadoRegistro");
+
+                    b.Property<int>("IdUsuario");
+
+                    b.Property<string>("PathArchivo");
+
+                    b.Property<int>("TipoId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HRDetalleId");
+
+                    b.HasIndex("TipoId");
+
+                    b.ToTable("Anexos","Correspondencia");
+                });
+
             modelBuilder.Entity("MumanalPG.Models.Correspondencia.Documento", b =>
                 {
                     b.Property<int>("Id")
@@ -1160,6 +1189,29 @@ namespace MumanalPG.Data.Migrations
                     b.ToTable("Instrucciones","Correspondencia");
                 });
 
+            modelBuilder.Entity("MumanalPG.Models.Correspondencia.TipoAnexo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Descripcion")
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime>("FechaRegistro");
+
+                    b.Property<int>("IdEstadoRegistro");
+
+                    b.Property<int>("IdUsuario");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TiposAnexo","Correspondencia");
+                });
+
             modelBuilder.Entity("MumanalPG.Models.Correspondencia.TipoDocumento", b =>
                 {
                     b.Property<short>("Id")
@@ -1182,6 +1234,36 @@ namespace MumanalPG.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TipoDocumento","Correspondencia");
+                });
+
+            modelBuilder.Entity("MumanalPG.Models.Finanzas.TipoComprobante", b =>
+                {
+                    b.Property<int>("IdTipoComprobante")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Descripcion");
+
+                    b.Property<bool>("EsCobranza");
+
+                    b.Property<bool>("EsContabilidad");
+
+                    b.Property<bool>("EsEgreso");
+
+                    b.Property<bool>("EsIngreso");
+
+                    b.Property<bool>("EsPago");
+
+                    b.Property<DateTime>("FechaRegistro");
+
+                    b.Property<int>("IdEstadoRegistro");
+
+                    b.Property<int>("IdUsuario");
+
+                    b.Property<string>("Sigla");
+
+                    b.HasKey("IdTipoComprobante");
+
+                    b.ToTable("TipoComprobante","Finanzas");
                 });
 
             modelBuilder.Entity("MumanalPG.Models.Finanzas.TipoTransaccion", b =>
@@ -2254,6 +2336,19 @@ namespace MumanalPG.Data.Migrations
                     b.HasOne("MumanalPG.Models.ApplicationUser", "SalesPerson")
                         .WithMany()
                         .HasForeignKey("SalesPersonId");
+                });
+
+            modelBuilder.Entity("MumanalPG.Models.Correspondencia.Anexo", b =>
+                {
+                    b.HasOne("MumanalPG.Models.Correspondencia.HojaRutaDetalle", "HRDetalle")
+                        .WithMany("Anexos")
+                        .HasForeignKey("HRDetalleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MumanalPG.Models.Correspondencia.TipoAnexo", "Tipo")
+                        .WithMany("Anexos")
+                        .HasForeignKey("TipoId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MumanalPG.Models.Correspondencia.Documento", b =>

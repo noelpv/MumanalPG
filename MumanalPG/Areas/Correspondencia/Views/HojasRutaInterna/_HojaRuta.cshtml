@@ -1,0 +1,82 @@
+@model MumanalPG.Models.Correspondencia.DTO.HojaRutaPDFDTO;
+@using MumanalPG.Utility
+@{ Layout = "_PDFLayout"; }
+@{
+    ViewData["Title"] = "Hoja de Ruta";
+    string[] literal = new string[] {"PRIMER", "SEGUNDO", "TERCER", "CUARTO", "QUINTO", "SEXTO", "SEPTIMO", "OCTAVO", 
+        "NOVENO", "DÉCIMO", "UNDÉCIMO", "DUODÉCIMO", "DECIMOTERCER", "DECIMOCUARTO", "DECIMOQUINTO", "DECIMOSEXTO",
+        "DECIMOSÉPTIMO", "DECIMOCOTAVO", "DECIMONOVENO","VIGÉSIMO","VIGÉSIMO PRIMERO","VIGÉSIMO SEGUNDO","VIGÉSIMO TERCER",
+        "VIGÉSIMO CUARTO","VIGÉSIMO QUINTO","VIGÉSIMO SEXTO","VIGÉSIMO SÉPTIMO","VIGÉSIMO OCTAVO","VIGÉSIMO NOVENO","TRIGÉSIMO",
+        "TRIGÉSIMO PRIMERO","TRIGÉSIMO SEGUNDO","TRIGÉSIMO TERCERO","TRIGÉSIMO CUARTO","TRIGÉSIMO QUINTO","TRIGÉSIMO SÉPTIMO",
+        "TRIGÉSIMO OCTAVO","TRIGÉSIMO NOVENO","CUADRAGÉSIMO" };
+}
+<div class="hoja-ruta">
+    
+    <div class="row mb-2">
+        <div class=" col-1">
+            <img height="65px" src="~/lib/theme-elegant/img/logo-80.png" alt="homepage" class="light-logo"/>
+        </div>
+        <div class="col-10 text-center">
+            <h3>CORRESPONDENCIA INTERNA</h3>
+            <h6>@Model.hojaRuta.CiteHojaRuta</h6>
+        </div>
+    </div>
+    @{
+        string bg_class = "bg-info";
+        switch (Model.hojaRuta.Prioridad)
+        {
+            case Constantes.PrioridadUrgente:
+                bg_class = "bg-danger";
+                break;
+            case Constantes.PrioridadAlta:
+                bg_class = "bg-warning";
+                break;
+            case Constantes.PrioridadBaja:
+                bg_class = "bg-default";
+                break;
+        }
+    }
+    <div class="row @bg_class">
+        <div class="col col-2 text-center">
+            <label>ASUNTO: </label>
+        </div>
+        <div class="col col-10">
+            <p class="bg-light">
+                @Model.hojaRuta.Referencia
+            </p>
+        </div>
+    </div>
+    <div class="box margin-box destinatario pt-0 pb-0 mb-0">
+        <label>@literal[0] DESTINATARIO</label>
+    </div>
+    <partial name="_HojaRutaSeccionPrimera" model="@Model" />
+    
+    @for (int i = 1; i < 12; i++)
+    {
+         if (i % 3 == 0 && i > 1)
+         {
+             <div class="page-break"></div>
+             <div class="row mt-5 mb-2 @bg_class">
+                 <div class="col col-2 text-center">
+                     <label>ASUNTO: </label>
+                 </div>
+                 <div class="col col-10">
+                     <p class="bg-light">
+                         @Model.hojaRuta.Referencia
+                     </p>
+                 </div>
+             </div>
+         }
+
+        <div class="box margin-box destinatario pt-0 pb-0 mb-0">
+            <label>@literal[i] DESTINATARIO</label>
+        </div>
+        <partial name="_HojaRutaSeccion" model="@Model" />
+        
+       
+
+       
+    }
+   
+
+</div>
