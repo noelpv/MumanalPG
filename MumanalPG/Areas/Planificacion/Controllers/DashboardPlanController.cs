@@ -21,7 +21,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
         {
         }
 
-        // GET: Planificacion/EstructuraProgramatica
+        // GET: Planificacion/Planificacion
         [Breadcrumb("Planificacion")]
         public async Task<IActionResult> Index()
         {
@@ -34,16 +34,16 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             return View();
         }
 
-        [Breadcrumb("Presupuesto", FromAction = "Index")]
-        public async Task<IActionResult> PresupuestoGasto()
-        {
-            //var consulta = DB.EstructuraProgramatica.AsNoTracking().AsQueryable();
-            //consulta = consulta.Where(m => m.IdEstadoRegistro != '2'); //!= Constantes.Eliminado );
+        //[Breadcrumb("Presupuesto", FromAction = "Index")]
+        //public async Task<IActionResult> Plan()
+        //{
+        //    //var consulta = DB.EstructuraProgramatica.AsNoTracking().AsQueryable();
+        //    //consulta = consulta.Where(m => m.IdEstadoRegistro != '2'); //!= Constantes.Eliminado );
 
-            //var resp = await PagingList.CreateAsync(consulta, 100, 1, "Descripcion", "Sigla");
-            ////resp.RouteValue = new RouteValueDictionary {{ "filter", filter}};
-            return View();
-        }
+        //    //var resp = await PagingList.CreateAsync(consulta, 100, 1, "Descripcion", "Sigla");
+        //    ////resp.RouteValue = new RouteValueDictionary {{ "filter", filter}};
+        //    return View();
+        //}
 
     } 
 }

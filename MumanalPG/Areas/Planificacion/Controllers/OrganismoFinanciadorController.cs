@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -63,18 +64,34 @@ namespace MumanalPG.Areas.Planificacion.Controllers
         public IActionResult Create()
         {
             var model = new Models.Planificacion.OrganismoFinanciador();
+
+            var items = new List<SelectListItem>();
+            items = DB.FuenteFinanciamiento.                   
+                   Select(c => new SelectListItem()
+                   {
+                       Text = c.Descripcion,
+                       Value = c.IdFuenteFinanciamiento.ToString()
+                   }).
+                   ToList();
+            ViewBag.FuenteFinanciamiento = items;
+
+
+
+
+
             return PartialView("Create", model);
         }
 
         // POST: Planificacion/OrganismoFinanciador/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Models.Planificacion.OrganismoFinanciador item)
+        public async Task<IActionResult> Create(Models.Planificacion.OrganismoFinanciador item, string FuenteFinanciamiento)
         {
             if (ModelState.IsValid)
             {
                 //ApplicationUser currentUser = await GetCurrentUser();
                 //item.IdUsuario = currentUser.AspNetUserId;
+                item.IdFuenteFinanciamiento = Convert.ToInt32(FuenteFinanciamiento);
                 item.Gestion = "2019";
                 item.IdBeneficiario = '0';
                 item.CargoRepresentante = "";

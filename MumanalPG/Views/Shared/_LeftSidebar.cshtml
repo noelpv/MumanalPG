@@ -32,6 +32,12 @@
             </a>
         </li>
 
+
+        <li class="@((String.Equals(currentArea.ToLower(), "Prestaciones")) ?  "selected" : "")">
+            <a asp-area="Ventas" asp-controller="DashboardVenta" asp-action="index" class="waves-effect waves-dark">
+                <i class="mdi mdi-email-open-outline"></i><span class="hide-menu">Prestaciones</span>
+            </a>
+        </li>
         @*<li>
         <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
             <i class="fas fa-bezier-curve"></i><span class="hide-menu">Planificación</span>
@@ -108,7 +114,9 @@
             </li>
         </ul>
             </li>*@
-        <li>
+
+
+        @*<li>
             <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                 <i class="fas fa-hand-holding-usd"></i><span class="hide-menu">Prestaciones</span>
             </a>
@@ -145,7 +153,8 @@
                     </ul>
                 </li>
             </ul>
-        </li>
+        </li>*@
+
         <li>
             <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                 <i class="fas fa-people-carry"></i><span class="hide-menu">Recursos Humanos </span>

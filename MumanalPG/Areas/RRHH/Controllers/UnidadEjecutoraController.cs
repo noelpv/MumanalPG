@@ -27,7 +27,7 @@ namespace MumanalPG.Areas.RRHH.Controllers
         }
 
 		// GET: RRHH/UnidadEjecutora
-        //[Breadcrumb("UnidadEjecutora", FromController = "DashboardBF", FromAction = "Clasificadores")]
+        //[Breadcrumb("UnidadEjecutora", FromController = "DashboardRRHH", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
             var consulta = DB.RRHH_UnidadEjecutora.AsNoTracking().AsQueryable();

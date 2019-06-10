@@ -27,7 +27,7 @@ namespace MumanalPG.Areas.RRHH.Controllers
         }
 
 		// GET: RRHH/Beneficiario
-        //[Breadcrumb("Beneficiario", FromController = "DashboardOF", FromAction = "Clasificadores")]
+        //[Breadcrumb("Beneficiario", FromController = "DashboardRRHH", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Denominacion", string a = "")
         { 
             var consulta = DB.RRHH_Beneficiario.AsNoTracking().AsQueryable();

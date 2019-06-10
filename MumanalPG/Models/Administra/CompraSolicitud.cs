@@ -24,7 +24,7 @@ namespace MumanalPG.Models.Administra
         public Int32 IdDepartamento { get; set; }
         public Int32 IdPoa { get; set; }
         public Int32 IdProceso { get; set; }
-        public Int32 IdDocumentosRespaldo { get; set; }
+        public Int32 IdDocumentoRespaldo { get; set; }
         public Int32 NumeroDocumento { get; set; }
         public string PathArchivo { get; set; }
         public Boolean ArchivoCargado { get; set; }

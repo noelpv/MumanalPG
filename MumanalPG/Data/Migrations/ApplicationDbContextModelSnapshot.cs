@@ -822,7 +822,7 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<int>("IdDepartamento");
 
-                    b.Property<int>("IdDocumentosRespaldo");
+                    b.Property<int>("IdDocumentoRespaldo");
 
                     b.Property<int>("IdEstadoRegistro");
 

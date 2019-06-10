@@ -10,7 +10,7 @@ namespace MumanalPG.Models.Finanzas
         [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         [Key]
         public Int32 IdCobranzaRegistro { get; set; }
-        public Int32 IdDocumentosRespaldo { get; set; }
+        public Int32 IdDocumentoRespaldo { get; set; }
         public Int32 NumeroDocumento { get; set; }
         public string Gestion { get; set; }
         public Int32 IdBeneficiario { get; set; }

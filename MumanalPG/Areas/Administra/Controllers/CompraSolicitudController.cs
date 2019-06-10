@@ -55,7 +55,7 @@ namespace MumanalPG.Areas.Administra
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdCompraSolicitud,Gestion,IdUnidadEjecutora,CorrelativoUnidad,FechaSolicitud,FechaRecepcionSolicitud,IdBeneficiario,IdBeneficiarioResponsable,Justificacion,Observaciones,CiteTramite,MesNumero,IdDepartamento,IdPoa,IdProceso,IdDocumentosRespaldo,NumeroDocumento,PathArchivo,ArchivoCargado,IdEstadoRegistro,IdUsuario,IdUsuarioAprueba,FechaRegistro,FechaAprueba")] CompraSolicitud compraSolicitud)
+        public async Task<IActionResult> Create([Bind("IdCompraSolicitud,Gestion,IdUnidadEjecutora,CorrelativoUnidad,FechaSolicitud,FechaRecepcionSolicitud,IdBeneficiario,IdBeneficiarioResponsable,Justificacion,Observaciones,CiteTramite,MesNumero,IdDepartamento,IdPoa,IdProceso,IdDocumentoRespaldo,NumeroDocumento,PathArchivo,ArchivoCargado,IdEstadoRegistro,IdUsuario,IdUsuarioAprueba,FechaRegistro,FechaAprueba")] CompraSolicitud compraSolicitud)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace MumanalPG.Areas.Administra
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdCompraSolicitud,Gestion,IdUnidadEjecutora,CorrelativoUnidad,FechaSolicitud,FechaRecepcionSolicitud,IdBeneficiario,IdBeneficiarioResponsable,Justificacion,Observaciones,CiteTramite,MesNumero,IdDepartamento,IdPoa,IdProceso,IdDocumentosRespaldo,NumeroDocumento,PathArchivo,ArchivoCargado,IdEstadoRegistro,IdUsuario,IdUsuarioAprueba,FechaRegistro,FechaAprueba")] CompraSolicitud compraSolicitud)
+        public async Task<IActionResult> Edit(int id, [Bind("IdCompraSolicitud,Gestion,IdUnidadEjecutora,CorrelativoUnidad,FechaSolicitud,FechaRecepcionSolicitud,IdBeneficiario,IdBeneficiarioResponsable,Justificacion,Observaciones,CiteTramite,MesNumero,IdDepartamento,IdPoa,IdProceso,IdDocumentoRespaldo,NumeroDocumento,PathArchivo,ArchivoCargado,IdEstadoRegistro,IdUsuario,IdUsuarioAprueba,FechaRegistro,FechaAprueba")] CompraSolicitud compraSolicitud)
         {
             if (id != compraSolicitud.IdCompraSolicitud)
             {

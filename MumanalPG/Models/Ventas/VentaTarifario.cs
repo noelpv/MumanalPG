@@ -11,10 +11,10 @@ namespace MumanalPG.Models.Ventas
 		[Key]
 		public Int32 IdVentaTarifario { get; set; }
 		public string Descripcion { get; set; }
-		public Int32 IdProcesoNivel2 { get; set; }
+		public Int32 IdProceso { get; set; }
 		public Int32 IdBeneficiarioCategoria { get; set; }
 		public Int32 NumeroCuotas { get; set; }
-		public Int32 NuemroPeriodos { get; set; }
+		public Int32 NumeroPeriodos { get; set; }
 		public Decimal ValorInicialBs { get; set; }
 		public Decimal InteresBs { get; set; }
 		public Decimal ValorFinalBs { get; set; }
@@ -22,7 +22,8 @@ namespace MumanalPG.Models.Ventas
 		public Int32 IdEstadoRegistro { get; set; }
 		public Int32 IdUsuario { get; set; }
 		public DateTime FechaRegistro { get; set; }
-	}
+        public Int32 Escala { get; set; }
+    }
 }
 
 

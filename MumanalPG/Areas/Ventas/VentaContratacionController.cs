@@ -256,7 +256,7 @@ namespace MumanalPG.Areas.Ventas
 				ventaContratacion.IdProcesoNivel2 = 0;
 				ventaContratacion.Gestion = DateTime.Now.Year.ToString();
 				ventaContratacion.IdDepartamento = 2;
-				//ventaContratacion.IdBeneficiario = Convert.ToInt32(HttpContext.Session.GetString(SessionIdBeneficiario));               //Convert.ToInt32(Beneficiarios);
+				//ventaContratacion.IdBeneficiario = //Convert.ToInt32(Beneficiarios);
 				ventaContratacion.IdBeneficiarioGarante = -1;// Convert.ToInt32(HttpContext.Session.GetString(SessionIdBeneficiarioGarante)); //Convert.ToInt32(Garantes);
 				ventaContratacion.IdBeneficiarioResponsable = 0;
 				ventaContratacion.IdVentaTarifario = 0;

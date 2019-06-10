@@ -1,90 +1,44 @@
-﻿@model MumanalPG.Models.Ventas.VentaTarifario
+@model MumanalPG.Models.Ventas.VentaTarifario
+<div class="row justify-content-center">
+    <div class="col-10">
+        <div class="card border-info">
+            <div class="card-body">
+                <dl class="dl-horizontal">
+                    //IdVentaTarifario,IdBeneficiario,Justificacion,IdUnidadEjecutora,FechaSolicitud,IdDocumentoRespaldo
+                    <dt>
+                        @Html.DisplayNameFor(model => model.IdVentaTarifario)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.IdVentaTarifario)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Descripcion)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Descripcion)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Escala)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Escala)
+                    </dd>
 
-@{
-    ViewData["Title"] = "Details";
-}
+                    <dt>
+                        @Html.DisplayNameFor(model => model.NumeroCuotas)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.NumeroCuotas)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ValorFinalBs)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ValorFinalBs)
+                    </dd>
 
-<h2>Details</h2>
-
-<div>
-    <h4>VentaTarifario</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Descripcion)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IdProcesoNivel2)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IdProcesoNivel2)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IdBeneficiarioCategoria)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IdBeneficiarioCategoria)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.NumeroCuotas)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NumeroCuotas)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.NuemroPeriodos)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NuemroPeriodos)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ValorInicialBs)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ValorInicialBs)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.InteresBs)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.InteresBs)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ValorFinalBs)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ValorFinalBs)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Porcentaje)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Porcentaje)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IdEstadoRegistro)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IdEstadoRegistro)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IdUsuario)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IdUsuario)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaRegistro)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.FechaRegistro)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.IdVentaTarifario">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+                </dl>
+            </div>
+        </div>
+    </div>
 </div>
