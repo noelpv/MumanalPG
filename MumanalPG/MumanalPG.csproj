@@ -9,8 +9,6 @@
 
   <ItemGroup>
     <Compile Remove="Areas\AdministraParam\**" />
-    <Compile Remove="Areas\Administra\Data\**" />
-    <Compile Remove="Areas\Administra\Models\**" />
     <Compile Remove="Areas\RRHH\Models\**" />
     <Compile Remove="Models\ContableParam\**" />
     <Compile Remove="Models\Contable\**" />
@@ -18,8 +16,6 @@
     <Compile Remove="Models\PlanificacionParam\**" />
     <Compile Remove="Models\VentasParam\**" />
     <Content Remove="Areas\AdministraParam\**" />
-    <Content Remove="Areas\Administra\Data\**" />
-    <Content Remove="Areas\Administra\Models\**" />
     <Content Remove="Areas\RRHH\Models\**" />
     <Content Remove="Models\ContableParam\**" />
     <Content Remove="Models\Contable\**" />
@@ -27,8 +23,6 @@
     <Content Remove="Models\PlanificacionParam\**" />
     <Content Remove="Models\VentasParam\**" />
     <EmbeddedResource Remove="Areas\AdministraParam\**" />
-    <EmbeddedResource Remove="Areas\Administra\Data\**" />
-    <EmbeddedResource Remove="Areas\Administra\Models\**" />
     <EmbeddedResource Remove="Areas\RRHH\Models\**" />
     <EmbeddedResource Remove="Models\ContableParam\**" />
     <EmbeddedResource Remove="Models\Contable\**" />
@@ -36,8 +30,6 @@
     <EmbeddedResource Remove="Models\PlanificacionParam\**" />
     <EmbeddedResource Remove="Models\VentasParam\**" />
     <None Remove="Areas\AdministraParam\**" />
-    <None Remove="Areas\Administra\Data\**" />
-    <None Remove="Areas\Administra\Models\**" />
     <None Remove="Areas\RRHH\Models\**" />
     <None Remove="Models\ContableParam\**" />
     <None Remove="Models\Contable\**" />
@@ -69,6 +61,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.2" />
     <PackageReference Include="ReflectionIT.Mvc.Paging" Version="3.0.1" />
+    <PackageReference Include="Rotativa.AspNetCore" Version="1.1.1" />
     <PackageReference Include="SmartBreadcrumbs" Version="1.0.3.3" />    
   </ItemGroup>
   <ItemGroup>
@@ -147,12 +140,16 @@
 
   <ItemGroup>
     <Folder Include="Areas\Administra\Controllers\" />
+    <Folder Include="Areas\Administra\Data\" />
+    <Folder Include="Areas\Administra\Models\" />
     <Folder Include="Areas\Identity\Services\" />
-    <Folder Include="Areas\RRHH\Controllers\" />
     <Folder Include="Areas\RRHH\Views\" />
     <Folder Include="Controllers\" />
     <Folder Include="Data\Migrations" />
     <Folder Include="Models\Finanzas\" />
+    <Folder Include="Models\GeneralesParam\" />
+    <Folder Include="Models\VentasParam\" />
+    <Folder Include="Models\PlanificacionParam\" />
     <Folder Include="wwwroot\images\ProductImage\" />
     <Folder Include="wwwroot\docs\" />
     <Folder Include="wwwroot\uploads\" />

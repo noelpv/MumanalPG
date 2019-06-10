@@ -1,167 +1,79 @@
-﻿@model IEnumerable<MumanalPG.Models.Ventas.VentaSolicitud>
-
+@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Ventas.VentaSolicitud>
+@using MumanalPG.Utility
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Afiliaciones";
+    OptionPartial options = new OptionPartial();
+    string intro_msg_search = "Puede buscar un Afiliado introduciendo el nombre en este campo, " +
+                              "luego presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
+                              "<i class='fas fa-search'></i></button>";
 }
+<div class="row">
+    <div class="col-12 text-right">
+        <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nuevo VentaSolicitud"
+           data-modal="link", data-redirect="@Url.Action("Index", new{@a=Constantes.Creado})" 
+           data-intro="Click, en este botón para crear una nueva VentaSolicitud">
+            <i class="fas fa-plus"></i><span class="d-none d-sm-inline">&nbsp; Nuevo </span>
+        </a>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-12">
+        <form method="get" class="form form-search" data-intro="@intro_msg_search">
+            <div class="input-group mb-3">
+                <input name="filter" class="form-control search" placeholder="Buscar por Descripcion ..."
+                       value="@Model.RouteValue["Filter"]"/>
+                <button type="submit" class="btn btn-secondary input-group-append">
+                    <span class="fas fa-search" aria-hidden="true"></span>
+                </button>
+            </div>            
+        </form>
+    </div>
+</div>
 
-<h2>Index</h2>
+<div class="row table-responsive mt-4">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>@Html.SortableHeaderFor(model => model.Descripcion)</th>
+                <th>FechaSolicitud</th>
+                <th>Unidad</th>
+            </tr>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Gestion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdUnidadEjecutora)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CorrelativoUnidad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdDepartamento)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaSolicitud)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaRecepcionSolicitud)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdBeneficiario)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdBeneficiarioResponsable)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Justificacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Observaciones)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CiteTramite)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MesNumero)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdPoa)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdProceso)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdDocumentoRespaldo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumeroDocumento)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PathArchivo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ArchivoCargado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdEstadoRegistro)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdUsuario)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdUsuarioAprueba)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaRegistro)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaAprueba)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
+        </thead>
+        @{int index = 0;}
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Gestion)
+                <a asp-action="Details" asp-route-id="@item.IdVentaSolicitud" title="Detalle"
+                   data-modal="link" data-modal-read="True">
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </a>
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdUnidadEjecutora)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CorrelativoUnidad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdDepartamento)
-            </td>
+            @*
+        //IdVentaSolicitud,IdBeneficiario,Descripcion,IdUnidadEjecutora,FechaSolicitud,IdDocumentoRespaldo
+            *@
             <td>
                 @Html.DisplayFor(modelItem => item.FechaSolicitud)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FechaRecepcionSolicitud)
+                @Html.DisplayFor(modelItem => item.IdUnidadEjecutora)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdBeneficiario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdBeneficiarioResponsable)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Justificacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Observaciones)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CiteTramite)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MesNumero)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdPoa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdProceso)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdDocumentoRespaldo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumeroDocumento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PathArchivo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ArchivoCargado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdEstadoRegistro)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdUsuario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdUsuarioAprueba)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaRegistro)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaAprueba)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdVentaSolicitud">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdVentaSolicitud">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdVentaSolicitud">Delete</a>
-            </td>
+            @{
+                options.Id = item.IdVentaSolicitud;
+                options.ShowIntroMessages = index == 0 ? true : false;
+                index++;
+
+            }
+            <partial name="_TableOptionsPartial" model="options" />
         </tr>
-}
-    </tbody>
-</table>
+        }
+    </table>
+</div>
+<div class="row justify-content-center">
+    <nav>
+        <vc:pager paging-list="@Model"/>
+    </nav>
+</div>

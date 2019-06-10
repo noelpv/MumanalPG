@@ -52,12 +52,6 @@ namespace MumanalPG
 			//	.AddDefaultUI()
 			//	.AddDefaultTokenProviders();
 
-
-
-
-
-
-
 			services.AddScoped<IDbInitializer, DbInitializer>();
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -116,6 +110,10 @@ namespace MumanalPG
 			});
 			
 			app.UseStaticFiles();
+	        
+	        // Configuramos Rotativa indicándole el Path RELATIVO donde se
+	        // encuentran los archivos de la herramienta wkhtmltopdf.
+	        Rotativa.AspNetCore.RotativaConfiguration.Setup(env, "..\\Rotativa\\Windows\\");
 		}
 	}
 }

@@ -18,7 +18,7 @@ namespace MumanalPG.Models.Ventas
         public DateTime FechaRecepcionSolicitud { get; set; } = DateTime.Now.Date;
         public Int32 IdBeneficiario { get; set; }
 		public Int32 IdBeneficiarioResponsable { get; set; }
-		public string Justificacion { get; set; }
+		public string Descripcion { get; set; }
 		public string Observaciones { get; set; }
 		public string CiteTramite { get; set; }
 		public Int32 MesNumero { get; set; }

@@ -5,20 +5,20 @@
     ViewData["Title"] = "Correspondencia";
 }
 <div class="row">
+    @* <div class="col-md-4 col-sm-6 col-xs-12"> *@
+    @*     <a href=""> *@
+    @*         <div class="ribbon-vwrapper card"> *@
+    @*             <div class="ribbon ribbon-primary ribbon-vertical-l"> *@
+    @*                 <i class="ti-email"></i> *@
+    @*             </div> *@
+    @*             <h4>Bandeja Principal</h4> *@
+    @*             <p class="ribbon-content">Aqui podra encontrar toda la correspondencia recibida y enviada.</p> *@
+    @*         </div> *@
+    @*     </a> *@
+    @* *@
+    @* </div> *@
     <div class="col-md-4 col-sm-6 col-xs-12">
-        <a href="">
-            <div class="ribbon-vwrapper card">
-                <div class="ribbon ribbon-primary ribbon-vertical-l">
-                    <i class="ti-email"></i>
-                </div>
-                <h4>Bandeja Principal</h4>
-                <p class="ribbon-content">Aqui podra encontrar toda la correspondencia recibida y enviada.</p>
-            </div>
-        </a>
-
-    </div>
-    <div class="col-md-4 col-sm-6 col-xs-12">
-        <a asp-area="correspondencia" asp-controller="dashboard" asp-action="docs" >
+        <a asp-area="correspondencia" asp-controller="dashboard" asp-action="docs" class="show-loader">
             <div class="ribbon-vwrapper card">
                 <div class="ribbon ribbon-success ribbon-vertical-l">
                     <i class="ti-agenda"></i>
@@ -30,7 +30,7 @@
 
     </div>
     <div class="col-md-4 col-sm-6 col-xs-12">
-        <a asp-area="Correspondencia" asp-controller="hojasrutainterna" asp-action="index">
+        <a asp-area="Correspondencia" asp-controller="hojasrutainterna" asp-action="index" class="show-loader">
             <div class="ribbon-vwrapper card">
                 <div class="ribbon ribbon-warning ribbon-vertical-l">
                     <i class="ti-import"></i>
@@ -42,7 +42,7 @@
 
     </div>
     <div class="col-md-4 col-sm-6 col-xs-12">
-        <a href="">
+        <a href="" class="show-loader">
             <div class="ribbon-vwrapper card">
                 <div class="ribbon ribbon-danger ribbon-vertical-l">
                     <i class="ti-export"></i>
@@ -54,7 +54,7 @@
 
     </div>
     <div class="col-md-4 col-sm-6 col-xs-12">
-        <a href="">
+        <a href="" class="show-loader">
             <div class="ribbon-vwrapper card">
                 <div class="ribbon ribbon-info ribbon-vertical-l">
                     <i class="ti-map-alt"></i>
@@ -66,7 +66,7 @@
 
     </div>
     <div class="col-md-4 col-sm-6 col-xs-12">
-        <a href="">
+        <a href="" class="show-loader">
             <div class="ribbon-vwrapper card">
                 <div class="ribbon ribbon-primary ribbon-vertical-l">
                     <i class="ti-bar-chart"></i>
@@ -80,7 +80,7 @@
     
     
     <div class="col-md-4 col-sm-6 col-xs-12">
-        <a asp-area="correspondencia" asp-controller="dashboard" asp-action="clasificadores">
+        <a asp-area="correspondencia" asp-controller="dashboard" asp-action="clasificadores" class="show-loader">
             <div class="ribbon-vwrapper card">
                 <div class="ribbon ribbon-success ribbon-vertical-l">
                     <i class="ti-settings"></i>

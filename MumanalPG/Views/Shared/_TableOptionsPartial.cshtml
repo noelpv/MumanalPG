@@ -14,21 +14,26 @@
 {
     <td style="width: 150px">
         <div class="btn-group" role="group">
+            @if (Model.CustomBtn != null)
+            {
+                @Html.Raw(Model.CustomBtn) 
+            }
+           
             <a class="btn btn-secondary btn-outline-secondary waves-effect waves-light"
                data-modal="link" data-redirect="@Url.Action("Index", new {@a = Constantes.Modificado})"
                data-toggle="tooltip" title="Editar" asp-action="Edit" asp-route-id="@Model.Id"
-               data-intro = "@msg_edit">
-                <i class="fas fa-edit"></i>
+               data-intro="@msg_edit">
+                <i class="ti-pencil"></i>
             </a>
             <a type="button" class="btn btn-secondary btn-outline-secondary waves-effect waves-light" data-toggle="tooltip" title="Detalle" asp-action="Details" asp-route-id="@Model.Id"
                data-modal="link" data-modal-read="True" data-intro="@msg_detalis">
-                <i class="fas fa-list-alt"></i>
+                <i class="ti-eye"></i>
             </a>
             <a type="button" class="btn btn-outline-secondary waves-effect waves-light"
                data-toggle="tooltip" title="Eliminar" asp-action="Delete"
                asp-route-id="@Model.Id" data-modal="link" data-modal-delete="True"
                data-redirect="@Url.Action("Index", new {@a = Constantes.Eliminado})" data-intro="@msg_delete">
-                <i class="fas fa-trash-alt"></i>
+                <i class="ti-trash"></i>
             </a>
         </div>
     </td>
@@ -37,20 +42,24 @@ else
 {
     <td style="width: 150px">
         <div class="btn-group" role="group">
+            @if (Model.CustomBtn != null)
+            {
+                @Html.Raw(Model.CustomBtn) 
+            }
             <a class="btn btn-secondary btn-outline-secondary waves-effect waves-light"
                data-modal="link" data-redirect="@Url.Action("Index", new {@a = Constantes.Modificado})"
                data-toggle="tooltip" title="Editar" asp-action="Edit" asp-route-id="@Model.Id">
-                <i class="fas fa-edit"></i>
+                <i class="ti-pencil"></i>
             </a>
             <a type="button" class="btn btn-secondary btn-outline-secondary waves-effect waves-light" data-toggle="tooltip" title="Detalle" asp-action="Details" asp-route-id="@Model.Id"
                data-modal="link" data-modal-read="True">
-                <i class="fas fa-list-alt"></i>
+                <i class="ti-eye"></i>
             </a>
             <a type="button" class="btn btn-outline-secondary waves-effect waves-light"
                data-toggle="tooltip" title="Eliminar" asp-action="Delete"
                asp-route-id="@Model.Id" data-modal="link" data-modal-delete="True"
                data-redirect="@Url.Action("Index", new {@a = Constantes.Eliminado})">
-                <i class="fas fa-trash-alt"></i>
+                <i class="ti-trash"></i>
             </a>
         </div>
     </td>

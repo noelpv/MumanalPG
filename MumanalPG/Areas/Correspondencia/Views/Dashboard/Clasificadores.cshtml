@@ -4,7 +4,7 @@
 }
 <div class="row">
     <div class="col-md-4 col-sm-6 col-xs-12">
-        <a asp-area="correspondencia" asp-controller="tipodocumento" asp-action="index">
+        <a asp-area="correspondencia" asp-controller="tipodocumento" asp-action="index" class="show-loader">
             <div class="ribbon-vwrapper card">
                 <div class="ribbon ribbon-primary ribbon-vertical-l">
                     <i class="ti-zip"></i>
@@ -17,13 +17,26 @@
     </div>
     
     <div class="col-md-4 col-sm-6 col-xs-12">
-        <a asp-area="correspondencia" asp-controller="instrucciones" asp-action="index">
+        <a asp-area="correspondencia" asp-controller="instrucciones" asp-action="index" class="show-loader">
             <div class="ribbon-vwrapper card">
                 <div class="ribbon ribbon-success ribbon-vertical-l">
                     <i class="ti-hand-point-right"></i>
                 </div>
                 <h4>Instrucciones</h4>
                 <p class="ribbon-content">Aqui podra administrar las instrucciones que se maneja en las hojas de ruta.</p>
+            </div>
+        </a>
+
+    </div>
+    
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="correspondencia" asp-controller="tipoanexos" asp-action="index" class="show-loader">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-info ribbon-vertical-l">
+                    <i class="ti-link"></i>
+                </div>
+                <h4>Tipos de Anexo</h4>
+                <p class="ribbon-content">Aqui podra administrar los tipos de anexo que se maneja en las hojas de ruta.</p>
             </div>
         </a>
 

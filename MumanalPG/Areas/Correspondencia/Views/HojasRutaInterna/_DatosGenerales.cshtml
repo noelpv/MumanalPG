@@ -1,3 +1,5 @@
+@using MumanalPG.Areas.Correspondencia.Controllers
+@using MumanalPG.Models.Correspondencia
 @using MumanalPG.Utility
 @model MumanalPG.Models.Correspondencia.DTO.HojaRutaDTO
 @{
@@ -18,53 +20,78 @@
             <h2>Datos Generales</h2>
             <p class="desc">Por favor ingrese los datos generales de la hoja de ruta</p>
             <div class="fieldset-content">
-                <div class="form-row">
-                    <label class="form-label">Crear Hoja de Ruta a partir de:</label>
-                    <div class="form-flex">
-                        <div class="col-md-12">
-                            <div class="m-b-10" data-intro="Use esta opción cuando haya creado un documento mediante el sistema">
-                                <label class="custom-control custom-radio">
-                                    <input id="radio1" name="radio-options" type="radio" class="custom-control-input"
-                                           checked="checked" value="created">
-                                    <span class="custom-control-label">Documento Creado en el Sistema</span>
-                                </label>
-                            </div>
-                            <div class="m-b-10" data-intro="Use esta opción si no tiene un documento creado en el sistema 
+                <input id="doc-id" asp-for="DocumentoId" type="hidden"/>
+                @if (Model.DocumentoId <= 0)
+                {
+                    <div class="form-row">
+                        <label class="form-label">Crear Hoja de Ruta a partir de:</label>
+                        <div class="form-flex">
+                            <div class="col-md-12">
+                                <div class="m-b-10" data-intro="Use esta opción cuando haya creado un documento mediante el sistema">
+                                    <label class="custom-control custom-radio">
+                                        <input id="radio1" name="radio-options" type="radio" class="custom-control-input"
+                                               checked="checked" value="created">
+                                        <span class="custom-control-label">Documento Creado en el Sistema</span>
+                                    </label>
+                                </div>
+                                <div class="m-b-10" data-intro="Use esta opción si no tiene un documento creado en el sistema 
                                                     y quiere escanearlo para poder subirlo">
-                                <label class="custom-control custom-radio">
-                                    <input id="radio2" name="radio-options" type="radio" class="custom-control-input"
-                                           value="no-created">
-                                    <span class="custom-control-label">Digitalizar Documento Físico</span>
-                                </label>
+                                    <label class="custom-control custom-radio">
+                                        <input id="radio2" name="radio-options" type="radio" class="custom-control-input"
+                                               value="no-created">
+                                        <span class="custom-control-label">Digitalizar Documento Físico</span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-sm-12 col-md-8">
-                        <div id="doc-container" class="form-group m-t-10 @if (stringErrors.Contains("DocumentoId"))
-                                                                         {
-                                                                             @hasError
-                                                                         }">
-                            <label asp-for="DocumentoId" class="form-label">Elegir Documento</label>
-                            <div>
-                                <select asp-for="DocumentoId" class="form-control remote" id="documento" placeholder="Escriba Cite o Remitente..."
-                                        data-remote-url="@Url.Action("GetDocuments")">
-                                </select>
+                    <div class="form-row">
+                        <div class="col-sm-10 col-md-8">
+                            <div id="doc-container" class="form-group m-t-10 @if (stringErrors.Contains("DocumentoId"))
+                                                                             {
+                                                                                 @hasError
+                                                                             }">
+                                <label asp-for="DocumentoId" class="form-label">Elegir Documento</label>
+                                <div>
+                                    <select class="form-control remote" id="documento" placeholder="Escriba Cite o Remitente..."
+                                            data-remote-url="@Url.Action("GetDocuments")">
+                                    </select>
 
+                                </div>
+                                <span asp-validation-for="DocumentoId" class="text-danger"></span>
+                                <span class="text-input">Documento creado en el sistema (Informes, Memorandums, Notas, etc.)</span>
                             </div>
-                            <span asp-validation-for="DocumentoId" class="text-danger"></span>
-                            <span class="text-input">Documento creado en el sistema (Informes, Memorandums, Notas, etc.)</span>
+                        </div>
+                        <div class="col-sm-2 col-md-4 m-t-10">
+                            <div id="rem-input" class="form-group">
+                                <label class="form-label">&nbsp;</label>
+                                <a class="dropdown-toggle btn btn-success" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-plus"></i><span class="d-none d-sm-inline">&nbsp; Crear </span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-lg-right">
+
+                                    @foreach (TipoDocumento doc in ViewBag.Tipos)
+                                    {
+                                        <a asp-controller="Documentos" asp-action="Create" asp-route-type="@doc.Id"
+                                           asp-route-redirect="@HojasRutaInternaController.RedirectHRCreate" 
+                                           class="dropdown-item" data-modal="link" title="@doc.Nombre">
+                                            @doc.Nombre
+                                        </a>
+                                    }
+
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+
+                }
 
                 <div class="form-row">
                     <div class="col-sm-12 col-md-6">
                         <div id="rem-input" class="form-group">
                             <label class="form-label" asp-for="Remitente"></label>
                             <input id="origen-id" type="hidden" asp-for="OrigenId"/>
-                            <input type="text" class="form-control" id="origen-name" asp-for="Remitente" required/>
+                            <input id="origen-name" type="text" class="form-control" asp-for="Remitente" required/>
                             <span asp-validation-for="Remitente" class="text-danger"></span>
                             <span class="text-input">Persona que remite el documento</span>
                         </div>

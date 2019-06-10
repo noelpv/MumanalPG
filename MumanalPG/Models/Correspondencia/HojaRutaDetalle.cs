@@ -44,6 +44,13 @@ namespace MumanalPG.Models.Correspondencia
 		public bool Leido { get; set; }
 		public DateTime? FechaRecepcion { get; set; }
 		
+		public int Padre { get; set; }
+
+		public int DocumentoId { get; set; }
+		public virtual Documento Documento { get; set; }
+		
+		public ICollection<Anexo>  Anexos { get; set; }
+
 		public int IdEstadoRegistro { get; set; }
 		public int IdUsuario { get; set; }
 		public DateTime FechaRegistro { get; set; }

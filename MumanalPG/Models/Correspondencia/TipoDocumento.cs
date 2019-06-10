@@ -27,5 +27,18 @@ namespace MumanalPG.Models.Correspondencia
         public Int32 IdUsuario { get; set; }
         public DateTime FechaRegistro { get; set; }
         public ICollection<Documento> Documentos { get; set; }
+
+        public string shortName()
+        {
+            string res = "";
+            string[] words = Nombre.Split(" ");
+
+            foreach (var word in words)
+            {
+                res += $"{word.Substring(0,3).ToUpper()}.";
+            }
+
+            return res;
+        }
     }
 }

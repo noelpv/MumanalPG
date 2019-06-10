@@ -26,8 +26,8 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             
         }
 
-		// GET: Planificacion/FuenteFinanciamiento
-        [Breadcrumb("FuenteFinanciamiento", FromController = "DashboardFF", FromAction = "Clasificadores")]
+        // GET: Planificacion/FuenteFinanciamiento
+        [Breadcrumb("FuenteFinanciamiento", FromController = "DashboardPlan", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
             var consulta = DB.FuenteFinanciamiento.AsNoTracking().AsQueryable();
