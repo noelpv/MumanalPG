@@ -16,10 +16,10 @@
     <input type="hidden" asp-for="IdVentaTarifario" />
 
     @*<div class="form-group m-b-40 @if(stringErrors.Contains("IdBeneficiarioCategoria")){@hasError}">
-        <label asp-for="Categoria" class="form-control-label"></label>
-        <input asp-for="IdBeneficiarioCategoria" class="form-control" />
-        <span asp-validation-for="IdBeneficiarioCategoria" class="text-danger"></span>
-    </div>*@
+            <label asp-for="Categoria" class="form-control-label"></label>
+            <input asp-for="IdBeneficiarioCategoria" class="form-control" />
+            <span asp-validation-for="IdBeneficiarioCategoria" class="text-danger"></span>
+        </div>*@
 
     <div class="form-group m-b-40 @if(stringErrors.Contains("Descripcion")){@hasError}">
         <label asp-for="Descripcion" class="form-control-label"></label>
@@ -41,5 +41,11 @@
         <input asp-for="ValorFinalBs" class="form-control" />
         <span asp-validation-for="ValorFinalBs" class="text-danger"></span>
     </div>
+    <div class="form-group m-b-40 @if(stringErrors.Contains("IdBeneficiarioCategoria")){@hasError}">
 
+        <label asp-for="IdBeneficiarioCategoria" class="form-control-label"></label>
+        <br>
+        @Html.DropDownList("BeneficiarioCategoria")
+        <span asp-validation-for="IdBeneficiarioCategoria" class="text-danger"></span>
+    </div>
 </form>

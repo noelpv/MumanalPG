@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -63,13 +64,24 @@ namespace MumanalPG.Areas.Ventas.Controllers
         public IActionResult Create()
         {
             var model = new Models.Ventas.VentaTarifario();
+
+            var items = new List<SelectListItem>();
+            items = DB.BeneficiarioCategoria.
+                   Select(c => new SelectListItem()
+                   {
+                       Text = c.Descripcion,
+                       Value = c.IdBeneficiarioCategoria.ToString()
+                   }).
+                   ToList();
+            ViewBag.BeneficiarioCategoria = items;
+
             return PartialView("Create", model);
         }
 
         // POST: Ventas/VentaTarifario/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Models.Ventas.VentaTarifario item)
+        public async Task<IActionResult> Create(Models.Ventas.VentaTarifario item, string BeneficiarioCategoria)
         {
             if (ModelState.IsValid)
             {
@@ -83,6 +95,7 @@ namespace MumanalPG.Areas.Ventas.Controllers
                 item.Porcentaje = '0';
                 item.IdEstadoRegistro = '1';
                 item.FechaRegistro = DateTime.Now;
+                item.IdBeneficiarioCategoria = Convert.ToInt32(BeneficiarioCategoria);
                 DB.Add(item);
                 await DB.SaveChangesAsync();
             }
@@ -102,13 +115,24 @@ namespace MumanalPG.Areas.Ventas.Controllers
             {
                 return NotFound();
             }
+
+            var items = new List<SelectListItem>();
+            items = DB.BeneficiarioCategoria.
+                   Select(c => new SelectListItem()
+                   {
+                       Text = c.Descripcion,
+                       Value = c.IdBeneficiarioCategoria.ToString()
+                   }).
+                   ToList();
+            ViewBag.BeneficiarioCategoria = items;
+
             return PartialView( "Edit", item);
         }
 
         // POST: Ventas/VentaTarifario/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, [Bind("IdVentaTarifario,IdBeneficiario,Descripcion,IdUnidadEjecutora,FechaSolicitud,IdDocumentoRespaldo")] Models.Ventas.VentaTarifario item)
+        public async Task<IActionResult> Edit(Int32 id, [Bind("IdVentaTarifario,IdBeneficiario,Descripcion,IdUnidadEjecutora,FechaSolicitud,IdDocumentoRespaldo")] Models.Ventas.VentaTarifario item, string BeneficiarioCategoria)
         {
             if (id != item.IdVentaTarifario)
             {
@@ -119,6 +143,7 @@ namespace MumanalPG.Areas.Ventas.Controllers
             {
                 try
                 {
+                    item.IdBeneficiarioCategoria = Convert.ToInt32(BeneficiarioCategoria);
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }

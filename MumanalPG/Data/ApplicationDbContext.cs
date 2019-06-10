@@ -40,7 +40,7 @@ namespace MumanalPG.Data
 		public DbSet<MumanalPG.Models.RRHH.vPersona> RRHH_vPersona { get; set; }
         public DbSet<MumanalPG.Models.RRHH.VacacionProgramacion> VacacionProgramacion { get; set; }
         public DbSet<MumanalPG.Models.RRHHParam.TipoBeneficiario> RRHHParam_TipoBeneficiario { get; set; }
-        //public DbSet<MumanalPG.Models.RRHH.Beneficiario> UnidadEjecutora { get; set; }
+        public DbSet<MumanalPG.Models.RRHH.BeneficiarioCategoria> BeneficiarioCategoria { get; set; }
         /*Fin RRHH*/
 
         /*Ini Finanzas*/
@@ -93,9 +93,9 @@ namespace MumanalPG.Data
         public DbSet<MumanalPG.Models.Planificacion.OrganismoFinanciador> OrganismoFinanciador { get; set; }
         public DbSet<MumanalPG.Models.Planificacion.EstructuraProgramatica> EstructuraProgramatica { get; set; }
         public DbSet<MumanalPG.Models.Planificacion.PartidaGasto> PartidaGasto { get; set; }
+        public DbSet<MumanalPG.Models.Planificacion.RubroIngreso> RubroIngreso { get; set; }
+        //public DbSet<MumanalPG.Models.Planificacion.HojaRutaInstrucciones> HojaRutaInstrucciones { get; set; }
 
-        public DbSet<MumanalPG.Models.Planificacion.HojaRutaInstrucciones> HojaRutaInstrucciones { get; set; }
-        public DbSet<MumanalPG.Models.Planificacion.HojaRutaDocumentos> HojaRutaDocumentos { get; set; }
         /*Fin Planificacion*/
 
         /*Correspondencia*/

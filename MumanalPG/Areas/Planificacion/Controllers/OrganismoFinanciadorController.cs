@@ -75,10 +75,6 @@ namespace MumanalPG.Areas.Planificacion.Controllers
                    ToList();
             ViewBag.FuenteFinanciamiento = items;
 
-
-
-
-
             return PartialView("Create", model);
         }
 
@@ -89,16 +85,17 @@ namespace MumanalPG.Areas.Planificacion.Controllers
         {
             if (ModelState.IsValid)
             {
-                //ApplicationUser currentUser = await GetCurrentUser();
-                //item.IdUsuario = currentUser.AspNetUserId;
-                item.IdFuenteFinanciamiento = Convert.ToInt32(FuenteFinanciamiento);
+                ApplicationUser currentUser = await GetCurrentUser();
+                item.IdUsuario = currentUser.AspNetUserId;
                 item.Gestion = "2019";
                 item.IdBeneficiario = '0';
-                item.CargoRepresentante = "";
+                item.IdPais = '1';
+                item.CargoRepresentante = "-";
+                item.IdEstadoRegistro = '1';
                 item.FechaRegistro = DateTime.Now;
+                item.IdFuenteFinanciamiento = Convert.ToInt32(FuenteFinanciamiento);
                 DB.Add(item);
                 await DB.SaveChangesAsync();
-                
             }
             return PartialView("Create",item);
         }
@@ -110,19 +107,28 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             {
                 return NotFound();
             }
-
             var item = await DB.OrganismoFinanciador.FindAsync(id);
             if (item == null)
             {
                 return NotFound();
             }
+            var items = new List<SelectListItem>();
+            items = DB.FuenteFinanciamiento.
+                   Select(c => new SelectListItem()
+                   {
+                       Text = c.Descripcion,
+                       Value = c.IdFuenteFinanciamiento.ToString()
+                   }).
+                   ToList();
+            ViewBag.FuenteFinanciamiento = items;
+
             return PartialView( "Edit", item);
         }
 
         // POST: Planificacion/OrganismoFinanciador/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, [Bind("IdOrganismoFinanciador,Descripcion,Sigla, IdFuenteFinanciamiento")] Models.Planificacion.OrganismoFinanciador item)
+        public async Task<IActionResult> Edit(Int32 id, [Bind("IdOrganismoFinanciador,Descripcion,Sigla, IdFuenteFinanciamiento")] Models.Planificacion.OrganismoFinanciador item, string FuenteFinanciamiento)
         {
             if (id != item.IdOrganismoFinanciador)
             {
@@ -133,6 +139,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             {
                 try
                 {
+                    item.IdFuenteFinanciamiento = Convert.ToInt32(FuenteFinanciamiento);
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }
