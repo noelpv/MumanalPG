@@ -97,7 +97,7 @@ namespace MumanalPG.Data
         //public DbSet<MumanalPG.Models.Planificacion.HojaRutaInstrucciones> HojaRutaInstrucciones { get; set; }
 
         public DbSet<MumanalPG.Models.Planificacion.HojaRutaInstrucciones> HojaRutaInstrucciones { get; set; }
-        public DbSet<MumanalPG.Models.Planificacion.HojaRutaDocumentos> HojaRutaDocumentos { get; set; }
+        //public DbSet<MumanalPG.Models.Planificacion.HojaRutaDocumentos> HojaRutaDocumentos { get; set; }
         /*Fin Planificacion*/
 
 

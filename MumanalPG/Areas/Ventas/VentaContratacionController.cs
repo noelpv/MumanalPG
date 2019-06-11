@@ -48,13 +48,20 @@ namespace MumanalPG.Areas.Ventas
 			//return View(await DB.Ventas_vContratacion.ToListAsync());
         }
 
-		public async Task<IActionResult> Index2()
-		{
-			return View();
-		}
+		public async Task<IActionResult> IndexReg(string searchString)
+        {
+            String InternalSearchString = "";
+            ViewData["CurrentFilter"] = searchString;
+            if (!String.IsNullOrEmpty(searchString))
+                InternalSearchString = searchString;
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            return View(await DB.Ventas_vContratacion.FromSql($"SELECT * FROM \"Ventas\".\"pContratacion\"({userId}, {InternalSearchString})").ToListAsync());
+        }
 
 
-		[HttpGet]
+        [HttpGet]
 		public JsonResult LoadData()
 		{
 			var draw = Request.Form.GetPropertyValue("draw").FirstOrDefault();
@@ -123,7 +130,7 @@ namespace MumanalPG.Areas.Ventas
 			return View(await DB.RRHH_vPersona.FromSql($"SELECT * FROM \"RRHH\".\"fBuscaPersona\"({InternalSearchString})").ToListAsync());
 		}
 
-		//----------------------------------------------------------
+		//--CREATE GET DIGITAL  -------------------------------------------------------- 
         public IActionResult Create(String IdBeneficiario, String IdBeneficiarioGarante, String Beneficiario, String Garante)
         {
 			Models.Ventas.VentaContratacion Contratacion = new VentaContratacion();
@@ -228,19 +235,6 @@ namespace MumanalPG.Areas.Ventas
 			return View(Contratacion);
         }
 
-		public Boolean ValidaAntesGrabar()
-		{
-			Int16 IdUnidadEjecutora = 22;
-			var VerificaLimite = DB.Ventas_pVerificaLimite.FromSql($"SELECT * FROM \"Ventas\".\"pVerificaLimite\"({IdUnidadEjecutora})").ToList();
-			Int16 CantidadLimite = VerificaLimite.First().CantidadLimite;
-			if (4 > CantidadLimite)
-			{
-				return false;
-			}
-			else
-				return true;
-		}
-
 		[HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdVentaContratacion,IdVentaSolicitud,IdProcesoNivel2,Gestion,IdUnidadEjecutora,CorrelativoUnidad,IdDepartamento,FechaVenta,IdBeneficiario,IdBeneficiarioGarante,IdBeneficiarioResponsable,IdVentaTarifario,Concepto,Observaciones,CiteTramite,IdAsrSiver,MesNumero,FechaInicio,FechaFinal,CantidadTotal,TotalBs,TotalDolares,IdTipoMoneda,TipoCambio,TotalPrevisionBs,Literal,PlazoMeses,MesInicioCronograma,IdPoa,IdProceso,IdDocumentoRespaldo,NumeroDocumento,ArchivoRespaldo,ArchivoRespaldoCargado,IdEstadoRegistro,IdUsuario,IdUsuarioAprueba,FechaRegistro,FechaAprueba")] VentaContratacion ventaContratacion, string Beneficiarios, string Garantes, string UnidadesEjecutoras, String IdBeneficiario, String IdBeneficiarioGarante)
@@ -283,6 +277,168 @@ namespace MumanalPG.Areas.Ventas
 		
             return View(ventaContratacion);
         }
+
+        //--CREATE GET REGULAR  -------------------------------------------------------- 
+        public IActionResult CreateReg(String IdBeneficiario, String IdBeneficiarioGarante, String Beneficiario, String Garante)
+        {
+            Models.Ventas.VentaContratacion Contratacion = new VentaContratacion();
+            Contratacion.FechaVenta = DateTime.Now.Date;
+
+            if (IdBeneficiario == null && IdBeneficiarioGarante == null)
+            {
+                ViewBag.IdBeneficiario = IdBeneficiario;
+                ViewBag.Beneficiario = Beneficiario;
+                ViewBag.IdBeneficiarioGarante = IdBeneficiarioGarante;
+                ViewBag.Garante = Garante;
+            }
+            else if (IdBeneficiario != null && IdBeneficiarioGarante == "0")
+            {
+                //HttpContext.Session.SetString(SessionIdBeneficiario, IdBeneficiario);
+                //HttpContext.Session.SetString(SessionBeneficiario, Beneficiario);
+
+                ViewBag.IdBeneficiario = IdBeneficiario;
+                ViewBag.Beneficiario = Beneficiario;
+                ViewBag.IdBeneficiarioGarante = IdBeneficiarioGarante;
+                ViewBag.Garante = Garante;
+            }
+            else if (IdBeneficiario == "0" && IdBeneficiarioGarante != null)
+            {
+                //HttpContext.Session.SetString(SessionIdBeneficiarioGarante, IdBeneficiarioGarante);
+                //HttpContext.Session.SetString(SessionGarante, Garante);
+
+                //ViewBag.IdBeneficiario = HttpContext.Session.GetString(SessionIdBeneficiario);
+                //ViewBag.Beneficiario = HttpContext.Session.GetString(SessionBeneficiario);
+                //ViewBag.IdBeneficiarioGarante = HttpContext.Session.GetString(SessionIdBeneficiarioGarante);
+                //ViewBag.Garante = HttpContext.Session.GetString(SessionGarante);
+            }
+
+            //// BENEFICIARIOS --------------------------------------------
+            //var items = new List<SelectListItem>();
+            //items = DB.RRHH_Beneficiario.
+            //	   Where(f => f.DepartamentoSigla == "LPZ").
+            //	   OrderBy(x => x.Denominacion).
+            //	   Select(c => new SelectListItem()
+            //				{
+            //					Text = c.Denominacion,
+            //					Value = c.IdBeneficiario.ToString()
+            //				}).
+            //	   ToList();
+            //ViewBag.Beneficiarios = items;
+
+            //// GARANTES --------------------------------------------------
+            //var items3 = new List<SelectListItem>();
+            //items3 = DB.RRHH_Beneficiario.
+            //	   Where(f => f.DepartamentoSigla == "LPZ").
+            //	   OrderBy(x => x.Denominacion).
+            //	   Select(c => new SelectListItem()
+            //	   {
+            //		   Text = c.Denominacion,
+            //		   Value = c.IdBeneficiario.ToString()
+            //	   }).
+            //	   ToList();
+            //ViewBag.Garantes = items3;
+
+            // UNIDAD EJECUTORA ------------------------------------------
+
+
+            //var items2 = new List<SelectListItem>();
+
+            //items2 = DB.RRHH_UnidadEjecutora.
+            //	   Select(c => new SelectListItem()
+            //	   {
+            //		   Text = c.Descripcion,
+            //		   Value = c.IdUnidadEjecutora.ToString()
+            //	   }).
+            //	   ToList();
+            //ViewBag.UnidadesEjecutoras = items2;
+
+            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            //var items3 = new List<SelectListItem>();
+
+            //items3 = (from E in DB.RRHH_UnidadEjecutora
+            //		  join U in DB.Seguridad_UsuarioUnidadEjecutora on E.IdUnidadEjecutora equals U.IdUnidadEjecutora
+            //		  join R in DB.Seguridad_Usuario on U.IdUsuario equals R.IdUsuario
+            //		  where R.Id == userId
+            //		  select new SelectListItem()
+            //		  {
+            //			  Text = E.Descripcion,
+            //			  Value = E.IdUnidadEjecutora.ToString()
+            //		  }
+            //		 ).ToList();
+            //ViewBag.UnidadesEjecutoras = items3;
+
+            //var entryPoint = (from u in DB.RRHH_UnidadEjecutora
+            //				  join e in dbContext.tbl_Entry on ep.EID equals e.EID
+            //				  join t in dbContext.tbl_Title on e.TID equals t.TID
+            //				  where e.OwnerID == user.UID
+            //				  select new
+            //				  {
+            //					  UID = e.OwnerID,
+            //					  TID = e.TID,
+            //					  Title = t.Title,
+            //					  EID = e.EID
+            //				  }).Take(10);
+
+            return View(Contratacion);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateReg([Bind("IdVentaContratacion,IdVentaSolicitud,IdProcesoNivel2,Gestion,IdUnidadEjecutora,CorrelativoUnidad,IdDepartamento,FechaVenta,IdBeneficiario,IdBeneficiarioGarante,IdBeneficiarioResponsable,IdVentaTarifario,Concepto,Observaciones,CiteTramite,IdAsrSiver,MesNumero,FechaInicio,FechaFinal,CantidadTotal,TotalBs,TotalDolares,IdTipoMoneda,TipoCambio,TotalPrevisionBs,Literal,PlazoMeses,MesInicioCronograma,IdPoa,IdProceso,IdDocumentoRespaldo,NumeroDocumento,ArchivoRespaldo,ArchivoRespaldoCargado,IdEstadoRegistro,IdUsuario,IdUsuarioAprueba,FechaRegistro,FechaAprueba")] VentaContratacion ventaContratacion, string Beneficiarios, string Garantes, string UnidadesEjecutoras, String IdBeneficiario, String IdBeneficiarioGarante)
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                var BuscaId = DB.Generales_fBuscaId.FromSql($"SELECT * FROM \"Generales\".\"fBuscaId\"({userId})").ToList();
+                Int32 IdUnidadEjecutora = BuscaId.FirstOrDefault().IdUnidadEjecutora;
+
+                ventaContratacion.IdUnidadEjecutora = IdUnidadEjecutora; // Convert.ToInt32(UnidadesEjecutoras);
+                ventaContratacion.IdVentaSolicitud = 0;
+                ventaContratacion.IdProcesoNivel2 = 0;
+                ventaContratacion.Gestion = DateTime.Now.Year.ToString();
+                ventaContratacion.IdDepartamento = 2;
+                //ventaContratacion.IdBeneficiario = //Convert.ToInt32(Beneficiarios);
+                ventaContratacion.IdBeneficiarioGarante = -1;// Convert.ToInt32(HttpContext.Session.GetString(SessionIdBeneficiarioGarante)); //Convert.ToInt32(Garantes);
+                ventaContratacion.IdBeneficiarioResponsable = 0;
+                ventaContratacion.IdVentaTarifario = 0;
+                ventaContratacion.Concepto = "Solicitud de Reposición de Ayuda Social reversible";
+                ventaContratacion.Observaciones = "Digitalización";
+                ventaContratacion.MesNumero = DateTime.Now.Month;
+                ventaContratacion.FechaInicio = DateTime.Now.Date;
+                ventaContratacion.FechaFinal = DateTime.Now.Date;
+                ventaContratacion.CantidadTotal = 1;
+                ventaContratacion.TotalBs = 0;
+                ventaContratacion.TotalDolares = 0;
+                ventaContratacion.IdTipoMoneda = 1;
+                ventaContratacion.TipoCambio = 0;
+                ventaContratacion.TotalPrevisionBs = 0;
+                ventaContratacion.IdEstadoRegistro = 1;
+                ventaContratacion.IdUsuario = 1;
+                ventaContratacion.FechaRegistro = DateTime.Now.Date;
+
+                DB.Add(ventaContratacion);
+                await DB.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View("IndexReg");
+        }
+
+
+        public Boolean ValidaAntesGrabar()
+		{
+			Int16 IdUnidadEjecutora = 22;
+			var VerificaLimite = DB.Ventas_pVerificaLimite.FromSql($"SELECT * FROM \"Ventas\".\"pVerificaLimite\"({IdUnidadEjecutora})").ToList();
+			Int16 CantidadLimite = VerificaLimite.First().CantidadLimite;
+			if (4 > CantidadLimite)
+			{
+				return false;
+			}
+			else
+				return true;
+		}
 
 		//----------------------------------------------------------
 		public async Task<IActionResult> Edit(int? id)
