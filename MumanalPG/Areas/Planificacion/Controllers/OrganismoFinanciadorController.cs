@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Dynamic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +16,10 @@ using MumanalPG.Models;
 using MumanalPG.Utility;
 using ReflectionIT.Mvc.Paging;
 using SmartBreadcrumbs;
+using MumanalPG.Extensions;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace MumanalPG.Areas.Planificacion.Controllers
 {
@@ -64,7 +71,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
         public IActionResult Create()
         {
             var model = new Models.Planificacion.OrganismoFinanciador();
-
+            //ini combo
             var items = new List<SelectListItem>();
             items = DB.FuenteFinanciamiento.                   
                    Select(c => new SelectListItem()
@@ -74,7 +81,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
                    }).
                    ToList();
             ViewBag.FuenteFinanciamiento = items;
-
+            //ini combo
             return PartialView("Create", model);
         }
 
@@ -88,12 +95,12 @@ namespace MumanalPG.Areas.Planificacion.Controllers
                 ApplicationUser currentUser = await GetCurrentUser();
                 item.IdUsuario = currentUser.AspNetUserId;
                 item.Gestion = "2019";
-                item.IdBeneficiario = '0';
-                item.IdPais = '1';
+                item.IdBeneficiario = 0;
+                item.IdPais = 1;
                 item.CargoRepresentante = "-";
-                item.IdEstadoRegistro = '1';
+                item.IdEstadoRegistro = 1;
                 item.FechaRegistro = DateTime.Now;
-                item.IdFuenteFinanciamiento = Convert.ToInt32(FuenteFinanciamiento);
+                item.IdFuenteFinanciamiento = Convert.ToInt32(FuenteFinanciamiento);  
                 DB.Add(item);
                 await DB.SaveChangesAsync();
             }

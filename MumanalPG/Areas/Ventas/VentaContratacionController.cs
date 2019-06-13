@@ -261,7 +261,8 @@ namespace MumanalPG.Areas.Ventas
 				ventaContratacion.FechaInicio = DateTime.Now.Date;
 				ventaContratacion.FechaFinal = DateTime.Now.Date;
 				ventaContratacion.CantidadTotal = 1;
-				ventaContratacion.TotalBs = 0;
+                ventaContratacion.ArchivoRespaldo = "";
+                ventaContratacion.TotalBs = 0;
 				ventaContratacion.TotalDolares = 0;
 				ventaContratacion.IdTipoMoneda = 1;
 				ventaContratacion.TipoCambio = 0;
