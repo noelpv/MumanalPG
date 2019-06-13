@@ -38,7 +38,8 @@ namespace MumanalPG.Models.RRHH
 		public string EdificioNumeroPiso { get; set; }
 		public string EdificioNumeroDepto { get; set; }
 		public string EsDeudor { get; set; }
-		public Int32? IdEstadoRegistro { get; set; }
+        public Boolean EsHabilitado { get; set; }
+        public Int32? IdEstadoRegistro { get; set; }
 		public Int32? IdUsuario { get; set; }
 		public DateTime? FechaRegistro { get; set; }
 		
