@@ -1,0 +1,94 @@
+﻿@model MumanalPG.Models.Ventas.VentaContratacion
+
+@{
+    ViewData["Title"] = "Prestaciones / ASR / Contratación (Regular)";
+}
+
+<h3>Nueva Contratación</h3>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" onsubmit="return ValidaAntesGrabar()">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input name="IdBeneficiario" type="hidden" value="@ViewBag.IdBeneficiario" />
+            @*<input name="IdBeneficiarioGarante" type="hidden" value="@ViewBag.IdBeneficiarioGarante" />*@
+
+            <table>
+                <tr>
+                    <td>
+                        <a class="btn btn-skype" asp-action="BuscaPersona" asp-route-id="@ViewBag.IdBeneficiario">Titular</a>
+                        @*<a class="btn btn-success" asp-action="Edit" asp-route-id="11111">Beneficiario</a>*@
+                    </td>
+                    <td>
+                        @ViewBag.Beneficiario
+                        @*@Html.DropDownList("Beneficiarios", (IEnumerable<SelectListItem>)ViewBag.Beneficiarios, new { size = "1", style = "width: 300px" })*@
+                        @*@Html.DropDownList("Beneficiarios")*@ //jq
+                    </td>
+                </tr>
+                <br>
+
+                @*<tr>
+                    <td>
+                        <a class="btn btn-skype" asp-action="BuscaPersona2" asp-route-id="@ViewBag.IdBeneficiarioGarante">Garante</a>
+                        <a class="btn btn-success" asp-action="Edit" asp-route-id="11111">Beneficiario</a>
+                    </td>
+                    <td>
+                        @ViewBag.Garante
+                        @Html.DropDownList("Beneficiarios", (IEnumerable<SelectListItem>)ViewBag.Beneficiarios, new { size = "1", style = "width: 300px" })
+                        @Html.DropDownList("Beneficiarios")
+                    </td>
+
+                    <td><label asp-for="IdBeneficiarioGarante" class="control-label"></label></td>
+                <td>
+                    @Html.DropDownList("Garantes", (IEnumerable<SelectListItem>)ViewBag.Garantes, new { size = "1", style = "width: 300px" })
+                </td>
+                </tr>*@
+
+                <br>
+
+                <tr>
+                    <td><label asp-for="FechaVenta" class="control-label"></label></td>
+                    <td>
+                        <input asp-for="FechaVenta" class="form-control" type="date" />
+                        <span asp-validation-for="FechaVenta" class="text-danger"></span>
+                    </td>
+                </tr>
+                @*<tr>
+                    <td>Regional</td>
+                    <td>
+                        @Html.DropDownList("UnidadesEjecutoras")
+                        @Html.DropDownList("UnidadesEjecutoras", (IEnumerable<SelectListItem>)ViewBag.UnidadesEjecutoras, new { size = "1", style = "width: 300px" })
+                    </td>
+                </tr>*@
+                <br>
+                @*<tr>
+                    <td><label asp-for="CorrelativoUnidad" class="control-label"></label></td>
+                    <td>
+                        <input asp-for="CorrelativoUnidad" class="form-control" />
+                        <span asp-validation-for="CorrelativoUnidad" class="text-danger"></span>
+                    </td>
+                </tr>*@
+                <tr>
+                    <td><label asp-for="IdAsrSiver" class="control-label"></label></td>
+                    <td>
+                        <input asp-for="IdAsrSiver" class="form-control" />
+                        <span asp-validation-for="IdAsrSiver" class="text-danger"></span>
+                    </td>
+                </tr>
+            </table>
+
+            <br>
+            <div class="form-group">
+                <input type="submit" value="Grabar"  class="btn btn-primary btn-lg" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a  class="btn btn-primary btn-lg" asp-action="Index">Regresar a la lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

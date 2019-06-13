@@ -112,6 +112,12 @@
     <Content Update="Areas\Generales\Views\_ViewStart.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Areas\Ventas\Views\VentaContratacion\CreateReg.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Ventas\Views\VentaContratacion\IndexReg.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Areas\Ventas\Views\VentaRequisito\Rechazar.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

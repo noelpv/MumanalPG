@@ -8,16 +8,15 @@
 
 <div class="row">
     <div class="col-6">
-        <h2 class="text-info">Lista de Registros ASR Digital</h2>
+        <h2 class="text-info">Lista de Registros ASR</h2>
     </div>
     <div class="col-6 text-right">
         @if (ViewContext.HttpContext.User.IsInRole("SUPER ADMIN") || ViewContext.HttpContext.User.IsInRole("AGENTE"))
         {
-            <a asp-action="Create" class="btn btn-info">&nbsp; Nuevo Registro</a>
+            <a asp-action="CreateReg" class="btn btn-info">&nbsp; Nuevo Registro</a>
         }
     </div>
 </div>
-
 
 <form asp-action="index" method="get">
     <div class="form-actions no-color">
@@ -25,7 +24,6 @@
             Buscar por Nro ASR o primeras letras del Apellido: <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" />
             <input type="submit" value="Buscar" class="btn btn-facebook" />
         </p>
-
     </div>
 </form>
 
