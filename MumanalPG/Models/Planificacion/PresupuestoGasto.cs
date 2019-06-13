@@ -34,5 +34,6 @@ namespace MumanalPG.Models.Planificacion
 		public Int32 IdUsuarioAprueba { get; set; }
 		public DateTime FechaRegistro { get; set; }
 		public DateTime FechaAprueba { get; set; }
-	}
+        public string  Descripcion { get; set; }
+    }
 }
