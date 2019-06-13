@@ -27,8 +27,8 @@ namespace MumanalPG.Models.Ventas
 		public Int32 IdDocumentoRespaldo { get; set; }
 		public Int32 NumeroDocumento { get; set; }
 		public string PathArchivo { get; set; }
-		public Boolean ArchivoCargado { get; set; }
-		public Int32 IdEstadoRegistro { get; set; }
+        public Boolean ArchivoCargado { get; set; }
+        public Int32 IdEstadoRegistro { get; set; }
 		public Int32 IdUsuario { get; set; }
 		public Int32 IdUsuarioAprueba { get; set; }
 		public DateTime FechaRegistro { get; set; }

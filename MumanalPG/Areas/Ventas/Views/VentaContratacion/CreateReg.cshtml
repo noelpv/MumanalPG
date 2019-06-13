@@ -13,6 +13,14 @@
             <input name="IdBeneficiario" type="hidden" value="@ViewBag.IdBeneficiario" />
             @*<input name="IdBeneficiarioGarante" type="hidden" value="@ViewBag.IdBeneficiarioGarante" />*@
 
+            <div class="form-group">
+                <label asp-for="IdBeneficiario" class="control-label">Benef</label>
+                @Html.DropDownList("Beneficiarios")
+                @*<input asp-for="IdBeneficiario" class="form-control" />
+                <span asp-validation-for="IdBeneficiario" class="text-danger"></span>*@
+            </div>
+
+
             <table>
                 <tr>
                     <td>
@@ -25,26 +33,26 @@
                         @*@Html.DropDownList("Beneficiarios")*@ //jq
                     </td>
                 </tr>
-                <br>
+                
 
                 @*<tr>
-                    <td>
-                        <a class="btn btn-skype" asp-action="BuscaPersona2" asp-route-id="@ViewBag.IdBeneficiarioGarante">Garante</a>
-                        <a class="btn btn-success" asp-action="Edit" asp-route-id="11111">Beneficiario</a>
-                    </td>
-                    <td>
-                        @ViewBag.Garante
-                        @Html.DropDownList("Beneficiarios", (IEnumerable<SelectListItem>)ViewBag.Beneficiarios, new { size = "1", style = "width: 300px" })
-                        @Html.DropDownList("Beneficiarios")
-                    </td>
-
-                    <td><label asp-for="IdBeneficiarioGarante" class="control-label"></label></td>
                 <td>
-                    @Html.DropDownList("Garantes", (IEnumerable<SelectListItem>)ViewBag.Garantes, new { size = "1", style = "width: 300px" })
+                    <a class="btn btn-skype" asp-action="BuscaPersona2" asp-route-id="@ViewBag.IdBeneficiarioGarante">Garante</a>
+                    <a class="btn btn-success" asp-action="Edit" asp-route-id="11111">Beneficiario</a>
                 </td>
-                </tr>*@
+                <td>
+                    @ViewBag.Garante
+                    @Html.DropDownList("Beneficiarios", (IEnumerable<SelectListItem>)ViewBag.Beneficiarios, new { size = "1", style = "width: 300px" })
+                    @Html.DropDownList("Beneficiarios")
+                </td>
 
-                <br>
+                <td><label asp-for="IdBeneficiarioGarante" class="control-label"></label></td>
+            <td>
+                @Html.DropDownList("Garantes", (IEnumerable<SelectListItem>)ViewBag.Garantes, new { size = "1", style = "width: 300px" })
+            </td>
+            </tr>*@
+
+
 
                 <tr>
                     <td><label asp-for="FechaVenta" class="control-label"></label></td>
@@ -54,20 +62,20 @@
                     </td>
                 </tr>
                 @*<tr>
-                    <td>Regional</td>
-                    <td>
-                        @Html.DropDownList("UnidadesEjecutoras")
-                        @Html.DropDownList("UnidadesEjecutoras", (IEnumerable<SelectListItem>)ViewBag.UnidadesEjecutoras, new { size = "1", style = "width: 300px" })
-                    </td>
-                </tr>*@
-                <br>
+                <td>Regional</td>
+                <td>
+                    @Html.DropDownList("UnidadesEjecutoras")
+                    @Html.DropDownList("UnidadesEjecutoras", (IEnumerable<SelectListItem>)ViewBag.UnidadesEjecutoras, new { size = "1", style = "width: 300px" })
+                </td>
+            </tr>*@
+
                 @*<tr>
-                    <td><label asp-for="CorrelativoUnidad" class="control-label"></label></td>
-                    <td>
-                        <input asp-for="CorrelativoUnidad" class="form-control" />
-                        <span asp-validation-for="CorrelativoUnidad" class="text-danger"></span>
-                    </td>
-                </tr>*@
+                <td><label asp-for="CorrelativoUnidad" class="control-label"></label></td>
+                <td>
+                    <input asp-for="CorrelativoUnidad" class="form-control" />
+                    <span asp-validation-for="CorrelativoUnidad" class="text-danger"></span>
+                </td>
+            </tr>*@
                 <tr>
                     <td><label asp-for="IdAsrSiver" class="control-label"></label></td>
                     <td>
@@ -79,7 +87,7 @@
 
             <br>
             <div class="form-group">
-                <input type="submit" value="Grabar"  class="btn btn-primary btn-lg" />
+                <input type="submit" value="Grabar" class="btn btn-primary btn-lg" />
             </div>
         </form>
     </div>

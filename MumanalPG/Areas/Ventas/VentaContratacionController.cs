@@ -261,7 +261,8 @@ namespace MumanalPG.Areas.Ventas
 				ventaContratacion.FechaInicio = DateTime.Now.Date;
 				ventaContratacion.FechaFinal = DateTime.Now.Date;
 				ventaContratacion.CantidadTotal = 1;
-				ventaContratacion.TotalBs = 0;
+                ventaContratacion.ArchivoRespaldo = "";
+                ventaContratacion.TotalBs = 0;
 				ventaContratacion.TotalDolares = 0;
 				ventaContratacion.IdTipoMoneda = 1;
 				ventaContratacion.TipoCambio = 0;
@@ -293,9 +294,6 @@ namespace MumanalPG.Areas.Ventas
             }
             else if (IdBeneficiario != null && IdBeneficiarioGarante == "0")
             {
-                //HttpContext.Session.SetString(SessionIdBeneficiario, IdBeneficiario);
-                //HttpContext.Session.SetString(SessionBeneficiario, Beneficiario);
-
                 ViewBag.IdBeneficiario = IdBeneficiario;
                 ViewBag.Beneficiario = Beneficiario;
                 ViewBag.IdBeneficiarioGarante = IdBeneficiarioGarante;
@@ -303,44 +301,36 @@ namespace MumanalPG.Areas.Ventas
             }
             else if (IdBeneficiario == "0" && IdBeneficiarioGarante != null)
             {
-                //HttpContext.Session.SetString(SessionIdBeneficiarioGarante, IdBeneficiarioGarante);
-                //HttpContext.Session.SetString(SessionGarante, Garante);
-
-                //ViewBag.IdBeneficiario = HttpContext.Session.GetString(SessionIdBeneficiario);
-                //ViewBag.Beneficiario = HttpContext.Session.GetString(SessionBeneficiario);
-                //ViewBag.IdBeneficiarioGarante = HttpContext.Session.GetString(SessionIdBeneficiarioGarante);
-                //ViewBag.Garante = HttpContext.Session.GetString(SessionGarante);
             }
 
-            //// BENEFICIARIOS --------------------------------------------
-            //var items = new List<SelectListItem>();
-            //items = DB.RRHH_Beneficiario.
-            //	   Where(f => f.DepartamentoSigla == "LPZ").
-            //	   OrderBy(x => x.Denominacion).
-            //	   Select(c => new SelectListItem()
-            //				{
-            //					Text = c.Denominacion,
-            //					Value = c.IdBeneficiario.ToString()
-            //				}).
-            //	   ToList();
-            //ViewBag.Beneficiarios = items;
+            // BENEFICIARIOS --------------------------------------------
+            var items = new List<SelectListItem>();
+            items = DB.RRHH_Beneficiario.
+                   Where(f => f.EsHabilitado == true).
+                   OrderBy(x => x.Denominacion).
+                   Select(c => new SelectListItem()
+                   {
+                       Text = c.Denominacion,
+                       Value = c.IdBeneficiario.ToString()
+                   }).
+                   ToList();
+            ViewBag.Beneficiarios = items;
 
-            //// GARANTES --------------------------------------------------
-            //var items3 = new List<SelectListItem>();
-            //items3 = DB.RRHH_Beneficiario.
-            //	   Where(f => f.DepartamentoSigla == "LPZ").
-            //	   OrderBy(x => x.Denominacion).
-            //	   Select(c => new SelectListItem()
-            //	   {
-            //		   Text = c.Denominacion,
-            //		   Value = c.IdBeneficiario.ToString()
-            //	   }).
-            //	   ToList();
-            //ViewBag.Garantes = items3;
+            // GARANTES --------------------------------------------------
+            var items3 = new List<SelectListItem>();
+            items3 = DB.RRHH_Beneficiario.
+                   Where(f => f.EsHabilitado == true).
+                   OrderBy(x => x.Denominacion).
+                   Select(c => new SelectListItem()
+                   {
+                       Text = c.Denominacion,
+                       Value = c.IdBeneficiario.ToString()
+                   }).
+                   ToList();
+            ViewBag.Garantes = items3;
 
             // UNIDAD EJECUTORA ------------------------------------------
-
-
+            
             //var items2 = new List<SelectListItem>();
 
             //items2 = DB.RRHH_UnidadEjecutora.
@@ -352,7 +342,7 @@ namespace MumanalPG.Areas.Ventas
             //	   ToList();
             //ViewBag.UnidadesEjecutoras = items2;
 
-            //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             //var items3 = new List<SelectListItem>();
 
@@ -498,10 +488,14 @@ namespace MumanalPG.Areas.Ventas
 
 			var ventaContratacion = await DB.Ventas_VentaContratacion
 				.FirstOrDefaultAsync(m => m.IdVentaContratacion == id);
-			if (ventaContratacion == null)
-			{
-				return NotFound();
-			}
+            if (ventaContratacion == null)
+            {
+                return NotFound();
+            }
+            //else
+            //{
+            //    string Descri = ventaContratacion.Observaciones;
+            //}
 
 			return View(ventaContratacion);
 		}
