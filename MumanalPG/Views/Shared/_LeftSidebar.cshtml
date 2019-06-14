@@ -395,12 +395,26 @@
                         </li>*@
                         <li><a href="javascript:void(0)">Plan de Cuentas<i class="ti-list-ol"></i></a></li>
                         <li><a href="javascript:void(0)">Auxiliares<i class="ti-list-ol"></i></a></li>
-                        <li><a href="javascript:void(0)">Bancos<i class="ti-list-ol"></i></a></li>
                         <li><a href="javascript:void(0)">Cuentas Bancarias<i class="ti-list-ol"></i></a></li>
                         <li><a href="javascript:void(0)">Dosificacion Facturas<i class="ti-list-ol"></i></a></li>
                         <li>
+                            <a asp-area="Finanzas" asp-controller="Banco" asp-action="Index">
+                                Bancos <i class="fas fa-building"></i>
+                            </a>
+                        </li>
+                        <li>
                             <a asp-area="Finanzas" asp-controller="TipoComprobante" asp-action="Index">
-                                Tipos Comprobantes <i class="fas fa-th-list"></i>
+                                Tipo de Comprobante <i class="fas fa-th-list"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="Finanzas" asp-controller="TipoCuentaBanco" asp-action="Index">
+                                Tipo de Cuenta de Banco <i class="fas fa-piggy-bank"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="Finanzas" asp-controller="TipoMoneda" asp-action="Index">
+                                Tipo de Moneda <i class="fas fa-coins"></i>
                             </a>
                         </li>
                         <li>

@@ -30,7 +30,10 @@ namespace MumanalPG.Data
         public DbSet<MumanalPG.Models.Generales.fBuscaId> Generales_fBuscaId { get; set; }
 		public DbSet<MumanalPG.Models.Generales.fRetornaEntero> Generales_fRetornaEntero { get; set; }
 		public DbSet<MumanalPG.Models.Generales.fRetornaCadena> Generales_fRetornaCadena { get; set; }
+        public DbSet<MumanalPG.Models.Generales.Continente> Continente { get; set; }
         public DbSet<MumanalPG.Models.Generales.Departamento> Departamento { get; set; }
+        public DbSet<MumanalPG.Models.Generales.Municipio> Municipio { get; set; }
+        public DbSet<MumanalPG.Models.Generales.Pais> Pais { get; set; }
         /*Fin Generales*/
 
         /*Ini RRHH*/
@@ -44,10 +47,13 @@ namespace MumanalPG.Data
         /*Fin RRHH*/
 
         /*Ini Finanzas*/
+        public DbSet<MumanalPG.Models.Finanzas.Banco> Banco { get; set; }
         public DbSet<MumanalPG.Models.Finanzas.TipoTransaccion> TipoTransaccion { get; set; }
         //public DbSet<MumanalPG.Models.Finanzas.Puesto> RRHH_Puesto { get; set; }
         //public DbSet<MumanalPG.Models.Finanzas.UnidadEjecutora> RRHH_UnidadEjecutora { get; set; }
         //public DbSet<MumanalPG.Models.Finanzas.vPersona> RRHH_vPersona { get; set; }
+        public DbSet<MumanalPG.Models.Finanzas.TipoCuentaBanco> TipoCuentaBanco { get; set; }
+        public DbSet<MumanalPG.Models.Finanzas.TipoMoneda> TipoMoneda { get; set; } //
         public DbSet<MumanalPG.Models.Finanzas.TipoComprobante> TipoComprobante { get; set; }
         /*Fin Finanzas*/
 

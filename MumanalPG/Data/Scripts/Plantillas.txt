@@ -1,0 +1,7 @@
+﻿add migration (after modifying the model)
+	cd D:\Fuentes\aJorge\MumanalPG\MumanalPG
+	dotnet ef migrations add DescripcionDelUpdate
+remove migration
+	dotnet ef migrations remove
+update database
+	dotnet ef database update
