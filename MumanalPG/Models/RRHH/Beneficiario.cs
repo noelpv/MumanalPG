@@ -19,20 +19,21 @@ namespace MumanalPG.Models.RRHH
 		public string Nit { get; set; }
 		public string DepartamentoSigla { get; set; }
 		public string Iniciales { get; set; }
-		public string PrimerNombre { get; set; }
 		public Int32? IdDocumentoRespaldo { get; set; }
 		public string PrimerApellido { get; set; }
 		public string SegundoApellido { get; set; }
 		public string Denominacion { get; set; }
 		public DateTime? FechaNacimiento { get; set; }
-		public string TelefonoFijo { get; set; }
+        public Int32? IdGenero { get; set; }
+        public string TelefonoFijo { get; set; }
 		public string TelefonoOficina { get; set; }
 		public string TelefonoCelular { get; set; }
 		public string EmailPersonal { get; set; }
 		public string EmailOficina { get; set; }
 		public string DomicilioLegal { get; set; }
 		public Int32? IdMunicipio { get; set; }
-		public Int32? IdCalle { get; set; }
+        public Int32? IdBarrio { get; set; }
+        public Int32? IdCalle { get; set; }
 		public Int32? IdEdificio { get; set; }
 		public string EdificioNumero { get; set; }
 		public string EdificioNumeroPiso { get; set; }
@@ -41,8 +42,11 @@ namespace MumanalPG.Models.RRHH
 		public Int32? IdEstadoRegistro { get; set; }
 		public Int32? IdUsuario { get; set; }
 		public DateTime? FechaRegistro { get; set; }
-		
-		[InverseProperty("FuncionarioOrigen")]
+        public string PrimerNombre { get; set; }
+        public string SegundoNombre { get; set; }
+        public string ApellidoCasada { get; set; }
+
+        [InverseProperty("FuncionarioOrigen")]
 		public ICollection<Documento> DocumentosCreados { get; set; }
 		
 		[InverseProperty("FuncionarioDestino")]
