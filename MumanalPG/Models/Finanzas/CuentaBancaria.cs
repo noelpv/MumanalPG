@@ -18,7 +18,7 @@ namespace MumanalPG.Models.Finanzas
         public Int32 IdTipoMoneda { get; set; }
         public string CodigoTgn { get; set; }
         public DateTime FechaApertura { get; set; }
-        public Int32 IdOrganismo { get; set; }
+        public Int32 IdOrganismoFinanciador { get; set; }
         public DateTime FechaSaldoInicial { get; set; }
         public Decimal SaldoInicialBs { get; set; }
         public Decimal SaldoInicialDolares { get; set; }
@@ -29,7 +29,7 @@ namespace MumanalPG.Models.Finanzas
         public Decimal SaldoActualBs { get; set; }
         public Decimal SaldoActualDolares { get; set; }
         public string CodigoSigep { get; set; }
-        public Boolean EsCUT { get; set; }
+        public Boolean EsCuentaUnica { get; set; }
         public Int32 IdEstadoRegistro { get; set; }
         public Int32 IdUsuario { get; set; }
         public DateTime FechaRegistro { get; set; }

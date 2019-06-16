@@ -4,12 +4,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MumanalPG.Models.Finanzas
 {
-    [Table("ContabilidadCabecera", Schema = "Finanzas")]
-    public class ContabilidadCabecera
+    [Table("Contabilidad", Schema = "Finanzas")]
+    public class Contabilidad
     {
         [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         [Key]
-        public Int32 IdContabilidadCabecera { get; set; }
+        public Int32 IdContabilidad { get; set; }
         public Int32 IdTipoComprobante { get; set; }
         public string Gestion { get; set; }
         public Int32 CorrelativoAsiento { get; set; }
