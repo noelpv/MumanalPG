@@ -245,7 +245,7 @@
 --    "IdProcesoNivel2" integer,
 --    "IdBeneficiarioCategoria" integer,
 --    "NumeroCuotas" integer,
---    "NumeroPeriodos" integer,
+--    "NuemroPeriodos" integer,
 --    "ValorInicialBs" Decimal,
 --    "InteresBs" Decimal,
 --    "ValorFinalBs" Decimal,

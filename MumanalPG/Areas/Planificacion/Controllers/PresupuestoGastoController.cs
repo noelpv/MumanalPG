@@ -128,9 +128,10 @@ namespace MumanalPG.Areas.Planificacion.Controllers
                 item.IdBeneficiario = '0';
                 item.IdBeneficiarioResponsable = '1';
 
+                //item.PptoFormulado = '0';
                 item.PptoAdiciones = 0;
                 item.PptoModificaciones = 0;
-                item.PptoVigente = item.PptoFormulado ;
+                item.PptoVigente = 0;
 
                 item.EjecucionCompromiso = 0;
                 item.EjecucionDevengado = 0;

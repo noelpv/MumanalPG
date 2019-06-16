@@ -30,7 +30,8 @@
 
         <label asp-for="IdFuenteFinanciamiento" class="form-control-label"></label>
         <br>
-        @Html.DropDownList("FuenteFinanciamiento", ViewBag.FuenteFinanciamiento, "Sin asignar", new { @class = "form-control" })
-        @*@Html.DropDownList("FuenteFinanciamiento")*@
+        @Html.DropDownList("FuenteFinanciamiento")      //combo
+        @*<input asp-for="IdFuenteFinanciamiento" class="form-control" />
+        <span asp-validation-for="IdFuenteFinanciamiento" class="text-danger"></span>*@
     </div>
 </form>

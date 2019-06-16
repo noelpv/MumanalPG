@@ -12,11 +12,11 @@ namespace MumanalPG.Models.Planificacion
 		public Int32 IdRubroIngreso { get; set; }
         public string Descripcion { get; set; }
         public Int32 IdRubroIngresoPadre { get; set; }
+        public Int32 Nivel { get; set; }
+        public Boolean EsUltimoNivel { get; set; }
+        public string Gestion { get; set; }
 		public Int32 IdEstadoRegistro { get; set; }
 		public Int32 IdUsuario { get; set; }
 		public DateTime FechaRegistro { get; set; }
-        public string Gestion { get; set; }
-        public Int32 Nivel { get; set; }
-        public Boolean EsUltimoNivel { get; set; }
-    }
+	}
 }

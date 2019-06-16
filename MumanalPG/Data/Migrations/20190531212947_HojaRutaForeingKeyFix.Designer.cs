@@ -1908,7 +1908,7 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<decimal>("InteresBs");
 
-                    b.Property<int>("NumeroPeriodos");
+                    b.Property<int>("NuemroPeriodos");
 
                     b.Property<int>("NumeroCuotas");
 
