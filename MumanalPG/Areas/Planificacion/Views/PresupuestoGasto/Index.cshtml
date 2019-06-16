@@ -42,8 +42,8 @@
                 <th>Organismo.Financiador</th>
                 <th>Estructura.Programatica</th>
                 <th>Monto.Formulado</th>
-                @*<th>Monto.Modificado</th>
-        <th>Monto.Vigente</th>*@
+                <th>Monto.Modificado</th>
+                <th>Monto.Vigente</th>
             </tr>
 
         </thead>
@@ -70,17 +70,15 @@
                 @Html.DisplayFor(modelItem => item.IdEstructuraProgramatica)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdPartidaGasto)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.PptoFormulado)
             </td>
-            @*<td>
-            @Html.DisplayFor(modelItem => item.PptoModificaciones)
-        </td>
             <td>
-            @Html.DisplayFor(modelItem => item.PptoVigente)
-        </td>*@
+                @Html.DisplayFor(modelItem => item.PptoModificaciones)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PptoVigente)
+            </td>
+
             @{
                 options.Id = item.IdPresupuestoGasto;
                 options.ShowIntroMessages = index == 0 ? true : false;
