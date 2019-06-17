@@ -1,0 +1,37 @@
+@model MumanalPG.Models.Finanzas.Auxiliar
+<form asp-action="@ViewData["Action"]">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @{
+        string hasError = "has-danger";
+        string stringErrors = "";
+        if (ViewData.ModelState.IsValid) { hasError = ""; }
+        else
+        {
+            var errorList = ViewData.ModelState.Where(x => x.Value.Errors.Count > 0).ToDictionary(kvp => kvp.Key);
+            stringErrors = String.Join(",", errorList.Select(x => x.Key));
+        }
+
+    }
+    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+    <input type="hidden" asp-for="IdAuxiliar" />
+    <div class="form-group m-b-40 @if(stringErrors.Contains("Descripcion")){@hasError}">
+        <label asp-for="Descripcion" class="form-control-label"></label>
+        <textarea asp-for="Descripcion" class="form-control"></textarea>
+        <span asp-validation-for="Descripcion" class="text-danger"></span>
+    </div>
+    <div class="form-group m-b-40 @if(stringErrors.Contains("NombreTabla")){@hasError}">
+        <label asp-for="NombreTabla" class="form-control-label"></label>
+        <textarea asp-for="NombreTabla" class="form-control"></textarea>
+        <span asp-validation-for="NombreTabla" class="text-danger"></span>
+    </div>
+    <div class="form-group m-b-40 @if(stringErrors.Contains("NombreCampoCodigo")){@hasError}">
+        <label asp-for="NombreCampoCodigo" class="form-control-label"></label>
+        <textarea asp-for="NombreCampoCodigo" class="form-control"></textarea>
+        <span asp-validation-for="NombreCampoCodigo" class="text-danger"></span>
+    </div>
+    <div class="form-group m-b-40 @if(stringErrors.Contains("NombreCampoDescripcion")){@hasError}">
+        <label asp-for="NombreCampoDescripcion" class="form-control-label"></label>
+        <textarea asp-for="NombreCampoDescripcion" class="form-control"></textarea>
+        <span asp-validation-for="NombreCampoDescripcion" class="text-danger"></span>
+    </div>
+</form>
