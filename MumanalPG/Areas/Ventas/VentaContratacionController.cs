@@ -248,7 +248,7 @@ namespace MumanalPG.Areas.Ventas
 				
 				ventaContratacion.IdUnidadEjecutora = IdUnidadEjecutora; // Convert.ToInt32(UnidadesEjecutoras);
 				ventaContratacion.IdVentaSolicitud = 0;
-				ventaContratacion.IdProcesoNivel2 = 0;
+				ventaContratacion.IdProcesoNivel2 = 12;
 				ventaContratacion.Gestion = DateTime.Now.Year.ToString();
 				ventaContratacion.IdDepartamento = 2;
 				//ventaContratacion.IdBeneficiario = //Convert.ToInt32(Beneficiarios);
@@ -285,23 +285,16 @@ namespace MumanalPG.Areas.Ventas
             Models.Ventas.VentaContratacion Contratacion = new VentaContratacion();
             Contratacion.FechaVenta = DateTime.Now.Date;
 
-            if (IdBeneficiario == null && IdBeneficiarioGarante == null)
-            {
-                ViewBag.IdBeneficiario = IdBeneficiario;
-                ViewBag.Beneficiario = Beneficiario;
-                ViewBag.IdBeneficiarioGarante = IdBeneficiarioGarante;
-                ViewBag.Garante = Garante;
-            }
-            else if (IdBeneficiario != null && IdBeneficiarioGarante == "0")
-            {
-                ViewBag.IdBeneficiario = IdBeneficiario;
-                ViewBag.Beneficiario = Beneficiario;
-                ViewBag.IdBeneficiarioGarante = IdBeneficiarioGarante;
-                ViewBag.Garante = Garante;
-            }
-            else if (IdBeneficiario == "0" && IdBeneficiarioGarante != null)
-            {
-            }
+            //ViewBag.IdBeneficiario = IdBeneficiario;
+            //ViewBag.Beneficiario = Beneficiario;
+            //ViewBag.IdBeneficiarioGarante = IdBeneficiarioGarante;
+            //ViewBag.Garante = Garante;
+            
+            //ViewBag.IdBeneficiario = IdBeneficiario;
+            //ViewBag.Beneficiario = Beneficiario;
+            //ViewBag.IdBeneficiarioGarante = IdBeneficiarioGarante;
+            //ViewBag.Garante = Garante;
+
 
             // BENEFICIARIOS --------------------------------------------
             var items = new List<SelectListItem>();
@@ -328,9 +321,21 @@ namespace MumanalPG.Areas.Ventas
                    }).
                    ToList();
             ViewBag.Garantes = items3;
-
-            // UNIDAD EJECUTORA ------------------------------------------
             
+            // VENTA TARIFARIO  ------------------------------------------
+            var items2 = new List<SelectListItem>();
+
+            items2 = DB.VentaTarifario.
+                   Select(c => new SelectListItem()
+                   {
+                       Text = c.Descripcion,
+                       Value = c.IdVentaTarifario.ToString()
+                   }).
+                   ToList();
+            ViewBag.VentaTarifario = items2;
+            
+            // UNIDAD EJECUTORA ------------------------------------------
+
             //var items2 = new List<SelectListItem>();
 
             //items2 = DB.RRHH_UnidadEjecutora.
@@ -358,24 +363,12 @@ namespace MumanalPG.Areas.Ventas
             //		 ).ToList();
             //ViewBag.UnidadesEjecutoras = items3;
 
-            //var entryPoint = (from u in DB.RRHH_UnidadEjecutora
-            //				  join e in dbContext.tbl_Entry on ep.EID equals e.EID
-            //				  join t in dbContext.tbl_Title on e.TID equals t.TID
-            //				  where e.OwnerID == user.UID
-            //				  select new
-            //				  {
-            //					  UID = e.OwnerID,
-            //					  TID = e.TID,
-            //					  Title = t.Title,
-            //					  EID = e.EID
-            //				  }).Take(10);
-
             return View(Contratacion);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateReg([Bind("IdVentaContratacion,IdVentaSolicitud,IdProcesoNivel2,Gestion,IdUnidadEjecutora,CorrelativoUnidad,IdDepartamento,FechaVenta,IdBeneficiario,IdBeneficiarioGarante,IdBeneficiarioResponsable,IdVentaTarifario,Concepto,Observaciones,CiteTramite,IdAsrSiver,MesNumero,FechaInicio,FechaFinal,CantidadTotal,TotalBs,TotalDolares,IdTipoMoneda,TipoCambio,TotalPrevisionBs,Literal,PlazoMeses,MesInicioCronograma,IdPoa,IdProceso,IdDocumentoRespaldo,NumeroDocumento,ArchivoRespaldo,ArchivoRespaldoCargado,IdEstadoRegistro,IdUsuario,IdUsuarioAprueba,FechaRegistro,FechaAprueba")] VentaContratacion ventaContratacion, string Beneficiarios, string Garantes, string UnidadesEjecutoras, String IdBeneficiario, String IdBeneficiarioGarante)
+        public async Task<IActionResult> CreateReg([Bind("IdVentaContratacion,IdVentaSolicitud,IdProcesoNivel2,Gestion,IdUnidadEjecutora,CorrelativoUnidad,IdDepartamento,FechaVenta,IdBeneficiario,IdBeneficiarioGarante,IdBeneficiarioResponsable,IdVentaTarifario,Concepto,Observaciones,CiteTramite,IdAsrSiver,MesNumero,FechaInicio,FechaFinal,CantidadTotal,TotalBs,TotalDolares,IdTipoMoneda,TipoCambio,TotalPrevisionBs,Literal,PlazoMeses,MesInicioCronograma,IdPoa,IdProceso,IdDocumentoRespaldo,NumeroDocumento,ArchivoRespaldo,ArchivoRespaldoCargado,IdEstadoRegistro,IdUsuario,IdUsuarioAprueba,FechaRegistro,FechaAprueba")] VentaContratacion ventaContratacion, string Beneficiarios, string Garantes, string UnidadesEjecutoras, String IdBeneficiario, String IdBeneficiarioGarante, string VentaTarifario)
         {
             if (ModelState.IsValid)
             {
@@ -384,33 +377,66 @@ namespace MumanalPG.Areas.Ventas
                 var BuscaId = DB.Generales_fBuscaId.FromSql($"SELECT * FROM \"Generales\".\"fBuscaId\"({userId})").ToList();
                 Int32 IdUnidadEjecutora = BuscaId.FirstOrDefault().IdUnidadEjecutora;
 
+                String Denominacion = "";
+                var tBeneficiario = await DB.RRHH_Beneficiario
+                .FirstOrDefaultAsync(m => m.IdBeneficiario == Convert.ToInt32(Beneficiarios));
+                if (tBeneficiario != null)
+                    Denominacion = tBeneficiario.Denominacion;
+
+                String UESigla = "";
+                var UnidaEjecutora = await DB.RRHH_UnidadEjecutora
+                .FirstOrDefaultAsync(m => m.IdUnidadEjecutora == IdUnidadEjecutora);
+                if (UnidaEjecutora != null)
+                    UESigla = UnidaEjecutora.Sigla;
+
+                Int32 NumeroCuotas = 0;
+                Decimal ValorFinalBs = 0;
+                var VentaTarifario2 = await DB.VentaTarifario
+                .FirstOrDefaultAsync(m => m.IdVentaTarifario == Convert.ToInt32(VentaTarifario));
+                if (VentaTarifario2 != null)
+                {
+                    NumeroCuotas = VentaTarifario2.NumeroCuotas;
+                    ValorFinalBs = VentaTarifario2.ValorFinalBs;
+                }
+
                 ventaContratacion.IdUnidadEjecutora = IdUnidadEjecutora; // Convert.ToInt32(UnidadesEjecutoras);
-                ventaContratacion.IdVentaSolicitud = 0;
-                ventaContratacion.IdProcesoNivel2 = 0;
+                ventaContratacion.IdVentaSolicitud = 0;  //cambiar
+                ventaContratacion.CorrelativoUnidad = 0;  //cambiar
+                ventaContratacion.IdProcesoNivel2 = 12;
                 ventaContratacion.Gestion = DateTime.Now.Year.ToString();
-                ventaContratacion.IdDepartamento = 2;
-                //ventaContratacion.IdBeneficiario = //Convert.ToInt32(Beneficiarios);
-                ventaContratacion.IdBeneficiarioGarante = -1;// Convert.ToInt32(HttpContext.Session.GetString(SessionIdBeneficiarioGarante)); //Convert.ToInt32(Garantes);
-                ventaContratacion.IdBeneficiarioResponsable = 0;
-                ventaContratacion.IdVentaTarifario = 0;
-                ventaContratacion.Concepto = "Solicitud de Reposición de Ayuda Social reversible";
-                ventaContratacion.Observaciones = "Digitalización";
+                ventaContratacion.IdDepartamento = 2; // deberiamos eliminar este campo ya que se obtiene por relacion de UE/municipio/provincia/depto
+                ventaContratacion.IdBeneficiario = Convert.ToInt32(Beneficiarios);
+                ventaContratacion.IdBeneficiarioGarante = Convert.ToInt32(Garantes);
+                ventaContratacion.IdBeneficiarioResponsable = Convert.ToInt32(BuscaId);
+                ventaContratacion.IdVentaTarifario = Convert.ToInt32(VentaTarifario);
+                ventaContratacion.Concepto = "Solicitud de ASR de "  + Denominacion + ", En fecha " + ventaContratacion.FechaVenta.ToString("dd/MM/yyyy");
+                //ventaContratacion.Observaciones = ""; // se graba lo que escriba el usuario en el form
+                ventaContratacion.CiteTramite = "Mumanal/" + UESigla + "/" + "0"; //cambiar
                 ventaContratacion.MesNumero = DateTime.Now.Month;
+                ventaContratacion.FechaVenta = DateTime.Now.Date;
                 ventaContratacion.FechaInicio = DateTime.Now.Date;
                 ventaContratacion.FechaFinal = DateTime.Now.Date;
-                ventaContratacion.CantidadTotal = 1;
-                ventaContratacion.TotalBs = 0;
-                ventaContratacion.TotalDolares = 0;
+                ventaContratacion.CantidadTotal = NumeroCuotas;
+                ventaContratacion.TotalBs = ValorFinalBs;
+                ventaContratacion.TotalDolares = Math.Round(ValorFinalBs / Convert.ToDecimal(6.86), 2, MidpointRounding.AwayFromZero);
                 ventaContratacion.IdTipoMoneda = 1;
                 ventaContratacion.TipoCambio = 0;
                 ventaContratacion.TotalPrevisionBs = 0;
                 ventaContratacion.IdEstadoRegistro = 1;
                 ventaContratacion.IdUsuario = 1;
                 ventaContratacion.FechaRegistro = DateTime.Now.Date;
+                ventaContratacion.ArchivoRespaldo = "";
 
                 DB.Add(ventaContratacion);
-                await DB.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    await DB.SaveChangesAsync();
+                    return RedirectToAction(nameof(IndexReg));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
 
             return View("IndexReg");
