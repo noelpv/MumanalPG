@@ -12,6 +12,7 @@ namespace MumanalPG.Models.Finanzas
         [Key]
         public Int32 IdDosificacion { get; set; }
         public Int32 IdDocumentoRespaldo { get; set; }
+        [Required]
         public string NumeroAutorizacion { get; set; }
         public DateTime DosificacionFecha { get; set; }
         public Int32 IdBeneficiario { get; set; }

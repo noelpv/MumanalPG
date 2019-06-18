@@ -15,12 +15,12 @@ namespace MumanalPG.Models.Finanzas
         public string Gestion { get; set; }
         public Int32 IdBeneficiario { get; set; }
         public Int32 IdBeneficiarioResponsable { get; set; }
-        public Decimal importe_cobrado_bs { get; set; }
-        public Decimal importe_cobrado_dol { get; set; }
-        public Decimal tipo_cambio { get; set; }
-        public Int32 tipo_moneda { get; set; }
-        public DateTime fecha_cobranza { get; set; }
-        public string cobranza_concepto { get; set; }
+        public Decimal ImporteCobradoBs { get; set; }
+        public Decimal ImporteCobradoDolar { get; set; }
+        public Decimal TipoCambio { get; set; }
+        public Int32 IdTipoMoneda { get; set; }
+        public DateTime FechaCobranza { get; set; }
+        public string Concepto { get; set; }
         public Int32 IdCuentaBancaria { get; set; }
         public string ComprobanteDeposito { get; set; }
         public Int32 IdTipoTransaccion { get; set; }

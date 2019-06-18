@@ -11,7 +11,7 @@ namespace MumanalPG.Models.Finanzas
         [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         [Key]
         public Int32 IdContabilidadDetalle { get; set; }
-        public Int32 IdContabilidadCabecera { get; set; }
+        public Int32 IdContabilidad { get; set; }
         public Int32 IdAsientoTipo { get; set; }
         public Int32 DebeAuxiliar1 { get; set; }
         public Int32 DebeAuxiliar2 { get; set; }

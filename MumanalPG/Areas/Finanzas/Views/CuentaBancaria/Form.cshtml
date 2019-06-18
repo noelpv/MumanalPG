@@ -1,0 +1,54 @@
+@model MumanalPG.Models.Finanzas.CuentaBancaria
+<form asp-action="@ViewData["Action"]">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @{
+        string hasError = "has-danger";
+        string stringErrors = "";
+        if (ViewData.ModelState.IsValid) { hasError = ""; }
+        else
+        {
+            var errorList = ViewData.ModelState.Where(x => x.Value.Errors.Count > 0).ToDictionary(kvp => kvp.Key);
+            stringErrors = String.Join(",", errorList.Select(x => x.Key));
+        }
+    }
+    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+    <input type="hidden" asp-for="IdCuentaBancaria" />
+    <div class="form-group m-b-40 @if(stringErrors.Contains("IdBanco")){@hasError}">
+        <label asp-for="IdBanco" class="form-control-label"></label>
+        <br>
+        @Html.DropDownList("Banco", ViewBag.Banco, "Sin asignar", new { @class = "form-control" })
+        @*<input asp-for="IdBanco" class="form-control" />
+        <span asp-validation-for="IdBanco" class="text-danger"></span>*@
+    </div>
+    <div class="form-group m-b-40 @if(stringErrors.Contains("CuentaCodigo")){@hasError}">
+        <label asp-for="CuentaCodigo" class="form-control-label"></label>
+        <input asp-for="CuentaCodigo" class="form-control" />
+        <span asp-validation-for="CuentaCodigo" class="text-danger"></span>
+    </div>
+    <div class="form-group m-b-40 @if(stringErrors.Contains("Descripcion")){@hasError}">
+        <label asp-for="Descripcion" class="form-control-label"></label>
+        <textarea asp-for="Descripcion" class="form-control"></textarea>
+        <span asp-validation-for="Descripcion" class="text-danger"></span>
+    </div>
+    <div class="form-group m-b-40 @if(stringErrors.Contains("IdTipoCuentaBanco")){@hasError}">
+        <label asp-for="IdTipoCuentaBanco" class="form-control-label"></label>
+        <br>
+        @Html.DropDownList("TipoCuentaBanco", ViewBag.TipoCuentaBanco, "Sin asignar", new { @class = "form-control" })
+        @*<input asp-for="IdTipoCuentaBanco" class="form-control" />
+        <span asp-validation-for="IdTipoCuentaBanco" class="text-danger"></span>*@
+    </div>
+    <div class="form-group m-b-40 @if(stringErrors.Contains("IdTipoMoneda")){@hasError}">
+        <label asp-for="IdTipoMoneda" class="form-control-label"></label>
+        <br>
+        @Html.DropDownList("TipoMoneda", ViewBag.TipoMoneda, "Sin asignar", new { @class = "form-control" })
+        @*<input asp-for="IdTipoMoneda" class="form-control" />
+        <span asp-validation-for="IdTipoMoneda" class="text-danger"></span>*@
+    </div>
+    <div class="form-group m-b-40 @if(stringErrors.Contains("IdOrganismoFinanciador")){@hasError}">
+        <label asp-for="IdOrganismoFinanciador" class="form-control-label"></label>
+        <br>
+        @Html.DropDownList("OrganismoFinanciador", ViewBag.OrganismoFinanciador, "Sin asignar", new { @class = "form-control" })
+        @*<input asp-for="IdOrganismoFinanciador" class="form-control" />
+        <span asp-validation-for="IdOrganismoFinanciador" class="text-danger"></span>*@
+    </div>
+</form>
