@@ -78,7 +78,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                 item.FechaRegistro = DateTime.Now;
                 DB.Add(item);
                 await DB.SaveChangesAsync();
-                
+                SetFlashSuccess("Registro creado satisfactoriamente");
             }
             return PartialView("_Create",item);
         }

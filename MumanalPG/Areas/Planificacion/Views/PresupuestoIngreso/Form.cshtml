@@ -18,19 +18,19 @@
     <div class="form-group m-b-40 @if(stringErrors.Contains("IdOrganismoFinanciador")){@hasError}">
         <label asp-for="IdOrganismoFinanciador" class="form-control-label"></label>
         <br>
-        @Html.DropDownList("OrganismoFinanciador")
+        @Html.DropDownList("OrganismoFinanciador", ViewBag.OrganismoFinanciador, "Sin asignar", new { @class = "form-control" })
     </div>
 
     <div class="form-group m-b-40 @if(stringErrors.Contains("IdUnidadEjecutora")){@hasError}">
         <label asp-for="IdUnidadEjecutora" class="form-control-label"></label>
         <br>
-        @Html.DropDownList("UnidadEjecutora")
+        @Html.DropDownList("UnidadEjecutora", ViewBag.UnidadEjecutora, "Sin asignar", new { @class = "form-control" })
     </div>
     
     <div class="form-group m-b-40 @if(stringErrors.Contains("IdRubroIngreso")){@hasError}">
         <label asp-for="IdRubroIngreso" class="form-control-label"></label>
         <br>
-        @Html.DropDownList("RubroIngreso")
+        @Html.DropDownList("RubroIngreso", ViewBag.RubroIngreso, "Sin asignar", new { @class = "form-control" })
     </div>
 
     <div class="form-group m-b-40 @if(stringErrors.Contains("PptoFormulado")){@hasError}">

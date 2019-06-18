@@ -103,6 +103,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
                 item.IdFuenteFinanciamiento = Convert.ToInt32(FuenteFinanciamiento);  
                 DB.Add(item);
                 await DB.SaveChangesAsync();
+                SetFlashSuccess("Registro creado satisfactoriamente");
             }
             return PartialView("Create",item);
         }
