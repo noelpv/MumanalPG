@@ -1,0 +1,6 @@
+@model MumanalPG.Models.Finanzas.Auxiliar  
+<partial name="_MensajeEliminar"/>
+<form asp-action="Delete">
+    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+    <input type="hidden" asp-for="IdAuxiliar"/>
+</form>

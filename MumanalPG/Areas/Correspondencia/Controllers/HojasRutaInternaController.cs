@@ -109,7 +109,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
 //                consulta = consulta.Where(m => m.FuncionarioOrigenId == currentUser.Funcionario.IdBeneficiario);
 //            }
             
-            var resp = await PagingList.CreateAsync(consulta, Constantes.TamanoPaginacion, page, sortExpression,"-FechaRegistro");
+            var resp = await PagingList.CreateAsync(consulta, Constantes.TamanoPaginacion, page, sortExpression,"FechaRegistro");
             resp.RouteValue = new RouteValueDictionary {{ "filter", filter}, {"type", type}};
 
             ShowFlash(a);

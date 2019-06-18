@@ -1,14 +1,14 @@
-@model MumanalPG.Models.Planificacion.PresupuestoGasto
+@model MumanalPG.Models.Planificacion.PresupuestoIngreso
 <div class="row justify-content-center">
     <div class="col-10">
         <div class="card border-info">
             <div class="card-body">
                 <dl class="dl-horizontal">
                     <dt>
-                        @Html.DisplayNameFor(model => model.IdPartidaGasto)
+                        @Html.DisplayNameFor(model => model.IdRubroIngreso)
                     </dt>
                     <dd>
-                        @Html.DisplayFor(model => model.IdPartidaGasto)
+                        @Html.DisplayFor(model => model.IdRubroIngreso)
                     </dd>
                     <dt>
                         @Html.DisplayNameFor(model => model.Descripcion)
@@ -28,13 +28,6 @@
                     <dd>
                         @Html.DisplayFor(model => model.IdUnidadEjecutora)
                     </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.IdEstructuraProgramatica)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.IdEstructuraProgramatica)
-                    </dd>
-
                     <dt>
                         @Html.DisplayNameFor(model => model.PptoFormulado)
                     </dt>

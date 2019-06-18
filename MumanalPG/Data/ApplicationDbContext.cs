@@ -32,6 +32,7 @@ namespace MumanalPG.Data
 		public DbSet<MumanalPG.Models.Generales.fRetornaCadena> Generales_fRetornaCadena { get; set; }
         public DbSet<MumanalPG.Models.Generales.Continente> Continente { get; set; }
         public DbSet<MumanalPG.Models.Generales.Departamento> Departamento { get; set; }
+        public DbSet<MumanalPG.Models.Generales.DocumentoRespaldo> DocumentoRespaldo { get; set; }
         public DbSet<MumanalPG.Models.Generales.Municipio> Municipio { get; set; }
         public DbSet<MumanalPG.Models.Generales.Pais> Pais { get; set; }
         /*Fin Generales*/
@@ -47,13 +48,14 @@ namespace MumanalPG.Data
         /*Fin RRHH*/
 
         /*Ini Finanzas*/
+        public DbSet<MumanalPG.Models.Finanzas.Auxiliar> Auxiliar { get; set; }
         public DbSet<MumanalPG.Models.Finanzas.Banco> Banco { get; set; }
+        public DbSet<MumanalPG.Models.Finanzas.CuentaBancaria> CuentaBancaria { get; set; }
+        public DbSet<MumanalPG.Models.Finanzas.Dosificacion> Dosificacion { get; set; }
+        public DbSet<MumanalPG.Models.Finanzas.PlanCuentas> PlanCuentas { get; set; }
         public DbSet<MumanalPG.Models.Finanzas.TipoTransaccion> TipoTransaccion { get; set; }
-        //public DbSet<MumanalPG.Models.Finanzas.Puesto> RRHH_Puesto { get; set; }
-        //public DbSet<MumanalPG.Models.Finanzas.UnidadEjecutora> RRHH_UnidadEjecutora { get; set; }
-        //public DbSet<MumanalPG.Models.Finanzas.vPersona> RRHH_vPersona { get; set; }
         public DbSet<MumanalPG.Models.Finanzas.TipoCuentaBanco> TipoCuentaBanco { get; set; }
-        public DbSet<MumanalPG.Models.Finanzas.TipoMoneda> TipoMoneda { get; set; } //
+        public DbSet<MumanalPG.Models.Finanzas.TipoMoneda> TipoMoneda { get; set; }
         public DbSet<MumanalPG.Models.Finanzas.TipoComprobante> TipoComprobante { get; set; }
         /*Fin Finanzas*/
 
@@ -94,18 +96,17 @@ namespace MumanalPG.Data
 
         /*Ini Planificacion*/
         public DbSet<MumanalPG.Models.Planificacion.PresupuestoGasto> PresupuestoGasto { get; set; }
+        public DbSet<MumanalPG.Models.Planificacion.PresupuestoIngreso> PresupuestoIngreso { get; set; }
         public DbSet<MumanalPG.Models.Planificacion.PresupuestoModificaciones> PresupuestoModificaciones { get; set; }
         public DbSet<MumanalPG.Models.Planificacion.FuenteFinanciamiento> FuenteFinanciamiento { get; set; }
         public DbSet<MumanalPG.Models.Planificacion.OrganismoFinanciador> OrganismoFinanciador { get; set; }
         public DbSet<MumanalPG.Models.Planificacion.EstructuraProgramatica> EstructuraProgramatica { get; set; }
         public DbSet<MumanalPG.Models.Planificacion.PartidaGasto> PartidaGasto { get; set; }
         public DbSet<MumanalPG.Models.Planificacion.RubroIngreso> RubroIngreso { get; set; }
-        //public DbSet<MumanalPG.Models.Planificacion.HojaRutaInstrucciones> HojaRutaInstrucciones { get; set; }
 
         public DbSet<MumanalPG.Models.Planificacion.HojaRutaInstrucciones> HojaRutaInstrucciones { get; set; }
         //public DbSet<MumanalPG.Models.Planificacion.HojaRutaDocumentos> HojaRutaDocumentos { get; set; }
         /*Fin Planificacion*/
-
 
         /*Correspondencia*/
         public DbSet<TipoDocumento> CorrespondenciaTipoDocumento { get; set; }

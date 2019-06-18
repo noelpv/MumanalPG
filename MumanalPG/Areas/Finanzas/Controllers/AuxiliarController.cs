@@ -18,19 +18,19 @@ namespace MumanalPG.Areas.Finanzas.Controllers
     //[Authorize(Roles = SD.SuperAdminEndUser)]
     [Authorize]
     [Area("Finanzas")]
-    public class TipoCuentaBancoController : BaseController
+    public class AuxiliarController : BaseController
     {        
         
-		public TipoCuentaBancoController(ApplicationDbContext db, UserManager<IdentityUser> userManager): base(db, userManager)
+		public AuxiliarController(ApplicationDbContext db, UserManager<IdentityUser> userManager): base(db, userManager)
         {
             
         }
 
-        // GET: Finanzas/TipoCuentaBanco
-        // [Breadcrumb("TipoCuentaBanco", FromController = "DashboardPlan", FromAction = "Clasificadores")]
+        // GET: Finanzas/Auxiliar
+        // [Breadcrumb("Auxiliar", FromController = "DashboardPlan", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
-            var consulta = DB.TipoCuentaBanco.AsNoTracking().AsQueryable();
+            var consulta = DB.Auxiliar.AsNoTracking().AsQueryable();
             consulta = consulta.Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
             if (!string.IsNullOrWhiteSpace(filter))
 			{
@@ -42,7 +42,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             return View(resp);
         }
 
-        // GET: Finanzas/TipoCuentaBanco/Details/5
+        // GET: Finanzas/Auxiliar/Details/5
         public async Task<IActionResult> Details(Int32? id)
         {
             if (id == null)
@@ -50,7 +50,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
                 return NotFound();
             }
 
-            var item = await DB.TipoCuentaBanco.FirstOrDefaultAsync(m => m.IdTipoCuentaBanco  == id);
+            var item = await DB.Auxiliar.FirstOrDefaultAsync(m => m.IdAuxiliar  == id);
             if (item == null)
             {
                 return NotFound();
@@ -59,17 +59,17 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             return PartialView("Details",item);
         }
 
-        // GET: Finanzas/TipoCuentaBanco/Create
+        // GET: Finanzas/Auxiliar/Create
         public IActionResult Create()
         {
-            var model = new Models.Finanzas.TipoCuentaBanco();
+            var model = new Models.Finanzas.Auxiliar();
             return PartialView("Create", model);
         }
 
-        // POST: Finanzas/TipoCuentaBanco/Create
+        // POST: Finanzas/Auxiliar/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Models.Finanzas.TipoCuentaBanco item)
+        public async Task<IActionResult> Create(Models.Finanzas.Auxiliar item)
         {
             if (ModelState.IsValid)
             {
@@ -83,7 +83,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             return PartialView("Create",item);
         }
 
-        // GET: Finanzas/TipoCuentaBanco/Edit/5
+        // GET: Finanzas/Auxiliar/Edit/5
         public async Task<IActionResult> Edit(Int32? id)
         {
             if (id == null)
@@ -91,7 +91,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
                 return NotFound();
             }
 
-            var item = await DB.TipoCuentaBanco.FindAsync(id);
+            var item = await DB.Auxiliar.FindAsync(id);
             if (item == null)
             {
                 return NotFound();
@@ -99,12 +99,12 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             return PartialView( "Edit", item);
         }
 
-        // POST: Finanzas/TipoCuentaBanco/Edit/5
+        // POST: Finanzas/Auxiliar/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, [Bind("IdTipoCuentaBanco,Descripcion,Sigla")] Models.Finanzas.TipoCuentaBanco item)
+        public async Task<IActionResult> Edit(Int32 id, [Bind("IdAuxiliar,Descripcion,Sigla")] Models.Finanzas.Auxiliar item)
         {
-            if (id != item.IdTipoCuentaBanco)
+            if (id != item.IdAuxiliar)
             {
                 return NotFound();
             }
@@ -118,7 +118,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ItemExists(item.IdTipoCuentaBanco))
+                    if (!ItemExists(item.IdAuxiliar))
                     {
                         return NotFound();
                     }
@@ -132,7 +132,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             return PartialView("Edit", item);
         }
 
-        // GET: Finanzas/TipoCuentaBanco/Delete/5
+        // GET: Finanzas/Auxiliar/Delete/5
         public async Task<IActionResult> Delete(Int32? id)
         {
             if (id == null)
@@ -140,7 +140,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
                 return NotFound();
             }
 
-            var item = await DB.TipoCuentaBanco.FirstOrDefaultAsync(m => m.IdTipoCuentaBanco == id);
+            var item = await DB.Auxiliar.FirstOrDefaultAsync(m => m.IdAuxiliar == id);
             if (item == null)
             {
                 return NotFound();
@@ -149,21 +149,21 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             return PartialView("Delete",item);
         }
 
-        // POST: Finanzas/TipoCuentaBanco/Delete/5
+        // POST: Finanzas/Auxiliar/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Int32 id)
         {
-            var item = await DB.TipoCuentaBanco.FindAsync(id);
+            var item = await DB.Auxiliar.FindAsync(id);
             item.IdEstadoRegistro = 2;  //Constantes.Eliminado ;
-            DB.TipoCuentaBanco.Update(item);
+            DB.Auxiliar.Update(item);
             await DB.SaveChangesAsync();
             return PartialView("Delete",item);
         }
 
         private bool ItemExists(Int32 id)
         {
-            return DB.TipoCuentaBanco.Any(e => e.IdTipoCuentaBanco == id);
+            return DB.Auxiliar.Any(e => e.IdAuxiliar == id);
         }
     }
 }

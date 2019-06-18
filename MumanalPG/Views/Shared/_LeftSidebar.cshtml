@@ -393,13 +393,29 @@
                                 <li><a href="javascript:void(0)">Clasif 2<i class="ti-list-ol"></i></a></li>
                             </ul>
                         </li>*@
-                        <li><a href="javascript:void(0)">Plan de Cuentas<i class="ti-list-ol"></i></a></li>
-                        <li><a href="javascript:void(0)">Auxiliares<i class="ti-list-ol"></i></a></li>
-                        <li><a href="javascript:void(0)">Cuentas Bancarias<i class="ti-list-ol"></i></a></li>
-                        <li><a href="javascript:void(0)">Dosificacion Facturas<i class="ti-list-ol"></i></a></li>
+                        <li>
+                            <a asp-area="Finanzas" asp-controller="Auxiliar" asp-action="Index">
+                                Auxiliar <i class="far fa-file-alt"></i>
+                            </a>
+                        </li>
                         <li>
                             <a asp-area="Finanzas" asp-controller="Banco" asp-action="Index">
                                 Bancos <i class="fas fa-building"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="Finanzas" asp-controller="CuentaBancaria" asp-action="Index">
+                                Cuentas Bancarias <i class="far fa-credit-card"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="Finanzas" asp-controller="Dosificacion" asp-action="Index">
+                                Dosificacion Facturas <i class="far fa-list-alt"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="Finanzas" asp-controller="PlanCuentas" asp-action="Index">
+                                Plan de Cuentas <i class="far fa-id-badge"></i>
                             </a>
                         </li>
                         <li>
