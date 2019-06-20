@@ -385,7 +385,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
            // return View(await _context.Customers.ToListAsync());
             return new ViewAsPdf("_HojaRuta", dto)
             {
-                PageMargins = new Margins(20, 10, 12, 10),
+                PageMargins = new Margins(15, 10, 12, 10),
                 PageSize = Size.Letter,
                 CustomSwitches =  
                     "--footer-left \" © Sistema Integrado Versión 1.0\" --footer-center \" Página: [page]\" --footer-right \"  Documento generado el: " +  
