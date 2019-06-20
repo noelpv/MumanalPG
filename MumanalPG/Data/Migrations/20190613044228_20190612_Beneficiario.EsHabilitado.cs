@@ -44,6 +44,10 @@ namespace MumanalPG.Data.Migrations
                 nullable: false,
                 defaultValue: false);
 
+            migrationBuilder.DropTable(
+                name: "RubroIngreso",
+                schema: "Planificacion");
+
             migrationBuilder.CreateTable(
                 name: "RubroIngreso",
                 schema: "Planificacion",
