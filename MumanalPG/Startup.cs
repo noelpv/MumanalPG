@@ -113,7 +113,7 @@ namespace MumanalPG
 	        
 	        // Configuramos Rotativa indicándole el Path RELATIVO donde se
 	        // encuentran los archivos de la herramienta wkhtmltopdf.
-	        Rotativa.AspNetCore.RotativaConfiguration.Setup(env, "..\\Rotativa\\Windows\\");
+	        Rotativa.AspNetCore.RotativaConfiguration.Setup(env);
 		}
 	}
 }
