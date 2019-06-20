@@ -36,6 +36,12 @@
     <None Remove="Models\GeneralesParam\**" />
     <None Remove="Models\PlanificacionParam\**" />
     <None Remove="Models\VentasParam\**" />
+    <None Update="Rotativa\Windows\wkhtmltoimage.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Rotativa\Windows\wkhtmltopdf.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
