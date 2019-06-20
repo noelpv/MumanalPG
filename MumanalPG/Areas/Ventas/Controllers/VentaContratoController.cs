@@ -19,19 +19,19 @@ namespace MumanalPG.Areas.Ventas.Controllers
     //[Authorize(Roles = SD.SuperAdminEndUser)]
     [Authorize]
     [Area("Ventas")]
-    public class VentaSolicitudController : BaseController
+    public class VentaContratoController : BaseController
     {        
         
-		public VentaSolicitudController(ApplicationDbContext db, UserManager<IdentityUser> userManager): base(db, userManager)
+		public VentaContratoController(ApplicationDbContext db, UserManager<IdentityUser> userManager): base(db, userManager)
         {
             
         }
 
-		// GET: Ventas/VentaSolicitud
+		// GET: Ventas/VentaContrato
         [Breadcrumb("Afiliaciones", FromController = "DashboardVenta", FromAction = "Index")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
-            var consulta = DB.VentaSolicitud.AsNoTracking().AsQueryable();
+            var consulta = DB.VentaContrato.AsNoTracking().AsQueryable();
             consulta = consulta.Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
             if (!string.IsNullOrWhiteSpace(filter))
 			{
@@ -43,7 +43,7 @@ namespace MumanalPG.Areas.Ventas.Controllers
             return View(resp);
         }
 
-        // GET: Ventas/VentaSolicitud/Details/5
+        // GET: Ventas/VentaContrato/Details/5
         public async Task<IActionResult> Details(Int32? id)
         {
             if (id == null)
@@ -51,7 +51,7 @@ namespace MumanalPG.Areas.Ventas.Controllers
                 return NotFound();
             }
 
-            var item = await DB.VentaSolicitud.FirstOrDefaultAsync(m => m.IdVentaSolicitud  == id);
+            var item = await DB.VentaContrato.FirstOrDefaultAsync(m => m.IdVentaContrato  == id);
             if (item == null)
             {
                 return NotFound();
@@ -60,10 +60,10 @@ namespace MumanalPG.Areas.Ventas.Controllers
             return PartialView("Details",item);
         }
 
-        // GET: Ventas/VentaSolicitud/Create
+        // GET: Ventas/VentaContrato/Create
         public IActionResult Create()
         {
-            var model = new Models.Ventas.VentaSolicitud();
+            var model = new Models.Ventas.VentaContrato();
 
             //UnidadEjecutora
             var itemsU = new List<SelectListItem>();
@@ -87,14 +87,24 @@ namespace MumanalPG.Areas.Ventas.Controllers
                    ToList();
             ViewBag.Beneficiario = itemsB;
 
+            //VentaTarifario
+            var itemsT = new List<SelectListItem>();
+            itemsT = DB.VentaTarifario.
+                   Select(c => new SelectListItem()
+                   {
+                       Text = c.Descripcion,
+                       Value = c.IdVentaTarifario.ToString()
+                   }).
+                   ToList();
+            ViewBag.VentaTarifario = itemsT;
 
             return PartialView("Create", model);
         }
 
-        // POST: Ventas/VentaSolicitud/Create
+        // POST: Ventas/VentaContrato/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Models.Ventas.VentaSolicitud item, string UnidadEjecutora, string Beneficiario)
+        public async Task<IActionResult> Create(Models.Ventas.VentaContrato item, string UnidadEjecutora, string Beneficiario, string VentaTarifario)
         {
             if (ModelState.IsValid)
             {
@@ -106,22 +116,35 @@ namespace MumanalPG.Areas.Ventas.Controllers
                 item.Gestion = "2019";
                 item.CorrelativoUnidad = '0';
                 item.IdDepartamento = '2';
-                item.FechaSolicitud = DateTime.Now;
-                item.FechaRecepcionSolicitud = DateTime.Now;
-                item.Observaciones = "Solicitud de Afiliación";
-                item.CiteTramite = "MUMANAL/GG/ 1/2019";
-                item.MesNumero = '6';
-                item.IdPoa = '0';
-                item.IdProceso = 11;
+                item.FechaVenta = DateTime.Now;
+                //item.FechaRecepcionSolicitud = DateTime.Now;
+                item.Observaciones = "Solicitud de ASR.";
+                item.CiteTramite = "MUMANAL/UP/0101/2019";
+                item.IdAsrSiver = Convert.ToString(item.IdVentaContrato);
+                item.MesNumero = 6;
+                item.FechaInicio = DateTime.Now;
+                item.FechaFinal = DateTime.Now;
+                item.CantidadTotal = 36;
+                item.TotalDolares = 36;
+                item.IdTipoMoneda = 1;
+                item.TipoCambio = 7;
+                item.TotalPrevisionBs = 1;
+                item.Literal = "-";
+                item.PlazoMeses = 24;
+                item.MesInicioCronograma = 7;
+
+                item.IdPoa = 0;
+                item.IdProceso = 12;
                 item.IdDocumentoRespaldo = 14;
-                item.NumeroDocumento = '6';
-                item.PathArchivo = "-";
-                item.ArchivoCargado = false;
-                item.IdEstadoRegistro = '1';
+                item.NumeroDocumento = 101;
+                item.ArchivoRespaldo = "-";
+                item.ArchivoRespaldoCargado = false;
+                item.IdEstadoRegistro = 1;
                 item.FechaRegistro = DateTime.Now;
                 item.FechaAprueba = DateTime.Now;
                 item.IdUnidadEjecutora = Convert.ToInt32(UnidadEjecutora);
                 item.IdBeneficiario = Convert.ToInt32(Beneficiario);
+                item.IdVentaTarifario = Convert.ToInt32(VentaTarifario);
                 DB.Add(item);
                 await DB.SaveChangesAsync();
                 
@@ -129,7 +152,7 @@ namespace MumanalPG.Areas.Ventas.Controllers
             return PartialView("Create",item);
         }
 
-        // GET: Ventas/VentaSolicitud/Edit/5
+        // GET: Ventas/VentaContrato/Edit/5
         public async Task<IActionResult> Edit(Int32? id)
         {
             if (id == null)
@@ -137,7 +160,7 @@ namespace MumanalPG.Areas.Ventas.Controllers
                 return NotFound();
             }
 
-            var item = await DB.VentaSolicitud.FindAsync(id);
+            var item = await DB.VentaContrato.FindAsync(id);
             if (item == null)
             {
                 return NotFound();
@@ -145,12 +168,12 @@ namespace MumanalPG.Areas.Ventas.Controllers
             return PartialView( "Edit", item);
         }
 
-        // POST: Ventas/VentaSolicitud/Edit/5
+        // POST: Ventas/VentaContrato/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, [Bind("IdVentaSolicitud,IdBeneficiario,Descripcion,IdUnidadEjecutora")] Models.Ventas.VentaSolicitud item)
+        public async Task<IActionResult> Edit(Int32 id, [Bind("IdVentaContrato,IdBeneficiario,Descripcion,IdUnidadEjecutora")] Models.Ventas.VentaContrato item)
         {
-            if (id != item.IdVentaSolicitud)
+            if (id != item.IdVentaContrato)
             {
                 return NotFound();
             }
@@ -164,7 +187,7 @@ namespace MumanalPG.Areas.Ventas.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ItemExists(item.IdVentaSolicitud))
+                    if (!ItemExists(item.IdVentaContrato))
                     {
                         return NotFound();
                     }
@@ -178,7 +201,7 @@ namespace MumanalPG.Areas.Ventas.Controllers
             return PartialView("Edit", item);
         }
 
-        // GET: Ventas/VentaSolicitud/Delete/5
+        // GET: Ventas/VentaContrato/Delete/5
         public async Task<IActionResult> Delete(Int32? id)
         {
             if (id == null)
@@ -186,7 +209,7 @@ namespace MumanalPG.Areas.Ventas.Controllers
                 return NotFound();
             }
 
-            var item = await DB.VentaSolicitud.FirstOrDefaultAsync(m => m.IdVentaSolicitud == id);
+            var item = await DB.VentaContrato.FirstOrDefaultAsync(m => m.IdVentaContrato == id);
             if (item == null)
             {
                 return NotFound();
@@ -195,21 +218,21 @@ namespace MumanalPG.Areas.Ventas.Controllers
             return PartialView("Delete",item);
         }
 
-        // POST: Ventas/VentaSolicitud/Delete/5
+        // POST: Ventas/VentaContrato/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Int32 id)
         {
-            var item = await DB.VentaSolicitud.FindAsync(id);
+            var item = await DB.VentaContrato.FindAsync(id);
             item.IdEstadoRegistro = 2;  //Constantes.Eliminado ;
-            DB.VentaSolicitud.Update(item);
+            DB.VentaContrato.Update(item);
             await DB.SaveChangesAsync();
             return PartialView("Delete",item);
         }
 
         private bool ItemExists(Int32 id)
         {
-            return DB.VentaSolicitud.Any(e => e.IdVentaSolicitud == id);
+            return DB.VentaContrato.Any(e => e.IdVentaContrato == id);
         }
     }
 }

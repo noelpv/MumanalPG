@@ -143,6 +143,8 @@ namespace MumanalPG.Areas.Planificacion.Controllers
 
                 item.IdEstadoRegistro = 1;
                 item.FechaRegistro = DateTime.Now;
+                //item.Gestion = string Year(DateTime.Now);
+                
                 item.IdUsuarioAprueba = 1;
                 item.FechaAprueba = DateTime.Now;
 

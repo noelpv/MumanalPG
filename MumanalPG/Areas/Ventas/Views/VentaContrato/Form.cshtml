@@ -1,4 +1,4 @@
-@model MumanalPG.Models.Ventas.VentaSolicitud
+@model MumanalPG.Models.Ventas.VentaContrato
 <form asp-action="@ViewData["Action"]">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     @{
@@ -14,18 +14,24 @@
     }
     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
 
-    <input type="hidden" asp-for="IdVentaSolicitud" />
+    <input type="hidden" asp-for="IdVentaContrato" />
 
     <div class="form-group m-b-40 @if(stringErrors.Contains("IdUnidadEjecutora")){@hasError}">
         <label asp-for="IdUnidadEjecutora" class="form-control-label"></label>
         <br>
         @Html.DropDownList("UnidadEjecutora", ViewBag.UnidadEjecutora, "Sin asignar", new { @class = "form-control" })
     </div>
-    
+
     <div class="form-group m-b-40 @if(stringErrors.Contains("IdBeneficiario")){@hasError}">
         <label asp-for="IdBeneficiario" class="form-control-label"></label>
         <br>
         @Html.DropDownList("Beneficiario", ViewBag.Beneficiario, "Sin asignar", new { @class = "form-control" })
+    </div>
+
+    <div class="form-group m-b-40 @if(stringErrors.Contains("IdVentaTarifario")){@hasError}">
+        <label asp-for="IdVentaTarifario" class="form-control-label"></label>
+        <br>
+        @Html.DropDownList("VentaTarifario", ViewBag.VentaTarifario, "Sin asignar", new { @class = "form-control" })
     </div>
 
     <div class="form-group m-b-40 @if(stringErrors.Contains("Descripcion")){@hasError}">
@@ -34,15 +40,15 @@
         <span asp-validation-for="Descripcion" class="text-danger"></span>
     </div>
 
-    <div class="form-group m-b-40 @if(stringErrors.Contains("FechaSolicitud")){@hasError}">
-        <label asp-for="FechaSolicitud" class="form-control-label"></label>
-        <input asp-for="FechaSolicitud" class="form-control" />
-        <span asp-validation-for="FechaSolicitud" class="text-danger"></span>
+    <div class="form-group m-b-40 @if(stringErrors.Contains("FechaVenta")){@hasError}">
+        <label asp-for="FechaVenta" class="form-control-label"></label>
+        <input asp-for="FechaVenta" class="form-control" />
+        <span asp-validation-for="FechaVenta" class="text-danger"></span>
     </div>
-    @*<div class="form-group m-b-40 @if(stringErrors.Contains("IdDocumentoRespaldo")){@hasError}">
-            <label asp-for="IdDocumentoRespaldo" class="form-control-label"></label>
-            <input asp-for="IdDocumentoRespaldo" class="form-control" />
-            <span asp-validation-for="IdDocumentoRespaldo" class="text-danger"></span>
-        </div>*@
+    <div class="form-group m-b-40 @if(stringErrors.Contains("TotalBs")){@hasError}">
+            <label asp-for="TotalBs" class="form-control-label"></label>
+            <input asp-for="TotalBs" class="form-control" />
+            <span asp-validation-for="TotalBs" class="text-danger"></span>
+        </div>
 
 </form>
