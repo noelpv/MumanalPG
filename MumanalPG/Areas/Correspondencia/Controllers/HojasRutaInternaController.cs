@@ -382,7 +382,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             dto.hojaRuta = item.HojaRuta;
             dto.detalle = item;
             dto.instrucciones = instrucciones;
-           // return View(await _context.Customers.ToListAsync());
+           // return PartialView("_HojaRuta", dto);
             return new ViewAsPdf("_HojaRuta", dto)
             {
                 PageMargins = new Margins(15, 10, 12, 10),

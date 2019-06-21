@@ -31,12 +31,12 @@
                             if (cont % 2 == 0)
                             {
                                 html_str += $@"<tr style='border: 1px solid #ccc;'><td width='115px'><span>{@i.Nombre}</span></td>
-                                        <td><input type='checkbox' class='checkbox-button__input'></td>";
+                                        <td><input type='checkbox'></td>";
                             }
                             else
                             {
                                 html_str += $@"<td width='115px'><span>{@i.Nombre}</span></td>
-                                    <td><input type='checkbox' class='checkbox-button__input'></td></tr>";
+                                    <td><input type='checkbox'></td></tr>";
                             }
                             cont++;
                         }
@@ -55,9 +55,9 @@
                     </table>
                 </div>
             </div>
-            <div class="col col-3 mt-0 pt-0">
+            <div class="col col-3 mt-0 pt-0" style="margin-left: 18px;">
                 <label>ANEXOS:</label>
-                <div class="col-12 box box-min bg-light"></div>
+                <div class="col-10 box box-min bg-light"></div>
             </div>
         </div>
         <div class="row box bg-light text-center mr-0 mt-0  mb-0 p-0">
