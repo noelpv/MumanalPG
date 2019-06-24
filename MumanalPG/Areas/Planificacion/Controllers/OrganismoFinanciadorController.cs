@@ -72,14 +72,8 @@ namespace MumanalPG.Areas.Planificacion.Controllers
         {
             var model = new Models.Planificacion.OrganismoFinanciador();
             //ini combo
-            var items = new List<SelectListItem>();
-            items = DB.FuenteFinanciamiento.                   
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdFuenteFinanciamiento.ToString()
-                   }).
-                   ToList();
+            var items = DB.FuenteFinanciamiento.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             ViewBag.FuenteFinanciamiento = items;
             //ini combo
             return PartialView("Create", model);
@@ -88,7 +82,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
         // POST: Planificacion/OrganismoFinanciador/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Models.Planificacion.OrganismoFinanciador item, string FuenteFinanciamiento)
+        public async Task<IActionResult> Create(Models.Planificacion.OrganismoFinanciador item)
         {
             if (ModelState.IsValid)
             {
@@ -100,11 +94,13 @@ namespace MumanalPG.Areas.Planificacion.Controllers
                 item.CargoRepresentante = "-";
                 item.IdEstadoRegistro = 1;
                 item.FechaRegistro = DateTime.Now;
-                item.IdFuenteFinanciamiento = Convert.ToInt32(FuenteFinanciamiento);  
                 DB.Add(item);
                 await DB.SaveChangesAsync();
                 SetFlashSuccess("Registro creado satisfactoriamente");
             }
+            var items = DB.FuenteFinanciamiento.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.FuenteFinanciamiento = items;
             return PartialView("Create",item);
         }
 
@@ -120,14 +116,8 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             {
                 return NotFound();
             }
-            var items = new List<SelectListItem>();
-            items = DB.FuenteFinanciamiento.
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdFuenteFinanciamiento.ToString()
-                   }).
-                   ToList();
+            var items = DB.FuenteFinanciamiento.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             ViewBag.FuenteFinanciamiento = items;
 
             return PartialView( "Edit", item);
@@ -136,7 +126,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
         // POST: Planificacion/OrganismoFinanciador/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, [Bind("IdOrganismoFinanciador,Descripcion,Sigla, IdFuenteFinanciamiento")] Models.Planificacion.OrganismoFinanciador item, string FuenteFinanciamiento)
+        public async Task<IActionResult> Edit(Int32 id,  Models.Planificacion.OrganismoFinanciador item)
         {
             if (id != item.IdOrganismoFinanciador)
             {
@@ -147,7 +137,6 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             {
                 try
                 {
-                    item.IdFuenteFinanciamiento = Convert.ToInt32(FuenteFinanciamiento);
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }
@@ -164,6 +153,9 @@ namespace MumanalPG.Areas.Planificacion.Controllers
                 }
                 
             }
+            var items = DB.FuenteFinanciamiento.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.FuenteFinanciamiento = items;
             return PartialView("Edit", item);
         }
 

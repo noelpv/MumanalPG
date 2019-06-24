@@ -30,6 +30,9 @@
 
         <label asp-for="IdFuenteFinanciamiento" class="form-control-label"></label>
         <br>
-        @Html.DropDownList("FuenteFinanciamiento", ViewBag.FuenteFinanciamiento, "Sin asignar", new { @class = "form-control" })
+        @* @Html.DropDownList("FuenteFinanciamiento", ViewBag.FuenteFinanciamiento, "Sin asignar", new { @class = "form-control" }) *@
+       <select asp-for="IdFuenteFinanciamiento" class="form-control"
+               asp-items="@(new SelectList(ViewBag.FuenteFinanciamiento, "IdFuenteFinanciamiento", "Descripcion"))">
+       </select>
     </div>
 </form>

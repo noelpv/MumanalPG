@@ -11,8 +11,11 @@ namespace MumanalPG.Models.Planificacion
 		[DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
 		[Key]
 		public Int32 IdOrganismoFinanciador { get; set; }
+		[Required(ErrorMessage = "{0} no puede estar en blanco")]
 		public Int32 IdFuenteFinanciamiento { get; set; }
+		[Required(ErrorMessage = "{0} no puede estar en blanco")]
 		public string Descripcion { get; set; }
+		[Required(ErrorMessage = "{0} no puede estar en blanco")]
 		public string Sigla { get; set; }
 		public string Gestion { get; set; }
 		public Int32 IdBeneficiario { get; set; }
