@@ -10,6 +10,7 @@ namespace MumanalPG.Models.Generales
 		[DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
 		[Key]
 		public Int32 IdPais { get; set; }
+		[Required(ErrorMessage = "{0} no puede estar en blanco")]
 		public Int32 IdContinente { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]
 		public string CodigoPais { get; set; }

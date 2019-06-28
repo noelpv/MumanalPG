@@ -1,0 +1,6 @@
+@model MumanalPG.Models.Generales.Provincia  
+<partial name="_MensajeEliminar"/>
+<form asp-action="Delete">
+    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+    <input type="hidden" asp-for="IdProvincia"/>
+</form>
