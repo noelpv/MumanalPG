@@ -57,13 +57,11 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             {
                 return NotFound();
             }
-
             var item = await DB.OrganismoFinanciador.FirstOrDefaultAsync(m => m.IdOrganismoFinanciador  == id);
             if (item == null)
             {
                 return NotFound();
             }
-
             return PartialView("Details",item);
         }
 
@@ -75,7 +73,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             var items = DB.FuenteFinanciamiento.
                 Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             ViewBag.FuenteFinanciamiento = items;
-            //ini combo
+            //Fin combo
             return PartialView("Create", model);
         }
 
@@ -101,6 +99,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             var items = DB.FuenteFinanciamiento.
                 Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             ViewBag.FuenteFinanciamiento = items;
+
             return PartialView("Create",item);
         }
 

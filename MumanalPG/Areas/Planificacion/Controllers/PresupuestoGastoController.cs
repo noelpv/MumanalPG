@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Dynamic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +15,10 @@ using MumanalPG.Models;
 using MumanalPG.Utility;
 using ReflectionIT.Mvc.Paging;
 using SmartBreadcrumbs;
+using MumanalPG.Extensions;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace MumanalPG.Areas.Planificacion.Controllers
 {
@@ -29,7 +35,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
 
         // GET: Planificacion/PresupuestoGasto
         [Breadcrumb("PresupuestoGasto", FromController = "DashboardPlan", FromAction = "Index")]
-        public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "IdPartidaGasto", string a = "")
+        public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
             var consulta = DB.PresupuestoGasto.AsNoTracking().AsQueryable();
             consulta = consulta.Where(m => m.IdEstadoRegistro != 2);    
@@ -40,7 +46,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
                 consulta = consulta.Where(m => EF.Functions.ILike(m.Descripcion, $"%{filter}%"));
                 //consulta = consulta.Where(m =>  m.IdPartidaGasto.Equals(filter));
             }
-            var resp = await PagingList.CreateAsync(consulta, Constantes.TamanoPaginacion, page, sortExpression, "IdPartidaGasto");
+            var resp = await PagingList.CreateAsync(consulta, Constantes.TamanoPaginacion, page, sortExpression, "Descripcion");
             resp.RouteValue = new RouteValueDictionary {{ "filter", filter}};
             ShowFlash(a);
             return View(resp);
@@ -58,7 +64,6 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             {
                 return NotFound();
             }
-
             return PartialView("Details",item);
         }
 
@@ -68,46 +73,54 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             var model = new Models.Planificacion.PresupuestoGasto();
 
             //OrganismoFinanciador
-            var items = new List<SelectListItem>();
-            items = DB.OrganismoFinanciador.                   
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdOrganismoFinanciador.ToString()
-                   }).
-                   ToList();
+            //var items = new List<SelectListItem>();
+            //items = DB.OrganismoFinanciador.                   
+            //       Select(c => new SelectListItem()
+            //       {
+            //           Text = c.Descripcion,
+            //           Value = c.IdOrganismoFinanciador.ToString()
+            //       }).
+            //       ToList();
+            var items = DB.OrganismoFinanciador.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
             ViewBag.OrganismoFinanciador = items;
             //UnidadEjecutora
-            var itemsU = new List<SelectListItem>();
-            itemsU = DB.RRHH_UnidadEjecutora.
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdUnidadEjecutora.ToString()
-                   }).
-                   ToList();
+            //var itemsU = new List<SelectListItem>();
+            //itemsU = DB.RRHH_UnidadEjecutora.
+            //       Select(c => new SelectListItem()
+            //       {
+            //           Text = c.Descripcion,
+            //           Value = c.IdUnidadEjecutora.ToString()
+            //       }).
+            //       ToList();
+            var itemsU = DB.RRHH_UnidadEjecutora.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
             ViewBag.UnidadEjecutora = itemsU;
 
             //EstructuraProgramatica
-            var itemsE = new List<SelectListItem>();
-            itemsE = DB.EstructuraProgramatica.
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdEstructuraProgramatica.ToString()
-                   }).
-                   ToList();
+            //var itemsE = new List<SelectListItem>();
+            //itemsE = DB.EstructuraProgramatica.
+            //       Select(c => new SelectListItem()
+            //       {
+            //           Text = c.Descripcion,
+            //           Value = c.IdEstructuraProgramatica.ToString()
+            //       }).
+            //       ToList();
+            var itemsE = DB.EstructuraProgramatica.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
             ViewBag.EstructuraProgramatica = itemsE;
 
             //PartidaGasto
-            var itemsP = new List<SelectListItem>();
-            itemsP = DB.PartidaGasto.
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdPartidaGasto.ToString()
-                   }).
-                   ToList();
+            //var itemsP = new List<SelectListItem>();
+            //itemsP = DB.PartidaGasto.
+            //       Select(c => new SelectListItem()
+            //       {
+            //           Text = c.Descripcion,
+            //           Value = c.IdPartidaGasto.ToString()
+            //       }).
+            //       ToList();
+            var itemsP = DB.PartidaGasto.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
             ViewBag.PartidaGasto = itemsP;
             //Fin Combos
 
@@ -117,16 +130,16 @@ namespace MumanalPG.Areas.Planificacion.Controllers
         // POST: Planificacion/PresupuestoGasto/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Models.Planificacion.PresupuestoGasto item, string OrganismoFinanciador, string UnidadEjecutora, string EstructuraProgramatica, string PartidaGasto)
-
+        //public async Task<IActionResult> Create(Models.Planificacion.PresupuestoGasto item, string OrganismoFinanciador, string UnidadEjecutora, string EstructuraProgramatica, string PartidaGasto)
+        public async Task<IActionResult> Create(Models.Planificacion.PresupuestoGasto item)
         {
             if (ModelState.IsValid)
             {
                 ApplicationUser currentUser = await GetCurrentUser();
                 item.IdUsuario = currentUser.AspNetUserId;
+                item.IdBeneficiarioResponsable = currentUser.AspNetUserId;
                 item.Gestion = "2019";
-                item.IdBeneficiario = '0';
-                item.IdBeneficiarioResponsable = '1';
+                item.IdBeneficiario = 0;
 
                 //item.PptoFormulado = '0';
                 item.PptoAdiciones = 0;
@@ -148,10 +161,10 @@ namespace MumanalPG.Areas.Planificacion.Controllers
                 item.IdUsuarioAprueba = 1;
                 item.FechaAprueba = DateTime.Now;
 
-                item.IdOrganismoFinanciador = Convert.ToInt32(OrganismoFinanciador);
-                item.IdUnidadEjecutora = Convert.ToInt32(UnidadEjecutora);
-                item.IdEstructuraProgramatica = Convert.ToInt32(EstructuraProgramatica);
-                item.IdPartidaGasto = Convert.ToInt32(PartidaGasto);
+                //item.IdOrganismoFinanciador = Convert.ToInt32(OrganismoFinanciador);
+                //item.IdUnidadEjecutora = Convert.ToInt32(UnidadEjecutora);
+                //item.IdEstructuraProgramatica = Convert.ToInt32(EstructuraProgramatica);
+                //item.IdPartidaGasto = Convert.ToInt32(PartidaGasto);
                 //
                 var partidaGasto = await DB.PartidaGasto.FirstOrDefaultAsync(m => m.IdPartidaGasto == item.IdPartidaGasto);
                 if (partidaGasto == null)
@@ -163,18 +176,30 @@ namespace MumanalPG.Areas.Planificacion.Controllers
                 {
                     item.Descripcion = partidaGasto.Descripcion;
                 }
-                //item.Descripcion = DescripcionP;
-
-                //var PartidaGasto2 = await DB.PartidaGasto.FindAsync(item.IdPartidaGasto);
-                //if (PartidaGasto2 != null)
-                //{
-
-                //    return NotFound();
-                //}
-                //
                 DB.Add(item);
                 await DB.SaveChangesAsync();
+                SetFlashSuccess("Registro creado satisfactoriamente");
             }
+            //item.IdOrganismoFinanciador = Convert.ToInt32(OrganismoFinanciador);
+            //item.IdUnidadEjecutora = Convert.ToInt32(UnidadEjecutora);
+            //item.IdEstructuraProgramatica = Convert.ToInt32(EstructuraProgramatica);
+            //item.IdPartidaGasto = Convert.ToInt32(PartidaGasto);
+            var items = DB.OrganismoFinanciador.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
+            ViewBag.OrganismoFinanciador = items;
+
+            var itemsU = DB.RRHH_UnidadEjecutora .
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
+            ViewBag.UnidadEjecutora = itemsU;
+
+            var itemsE = DB.EstructuraProgramatica.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
+            ViewBag.EstructuraProgramatica = itemsE;
+
+            var itemsP = DB.PartidaGasto.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
+            ViewBag.PartidaGasto = itemsP;
+
             return PartialView("Create",item);
         }
 
@@ -191,46 +216,23 @@ namespace MumanalPG.Areas.Planificacion.Controllers
                 return NotFound();
             }
             //OrganismoFinanciador
-            var items = new List<SelectListItem>();
-            items = DB.OrganismoFinanciador.
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdOrganismoFinanciador.ToString()
-                   }).
-                   ToList();
+            var items = DB.OrganismoFinanciador.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
             ViewBag.OrganismoFinanciador = items;
-            //IdUnidadEjecutora
-            var itemsU = new List<SelectListItem>();
-            itemsU = DB.RRHH_UnidadEjecutora.
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdUnidadEjecutora.ToString()
-                   }).
-                   ToList();
+
+            //UnidadEjecutora
+            var itemsU = DB.RRHH_UnidadEjecutora.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
             ViewBag.UnidadEjecutora = itemsU;
 
-            //IdEstructuraProgramatica
-            var itemsE = new List<SelectListItem>();
-            itemsE = DB.EstructuraProgramatica.
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdEstructuraProgramatica.ToString()
-                   }).
-                   ToList();
+            //EstructuraProgramatica
+            var itemsE = DB.EstructuraProgramatica.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
             ViewBag.EstructuraProgramatica = itemsE;
 
-            //IdPartidaGasto
-            var itemsP = new List<SelectListItem>();
-            itemsP = DB.PartidaGasto.
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdPartidaGasto.ToString()
-                   }).
-                   ToList();
+            //PartidaGasto
+            var itemsP = DB.PartidaGasto.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
             ViewBag.PartidaGasto = itemsP;
             //Fin Combos
 
@@ -240,7 +242,8 @@ namespace MumanalPG.Areas.Planificacion.Controllers
         // POST: Planificacion/PresupuestoGasto/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, [Bind("IdPresupuestoGasto,IdPartidaGasto,Sigla, IdOrganismoFinanciador,Descripcion")] Models.Planificacion.PresupuestoGasto item, string OrganismoFinanciador, string UnidadEjecutora, string EstructuraProgramatica, string PartidaGasto)
+        //public async Task<IActionResult> Edit(Int32 id, [Bind("IdPresupuestoGasto,IdPartidaGasto,Sigla, IdOrganismoFinanciador,Descripcion")] Models.Planificacion.PresupuestoGasto item, string OrganismoFinanciador, string UnidadEjecutora, string EstructuraProgramatica, string PartidaGasto)
+        public async Task<IActionResult> Edit(Int32 id, Models.Planificacion.PresupuestoGasto item)
         {
             if (id != item.IdPresupuestoGasto)
             {
@@ -251,10 +254,45 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             {
                 try
                 {
-                    item.IdOrganismoFinanciador = Convert.ToInt32(OrganismoFinanciador);
-                    item.IdUnidadEjecutora = Convert.ToInt32(UnidadEjecutora);
-                    item.IdEstructuraProgramatica = Convert.ToInt32(EstructuraProgramatica);
-                    item.IdPartidaGasto = Convert.ToInt32(PartidaGasto);
+                    ApplicationUser currentUser = await GetCurrentUser();
+                    item.IdUsuario = currentUser.AspNetUserId;
+                    item.IdBeneficiarioResponsable = currentUser.AspNetUserId;
+                    item.Gestion = "2019";
+                    item.IdBeneficiario = 0;
+
+                    item.PptoAdiciones = 0;
+                    item.PptoModificaciones = 0;
+                    item.PptoVigente = item.PptoFormulado;
+
+                    item.EjecucionCompromiso = 0;
+                    item.EjecucionDevengado = 0;
+                    item.EjecucionPagado = 0;
+                    item.EjecucionDevuelto = 0;
+
+                    item.EjecucionRevertido = 0;
+                    item.EjecucionAnulado = 0;
+
+                    item.IdEstadoRegistro = 1;
+                    item.FechaRegistro = DateTime.Now;
+                    //item.Gestion = string Year(DateTime.Now);
+
+                    item.IdUsuarioAprueba = 1;
+                    item.FechaAprueba = DateTime.Now;
+
+                    var partidaGasto = await DB.PartidaGasto.FirstOrDefaultAsync(m => m.IdPartidaGasto == item.IdPartidaGasto);
+                    if (partidaGasto == null)
+                    {
+                        item.Descripcion = "No Asignado";
+                        return NotFound();
+                    }
+                    else
+                    {
+                        item.Descripcion = partidaGasto.Descripcion;
+                    }
+                    //item.IdOrganismoFinanciador = Convert.ToInt32(OrganismoFinanciador);
+                    //item.IdUnidadEjecutora = Convert.ToInt32(UnidadEjecutora);
+                    //item.IdEstructuraProgramatica = Convert.ToInt32(EstructuraProgramatica);
+                    //item.IdPartidaGasto = Convert.ToInt32(PartidaGasto);
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }
@@ -269,8 +307,28 @@ namespace MumanalPG.Areas.Planificacion.Controllers
                         throw;
                     }
                 }
-                
             }
+            //OrganismoFinanciador
+            var items = DB.OrganismoFinanciador.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
+            ViewBag.OrganismoFinanciador = items;
+
+            //UnidadEjecutora
+            var itemsU = DB.RRHH_UnidadEjecutora.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
+            ViewBag.UnidadEjecutora = itemsU;
+
+            //EstructuraProgramatica
+            var itemsE = DB.EstructuraProgramatica.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
+            ViewBag.EstructuraProgramatica = itemsE;
+
+            //PartidaGasto
+            var itemsP = DB.PartidaGasto.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
+            ViewBag.PartidaGasto = itemsP;
+            //Fin Combos
+
             return PartialView("Edit", item);
         }
 

@@ -73,11 +73,12 @@ namespace MumanalPG.Areas.Planificacion.Controllers
         {
             if (ModelState.IsValid)
             {
-                //ApplicationUser currentUser = await GetCurrentUser();
-                //item.IdUsuario = currentUser.AspNetUserId;
+                ApplicationUser currentUser = await GetCurrentUser();
+                item.IdUsuario = currentUser.AspNetUserId;
                 item.Gestion = "2019";
                 item.Nivel = "1";
                 item.CodigoSisin = "";
+                item.IdEstadoRegistro = 1;
                 item.FechaRegistro = DateTime.Now;
                 DB.Add(item);
                 await DB.SaveChangesAsync();

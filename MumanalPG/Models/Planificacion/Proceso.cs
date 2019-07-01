@@ -10,13 +10,20 @@ namespace MumanalPG.Models.Planificacion
 		[DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
 		[Key]
 		public Int32 IdProceso { get; set; }
-		public Int32 IdProcesoPadre { get; set; }
-		public string Descripcion { get; set; }
-		public Int32 NumeroDiasHabiles { get; set; }
-		public Int32 NumeroDiasCalendario { get; set; }
-		public Int32 IdDocumentoRespaldo { get; set; }
-		public Int32 IdFormulario { get; set; }
-		public string EstadoCodigo { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
+        public Int32 IdProcesoPadre { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
+        public string Descripcion { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
+        public Int32 NumeroDiasHabiles { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
+        public Int32 NumeroDiasCalendario { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
+        public Int32 IdDocumentoRespaldo { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
+        public Int32 IdFormulario { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
+        public string EstadoCodigo { get; set; }
 		public string UsuarioCodigo { get; set; }
 		public DateTime FechaRegistro { get; set; }
 	}
