@@ -1,0 +1,75 @@
+@model MumanalPG.Models.Generales.DocumentoRespaldo
+<form asp-action="@ViewData["Action"]">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @{
+        string hasError = "has-danger";
+        string stringErrors = "";
+        if (ViewData.ModelState.IsValid) { hasError = ""; }
+        else
+        {
+            var errorList = ViewData.ModelState.Where(x => x.Value.Errors.Count > 0).ToDictionary(kvp => kvp.Key);
+            stringErrors = String.Join(",", errorList.Select(x => x.Key));
+        }
+    }
+    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+    <input type="hidden" asp-for="IdDocumentoRespaldo" />
+    <div class="form-group m-b-40 @if(stringErrors.Contains("IdDocumentoClasificacion")){@hasError}">
+        @Html.LabelFor(m => m.IdDocumentoClasificacion, new { @class = "form-control-label" })
+        <br>
+        @* @Html.DropDownList("IdDocumentoClasificacion", ViewBag.DocumentoClasificacion, "Sin asignar", new { @class = "form-control" }) *@
+       <select asp-for="IdDocumentoClasificacion" class="form-control"
+               asp-items="@(new SelectList(ViewBag.DocumentoClasificacion, "IdDocumentoClasificacion", "Descripcion"))">
+       </select>
+    </div>
+    <div class="form-group m-b-40 @if(stringErrors.Contains("Sigla")){@hasError}">
+        @Html.LabelFor(m => m.Sigla, new { @class = "form-control-label" }) 
+        @Html.TextBoxFor(m => m.Sigla, new { @class = "form-control" }) 
+        <span asp-validation-for="Sigla" class="text-danger"></span>
+    </div>
+    <div class="form-group m-b-40 @if(stringErrors.Contains("Descripcion")){@hasError}">
+        @Html.LabelFor(m => m.Descripcion, new { @class = "form-control-label" }) 
+        @Html.TextAreaFor(m => m.Descripcion, new { @class = "form-control" })
+        <span asp-validation-for="Descripcion" class="text-danger"></span>
+    </div>
+    <div class="form-group m-b-40 @if(stringErrors.Contains("IdFrecuenciaUso")){@hasError}">
+        @Html.LabelFor(m => m.IdFrecuenciaUso, new { @class = "form-control-label" })
+        <br>
+        @* @Html.DropDownList("IdFrecuenciaUso", ViewBag.FrecuenciaUso, "Sin asignar", new { @class = "form-control" }) *@
+       <select asp-for="IdFrecuenciaUso" class="form-control"
+               asp-items="@(new SelectList(ViewBag.FrecuenciaUso, "IdFrecuenciaUso", "Descripcion"))">
+       </select>
+    </div>
+    <div class="form-group m-b-40 @if(stringErrors.Contains("IdDocumentoFormato")){@hasError}">
+        @Html.LabelFor(m => m.IdDocumentoFormato, new { @class = "form-control-label" })
+        <br>
+        @* @Html.DropDownList("IdDocumentoFormato", ViewBag.DocumentoFormato, "Sin asignar", new { @class = "form-control" }) *@
+       <select asp-for="IdDocumentoFormato" class="form-control"
+               asp-items="@(new SelectList(ViewBag.DocumentoFormato, "IdDocumentoFormato", "Descripcion"))">
+       </select>
+    </div>
+    <div class="form-group m-b-40 @if(stringErrors.Contains("NumeroCopias")){@hasError}">
+        @Html.LabelFor(m => m.NumeroCopias, new { @class = "form-control-label" })
+        @Html.TextBoxFor(m => m.NumeroCopias, new { @class = "form-control" })
+        <span asp-validation-for="NumeroCopias" class="text-danger"></span>
+    </div>
+    <div class="form-group m-b-40 @if(stringErrors.Contains("LugarFisicoArchivado")){@hasError}">
+        @Html.LabelFor(m => m.LugarFisicoArchivado, new { @class = "form-control-label" }) 
+        @Html.TextAreaFor(m => m.LugarFisicoArchivado, new { @class = "form-control" })
+        <span asp-validation-for="LugarFisicoArchivado" class="text-danger"></span>
+    </div>
+    <div class="form-group m-b-40"> <!-- Checkbox para valores booleanos (true/false) -->
+        @Html.LabelFor(m => m.EsUsadoComoRequisito, new {@class = "form-control-label"})
+        &nbsp; &nbsp;
+        @Html.CheckBoxFor(m => m.EsUsadoComoRequisito, new { @class = "form-control-checkboxfor" })
+    </div>
+    <div class="form-group m-b-40 @if(stringErrors.Contains("Orden")){@hasError}">
+        @Html.LabelFor(m => m.Orden, new { @class = "form-control-label" })
+        @Html.TextBoxFor(m => m.Orden, new { @class = "form-control" })
+        <span asp-validation-for="Orden" class="text-danger"></span>
+    </div>
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.EsObligatorio, new {@class = "form-control-label"})
+        &nbsp; &nbsp;
+        @Html.CheckBoxFor(m => m.EsObligatorio, new {@class = "form-control-checkboxfor"})
+    </div>
+</form>
