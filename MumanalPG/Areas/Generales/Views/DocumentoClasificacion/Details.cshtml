@@ -1,15 +1,9 @@
-@model MumanalPG.Models.Generales.Departamento
+@model MumanalPG.Models.Generales.DocumentoClasificacion
 <div class="row justify-content-center">
     <div class="col-10">
         <div class="card border-info">
             <div class="card-body">
                 <dl class="dl-horizontal">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Descripcion)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.Descripcion)
-                    </dd>
                     <dt>
                         @Html.DisplayNameFor(model => model.Sigla)
                     </dt>
@@ -17,10 +11,10 @@
                         @Html.DisplayFor(model => model.Sigla)
                     </dd>
                     <dt>
-                        @Html.DisplayNameFor(model => model.IdPais)
+                        @Html.DisplayNameFor(model => model.Descripcion)
                     </dt>
                     <dd>
-                        @Html.DisplayFor(model => model.IdPais)
+                        @Html.DisplayFor(model => model.Descripcion)
                     </dd>
                 </dl>
             </div>

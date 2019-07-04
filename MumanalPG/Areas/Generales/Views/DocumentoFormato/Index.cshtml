@@ -1,19 +1,19 @@
-@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Generales.Departamento>
+@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Generales.DocumentoFormato>
 @using MumanalPG.Utility
 @using ReflectionIT.Mvc.Paging
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @{
-    ViewData["Title"] = "Departamento";
+    ViewData["Title"] = "DocumentoFormato";
     OptionPartial options = new OptionPartial();
-    string intro_msg_search = "Puede buscar un Departamento introduciendo el nombre en este campo, " +
+    string intro_msg_search = "Puede buscar un DocumentoFormato introduciendo el nombre en este campo, " +
                               "luego presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
                               "<i class='fas fa-search'></i></button>";
 }
 <div class="row">
     <div class="col-12 text-right">
-        <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nuevo Departamento"
+        <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nuevo DocumentoFormato"
            data-modal="link", data-redirect="@Url.Action("Index", new{@a=Constantes.Creado})" 
-           data-intro="Click, en este botón para crear un nuevo Departamento">
+           data-intro="Click, en este botón para crear un nuevo DocumentoFormato">
             <i class="fas fa-plus"></i><span class="d-none d-sm-inline">&nbsp; Nuevo </span>
         </a>
     </div>
@@ -37,8 +37,6 @@
         <thead>
         <tr>
             <th>@Html.SortableHeaderFor(model => model.Descripcion)</th>
-            <th>Sigla</th>
-            <th>Pais</th>
         </tr>
 
         </thead>
@@ -47,19 +45,13 @@
         {
         <tr>
             <td>
-                <a asp-action="Details" asp-route-id="@item.IdDepartamento" title="Detalle"
+                <a asp-action="Details" asp-route-id="@item.IdDocumentoFormato" title="Detalle"
                    data-modal="link" data-modal-read="True">
                     @Html.DisplayFor(modelItem => item.Descripcion)
                 </a>
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sigla)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdPais)
-            </td>
             @{
-                options.Id = item.IdDepartamento;
+                options.Id = item.IdDocumentoFormato;
                 options.ShowIntroMessages = index == 0 ? true : false;
                 index++;
             }

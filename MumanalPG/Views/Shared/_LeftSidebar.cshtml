@@ -444,11 +444,44 @@
         </li>
         <li>
             <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                <i class="fas fa-chart-line"></i><span class="hide-menu">Generales</span>
+                <i class="fa fa-briefcase"></i><span class="hide-menu">Generales</span>
             </a>
             <ul aria-expanded="false" class="collapse">
-                <li><a asp-area="Generales" asp-controller="Departamento" asp-action="Index">Departamento<i class="ti-layout-menu-separated"></i></a></li>
-
+                <li>
+                    <a asp-area="Generales" asp-controller="Departamento" asp-action="Index">
+                        Departamento <i class="fa fa-map"></i>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Generales" asp-controller="Continente" asp-action="Index">
+                        Continente <i class="fas fa-globe-americas"></i>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Generales" asp-controller="Municipio" asp-action="Index">
+                        Municipio <i class="fas fa-map-marker-alt"></i>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Generales" asp-controller="Pais" asp-action="Index">
+                        Pais <i class="fa fa-map-signs"></i>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Generales" asp-controller="Provincia" asp-action="Index">
+                        Provincia <i class="fas fa-map-marked-alt"></i>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Generales" asp-controller="DocumentoFormato" asp-action="Index">
+                        Documento Formato <i class="fas fa-globe-americas"></i>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Generales" asp-controller="DocumentoClasificacion" asp-action="Index">
+                        Documento Clasificacion <i class="fas fa-globe-americas"></i>
+                    </a>
+                </li>
                 @*<li>
                     <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Clasificadores<i class="ti-align-left"></i></a>
                     <ul aria-expanded="false" class="collapse">
