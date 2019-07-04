@@ -37,10 +37,9 @@
         <thead>
         <tr>
             <th>@Html.SortableHeaderFor(model => model.Descripcion)</th>
-            <th>Sigla</th>
-            <th>Provincia</th>
+            <th>@Html.SortableHeaderFor(model => model.Sigla)</th>
+            <th>@Html.SortableHeaderFor(model => model.IdProvincia)</th>
         </tr>
-
         </thead>
         @{int index = 0;}
         @foreach (var item in Model)

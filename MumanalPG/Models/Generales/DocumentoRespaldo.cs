@@ -31,9 +31,7 @@ namespace MumanalPG.Models.Generales
 		public DateTime FechaRegistro { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]
 		public int Orden { get; set; }
-		[Required(ErrorMessage = "{0} no puede estar en blanco")]
 		public Boolean EsObligatorio { get; set; }
-		[Required(ErrorMessage = "{0} no puede estar en blanco")]
 		public int IdProceso { get; set; }
 	}
 }

@@ -14,8 +14,8 @@
     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
     <input type="hidden" asp-for="IdContinente" />
     <div class="form-group m-b-40 @if(stringErrors.Contains("Descripcion")){@hasError}">
-        <label asp-for="Descripcion" class="form-control-label"></label>
-        <textarea asp-for="Descripcion" class="form-control"></textarea>
+        @Html.LabelFor(m => m.Descripcion, new { @class = "form-control-label" }) 
+        @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control" })
         <span asp-validation-for="Descripcion" class="text-danger"></span>
     </div>
 </form>

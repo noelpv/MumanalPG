@@ -1,19 +1,19 @@
-@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Generales.DocumentoClasificacion>
+@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Generales.DocumentoRespaldo>
 @using MumanalPG.Utility
 @using ReflectionIT.Mvc.Paging
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @{
-    ViewData["Title"] = "DocumentoClasificacion";
+    ViewData["Title"] = "DocumentoRespaldo";
     OptionPartial options = new OptionPartial();
-    string intro_msg_search = "Puede buscar un DocumentoClasificacion introduciendo el nombre en este campo, " +
+    string intro_msg_search = "Puede buscar un DocumentoRespaldo introduciendo el nombre en este campo, " +
                               "luego presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
                               "<i class='fas fa-search'></i></button>";
 }
 <div class="row">
     <div class="col-12 text-right">
-        <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nuevo DocumentoClasificacion"
+        <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nuevo DocumentoRespaldo"
            data-modal="link", data-redirect="@Url.Action("Index", new{@a=Constantes.Creado})" 
-           data-intro="Click, en este botón para crear un nuevo DocumentoClasificacion">
+           data-intro="Click, en este botón para crear un nuevo DocumentoRespaldo">
             <i class="fas fa-plus"></i><span class="d-none d-sm-inline">&nbsp; Nuevo </span>
         </a>
     </div>
@@ -37,27 +37,29 @@
         <thead>
         <tr>
             <th>@Html.SortableHeaderFor(model => model.Descripcion)</th>
-            <th>@Html.SortableHeaderFor(model => model.Sigla)</th>
+            <th>Sigla</th>
+            <th>FrecuenciaUso</th>
         </tr>
+
         </thead>
         @{int index = 0;}
         @foreach (var item in Model)
         {
         <tr>
             <td>
-                <a asp-action="Details" asp-route-id="@item.IdDocumentoClasificacion" title="Detalle"
+                <a asp-action="Details" asp-route-id="@item.IdDocumentoRespaldo" title="Detalle"
                    data-modal="link" data-modal-read="True">
                     @Html.DisplayFor(modelItem => item.Descripcion)
                 </a>
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.IdDocumentoClasificacion" title="Detalle"
-                   data-modal="link" data-modal-read="True">
-                    @Html.DisplayFor(modelItem => item.Sigla)
-                </a>
+                @Html.DisplayFor(modelItem => item.Sigla)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdFrecuenciaUso)
             </td>
             @{
-                options.Id = item.IdDocumentoClasificacion;
+                options.Id = item.IdDocumentoRespaldo;
                 options.ShowIntroMessages = index == 0 ? true : false;
                 index++;
             }
