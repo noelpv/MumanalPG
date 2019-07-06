@@ -1,4 +1,4 @@
-@model MumanalPG.Models.Finanzas.TipoCuentaBanco
+@model MumanalPG.Models.Generales.CalleTipo
 <form asp-action="@ViewData["Action"]">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     @{
@@ -12,9 +12,10 @@
         }
     }
     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
-    <input type="hidden" asp-for="IdTipoCuentaBanco" />
+    <input type="hidden" asp-for="IdCalleTipo" />
+
     <div class="form-group m-b-40 @if(stringErrors.Contains("Descripcion")){@hasError}">
-        @Html.LabelFor(m => m.Descripcion, new { @class = "form-control-label" })
+        @Html.LabelFor(m => m.Descripcion, new { @class = "form-control-label" }) 
         @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control" })
         <span asp-validation-for="Descripcion" class="text-danger"></span>
     </div>

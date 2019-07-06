@@ -5,7 +5,7 @@
 @{
     ViewData["Title"] = "Banco";
     OptionPartial options = new OptionPartial();
-    string intro_msg_search = "Puede buscar una Organismo Financiador introduciendo el nombre en este campo, " +
+    string intro_msg_search = "Puede buscar un Banco introduciendo el nombre en este campo, " +
                               "luego presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
                               "<i class='fas fa-search'></i></button>";
 }
@@ -36,9 +36,18 @@
     <table class="table table-hover table-striped">
         <thead>
         <tr>
-            <th>@Html.SortableHeaderFor(model => model.Descripcion)</th>
-            <th>Sigla</th>
-            <th>Municipio</th>
+            <th>
+                @Html.SortableHeaderFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.SortableHeaderFor(model => model.Sigla)
+            </th>
+            <th>
+                @Html.SortableHeaderFor(model => model.IdMunicipio)
+            </th>
+            <th>
+                @Html.SortableHeaderFor(model => model.EsReservaFederal)
+            </th>
         </tr>
 
         </thead>
@@ -58,11 +67,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IdMunicipio)
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EsReservaFederal)
+            </td>
             @{
                 options.Id = item.IdBanco;
                 options.ShowIntroMessages = index == 0 ? true : false;
                 index++;
-
             }
             <partial name="_TableOptionsPartial" model="options" />
         </tr>

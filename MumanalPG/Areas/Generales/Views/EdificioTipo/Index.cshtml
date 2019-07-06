@@ -1,19 +1,19 @@
-@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Finanzas.TipoCuentaBanco>
+@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Generales.EdificioTipo>
 @using MumanalPG.Utility
 @using ReflectionIT.Mvc.Paging
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @{
-    ViewData["Title"] = "Tipo de Cuenta de Banco";
+    ViewData["Title"] = "TIPO DE EDIFICIO";
     OptionPartial options = new OptionPartial();
-    string intro_msg_search = "Puede buscar un tipo de cuenta de banco introduciendo el nombre en este campo, " +
+    string intro_msg_search = "Puede buscar un TIPO DE EDIFICIO introduciendo el nombre en este campo, " +
                               "luego presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
                               "<i class='fas fa-search'></i></button>";
 }
 <div class="row">
     <div class="col-12 text-right">
-        <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nueva TipoCuentaBanco"
+        <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nueva EdificioTipo"
            data-modal="link", data-redirect="@Url.Action("Index", new{@a=Constantes.Creado})" 
-           data-intro="Click, en este botón para crear una nueva TipoCuentaBanco">
+           data-intro="Click, en este botón para crear una nueva EdificioTipo">
             <i class="fas fa-plus"></i><span class="d-none d-sm-inline">&nbsp; Nuevo </span>
         </a>
     </div>
@@ -44,19 +44,16 @@
         {
             <tr>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.IdTipoCuentaBanco" title="Detalle" 
+                    <a asp-action="Details" asp-route-id="@item.IdEdificioTipo" title="Detalle" 
                        data-modal="link" data-modal-read="True">
                         @Html.DisplayFor(modelItem => item.Descripcion)
                     </a>
                 </td>
-                 
                 @{
-                    options.Id = item.IdTipoCuentaBanco;
+                    options.Id = item.IdEdificioTipo;
                     options.ShowIntroMessages = index == 0 ? true : false;
                     index++;
-                    
                 }
-
                 <partial name="_TableOptionsPartial" model="options"/>
             </tr>
         }

@@ -3,7 +3,7 @@
 @using ReflectionIT.Mvc.Paging
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @{
-    ViewData["Title"] = "Tipo de Cuenta de Banco";
+    ViewData["Title"] = "Auxiliar";
     OptionPartial options = new OptionPartial();
     string intro_msg_search = "Puede buscar un Auxiliar introduciendo el nombre en este campo, " +
                               "luego presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
@@ -36,10 +36,16 @@
     <table class="table table-hover table-striped">
         <thead>
         <tr>
-            <th>@Html.SortableHeaderFor(model => model.Descripcion)</th>
-            <th></th>
+            <th>
+                @Html.SortableHeaderFor(m => m.Descripcion)
+            </th>
+            <th>
+                @Html.SortableHeaderFor(m => m.NombreTabla)
+            </th>
+            <th>
+                @Html.SortableHeaderFor(m => m.NombreCampoCodigo)
+            </th>
         </tr>
-
         </thead>
         @{int index = 0;}
         @foreach (var item in Model)
@@ -48,17 +54,20 @@
                 <td>
                     <a asp-action="Details" asp-route-id="@item.IdAuxiliar" title="Detalle" 
                        data-modal="link" data-modal-read="True">
-                        @Html.DisplayFor(modelItem => item.Descripcion)
+                       @Html.DisplayFor(modelItem => item.Descripcion)
                     </a>
                 </td>
-                 
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreTabla)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreCampoCodigo)
+                </td>
                 @{
                     options.Id = item.IdAuxiliar;
                     options.ShowIntroMessages = index == 0 ? true : false;
-                    index++;
-                    
+                    index++;   
                 }
-
                 <partial name="_TableOptionsPartial" model="options"/>
             </tr>
         }
