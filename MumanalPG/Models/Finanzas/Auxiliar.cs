@@ -13,10 +13,13 @@ namespace MumanalPG.Models.Finanzas
         [Required(ErrorMessage = "{0} no puede estar en blanco")]
         public string Descripcion { get; set; }
         [Required(ErrorMessage = "{0} no puede estar en blanco")]
+        [Display(Name="Nombre de la tabla")]
         public string NombreTabla { get; set; }
         [Required(ErrorMessage = "{0} no puede estar en blanco")]
+        [Display(Name="Nombre del Campo de Codigo")]
         public string NombreCampoCodigo { get; set; }
         [Required(ErrorMessage = "{0} no puede estar en blanco")]
+        [Display(Name="Nombre del Campo de Descripcion")]
         public string NombreCampoDescripcion { get; set; }
         public Int32 IdEstadoRegistro { get; set; }
         public Int32 IdUsuario { get; set; }

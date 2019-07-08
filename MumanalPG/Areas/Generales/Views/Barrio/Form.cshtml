@@ -1,0 +1,29 @@
+@model MumanalPG.Models.Generales.Barrio
+<form asp-action="@ViewData["Action"]">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @{
+        string hasError = "has-danger";
+        string stringErrors = "";
+        if (ViewData.ModelState.IsValid) { hasError = ""; }
+        else
+        {
+            var errorList = ViewData.ModelState.Where(x => x.Value.Errors.Count > 0).ToDictionary(kvp => kvp.Key);
+            stringErrors = String.Join(",", errorList.Select(x => x.Key));
+        }
+    }
+    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+    <input type="hidden" asp-for="IdBarrio" />
+    <div class="form-group m-b-40 @if(stringErrors.Contains("IdZona")){@hasError}">
+        @Html.LabelFor(m => m.IdZona, new { @class = "form-control-label" }) 
+        <br>
+        @* @Html.DropDownList("Zona", ViewBag.Zona, "Sin asignar", new { @class = "form-control" }) *@
+       <select asp-for="IdZona" class="form-control"
+               asp-items="@(new SelectList(ViewBag.Zona, "IdZona", "Descripcion"))">
+       </select>
+    </div>
+    <div class="form-group m-b-40 @if(stringErrors.Contains("Descripcion")){@hasError}">
+        @Html.LabelFor(m => m.Descripcion, new { @class = "form-control-label" }) 
+        @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control" })
+        <span asp-validation-for="Descripcion" class="text-danger"></span>
+    </div>
+</form>

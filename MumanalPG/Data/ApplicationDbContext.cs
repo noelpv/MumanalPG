@@ -30,6 +30,8 @@ namespace MumanalPG.Data
         public DbSet<MumanalPG.Models.Generales.fBuscaId> Generales_fBuscaId { get; set; }
 		public DbSet<MumanalPG.Models.Generales.fRetornaEntero> Generales_fRetornaEntero { get; set; }
 		public DbSet<MumanalPG.Models.Generales.fRetornaCadena> Generales_fRetornaCadena { get; set; }
+        public DbSet<MumanalPG.Models.Generales.Barrio> Barrio { get; set; }
+        public DbSet<MumanalPG.Models.Generales.Calle> Calle { get; set; }
         public DbSet<MumanalPG.Models.Generales.CalleTipo> CalleTipo { get; set; }
         public DbSet<MumanalPG.Models.Generales.Continente> Continente { get; set; }
         public DbSet<MumanalPG.Models.Generales.Departamento> Departamento { get; set; }
@@ -41,6 +43,7 @@ namespace MumanalPG.Data
         public DbSet<MumanalPG.Models.Generales.Municipio> Municipio { get; set; }
         public DbSet<MumanalPG.Models.Generales.Pais> Pais { get; set; }
         public DbSet<MumanalPG.Models.Generales.Provincia> Provincia { get; set; }
+        public DbSet<MumanalPG.Models.Generales.Zona> Zona { get; set; }
         /*Fin Generales*/
 
         /*Ini RRHH*/

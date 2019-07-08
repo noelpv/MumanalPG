@@ -1,4 +1,3 @@
-
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,10 +11,13 @@ namespace MumanalPG.Models.Finanzas
         [Key]
         public Int32 IdCuentaBancaria { get; set; }
         public Int32 IdBanco { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
         public string CuentaCodigo { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
         public string Descripcion { get; set; }
         public Int32 IdTipoCuentaBanco { get; set; }
         public Int32 IdTipoMoneda { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
         public string CodigoTgn { get; set; }
         public DateTime FechaApertura { get; set; }
         public Int32 IdOrganismoFinanciador { get; set; }

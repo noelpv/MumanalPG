@@ -10,6 +10,7 @@ namespace MumanalPG.Models.Generales
 		[DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
 		[Key]
 		public Int32 IdBarrio { get; set; }
+		[Display(Name="Zona")]
 		public Int32 IdZona { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]
 		public String Descripcion { get; set; }

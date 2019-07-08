@@ -1,0 +1,75 @@
+@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Generales.Calle>
+@using MumanalPG.Utility
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging
+@{
+    ViewData["Title"] = "Calle";
+    OptionPartial options = new OptionPartial();
+    string intro_msg_search = "Puede buscar un Calle introduciendo el nombre en este campo, " +
+                              "luego presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
+                              "<i class='fas fa-search'></i></button>";
+}
+<div class="row">
+    <div class="col-12 text-right">
+        <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nuevo Calle"
+           data-modal="link", data-redirect="@Url.Action("Index", new{@a=Constantes.Creado})" 
+           data-intro="Click, en este botón para crear un nuevo Calle">
+            <i class="fas fa-plus"></i><span class="d-none d-sm-inline">&nbsp; Nuevo </span>
+        </a>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-12">
+        <form method="get" class="form form-search" data-intro="@intro_msg_search">
+            <div class="input-group mb-3">
+                <input name="filter" class="form-control search" placeholder="Buscar por Descripcion ..."
+                       value="@Model.RouteValue["Filter"]"/>
+                <button type="submit" class="btn btn-secondary input-group-append">
+                    <span class="fas fa-search" aria-hidden="true"></span>
+                </button>
+            </div>            
+        </form>
+    </div>
+</div>
+
+<div class="row table-responsive mt-4">
+    <table class="table table-hover table-striped">
+        <thead>
+        <tr>
+            <th>@Html.SortableHeaderFor(model => model.Descripcion)</th>
+            <th>@Html.SortableHeaderFor(model => model.IdBarrio)</th>
+            <th>@Html.SortableHeaderFor(model => model.IdCalleTipo)</th>
+        </tr>
+
+        </thead>
+        @{int index = 0;}
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.IdCalle" title="Detalle"
+                   data-modal="link" data-modal-read="True">
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdBarrio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCalleTipo)
+            </td>
+            @{
+                options.Id = item.IdCalle;
+                options.ShowIntroMessages = index == 0 ? true : false;
+                index++;
+            }
+            <partial name="_TableOptionsPartial" model="options" />
+        </tr>
+        }
+    </table>
+</div>
+<div class="row justify-content-center">
+    <nav>
+        <vc:pager paging-list="@Model"/>
+    </nav>
+</div>

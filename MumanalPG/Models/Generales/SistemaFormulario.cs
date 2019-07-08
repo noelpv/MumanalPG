@@ -12,7 +12,9 @@ namespace MumanalPG.Models.Generales
 		public Int32 IdSistemaFormulario { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]
 		public String Descripcion { get; set; }
+		[Required(ErrorMessage = "{0} no puede estar en blanco")]
 		public String NombreObjeto { get; set; }
+		[Display(Name="Menu de Sistema")]
 		public Int32 IdSistemaMenu { get; set; }
 		public Int32 IdEstadoRegistro { get; set; }
 		public Int32 IdUsuario { get; set; }
