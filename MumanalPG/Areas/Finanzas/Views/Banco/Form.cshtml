@@ -15,51 +15,61 @@
     <input type="hidden" asp-for="IdBanco" />
 
     <div class="form-group m-b-40 @if(stringErrors.Contains("Descripcion")){@hasError}">
-        <label asp-for="Descripcion" class="form-control-label"></label>
-        <textarea asp-for="Descripcion" class="form-control"></textarea>
+        @Html.LabelFor(m => m.Descripcion, new { @class = "form-control-label" }) 
+        @Html.TextAreaFor(m => m.Descripcion, new { @class = "form-control" })
         <span asp-validation-for="Descripcion" class="text-danger"></span>
     </div>
     <div class="form-group m-b-40 @if(stringErrors.Contains("Sigla")){@hasError}">
-        <label asp-for="Sigla" class="form-control-label"></label>
-        <input asp-for="Sigla" class="form-control" />
+        @Html.LabelFor(m => m.Sigla, new { @class = "form-control-label" }) 
+        @Html.TextBoxFor(m => m.Sigla, new { @class = "form-control" })
         <span asp-validation-for="Sigla" class="text-danger"></span>
     </div>
     <div class="form-group m-b-40 @if(stringErrors.Contains("NIT")){@hasError}">
-        <label asp-for="NIT" class="form-control-label"></label>
-        <input asp-for="NIT" class="form-control" />
+        @Html.LabelFor(m => m.NIT, new { @class = "form-control-label" })
+        @Html.TextBoxFor(m => m.NIT, new { @class = "form-control" })
         <span asp-validation-for="NIT" class="text-danger"></span>
     </div>
     <div class="form-group m-b-40 @if(stringErrors.Contains("IdMunicipio")){@hasError}">
-        <label asp-for="IdMunicipio" class="form-control-label"></label>
+        @Html.LabelFor(m => m.IdMunicipio, new { @class = "form-control-label" })
         <br>
-        @Html.DropDownList("Municipio", ViewBag.Municipio, "Sin asignar", new { @class = "form-control" })
-        @*<input asp-for="IdMunicipio" class="form-control" />
-        <span asp-validation-for="IdMunicipio" class="text-danger"></span>*@
+        @* @Html.DropDownList("IdMunicipio", ViewBag.Municipio, "Sin asignar", new { @class = "form-control" }) *@
+        <select asp-for="IdMunicipio" class="form-control"
+               asp-items="@(new SelectList(ViewBag.Municipio, "IdMunicipio", "Descripcion"))">
+       </select>
     </div>
     <div class="form-group m-b-40 @if(stringErrors.Contains("Direccion")){@hasError}">
-        <label asp-for="Direccion" class="form-control-label"></label>
-        <input asp-for="Direccion" class="form-control" />
+        @Html.LabelFor(m => m.Direccion, new { @class = "form-control-label" })
+        @Html.TextAreaFor(m => m.Direccion, new { @class = "form-control" })
         <span asp-validation-for="Direccion" class="text-danger"></span>
     </div>
-    <!-- <div class="form-group m-b-40 @if(stringErrors.Contains("Representante")){@hasError}">
-        <label asp-for="Representante" class="form-control-label"></label>
-        <input asp-for="Representante" class="form-control" />
+    <div class="form-group m-b-40 @if(stringErrors.Contains("Representante")){@hasError}">
+        @Html.LabelFor(m => m.Representante, new { @class = "form-control-label" })
+        @Html.TextBoxFor(m => m.Representante, new { @class = "form-control" })
         <span asp-validation-for="Representante" class="text-danger"></span>
     </div>
     <div class="form-group m-b-40 @if(stringErrors.Contains("CargoRepresentante")){@hasError}">
-        <label asp-for="CargoRepresentante" class="form-control-label"></label>
-        <input asp-for="CargoRepresentante" class="form-control" />
+        @Html.LabelFor(m => m.CargoRepresentante, new { @class = "form-control-label" })
+        @Html.TextAreaFor(m => m.CargoRepresentante, new { @class = "form-control" })
         <span asp-validation-for="CargoRepresentante" class="text-danger"></span>
     </div>
-    // Añadir item booleano!
+    <div class="form-group m-b-40 @if(stringErrors.Contains("CodigoPostal")){@hasError}">
+        @Html.LabelFor(m => m.CodigoPostal, new { @class = "form-control-label" })
+        @Html.TextAreaFor(m => m.CodigoPostal, new { @class = "form-control" })
+        <span asp-validation-for="CodigoPostal" class="text-danger"></span>
+    </div>
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.EsReservaFederal, new {@class = "form-control-label"})
+        &nbsp; &nbsp;
+        @Html.CheckBoxFor(m => m.EsReservaFederal, new { @class = "form-control-checkboxfor" })
+    </div>
     <div class="form-group m-b-40 @if(stringErrors.Contains("BancoIntermediario")){@hasError}">
-        <label asp-for="BancoIntermediario" class="form-control-label"></label>
-        <input asp-for="BancoIntermediario" class="form-control" />
+        @Html.LabelFor(m => m.BancoIntermediario, new { @class = "form-control-label" })
+        @Html.TextBoxFor(m => m.BancoIntermediario, new { @class = "form-control" })
         <span asp-validation-for="BancoIntermediario" class="text-danger"></span>
     </div>
     <div class="form-group m-b-40 @if(stringErrors.Contains("Observaciones")){@hasError}">
-        <label asp-for="Observaciones" class="form-control-label"></label>
-        <input asp-for="Observaciones" class="form-control" />
+        @Html.LabelFor(m => m.Observaciones, new { @class = "form-control-label" })
+        @Html.TextAreaFor(m => m.Observaciones, new { @class = "form-control" })
         <span asp-validation-for="Observaciones" class="text-danger"></span>
-    </div> -->
+    </div>
 </form>

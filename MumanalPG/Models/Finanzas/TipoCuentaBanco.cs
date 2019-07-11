@@ -11,6 +11,7 @@ namespace MumanalPG.Models.Finanzas
         [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         [Key]
         public Int32 IdTipoCuentaBanco { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
         public string Descripcion { get; set; }
         public Int32 IdEstadoRegistro { get; set; }
         public Int32 IdUsuario { get; set; }

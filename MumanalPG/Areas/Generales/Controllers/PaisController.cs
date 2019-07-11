@@ -88,10 +88,6 @@ namespace MumanalPG.Areas.Generales.Controllers
             {
                 ApplicationUser currentUser = await GetCurrentUser();
                 item.IdUsuario = currentUser.AspNetUserId;
-                //item.Gestion = "2019";
-                //item.IdBeneficiario = 0;
-                //item.IdPais = 1;
-                //item.CargoRepresentante = "-";
                 item.IdEstadoRegistro = 1;
                 item.FechaRegistro = DateTime.Now;
                 DB.Add(item);

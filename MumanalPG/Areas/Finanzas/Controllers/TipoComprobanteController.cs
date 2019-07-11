@@ -73,12 +73,13 @@ namespace MumanalPG.Areas.Finanzas.Controllers
         {
             if (ModelState.IsValid)
             {
-                //ApplicationUser currentUser = await GetCurrentUser();
-                //item.IdUsuario = currentUser.AspNetUserId;
+                ApplicationUser currentUser = await GetCurrentUser();
+                item.IdUsuario = currentUser.AspNetUserId;
+                item.IdEstadoRegistro=1;
                 item.FechaRegistro = DateTime.Now;
                 DB.Add(item);
                 await DB.SaveChangesAsync();
-                
+                SetFlashSuccess("Registro creado satisfactoriamente");
             }
             return PartialView("Create",item);
         }
@@ -102,7 +103,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
         // POST: Finanzas/TipoComprobante/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, [Bind("IdTipoComprobante,Descripcion,Sigla")] Models.Finanzas.TipoComprobante item)
+        public async Task<IActionResult> Edit(Int32 id,Models.Finanzas.TipoComprobante item)
         {
             if (id != item.IdTipoComprobante)
             {

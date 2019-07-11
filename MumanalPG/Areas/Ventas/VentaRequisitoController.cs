@@ -375,7 +375,7 @@ namespace MumanalPG.Areas.Ventas
 			return View(ventaRequisito);
 		}
 
-		public async Task<IActionResult> Regresar() 
+		public IActionResult Regresar() 
 		{
 			return RedirectToAction("Index", "VentaContratacion");
 		}
