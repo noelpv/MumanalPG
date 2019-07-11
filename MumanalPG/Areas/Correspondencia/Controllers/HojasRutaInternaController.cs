@@ -164,6 +164,8 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             }
 
             ViewBag.instrucciones = instrucciones;
+            ViewBag.tiposAnexo = DB.CorrespondenciaTipoAnexo
+                .Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Nombre).ToList();
             ViewBag.Tipos = DB.CorrespondenciaTipoDocumento.Where(t => t.IdEstadoRegistro != Constantes.Anulado).ToList();
             ViewBag.documentosId = DB.CorrespondenciaHRDetalle
                 .Include(d => d.Documento)
@@ -209,6 +211,8 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             var instrucciones = GetInstrucciones();
             ViewBag.areas = areas;
             ViewBag.instrucciones = instrucciones;
+            ViewBag.tiposAnexo = DB.CorrespondenciaTipoAnexo
+                .Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Nombre).ToList();
             ViewBag.Tipos = DB.CorrespondenciaTipoDocumento.Where(t => t.IdEstadoRegistro != Constantes.Anulado).ToList();
             return View("_Create", model);
         }

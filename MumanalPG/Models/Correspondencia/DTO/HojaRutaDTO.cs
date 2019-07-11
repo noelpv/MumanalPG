@@ -60,6 +60,8 @@ namespace MumanalPG.Models.Correspondencia.DTO
         public string[] Instrucciones { get; set; }
         
         public int Parent { get; set; }
+        
+        public string[] Anexos { get; set; }
 
         public IList<InstruccionDTO> GetInstrucciones()
         {
