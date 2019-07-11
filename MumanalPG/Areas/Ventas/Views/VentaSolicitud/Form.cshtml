@@ -13,19 +13,24 @@
 
     }
     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
-
     <input type="hidden" asp-for="IdVentaSolicitud" />
 
     <div class="form-group m-b-40 @if(stringErrors.Contains("IdUnidadEjecutora")){@hasError}">
         <label asp-for="IdUnidadEjecutora" class="form-control-label"></label>
         <br>
-        @Html.DropDownList("UnidadEjecutora", ViewBag.UnidadEjecutora, "Sin asignar", new { @class = "form-control" })
+        @* @Html.DropDownList("UnidadEjecutora", ViewBag.UnidadEjecutora, "Sin asignar", new { @class = "form-control" })*@
+        <select asp-for="IdUnidadEjecutora" class="form-control"
+                asp-items="@(new SelectList(ViewBag.UnidadEjecutora, "IdUnidadEjecutora", "Descripcion"))">
+        </select>
     </div>
     
     <div class="form-group m-b-40 @if(stringErrors.Contains("IdBeneficiario")){@hasError}">
         <label asp-for="IdBeneficiario" class="form-control-label"></label>
         <br>
-        @Html.DropDownList("Beneficiario", ViewBag.Beneficiario, "Sin asignar", new { @class = "form-control" })
+        @* @Html.DropDownList("Beneficiario", ViewBag.Beneficiario, "Sin asignar", new { @class = "form-control" })*@
+        <select asp-for="IdBeneficiario" class="form-control"
+                asp-items="@(new SelectList(ViewBag.Beneficiario, "IdBeneficiario", "Denominacion"))">
+        </select>
     </div>
 
     <div class="form-group m-b-40 @if(stringErrors.Contains("Descripcion")){@hasError}">

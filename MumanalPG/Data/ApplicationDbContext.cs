@@ -6,6 +6,7 @@ using MumanalPG.Models.Administra;
 using MumanalPG.Models.Correspondencia;
 using MumanalPG.Models.Planificacion;
 using MumanalPG.Models.Ventas;
+using MumanalPG.Models.RRHH;
 
 
 namespace MumanalPG.Data

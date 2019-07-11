@@ -20,6 +20,7 @@
         <textarea asp-for="Descripcion" class="form-control"></textarea>
         <span asp-validation-for="Descripcion" class="text-danger"></span>
     </div>
+
     <div class="form-group m-b-40 @if(stringErrors.Contains("Sigla")){@hasError}">
         <label asp-for="Sigla" class="form-control-label"></label>
         <input asp-for="Sigla" class="form-control" />

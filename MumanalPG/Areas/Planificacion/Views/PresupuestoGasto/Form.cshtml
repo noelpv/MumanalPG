@@ -27,7 +27,7 @@
     <div class="form-group m-b-40 @if(stringErrors.Contains("IdUnidadEjecutora")){@hasError}">
         <label asp-for="IdUnidadEjecutora" class="form-control-label"></label>
         <br>
-         @*@Html.DropDownList("UnidadEjecutora", ViewBag.UnidadEjecutora, "Sin asignar", new { @class = "form-control" })*@
+         @* @Html.DropDownList("UnidadEjecutora", ViewBag.UnidadEjecutora, "Sin asignar", new { @class = "form-control" })*@
         <select asp-for="IdUnidadEjecutora" class="form-control"
                 asp-items="@(new SelectList(ViewBag.UnidadEjecutora, "IdUnidadEjecutora", "Descripcion"))">
         </select>
