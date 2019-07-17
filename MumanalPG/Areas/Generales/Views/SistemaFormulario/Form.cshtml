@@ -1,0 +1,20 @@
+@model MumanalPG.Models.Generales.SistemaFormulario
+<form asp-action="@ViewData["Action"]">
+    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+    <input type="hidden" asp-for="IdSistemaFormulario" />
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.IdSistemaMenu, new { @class = "control-label" })
+        <br>
+        @Html.DropDownListFor(m => m.IdSistemaMenu, new SelectList(ViewBag.SistemaMenu,"IdSistemaMenu","Descripcion"), new { @class = "form-control" })
+    </div>
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.Descripcion, new { @class = "control-label" }) 
+        @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Descripcion,"",new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.NombreObjeto, new { @class = "control-label" }) 
+        @Html.TextBoxFor(m => m.NombreObjeto, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NombreObjeto,"",new { @class = "text-danger" })
+    </div>
+</form>

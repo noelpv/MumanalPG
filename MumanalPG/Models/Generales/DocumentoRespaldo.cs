@@ -27,6 +27,7 @@ namespace MumanalPG.Models.Generales
 		[Display(Name="Numero de Copias")]
 		public Int32 NumeroCopias { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]
+		[Display(Name="Lugar Fisico Archivado")]
 		public string LugarFisicoArchivado { get; set; }
 		[Display(Name="¿Es usado como requisito?")]
 		public Boolean EsUsadoComoRequisito { get; set; }
