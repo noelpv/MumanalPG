@@ -44,11 +44,11 @@ namespace MumanalPG.Data.Seeders
 
             foreach (var b in beneficiarios)
             {
-                if (b.Puesto.Descripcion.Contains("Secretaria General"))
+                if (b.Puesto != null && b.Puesto.Descripcion.Contains("Secretaria General"))
                 {
                     AgregarUser(SD.VentanillaUnicaUser, b);
                     
-                } else if (b.Puesto.Descripcion.Contains("Secretaria"))
+                } else if (b.Puesto != null && b.Puesto.Descripcion.Contains("Secretaria"))
                 {
                     AgregarUser(SD.SecretariaUser, b);
                 }
@@ -68,8 +68,22 @@ namespace MumanalPG.Data.Seeders
         private void AgregarUser(string rol, Beneficiario ben)
         {
             string apellido = ben.PrimerApellido != null ? ben.PrimerApellido : ben.SegundoApellido; 
-            string username = $"{ben.PrimerNombre.ToLower()}.{apellido.ToLower()}@mumanal.org";
+            string nombre = ben.PrimerNombre != null ? ben.PrimerNombre : ben.SegundoNombre;
             
+            if (nombre == null || nombre.Trim() == "")
+            {
+                nombre = ben.SegundoApellido;
+            }
+
+            if (nombre == null || nombre.Trim() == "")
+            {
+                nombre = apellido;
+            }
+
+            string username = $"{nombre.ToLower()}.{apellido.ToLower()}";
+            username = username.RemoveDiacritics();
+            string email = $"{username}@mumanal.org";
+
             IdentityRole role = _context.Roles.FirstOrDefault(r => r.Name == rol);
             IdentityUser user =  _context.Users.FirstOrDefault(u => u.UserName == username);
             if (user == null)
@@ -77,7 +91,7 @@ namespace MumanalPG.Data.Seeders
                 var userCreated = _userManager.CreateAsync(new ApplicationUser
                 {
                     UserName = username,
-                    Email = username,
+                    Email = email,
                     Name = ben.Denominacion,
                     EmailConfirmed = true,
                     AspNetUserId = ben.IdBeneficiario
@@ -86,12 +100,16 @@ namespace MumanalPG.Data.Seeders
                 if (userCreated.Succeeded && role != null)
                 {
                     user =  _context.Users.FirstOrDefault(u => u.UserName == username);
-                   
-                    var userRole = new IdentityUserRole<string>();
-                    userRole.UserId = user.Id;
-                    userRole.RoleId = role.Id;
-                    _context.UserRoles.Add(userRole);
-                    //await _userManager.AddToRoleAsync(user, rol);
+
+                    if (user != null)
+                    {
+                        var userRole = new IdentityUserRole<string>();
+                        userRole.UserId = user.Id;
+                        userRole.RoleId = role.Id;
+                        _context.UserRoles.Add(userRole);
+                        //await _userManager.AddToRoleAsync(user, rol);
+                    }
+                    
                 }
 
             }
@@ -99,14 +117,14 @@ namespace MumanalPG.Data.Seeders
             {
                 IdentityUserRole<string> userRole = _context.UserRoles.FirstOrDefault(u => u.UserId == user.Id);
                 
-                if (userRole == null)
+                if (userRole == null && role != null)
                 {
                     userRole = new IdentityUserRole<string>();
                     userRole.UserId = user.Id;
                     userRole.RoleId = role.Id;
                    _context.UserRoles.Add(userRole);
                 }
-                else
+                else if(role != null)
                 {
                     userRole.UserId = user.Id;
                     userRole.RoleId = role.Id;

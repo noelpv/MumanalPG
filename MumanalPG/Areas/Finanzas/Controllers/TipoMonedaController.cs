@@ -35,7 +35,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
         }
 
         // GET: Finanzas/TipoMoneda
-        /* [Breadcrumb("TipoMoneda", FromController = "DashboardPlan", FromAction = "Clasificadores")] */
+        [Breadcrumb("Tipos de Monedas", FromController = "DashboardFinanzas", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
             var consulta = DB.TipoMoneda.AsNoTracking().AsQueryable();

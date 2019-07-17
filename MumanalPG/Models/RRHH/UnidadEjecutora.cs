@@ -35,6 +35,9 @@ namespace MumanalPG.Models.RRHH
 		public ICollection<HojaRutaDetalle> Originados { get; set; } 
 		
 		[InverseProperty("AreaDestino")]
-		public ICollection<HojaRutaDetalle> Destinados { get; set; } 
+		public ICollection<HojaRutaDetalle> Destinados { get; set; }
+		
+		public int OrdenMostrar { get; set; }
+		public bool EsExterna { get; set; }
 	}
 }

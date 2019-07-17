@@ -12,6 +12,8 @@ namespace MumanalPG.Models.Correspondencia.DTO
         public string text { get; set; }
         public string icon { get; set; }
         public string parent { get; set; }
+        
+        public int orden { get; set; }
 
         public string[] li_attr { get; set; }
         public string[] a_attr { get; set; }
