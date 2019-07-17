@@ -37,6 +37,7 @@
         <thead>
         <tr>
             <th>@Html.SortableHeaderFor(model => model.Descripcion)</th>
+            <th>Codigo</th>
             <th>Vida.Util</th>
             <th>Nivel</th>
         </tr>
@@ -51,6 +52,9 @@
                    data-modal="link" data-modal-read="True">
                     @Html.DisplayFor(modelItem => item.Descripcion)
                 </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPartidaGasto)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.VidaUtil)
