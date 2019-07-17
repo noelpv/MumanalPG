@@ -11,6 +11,7 @@ namespace MumanalPG.Models.Generales
 		[Key]
 		public Int32 IdPais { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]
+		[Display(Name="Continente")]
 		public Int32 IdContinente { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]
 		public string CodigoPais { get; set; }

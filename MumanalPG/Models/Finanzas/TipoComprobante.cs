@@ -11,7 +11,9 @@ namespace MumanalPG.Models.Finanzas
         [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         [Key]
         public Int32 IdTipoComprobante { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
         public string Descripcion { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
         public string Sigla { get; set; }
         public Boolean EsEgreso { get; set; }
         public Boolean EsIngreso { get; set; }

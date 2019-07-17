@@ -11,16 +11,30 @@ namespace MumanalPG.Models.Finanzas
         [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         [Key]
         public Int32 IdBanco { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
         public string Descripcion { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
         public string Sigla { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
         public string NIT { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
+        [Display(Name="Municipio")]
         public Int32 IdMunicipio { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
         public string Direccion { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
         public string Representante { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
+        [Display(Name="Cargo del representante")]
         public string CargoRepresentante { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
         public string CodigoPostal { get; set; }
+        [Display(Name="¿Es Reserva Federal?")]
         public Boolean EsReservaFederal { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
+        [Display(Name="Banco Intermediario")]
         public string BancoIntermediario { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
         public string Observaciones { get; set; }
         public Int32 IdEstadoRegistro { get; set; }
         public Int32 IdUsuario { get; set; }

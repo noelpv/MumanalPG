@@ -14,6 +14,7 @@
     }
     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
     <input type="hidden" asp-for="IdUnidadEjecutora" />
+
     <div class="form-group m-b-40 @if(stringErrors.Contains("Descripcion")){@hasError}">
         <label asp-for="Descripcion" class="form-control-label"></label>
         <textarea asp-for="Descripcion" class="form-control"></textarea>
@@ -31,7 +32,10 @@
     </div>
     <div class="form-group m-b-40 @if(stringErrors.Contains("IdMunicipio")){@hasError}">
         <label asp-for="IdMunicipio" class="form-control-label"></label>
-        <input asp-for="IdMunicipio" class="form-control" />
-        <span asp-validation-for="IdMunicipio" class="text-danger"></span>
+        @*<input asp-for="IdMunicipio" class="form-control" />
+        <span asp-validation-for="IdMunicipio" class="text-danger"></span>*@
+        <select asp-for="IdMunicipio" class="form-control"
+                asp-items="@(new SelectList(ViewBag.Municipio, "IdMunicipio", "Descripcion"))">
+        </select>
     </div>
 </form>

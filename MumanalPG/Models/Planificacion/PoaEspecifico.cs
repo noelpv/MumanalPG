@@ -10,7 +10,7 @@ namespace MumanalPG.Models.Planificacion
 		[DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
 		[Key]
 		public Int32 IdPoaEspecifico { get; set; }
-		public Int32 IdPoaEstrategico { get; set; }
+        public Int32 IdPoaEstrategico { get; set; }
 		public string Gestion { get; set; }
 		public string PoaCodigo { get; set; }
 		public string PoaDescripcion { get; set; }

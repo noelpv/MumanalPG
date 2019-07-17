@@ -18,25 +18,37 @@
     <div class="form-group m-b-40 @if(stringErrors.Contains("IdOrganismoFinanciador")){@hasError}">
         <label asp-for="IdOrganismoFinanciador" class="form-control-label"></label>
         <br>
-        @Html.DropDownList("OrganismoFinanciador", ViewBag.OrganismoFinanciador, "Sin asignar", new { @class = "form-control" })
+         @*@Html.DropDownList("OrganismoFinanciador", ViewBag.OrganismoFinanciador, "Sin asignar", new { @class = "form-control" })*@
+        <select asp-for="IdOrganismoFinanciador" class="form-control"
+                asp-items="@(new SelectList(ViewBag.OrganismoFinanciador, "IdOrganismoFinanciador", "Descripcion"))">
+        </select>
     </div>
 
     <div class="form-group m-b-40 @if(stringErrors.Contains("IdUnidadEjecutora")){@hasError}">
         <label asp-for="IdUnidadEjecutora" class="form-control-label"></label>
         <br>
-        @Html.DropDownList("UnidadEjecutora", ViewBag.UnidadEjecutora, "Sin asignar", new { @class = "form-control" })
+         @* @Html.DropDownList("UnidadEjecutora", ViewBag.UnidadEjecutora, "Sin asignar", new { @class = "form-control" })*@
+        <select asp-for="IdUnidadEjecutora" class="form-control"
+                asp-items="@(new SelectList(ViewBag.UnidadEjecutora, "IdUnidadEjecutora", "Descripcion"))">
+        </select>
     </div>
 
     <div class="form-group m-b-40 @if(stringErrors.Contains("IdEstructuraProgramatica")){@hasError}">
         <label asp-for="IdEstructuraProgramatica" class="form-control-label"></label>
         <br>
-        @Html.DropDownList("EstructuraProgramatica", ViewBag.EstructuraProgramatica, "Sin asignar", new { @class = "form-control" })
+         @*@Html.DropDownList("EstructuraProgramatica", ViewBag.EstructuraProgramatica, "Sin asignar", new { @class = "form-control" })*@
+        <select asp-for="IdEstructuraProgramatica" class="form-control"
+                asp-items="@(new SelectList(ViewBag.EstructuraProgramatica, "IdEstructuraProgramatica", "Descripcion"))">
+        </select>
     </div>
 
     <div class="form-group m-b-40 @if(stringErrors.Contains("IdPartidaGasto")){@hasError}">
         <label asp-for="IdPartidaGasto" class="form-control-label"></label>
         <br>
-        @Html.DropDownList("PartidaGasto", ViewBag.PartidaGasto, "Sin asignar", new { @class = "form-control" })
+         @*@Html.DropDownList("PartidaGasto", ViewBag.PartidaGasto, "Sin asignar", new { @class = "form-control" })*@
+        <select asp-for="IdPartidaGasto" class="form-control"
+                asp-items="@(new SelectList(ViewBag.PartidaGasto, "IdPartidaGasto", "Descripcion"))">
+        </select>
     </div>
 
     <div class="form-group m-b-40 @if(stringErrors.Contains("PptoFormulado")){@hasError}">

@@ -1,6 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Dynamic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +16,11 @@ using MumanalPG.Models;
 using MumanalPG.Utility;
 using ReflectionIT.Mvc.Paging;
 using SmartBreadcrumbs;
+using MumanalPG.Extensions;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Data;
+
 
 namespace MumanalPG.Areas.RRHH.Controllers
 {
@@ -63,6 +72,11 @@ namespace MumanalPG.Areas.RRHH.Controllers
         public IActionResult Create()
         {
             var model = new Models.RRHH.Beneficiario();
+            //UnidadEjecutora
+            var itemsU = DB.RRHH_UnidadEjecutora.
+               Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
+            ViewBag.UnidadEjecutora = itemsU;
+
             return PartialView("Create", model);
         }
 
@@ -73,16 +87,40 @@ namespace MumanalPG.Areas.RRHH.Controllers
         {
             if (ModelState.IsValid)
             {
-                //ApplicationUser currentUser = await GetCurrentUser();
-                //item.IdUsuario = currentUser.AspNetUserId;
+                ApplicationUser currentUser = await GetCurrentUser();
+                item.IdUsuario = currentUser.AspNetUserId;
+                item.IdBeneficiarioClasificacion = 2;
                 item.Nit = "0";
+                item.DepartamentoSigla = "LP";
+                item.Iniciales = "NN";
+                item.IdDocumentoRespaldo = 0;
+                item.Denominacion = "0";
+                item.FechaNacimiento = DateTime.Now;
+                item.IdGenero = 0;
                 item.TelefonoFijo = "0";
                 item.TelefonoOficina = "0";
+                item.EmailPersonal = "";
+                item.EmailOficina = "";
+                item.DomicilioLegal = "";
+                item.IdBarrio = 0;
+                item.IdCalle = 0;
+                item.IdMunicipio = 0;
+                item.IdEdificio = 0;
+                item.EdificioNumero = "0";
+                item.EdificioNumeroPiso = "0";
+                item.EdificioNumeroDepto = "0";
+                item.EsDeudor = "NO";
+                item.EsHabilitado = false;
                 item.FechaRegistro = DateTime.Now;
                 DB.Add(item);
                 await DB.SaveChangesAsync();
-                
+                SetFlashSuccess("Registro creado satisfactoriamente");
             }
+            //Puesto
+            var itemP = DB.RRHH_Puesto.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
+            ViewBag.Puesto = itemP;
+
             return PartialView("Create",item);
         }
 
@@ -93,19 +131,24 @@ namespace MumanalPG.Areas.RRHH.Controllers
             {
                 return NotFound();
             }
-
             var item = await DB.RRHH_Beneficiario.FindAsync(id);
             if (item == null)
             {
                 return NotFound();
             }
+            //Puesto
+            var itemP = DB.RRHH_Puesto.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
+            ViewBag.Puesto = itemP;
+
             return PartialView( "Edit", item);
         }
 
         // POST: RRHH/Beneficiario/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, [Bind("IdBeneficiario,Denominacion,PrimerApellido, SegundoApellido,PrimerNombre, SegundoNombre,PuestoId")] Models.RRHH.Beneficiario item)
+        ///public async Task<IActionResult> Edit(Int32 id, [Bind("IdBeneficiario,Denominacion,PrimerApellido, SegundoApellido,PrimerNombre, SegundoNombre,PuestoId")] Models.RRHH.Beneficiario item)
+        public async Task<IActionResult> Edit(Int32 id, Models.RRHH.Beneficiario item)
         {
             if (id != item.IdBeneficiario)
             {
@@ -116,6 +159,31 @@ namespace MumanalPG.Areas.RRHH.Controllers
             {
                 try
                 {
+                    ApplicationUser currentUser = await GetCurrentUser();
+                    item.IdUsuario = currentUser.AspNetUserId;
+                    item.IdBeneficiarioClasificacion = 2;
+                    item.Nit = "0";
+                    item.DepartamentoSigla = "LP";
+                    item.Iniciales = "NN";
+                    item.IdDocumentoRespaldo = 0;
+                    item.Denominacion = "0";
+                    item.FechaNacimiento = DateTime.Now;
+                    item.IdGenero = 0;
+                    item.TelefonoFijo = "0";
+                    item.TelefonoOficina = "0";
+                    item.EmailPersonal = "";
+                    item.EmailOficina = "";
+                    item.DomicilioLegal = "";
+                    item.IdBarrio = 0;
+                    item.IdCalle = 0;
+                    item.IdMunicipio = 0;
+                    item.IdEdificio = 0;
+                    item.EdificioNumero = "0";
+                    item.EdificioNumeroPiso = "0";
+                    item.EdificioNumeroDepto = "0";
+                    item.EsDeudor = "NO";
+                    item.EsHabilitado = false;
+                    item.FechaRegistro = DateTime.Now;
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }
@@ -132,6 +200,11 @@ namespace MumanalPG.Areas.RRHH.Controllers
                 }
                 
             }
+            //Puesto
+            var itemP = DB.RRHH_Puesto.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
+            ViewBag.Puesto = itemP;
+
             return PartialView("Edit", item);
         }
 

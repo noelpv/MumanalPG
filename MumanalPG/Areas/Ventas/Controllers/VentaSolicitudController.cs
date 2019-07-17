@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Dynamic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +16,11 @@ using MumanalPG.Models;
 using MumanalPG.Utility;
 using ReflectionIT.Mvc.Paging;
 using SmartBreadcrumbs;
+using MumanalPG.Extensions;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Data;
+
 
 namespace MumanalPG.Areas.Ventas.Controllers
 {
@@ -64,29 +72,15 @@ namespace MumanalPG.Areas.Ventas.Controllers
         public IActionResult Create()
         {
             var model = new Models.Ventas.VentaSolicitud();
-
             //UnidadEjecutora
-            var itemsU = new List<SelectListItem>();
-            itemsU = DB.RRHH_UnidadEjecutora.
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdUnidadEjecutora.ToString()
-                   }).
-                   ToList();
+            var itemsU = DB.RRHH_UnidadEjecutora.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
             ViewBag.UnidadEjecutora = itemsU;
 
             //Beneficiario
-            var itemsB = new List<SelectListItem>();
-            itemsB = DB.RRHH_Beneficiario.
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Denominacion,
-                       Value = c.IdBeneficiario.ToString()
-                   }).
-                   ToList();
+            var itemsB = DB.RRHH_Beneficiario.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Denominacion).ToList();
             ViewBag.Beneficiario = itemsB;
-
 
             return PartialView("Create", model);
         }
@@ -94,7 +88,8 @@ namespace MumanalPG.Areas.Ventas.Controllers
         // POST: Ventas/VentaSolicitud/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Models.Ventas.VentaSolicitud item, string UnidadEjecutora, string Beneficiario)
+        //public async Task<IActionResult> Create(Models.Ventas.VentaSolicitud item, string UnidadEjecutora, string Beneficiario)
+        public async Task<IActionResult> Create(Models.Ventas.VentaSolicitud item)
         {
             if (ModelState.IsValid)
             {
@@ -102,33 +97,41 @@ namespace MumanalPG.Areas.Ventas.Controllers
                 item.IdUsuario = currentUser.AspNetUserId;
                 item.IdUsuarioAprueba = currentUser.AspNetUserId;
                 item.IdBeneficiarioResponsable = currentUser.AspNetUserId;
-
                 item.Gestion = "2019";
-                item.CorrelativoUnidad = '0';
-                item.IdDepartamento = '2';
+                item.CorrelativoUnidad = 0;
+                item.IdDepartamento = 2;
                 item.FechaSolicitud = DateTime.Now;
                 item.FechaRecepcionSolicitud = DateTime.Now;
                 item.Observaciones = "Solicitud de Afiliación";
                 item.CiteTramite = "MUMANAL/GG/ 1/2019";
-                item.MesNumero = '6';
-                item.IdPoa = '0';
+                item.MesNumero = 7;
+                item.IdPoa = 0;
                 item.IdProceso = 11;
                 item.IdDocumentoRespaldo = 14;
-                item.NumeroDocumento = '6';
+                item.NumeroDocumento = 6;
                 item.PathArchivo = "-";
                 item.ArchivoCargado = false;
-                item.IdEstadoRegistro = '1';
+                item.IdEstadoRegistro = 1;
                 item.FechaRegistro = DateTime.Now;
                 item.FechaAprueba = DateTime.Now;
-                item.IdUnidadEjecutora = Convert.ToInt32(UnidadEjecutora);
-                item.IdBeneficiario = Convert.ToInt32(Beneficiario);
+                //item.IdUnidadEjecutora = Convert.ToInt32(UnidadEjecutora);
+                //item.IdBeneficiario = Convert.ToInt32(Beneficiario);
+                //UnidadEjecutora
+                var itemsU = DB.RRHH_UnidadEjecutora.
+                    Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
+                ViewBag.UnidadEjecutora = itemsU;
+
+                //Beneficiario
+                var itemsB = DB.RRHH_Beneficiario.
+                    Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Denominacion).ToList();
+                ViewBag.Beneficiario = itemsB;
                 DB.Add(item);
                 await DB.SaveChangesAsync();
-                
+                SetFlashSuccess("Registro creado satisfactoriamente");
             }
+            
             return PartialView("Create",item);
         }
-
         // GET: Ventas/VentaSolicitud/Edit/5
         public async Task<IActionResult> Edit(Int32? id)
         {
@@ -142,13 +145,24 @@ namespace MumanalPG.Areas.Ventas.Controllers
             {
                 return NotFound();
             }
+            //UnidadEjecutora
+            var itemsU = DB.RRHH_UnidadEjecutora.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
+            ViewBag.UnidadEjecutora = itemsU;
+
+            //Beneficiario
+            var itemsB = DB.RRHH_Beneficiario.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Denominacion).ToList();
+            ViewBag.Beneficiario = itemsB;
+
             return PartialView( "Edit", item);
         }
 
         // POST: Ventas/VentaSolicitud/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, [Bind("IdVentaSolicitud,IdBeneficiario,Descripcion,IdUnidadEjecutora")] Models.Ventas.VentaSolicitud item)
+        //public async Task<IActionResult> Edit(Int32 id, [Bind("IdVentaSolicitud,IdBeneficiario,Descripcion,IdUnidadEjecutora")] Models.Ventas.VentaSolicitud item)
+        public async Task<IActionResult> Edit(Int32 id,  Models.Ventas.VentaSolicitud item)
         {
             if (id != item.IdVentaSolicitud)
             {
@@ -159,6 +173,29 @@ namespace MumanalPG.Areas.Ventas.Controllers
             {
                 try
                 {
+                    ApplicationUser currentUser = await GetCurrentUser();
+                    item.IdUsuario = currentUser.AspNetUserId;
+                    item.IdUsuarioAprueba = currentUser.AspNetUserId;
+                    item.IdBeneficiarioResponsable = currentUser.AspNetUserId;
+
+                    item.Gestion = "2019";
+                    item.CorrelativoUnidad = 0;
+                    item.IdDepartamento = 2;
+                    item.FechaSolicitud = DateTime.Now;
+                    item.FechaRecepcionSolicitud = DateTime.Now;
+                    item.Observaciones = "Solicitud de Afiliación";
+                    item.CiteTramite = "MUMANAL/GG/ 1/2019";
+                    item.MesNumero = 7;
+                    item.IdPoa = 0;
+                    item.IdProceso = 11;
+                    item.IdDocumentoRespaldo = 14;
+                    item.NumeroDocumento = 6;
+                    item.PathArchivo = "-";
+                    item.ArchivoCargado = false;
+                    item.IdEstadoRegistro = 1;
+                    item.FechaRegistro = DateTime.Now;
+                    item.FechaAprueba = DateTime.Now;
+
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }
@@ -175,6 +212,16 @@ namespace MumanalPG.Areas.Ventas.Controllers
                 }
                 
             }
+            //UnidadEjecutora
+            var itemsU = DB.RRHH_UnidadEjecutora.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
+            ViewBag.UnidadEjecutora = itemsU;
+
+            //Beneficiario
+            var itemsB = DB.RRHH_Beneficiario.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Denominacion).ToList();
+            ViewBag.Beneficiario = itemsB;
+
             return PartialView("Edit", item);
         }
 

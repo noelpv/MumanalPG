@@ -1,0 +1,67 @@
+@model MumanalPG.Models.Generales.DocumentoRespaldo
+<div class="row justify-content-center">
+    <div class="col-10">
+        <div class="card border-info">
+            <div class="card-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.IdDocumentoClasificacion)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.IdDocumentoClasificacion)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Sigla)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Sigla)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Descripcion)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Descripcion)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.IdFrecuenciaUso)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.IdFrecuenciaUso)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.IdDocumentoFormato)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.IdDocumentoFormato)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.NumeroCopias)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.NumeroCopias)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.EsUsadoComoRequisito)
+                    </dt>
+                    <dd>
+                        <!-- Mejorar la vista del True/False -->
+                        @Html.DisplayFor(model => model.EsUsadoComoRequisito)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.LugarFisicoArchivado)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.LugarFisicoArchivado)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.EsObligatorio)
+                    </dt>
+                    <dd>
+                        <!-- Mejorar la vista del True/False -->
+                        @Html.DisplayFor(model => model.EsObligatorio)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

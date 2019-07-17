@@ -1,6 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Dynamic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +16,10 @@ using MumanalPG.Models;
 using MumanalPG.Utility;
 using ReflectionIT.Mvc.Paging;
 using SmartBreadcrumbs;
+using MumanalPG.Extensions;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace MumanalPG.Areas.RRHH.Controllers
 {
@@ -63,6 +71,11 @@ namespace MumanalPG.Areas.RRHH.Controllers
         public IActionResult Create()
         {
             var model = new Models.RRHH.UnidadEjecutora();
+            //Municipio
+            var items = DB.Municipio.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
+            ViewBag.Municipio = items;
+
             return PartialView("Create", model);
         }
 
@@ -73,16 +86,25 @@ namespace MumanalPG.Areas.RRHH.Controllers
         {
             if (ModelState.IsValid)
             {
-                //ApplicationUser currentUser = await GetCurrentUser();
-                //item.IdUsuario = currentUser.AspNetUserId;
+                ApplicationUser currentUser = await GetCurrentUser();
+                item.IdUsuario = currentUser.AspNetUserId;
+                item.IdUnidadEjecutoraPadre = 0;
+                item.Nivel = 0;
+                item.EsUltimoNivel = false;
                 item.Gestion = "2019";
-                item.MontoLimite = '0';
-                item.CantidadLimite = '0';
+                item.MontoLimite = 0;
+                item.CantidadLimite = 0;
+                item.IdEstadoRegistro = 1;
                 item.FechaRegistro = DateTime.Now;
                 DB.Add(item);
                 await DB.SaveChangesAsync();
-                
+                SetFlashSuccess("Registro creado satisfactoriamente");
             }
+            //Municipio
+            var items = DB.Municipio.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
+            ViewBag.Municipio = items;
+
             return PartialView("Create",item);
         }
 
@@ -99,13 +121,19 @@ namespace MumanalPG.Areas.RRHH.Controllers
             {
                 return NotFound();
             }
+            //Municipio
+            var items = DB.Municipio.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
+            ViewBag.Municipio = items;
+
             return PartialView( "Edit", item);
         }
 
         // POST: RRHH/UnidadEjecutora/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, [Bind("IdUnidadEjecutora,Descripcion,Sigla,Nivel,IdMunicipio")] Models.RRHH.UnidadEjecutora item)
+        //public async Task<IActionResult> Edit(Int32 id, [Bind("IdUnidadEjecutora,Descripcion,Sigla,Nivel,IdMunicipio")] Models.RRHH.UnidadEjecutora item)
+        public async Task<IActionResult> Edit(Int32 id,  Models.RRHH.UnidadEjecutora item)
         {
             if (id != item.IdUnidadEjecutora)
             {
@@ -116,6 +144,16 @@ namespace MumanalPG.Areas.RRHH.Controllers
             {
                 try
                 {
+                    ApplicationUser currentUser = await GetCurrentUser();
+                    item.IdUsuario = currentUser.AspNetUserId;
+                    item.IdUnidadEjecutoraPadre = 0;
+                    item.Nivel = 0;
+                    item.EsUltimoNivel = false;
+                    item.Gestion = "2019";
+                    item.MontoLimite = 0;
+                    item.CantidadLimite = 0;
+                    item.IdEstadoRegistro = 1;
+                    item.FechaRegistro = DateTime.Now;
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }
@@ -132,6 +170,11 @@ namespace MumanalPG.Areas.RRHH.Controllers
                 }
                 
             }
+            //Municipio
+            var items = DB.Municipio.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
+            ViewBag.Municipio = items;
+
             return PartialView("Edit", item);
         }
 

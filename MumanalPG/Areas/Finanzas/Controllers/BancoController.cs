@@ -64,39 +64,31 @@ namespace MumanalPG.Areas.Finanzas.Controllers
         public IActionResult Create()
         {
             var model = new Models.Finanzas.Banco();
-
-            var items = new List<SelectListItem>();
-            items = DB.Municipio.
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdMunicipio.ToString()
-                   }).
-                   ToList();
+            var items = DB.Municipio.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             ViewBag.Municipio = items;
-
+            
             return PartialView("Create", model);
         }
 
         // POST: Finanzas/Banco/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Models.Finanzas.Banco item, string Municipio)
+        public async Task<IActionResult> Create(Models.Finanzas.Banco item)
         {
             if (ModelState.IsValid)
             {
                 ApplicationUser currentUser = await GetCurrentUser();
                 item.IdUsuario = currentUser.AspNetUserId;
-                //item.Gestion = "2019";
-                //item.IdBeneficiario = '0';
-                //item.IdPais = '1';
-                item.CargoRepresentante = "-";
-                item.IdEstadoRegistro = '1';
+                item.IdEstadoRegistro = 1;
                 item.FechaRegistro = DateTime.Now;
-                item.IdMunicipio = Convert.ToInt32(Municipio);
                 DB.Add(item);
                 await DB.SaveChangesAsync();
+                SetFlashSuccess("Registro creado satisfactoriamente");
             }
+            var items = DB.Municipio.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Municipio = items;
             return PartialView("Create",item);
         }
 
@@ -112,14 +104,8 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             {
                 return NotFound();
             }
-            var items = new List<SelectListItem>();
-            items = DB.Municipio.
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdMunicipio.ToString()
-                   }).
-                   ToList();
+            var items = DB.Municipio.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             ViewBag.Municipio = items;
 
             return PartialView( "Edit", item);
@@ -128,7 +114,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
         // POST: Finanzas/Banco/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, [Bind("IdBanco,Descripcion,Sigla, IdMunicipio")] Models.Finanzas.Banco item, string Municipio)
+        public async Task<IActionResult> Edit(Int32 id, Models.Finanzas.Banco item)
         {
             if (id != item.IdBanco)
             {
@@ -139,7 +125,6 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             {
                 try
                 {
-                    item.IdMunicipio = Convert.ToInt32(Municipio);
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }
@@ -154,8 +139,10 @@ namespace MumanalPG.Areas.Finanzas.Controllers
                         throw;
                     }
                 }
-                
             }
+            var items = DB.Municipio.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Municipio = items;
             return PartialView("Edit", item);
         }
 

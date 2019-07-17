@@ -23,13 +23,13 @@ namespace MumanalPG.Areas.Ventas.Controllers
 
         // GET: Ventas/Prestaciones
         [Breadcrumb("Prestaciones")]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             return View();
         }
 
         [Breadcrumb("Clasificadores", FromAction = "Index")]
-        public async Task<IActionResult> Clasificadores()
+        public IActionResult Clasificadores()
         {
             return View();
         }

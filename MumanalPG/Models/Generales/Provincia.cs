@@ -11,6 +11,7 @@ namespace MumanalPG.Models.Generales
 		[Key]
 		public Int32 IdProvincia { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]
+		[Display(Name="Departamento")]
 		public Int32 IdDepartamento { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]
 		public string Descripcion { get; set; }

@@ -1,0 +1,11 @@
+@model MumanalPG.Models.Generales.EdificioTipo
+<form asp-action="@ViewData["Action"]">
+    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+    <input type="hidden" asp-for="IdEdificioTipo" />
+
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.Descripcion, new { @class = "form-control-label" }) 
+        @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Descripcion, "" ,new { @class = "text-danger" })
+    </div>
+</form>

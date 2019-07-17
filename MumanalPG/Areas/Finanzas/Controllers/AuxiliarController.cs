@@ -75,10 +75,11 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             {
                 ApplicationUser currentUser = await GetCurrentUser();
                 item.IdUsuario = currentUser.AspNetUserId;
+                item.IdEstadoRegistro = 1;
                 item.FechaRegistro = DateTime.Now;
                 DB.Add(item);
                 await DB.SaveChangesAsync();
-                
+                SetFlashSuccess("Registro creado satisfactoriamente");
             }
             return PartialView("Create",item);
         }
@@ -102,7 +103,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
         // POST: Finanzas/Auxiliar/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, [Bind("IdAuxiliar,Descripcion,Sigla")] Models.Finanzas.Auxiliar item)
+        public async Task<IActionResult> Edit(Int32 id, Models.Finanzas.Auxiliar item)
         {
             if (id != item.IdAuxiliar)
             {
@@ -126,8 +127,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
                     {
                         throw;
                     }
-                }
-                
+                }        
             }
             return PartialView("Edit", item);
         }

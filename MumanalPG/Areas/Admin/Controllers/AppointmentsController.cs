@@ -92,7 +92,7 @@ namespace MumanalPG.Areas.Admin.Controllers
                     DateTime appDate = Convert.ToDateTime(searchDate);
                     appointmentVM.Appointments = appointmentVM.Appointments.Where(a => a.AppointmentDate.ToShortDateString().Equals(appDate.ToShortDateString())).ToList();
                 }
-                catch(Exception ex)
+                catch (Exception)
                 {
 
                 }
