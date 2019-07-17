@@ -124,7 +124,8 @@
                                                 </a>
                                             </td>
                                             <td class="hidden-xs-down">
-                                                <i class="icon-paper-clip"></i>
+                                                @*<i class="icon-paper-clip"></i>*@
+                                                <a class="icon-paper-clip"  asp-action="VerPDF" asp-route-id="xyz.pdf"></a>
                                             </td>
                                             <td class=" small text-right text-capitalize">
                                                 @item.FechaRegistro.ToString("MMM dd, HH:mm", new CultureInfo("es-ES"))
