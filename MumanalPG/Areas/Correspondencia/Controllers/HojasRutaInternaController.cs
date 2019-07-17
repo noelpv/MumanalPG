@@ -38,6 +38,9 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         public async Task<IActionResult> Index(string filter, string type, int page = 1, string sortExpression = "-FechaRegistro", string a = "")
         {
 
+
+
+
             var consulta = DB.CorrespondenciaHRDetalle.AsNoTracking().AsQueryable();
             consulta = consulta.Include(m => m.AreaOrigen)
                                .Include(m => m.AreaDestino)
