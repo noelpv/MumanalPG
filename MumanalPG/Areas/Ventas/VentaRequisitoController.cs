@@ -259,7 +259,12 @@ namespace MumanalPG.Areas.Ventas
 			{
 				return NotFound();
 			}
-			return View(ventaRequisito);
+            if (ventaRequisito.ArchivoCargado)
+            {
+                SetFlashInfo("Ya existia el documento pero se volvera a cargarlo!!!");
+            }
+
+            return View(ventaRequisito);
 		}
 
 		[HttpPost]
