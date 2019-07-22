@@ -38,7 +38,10 @@ begin
 	join "Seguridad"."RoleEstadoRegistro" RER on UR."RoleId" = RER."IdRole" and A."IdEstadoRegistro" = RER."IdEstadoRegistro"
 	join "Ventas"."EstadoRegistro" ER on A."IdEstadoRegistro" = ER."IdEstadoRegistro"
   where S."Id" = IdAspUser
-	and (b."PrimerApellido" like searchString || '%' or a."IdAsrSiver" = searchString or searchString = '')
+	and (upper(b."PrimerApellido") like upper(searchString) || '%'
+	     or a."IdAsrSiver" = searchString
+			 or upper(u."Sigla") like upper(searchstring) || '%'
+			 or searchString = '')
 	order by "IdVentaContratacion" desc;
 end;
 $$
