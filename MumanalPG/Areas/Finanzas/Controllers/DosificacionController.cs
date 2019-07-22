@@ -66,7 +66,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             var model = new Models.Finanzas.Dosificacion();
 
             var items1 = new List<SelectListItem>();
-            items1 = DB.DocumentoRespaldo.                   
+            items1 = DB.Ventas_DocumentoRespaldo.                   
                    Select(c => new SelectListItem()
                    {
                        Text = c.Descripcion,
@@ -132,7 +132,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             }
 
             var items1 = new List<SelectListItem>();
-            items1 = DB.DocumentoRespaldo.                   
+            items1 = DB.Ventas_DocumentoRespaldo.                   
                    Select(c => new SelectListItem()
                    {
                        Text = c.Descripcion,

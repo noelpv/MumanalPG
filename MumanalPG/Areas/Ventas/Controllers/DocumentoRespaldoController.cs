@@ -21,11 +21,11 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data;
 
-namespace MumanalPG.Areas.Generales.Controllers
+namespace MumanalPG.Areas.Ventas.Controllers
 {
     //[Authorize(Roles = SD.SuperAdminEndUser)]
     [Authorize]
-    [Area("Generales")]
+    [Area("Ventas")]
     public class DocumentoRespaldoController : BaseController
     {        
         
@@ -34,11 +34,11 @@ namespace MumanalPG.Areas.Generales.Controllers
             
         }
 
-        // GET: Generales/DocumentoRespaldo
-        //[Breadcrumb("DocumentoRespaldo", FromController = "DashboardPlan", FromAction = "Clasificadores")]
+        // GET: Ventas/DocumentoRespaldo
+        [Breadcrumb("DocumentoRespaldo", FromController = "DashboardVenta", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
-            var consulta = DB.DocumentoRespaldo.AsNoTracking().AsQueryable();
+            var consulta = DB.Ventas_DocumentoRespaldo.AsNoTracking().AsQueryable();
             consulta = consulta.Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
             if (!string.IsNullOrWhiteSpace(filter))
 			{
@@ -50,15 +50,14 @@ namespace MumanalPG.Areas.Generales.Controllers
             return View(resp);
         }
 
-        // GET: Generales/DocumentoRespaldo/Details/5
+        // GET: Ventas/DocumentoRespaldo/Details/5
         public async Task<IActionResult> Details(Int32? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var item = await DB.DocumentoRespaldo.FirstOrDefaultAsync(m => m.IdDocumentoRespaldo  == id);
+            var item = await DB.Ventas_DocumentoRespaldo.FirstOrDefaultAsync(m => m.IdDocumentoRespaldo  == id);
             if (item == null)
             {
                 return NotFound();
@@ -67,10 +66,10 @@ namespace MumanalPG.Areas.Generales.Controllers
             return PartialView("Details",item);
         }
 
-        // GET: Generales/DocumentoRespaldo/Create
+        // GET: Ventas/DocumentoRespaldo/Create
         public IActionResult Create()
         {
-            var model = new Models.Generales.DocumentoRespaldo();
+            var model = new Models.Ventas.DocumentoRespaldo();
             //ini combo
             var items1 = DB.DocumentoClasificacion.
                 Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
@@ -85,10 +84,10 @@ namespace MumanalPG.Areas.Generales.Controllers
             return PartialView("Create", model);
         }
 
-        // POST: Generales/DocumentoRespaldo/Create
+        // POST: Ventas/DocumentoRespaldo/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Models.Generales.DocumentoRespaldo item)
+        public async Task<IActionResult> Create(Models.Ventas.DocumentoRespaldo item)
         {
             if (ModelState.IsValid)
             {
@@ -96,7 +95,7 @@ namespace MumanalPG.Areas.Generales.Controllers
                 item.IdUsuario = currentUser.AspNetUserId;
                 item.IdEstadoRegistro = 1;
                 item.FechaRegistro = DateTime.Now;
-                item.IdProceso=0;
+                //item.IdProceso=0;
                 DB.Add(item);
                 await DB.SaveChangesAsync();
                 SetFlashSuccess("Registro creado satisfactoriamente");
@@ -113,14 +112,14 @@ namespace MumanalPG.Areas.Generales.Controllers
             return PartialView("Create",item);
         }
 
-        // GET: Generales/DocumentoRespaldo/Edit/5
+        // GET: Ventas/DocumentoRespaldo/Edit/5
         public async Task<IActionResult> Edit(Int32? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var item = await DB.DocumentoRespaldo.FindAsync(id);
+            var item = await DB.Ventas_DocumentoRespaldo.FindAsync(id);
             if (item == null)
             {
                 return NotFound();
@@ -137,10 +136,10 @@ namespace MumanalPG.Areas.Generales.Controllers
             return PartialView( "Edit", item);
         }
 
-        // POST: Generales/DocumentoRespaldo/Edit/5
+        // POST: Ventas/DocumentoRespaldo/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id,  Models.Generales.DocumentoRespaldo item)
+        public async Task<IActionResult> Edit(Int32 id,  Models.Ventas.DocumentoRespaldo item)
         {
             if (id != item.IdDocumentoRespaldo)
             {
@@ -151,6 +150,11 @@ namespace MumanalPG.Areas.Generales.Controllers
             {
                 try
                 {
+                    ApplicationUser currentUser = await GetCurrentUser();
+                    item.IdUsuario = currentUser.AspNetUserId;
+                    item.IdEstadoRegistro = 1;
+                    item.FechaRegistro = DateTime.Now;
+                    //item.IdProceso = 0;
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }
@@ -178,7 +182,7 @@ namespace MumanalPG.Areas.Generales.Controllers
             return PartialView("Edit", item);
         }
 
-        // GET: Generales/DocumentoRespaldo/Delete/5
+        // GET: Ventas/DocumentoRespaldo/Delete/5
         public async Task<IActionResult> Delete(Int32? id)
         {
             if (id == null)
@@ -186,7 +190,7 @@ namespace MumanalPG.Areas.Generales.Controllers
                 return NotFound();
             }
 
-            var item = await DB.DocumentoRespaldo.FirstOrDefaultAsync(m => m.IdDocumentoRespaldo == id);
+            var item = await DB.Ventas_DocumentoRespaldo.FirstOrDefaultAsync(m => m.IdDocumentoRespaldo == id);
             if (item == null)
             {
                 return NotFound();
@@ -195,21 +199,21 @@ namespace MumanalPG.Areas.Generales.Controllers
             return PartialView("Delete",item);
         }
 
-        // POST: Generales/DocumentoRespaldo/Delete/5
+        // POST: Ventas/DocumentoRespaldo/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Int32 id)
         {
-            var item = await DB.DocumentoRespaldo.FindAsync(id);
+            var item = await DB.Ventas_DocumentoRespaldo.FindAsync(id);
             item.IdEstadoRegistro = 2;  //Constantes.Eliminado ;
-            DB.DocumentoRespaldo.Update(item);
+            DB.Ventas_DocumentoRespaldo.Update(item);
             await DB.SaveChangesAsync();
             return PartialView("Delete",item);
         }
 
         private bool ItemExists(Int32 id)
         {
-            return DB.DocumentoRespaldo.Any(e => e.IdDocumentoRespaldo == id);
+            return DB.Ventas_DocumentoRespaldo.Any(e => e.IdDocumentoRespaldo == id);
         }
     }
 }
