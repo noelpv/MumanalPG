@@ -21,8 +21,10 @@ namespace MumanalPG.Models.Generales
 		[Display(Name="Nombre de la Base de Datos")]
 		public String NombreBD { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]
+		[Display(Name="Directorio de Sistema (path)")]
 		public String PathSistema { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]
+		[Display(Name="Directorio de Documentos (path)")]
 		public String PathDocumentos { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]
 		[Display(Name="Codigo de Municipio")]

@@ -1,0 +1,40 @@
+@model MumanalPG.Models.Generales.ParametrosGenerales
+<form asp-action="@ViewData["Action"]">
+    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+    <input type="hidden" asp-for="IdParametrosGenerales" />
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.Gestion, new { @class = "control-label" }) 
+        @Html.TextBoxFor(m => m.Gestion, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Gestion,"",new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.Descripcion, new { @class = "control-label" }) 
+        @Html.TextAreaFor(m => m.Descripcion, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Descripcion,"",new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.NombreServidor, new { @class = "control-label" }) 
+        @Html.TextBoxFor(m => m.NombreServidor, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NombreServidor,"",new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.NombreBD, new { @class = "control-label" }) 
+        @Html.TextBoxFor(m => m.NombreBD, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NombreBD,"",new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.PathSistema, new { @class = "control-label" }) 
+        @Html.TextBoxFor(m => m.PathSistema, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PathSistema,"",new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.PathDocumentos, new { @class = "control-label" })
+        @Html.TextBoxFor(m => m.PathDocumentos, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PathDocumentos,"",new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.MunicipioCodigo, new { @class = "control-label" }) 
+        @Html.TextBoxFor(m => m.MunicipioCodigo, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.MunicipioCodigo,"",new { @class = "text-danger" })
+    </div>
+</form>

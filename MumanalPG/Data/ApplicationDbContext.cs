@@ -43,6 +43,7 @@ namespace MumanalPG.Data
         public DbSet<MumanalPG.Models.Generales.FrecuenciaUso> FrecuenciaUso { get; set; }
         public DbSet<MumanalPG.Models.Generales.Municipio> Municipio { get; set; }
         public DbSet<MumanalPG.Models.Generales.Pais> Pais { get; set; }
+        public DbSet<MumanalPG.Models.Generales.ParametrosGenerales> ParametrosGenerales { get; set; }
         public DbSet<MumanalPG.Models.Generales.Provincia> Provincia { get; set; }
         public DbSet<MumanalPG.Models.Generales.SistemaFormulario> SistemaFormulario { get; set; }
         public DbSet<MumanalPG.Models.Generales.SistemaMenu> SistemaMenu { get; set; }
