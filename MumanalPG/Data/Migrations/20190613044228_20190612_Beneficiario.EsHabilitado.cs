@@ -108,17 +108,17 @@ namespace MumanalPG.Data.Migrations
             //    schema: "RRHH",
             //    table: "Beneficiario");
 
-            migrationBuilder.RenameColumn(
-                name: "NumeroPeriodos",
-                schema: "Ventas",
-                table: "VentaTarifario",
-                newName: "NuemroPeriodos");
+            //migrationBuilder.RenameColumn(
+            //    name: "NumeroPeriodos",
+            //    schema: "Ventas",
+            //    table: "VentaTarifario",
+            //    newName: "NuemroPeriodos");
 
-            migrationBuilder.RenameColumn(
-                name: "IdProceso",
-                schema: "Ventas",
-                table: "VentaTarifario",
-                newName: "IdProcesoNivel2");
+            //migrationBuilder.RenameColumn(
+            //    name: "IdProceso",
+            //    schema: "Ventas",
+            //    table: "VentaTarifario",
+            //    newName: "IdProcesoNivel2");
 
             //migrationBuilder.RenameColumn(
             //    name: "Descripcion",
