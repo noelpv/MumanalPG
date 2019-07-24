@@ -15,7 +15,7 @@ namespace MumanalPG.Models.Ventas
 		public Int32 IdProceso { get; set; }
 		public Int32 IdBeneficiarioCategoria { get; set; }
 		public Int32 NumeroCuotas { get; set; }
-		public Int32 NuemroPeriodos { get; set; }
+		public Int32 NumeroPeriodos { get; set; }
 		public Decimal ValorInicialBs { get; set; }
 		public Decimal InteresBs { get; set; }
 		public Decimal ValorFinalBs { get; set; }
