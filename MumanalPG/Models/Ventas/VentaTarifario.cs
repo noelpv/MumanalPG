@@ -10,11 +10,12 @@ namespace MumanalPG.Models.Ventas
 		[DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
 		[Key]
 		public Int32 IdVentaTarifario { get; set; }
-		public string Descripcion { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
+        public string Descripcion { get; set; }
 		public Int32 IdProceso { get; set; }
 		public Int32 IdBeneficiarioCategoria { get; set; }
 		public Int32 NumeroCuotas { get; set; }
-		public Int32 NumeroPeriodos { get; set; }
+		public Int32 NuemroPeriodos { get; set; }
 		public Decimal ValorInicialBs { get; set; }
 		public Decimal InteresBs { get; set; }
 		public Decimal ValorFinalBs { get; set; }
