@@ -103,10 +103,10 @@ namespace MumanalPG.Data.Migrations
                 schema: "Ventas",
                 table: "VentaTarifario");
 
-            migrationBuilder.DropColumn(
-                name: "EsHabilitado",
-                schema: "RRHH",
-                table: "Beneficiario");
+            //migrationBuilder.DropColumn(
+            //    name: "EsHabilitado",
+            //    schema: "RRHH",
+            //    table: "Beneficiario");
 
             migrationBuilder.RenameColumn(
                 name: "NumeroPeriodos",
