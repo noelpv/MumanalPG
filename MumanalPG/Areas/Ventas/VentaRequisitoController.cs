@@ -228,6 +228,8 @@ namespace MumanalPG.Areas.Ventas
 			return View("VerPDF");
 		}
 
+
+
 		//[HttpPost]
 		////[ValidateAntiForgeryToken]
 		//public ActionResult VerPDF()
