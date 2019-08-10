@@ -1,98 +1,112 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using MumanalPG.Data;
-using MumanalPG.Models.Administra;
+using MumanalPG.Models;
+using MumanalPG.Utility;
+using ReflectionIT.Mvc.Paging;
+using SmartBreadcrumbs;
 
-namespace MumanalPG.Areas.Administra
+namespace MumanalPG.Areas.Administra.Controllers
 {
+    //[Authorize(Roles = SD.SuperAdminEndUser)]
+    [Authorize]
     [Area("Administra")]
-    public class TipoAlmacenController : Controller
-    {
-        private readonly ApplicationDbContext _context;
-
-        public TipoAlmacenController(ApplicationDbContext context)
+    public class TipoAlmacenController : BaseController
+    {        
+        
+		public TipoAlmacenController(ApplicationDbContext db, UserManager<IdentityUser> userManager): base(db, userManager)
         {
-            _context = context;
+            
         }
 
         // GET: Administra/TipoAlmacen
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.TipoAlmacen.ToListAsync());
+        // [Breadcrumb("TipoAlmacen", FromController = "DashboardPlan", FromAction = "Clasificadores")]
+        public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
+        { 
+            var consulta = DB.TipoAlmacen.AsNoTracking().AsQueryable();
+            consulta = consulta.Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
+            if (!string.IsNullOrWhiteSpace(filter))
+			{
+                consulta = consulta.Where(m => EF.Functions.ILike(m.Descripcion, $"%{filter}%"));
+            }
+            var resp = await PagingList.CreateAsync(consulta, Constantes.TamanoPaginacion, page, sortExpression, "Descripcion");
+            resp.RouteValue = new RouteValueDictionary {{ "filter", filter}};
+            ShowFlash(a);
+            return View(resp);
         }
 
         // GET: Administra/TipoAlmacen/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Int32? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var tipoAlmacen = await _context.TipoAlmacen
-                .FirstOrDefaultAsync(m => m.IdTipoAlmacen == id);
-            if (tipoAlmacen == null)
+            var item = await DB.TipoAlmacen.FirstOrDefaultAsync(m => m.IdTipoAlmacen  == id);
+            if (item == null)
             {
                 return NotFound();
             }
 
-            return View(tipoAlmacen);
+            return PartialView("Details",item);
         }
 
         // GET: Administra/TipoAlmacen/Create
         public IActionResult Create()
         {
-            return View();
+            var model = new Models.Administra.TipoAlmacen();
+            return PartialView("Create", model);
         }
 
         // POST: Administra/TipoAlmacen/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdTipoAlmacen,Descripcion,IdEstadoRegistro,IdUsuario,FechaRegistro")] TipoAlmacen tipoAlmacen)
+        public async Task<IActionResult> Create(Models.Administra.TipoAlmacen item)
         {
             if (ModelState.IsValid)
             {
-                tipoAlmacen.FechaRegistro = DateTime.Now;
-                tipoAlmacen.IdEstadoRegistro = '1';
-
-                _context.Add(tipoAlmacen);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                ApplicationUser currentUser = await GetCurrentUser();
+                item.IdUsuario = currentUser.AspNetUserId;
+                item.IdEstadoRegistro = 1;
+                item.FechaRegistro = DateTime.Now;
+                DB.Add(item);
+                await DB.SaveChangesAsync();
+                
             }
-            return View(tipoAlmacen);
+            return PartialView("Create",item);
         }
 
         // GET: Administra/TipoAlmacen/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(Int32? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var tipoAlmacen = await _context.TipoAlmacen.FindAsync(id);
-            if (tipoAlmacen == null)
+            var item = await DB.TipoAlmacen.FindAsync(id);
+            if (item == null)
             {
                 return NotFound();
             }
-            return View(tipoAlmacen);
+            return PartialView( "Edit", item);
         }
 
         // POST: Administra/TipoAlmacen/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdTipoAlmacen,Descripcion,IdEstadoRegistro,IdUsuario,FechaRegistro")] TipoAlmacen tipoAlmacen)
+        public async Task<IActionResult> Edit(Int32 id, Models.Administra.TipoAlmacen item)
+        //public async Task<IActionResult> Edit(Int32 id, [Bind("IdTipoAlmacen,Descripcion,Sigla")] Models.Administra.TipoAlmacen item)
         {
-            if (id != tipoAlmacen.IdTipoAlmacen)
+            if (id != item.IdTipoAlmacen)
             {
                 return NotFound();
             }
@@ -101,12 +115,16 @@ namespace MumanalPG.Areas.Administra
             {
                 try
                 {
-                    _context.Update(tipoAlmacen);
-                    await _context.SaveChangesAsync();
+                    ApplicationUser currentUser = await GetCurrentUser();
+                    item.IdUsuario = currentUser.AspNetUserId;
+                    item.IdEstadoRegistro = 1;
+                    item.FechaRegistro = DateTime.Now;
+                    DB.Update(item);
+                    await DB.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TipoAlmacenExists(tipoAlmacen.IdTipoAlmacen))
+                    if (!ItemExists(item.IdTipoAlmacen))
                     {
                         return NotFound();
                     }
@@ -115,43 +133,43 @@ namespace MumanalPG.Areas.Administra
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                
             }
-            return View(tipoAlmacen);
+            return PartialView("Edit", item);
         }
 
         // GET: Administra/TipoAlmacen/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Int32? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var tipoAlmacen = await _context.TipoAlmacen
-                .FirstOrDefaultAsync(m => m.IdTipoAlmacen == id);
-            if (tipoAlmacen == null)
+            var item = await DB.TipoAlmacen.FirstOrDefaultAsync(m => m.IdTipoAlmacen == id);
+            if (item == null)
             {
                 return NotFound();
             }
 
-            return View(tipoAlmacen);
+            return PartialView("Delete",item);
         }
 
         // POST: Administra/TipoAlmacen/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Int32 id)
         {
-            var tipoAlmacen = await _context.TipoAlmacen.FindAsync(id);
-            _context.TipoAlmacen.Remove(tipoAlmacen);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var item = await DB.TipoAlmacen.FindAsync(id);
+            item.IdEstadoRegistro = 2;  //Constantes.Eliminado ;
+            DB.TipoAlmacen.Update(item);
+            await DB.SaveChangesAsync();
+            return PartialView("Delete",item);
         }
 
-        private bool TipoAlmacenExists(int id)
+        private bool ItemExists(Int32 id)
         {
-            return _context.TipoAlmacen.Any(e => e.IdTipoAlmacen == id);
+            return DB.TipoAlmacen.Any(e => e.IdTipoAlmacen == id);
         }
     }
 }

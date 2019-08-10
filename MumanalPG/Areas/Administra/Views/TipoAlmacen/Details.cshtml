@@ -1,42 +1,24 @@
-﻿@model MumanalPG.Models.Administra.TipoAlmacen
+@model MumanalPG.Models.Administra.TipoAlmacen
+<div class="row justify-content-center">
+    <div class="col-10">
+        <div class="card border-info">
+            <div class="card-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.IdTipoAlmacen)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.IdTipoAlmacen)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Descripcion)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Descripcion)
+                    </dd>
 
-@{
-    ViewData["Title"] = "TipoAlmacen";
-}
-
-<h2>Detalle</h2>
-
-<div>
-    <h4>TipoAlmacen</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Descripcion)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IdEstadoRegistro)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IdEstadoRegistro)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IdUsuario)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IdUsuario)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaRegistro)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.FechaRegistro)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.IdTipoAlmacen">Editar</a> |
-    <a asp-action="Index">Retornar a la Lista</a>
+                </dl>
+            </div>
+        </div>
+    </div>
 </div>

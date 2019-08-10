@@ -9,6 +9,8 @@
 
   <ItemGroup>
     <Compile Remove="Areas\AdministraParam\**" />
+    <Compile Remove="Areas\Administra\Data\**" />
+    <Compile Remove="Areas\Administra\Models\**" />
     <Compile Remove="Areas\RRHH\Models\**" />
     <Compile Remove="Models\ContableParam\**" />
     <Compile Remove="Models\Contable\**" />
@@ -16,6 +18,8 @@
     <Compile Remove="Models\PlanificacionParam\**" />
     <Compile Remove="Models\VentasParam\**" />
     <Content Remove="Areas\AdministraParam\**" />
+    <Content Remove="Areas\Administra\Data\**" />
+    <Content Remove="Areas\Administra\Models\**" />
     <Content Remove="Areas\RRHH\Models\**" />
     <Content Remove="Models\ContableParam\**" />
     <Content Remove="Models\Contable\**" />
@@ -23,6 +27,8 @@
     <Content Remove="Models\PlanificacionParam\**" />
     <Content Remove="Models\VentasParam\**" />
     <EmbeddedResource Remove="Areas\AdministraParam\**" />
+    <EmbeddedResource Remove="Areas\Administra\Data\**" />
+    <EmbeddedResource Remove="Areas\Administra\Models\**" />
     <EmbeddedResource Remove="Areas\RRHH\Models\**" />
     <EmbeddedResource Remove="Models\ContableParam\**" />
     <EmbeddedResource Remove="Models\Contable\**" />
@@ -30,6 +36,8 @@
     <EmbeddedResource Remove="Models\PlanificacionParam\**" />
     <EmbeddedResource Remove="Models\VentasParam\**" />
     <None Remove="Areas\AdministraParam\**" />
+    <None Remove="Areas\Administra\Data\**" />
+    <None Remove="Areas\Administra\Models\**" />
     <None Remove="Areas\RRHH\Models\**" />
     <None Remove="Models\ContableParam\**" />
     <None Remove="Models\Contable\**" />
@@ -152,8 +160,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Administra\Controllers\" />
-    <Folder Include="Areas\Administra\Data\" />
-    <Folder Include="Areas\Administra\Models\" />
     <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Areas\RRHH\Views\" />
     <Folder Include="Controllers\" />

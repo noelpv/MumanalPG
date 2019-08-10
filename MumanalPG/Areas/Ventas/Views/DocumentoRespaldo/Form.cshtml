@@ -18,10 +18,10 @@
     <div class="form-group m-b-40">
         @Html.LabelFor(m => m.IdDocumentoClasificacion, new { @class = "control-label" })
         <br>
-         @*@Html.DropDownListFor(m => m.IdDocumentoClasificacion, new SelectList(ViewBag.DocumentoClasificacion, "IdDocumentoClasificacion", "Descripcion"), new { @class = "form-control" })*@
-        <select asp-for="IdDocumentoClasificacion" class="form-control"
+         @Html.DropDownListFor(m => m.IdDocumentoClasificacion, new SelectList(ViewBag.DocumentoClasificacion, "IdDocumentoClasificacion", "Descripcion"), new { @class = "form-control" })
+        @*<select asp-for="IdDocumentoClasificacion" class="form-control"
                 asp-items="@(new SelectList(ViewBag.DocumentoClasificacion, "IdDocumentoClasificacion", "Descripcion"))">
-        </select>
+        </select>*@
     </div>
     <div class="form-group m-b-40">
         @Html.LabelFor(m => m.Sigla, new { @class = "control-label" })
@@ -39,11 +39,10 @@
         <br>
         @*@Html.DropDownListFor(m => m.IdFrecuenciaUso, new SelectList(ViewBag.FrecuenciaUso, "IdFrecuenciaUso", "Descripcion"), new { @class = "form-control" })*@
         @*<!-- Codigo Anterior - Actualizar al nuevo codigo de preferencia -->
-            <!--*@
-        @*@Html.DropDownList("IdFrecuenciaUso", ViewBag.FrecuenciaUso, "Sin asignar", new { @class = "form-control" })*@
+        <!--*@
+        @*@Html.DropDownList("IdFrecuenciaUso", ViewBag.FrecuenciaUso, "Sin asignar", new { @class = "form-control" }) -->*@
         <select asp-for="IdFrecuenciaUso" class="form-control"
                 asp-items="@(new SelectList(ViewBag.FrecuenciaUso, "IdFrecuenciaUso", "Descripcion"))"></select>
-        -->
     </div>
     <div class="form-group m-b-40">
         @Html.LabelFor(m => m.IdDocumentoFormato, new { @class = "control-label" })
