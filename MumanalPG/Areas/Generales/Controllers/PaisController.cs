@@ -71,11 +71,9 @@ namespace MumanalPG.Areas.Generales.Controllers
         public IActionResult Create()
         {
             var model = new Models.Generales.Pais();
-            //ini combo
             var items = DB.Continente.
                 Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             ViewBag.Continente = items;
-            //ini combo
             return PartialView("Create", model);
         }
 
@@ -122,7 +120,7 @@ namespace MumanalPG.Areas.Generales.Controllers
         // POST: Generales/Pais/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id,  Models.Generales.Pais item)
+        public async Task<IActionResult> Edit(Int32 id, Models.Generales.Pais item)
         {
             if (id != item.IdPais)
             {
@@ -133,6 +131,10 @@ namespace MumanalPG.Areas.Generales.Controllers
             {
                 try
                 {
+                    ApplicationUser currentUser = await GetCurrentUser();
+                    item.IdUsuario = currentUser.AspNetUserId;
+                    item.IdEstadoRegistro = 1;
+                    item.FechaRegistro = DateTime.Now;
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }
@@ -147,7 +149,6 @@ namespace MumanalPG.Areas.Generales.Controllers
                         throw;
                     }
                 }
-                
             }
             var items = DB.Continente.
                 Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();

@@ -122,7 +122,7 @@ namespace MumanalPG.Areas.Generales.Controllers
         // POST: Generales/Provincia/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id,  Models.Generales.Provincia item)
+        public async Task<IActionResult> Edit(Int32 id, Models.Generales.Provincia item)
         {
             if (id != item.IdProvincia)
             {
@@ -133,6 +133,10 @@ namespace MumanalPG.Areas.Generales.Controllers
             {
                 try
                 {
+                    ApplicationUser currentUser = await GetCurrentUser();
+                    item.IdUsuario = currentUser.AspNetUserId;
+                    item.IdEstadoRegistro = 1;
+                    item.FechaRegistro = DateTime.Now;
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }
@@ -147,7 +151,6 @@ namespace MumanalPG.Areas.Generales.Controllers
                         throw;
                     }
                 }
-                
             }
             var items = DB.Departamento.
                 Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();

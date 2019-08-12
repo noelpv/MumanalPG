@@ -71,11 +71,9 @@ namespace MumanalPG.Areas.Generales.Controllers
         public IActionResult Create()
         {
             var model = new Models.Generales.SistemaFormulario();
-            //ini combo
             var items = DB.SistemaMenu.
                 Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             ViewBag.SistemaMenu = items;
-            //fin combo
             return PartialView("Create", model);
         }
 
@@ -133,6 +131,10 @@ namespace MumanalPG.Areas.Generales.Controllers
             {
                 try
                 {
+                    ApplicationUser currentUser = await GetCurrentUser();
+                    item.IdUsuario = currentUser.AspNetUserId;
+                    item.IdEstadoRegistro = 1;
+                    item.FechaRegistro = DateTime.Now;
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }

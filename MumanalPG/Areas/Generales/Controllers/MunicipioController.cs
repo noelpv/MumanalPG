@@ -71,11 +71,9 @@ namespace MumanalPG.Areas.Generales.Controllers
         public IActionResult Create()
         {
             var model = new Models.Generales.Municipio();
-            //ini combo
             var items = DB.Provincia.
                 Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             ViewBag.Provincia = items;
-            //ini combo
             return PartialView("Create", model);
         }
 
@@ -88,7 +86,6 @@ namespace MumanalPG.Areas.Generales.Controllers
             {
                 ApplicationUser currentUser = await GetCurrentUser();
                 item.IdUsuario = currentUser.AspNetUserId;
-                // IdRegion no esta definido como tabla en la BD*
                 item.IdRegion = 0;
                 item.IdEstadoRegistro = 1;
                 item.FechaRegistro = DateTime.Now;
@@ -135,6 +132,12 @@ namespace MumanalPG.Areas.Generales.Controllers
             {
                 try
                 {
+                    ApplicationUser currentUser = await GetCurrentUser();
+                    item.IdUsuario = currentUser.AspNetUserId;
+                    item.IdRegion = 0;
+                    item.IdEstadoRegistro = 1;
+                    item.FechaRegistro = DateTime.Now;
+                    DB.Add(item);
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }

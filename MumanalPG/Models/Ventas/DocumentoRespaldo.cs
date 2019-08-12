@@ -11,11 +11,14 @@ namespace MumanalPG.Models.Ventas
 		[Key]
 		public Int32 IdDocumentoRespaldo { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]
-		[Display(Name="Clasificacion de Documento")]
+		[Display(Name="Clasificación de Documento")]
 		public Int32 IdDocumentoClasificacion { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]
+		[StringLength(6, ErrorMessage = "La longitud máxima es de {1} caracteres")]
 		public string Sigla { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]
+		[StringLength(100, ErrorMessage = "La longitud máxima es de {1} caracteres")]
+		[Display(Name="Descripción")]
 		public string Descripcion { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]
 		[Display(Name="Frecuencia de Uso")]
@@ -24,9 +27,11 @@ namespace MumanalPG.Models.Ventas
 		[Display(Name="Formato de Documento")]
 		public Int32 IdDocumentoFormato { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]
-		[Display(Name="Numero de Copias")]
+		[Range(0, Int32.MaxValue, ErrorMessage="El máximo admitido es: {2}")]
+		[Display(Name="Número de Copias")]
 		public Int32 NumeroCopias { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]
+		[StringLength(20, ErrorMessage = "La longitud máxima es de {1} caracteres")]
 		[Display(Name="Lugar Fisico Archivado")]
 		public string LugarFisicoArchivado { get; set; }
 		[Display(Name="¿Es usado como requisito?")]
@@ -35,6 +40,7 @@ namespace MumanalPG.Models.Ventas
 		public Int32 IdUsuario { get; set; }
 		public DateTime FechaRegistro { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]
+		[Range(0, Int32.MaxValue, ErrorMessage = "No es un número válido")]
 		public Int32 Orden { get; set; }
 		[Display(Name="¿Es obligatorio?")]
 		public Boolean EsObligatorio { get; set; }

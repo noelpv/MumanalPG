@@ -109,7 +109,7 @@ namespace MumanalPG.Areas.Generales.Controllers
         // POST: Generales/Continente/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id,  Models.Generales.Continente item)
+        public async Task<IActionResult> Edit(Int32 id, Models.Generales.Continente item)
         {
             if (id != item.IdContinente)
             {
@@ -120,6 +120,10 @@ namespace MumanalPG.Areas.Generales.Controllers
             {
                 try
                 {
+                    ApplicationUser currentUser = await GetCurrentUser();
+                    item.IdUsuario = currentUser.AspNetUserId;
+                    item.IdEstadoRegistro = 1;
+                    item.FechaRegistro = DateTime.Now;
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }

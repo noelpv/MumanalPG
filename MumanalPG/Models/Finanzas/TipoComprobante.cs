@@ -1,4 +1,3 @@
-
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,8 +11,11 @@ namespace MumanalPG.Models.Finanzas
         [Key]
         public Int32 IdTipoComprobante { get; set; }
         [Required(ErrorMessage = "{0} no puede estar en blanco")]
+        [StringLength(50, ErrorMessage = "La longitud máxima es de {1} caracteres")]
+		[Display(Name="Descripción")]
         public string Descripcion { get; set; }
         [Required(ErrorMessage = "{0} no puede estar en blanco")]
+        [StringLength(5, ErrorMessage = "La longitud máxima es de {1} caracteres")]
         public string Sigla { get; set; }
         public Boolean EsEgreso { get; set; }
         public Boolean EsIngreso { get; set; }

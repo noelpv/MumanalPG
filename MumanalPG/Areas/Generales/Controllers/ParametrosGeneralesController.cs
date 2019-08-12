@@ -109,7 +109,7 @@ namespace MumanalPG.Areas.Generales.Controllers
         // POST: Generales/ParametrosGenerales/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id,  Models.Generales.ParametrosGenerales item)
+        public async Task<IActionResult> Edit(Int32 id, Models.Generales.ParametrosGenerales item)
         {
             if (id != item.IdParametrosGenerales)
             {
@@ -120,6 +120,10 @@ namespace MumanalPG.Areas.Generales.Controllers
             {
                 try
                 {
+                    ApplicationUser currentUser = await GetCurrentUser();
+                    item.IdUsuario = currentUser.AspNetUserId;
+                    item.IdEstadoRegistro = 1;
+                    item.FechaRegistro = DateTime.Now;
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }
@@ -151,7 +155,6 @@ namespace MumanalPG.Areas.Generales.Controllers
             {
                 return NotFound();
             }
-
             return PartialView("Delete",item);
         }
 
