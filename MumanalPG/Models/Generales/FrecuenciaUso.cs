@@ -7,7 +7,7 @@ namespace MumanalPG.Models.Generales
 	[Table("FrecuenciaUso", Schema = "Generales")]
 	public class FrecuenciaUso
 	{
-		[DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Key]
 		public Int32 IdFrecuenciaUso { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]

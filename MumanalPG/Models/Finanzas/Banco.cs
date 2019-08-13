@@ -7,7 +7,7 @@ namespace MumanalPG.Models.Finanzas
     [Table("Banco", Schema = "Finanzas")]
     public class Banco
     {
-        [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public Int32 IdBanco { get; set; }
         [Required(ErrorMessage = "{0} no puede estar en blanco")]

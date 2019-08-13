@@ -7,7 +7,7 @@ namespace MumanalPG.Models.Generales
 	[Table("DocumentoClasificacion", Schema = "Generales")]
 	public class DocumentoClasificacion
 	{
-		[DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Key]
 		public Int32 IdDocumentoClasificacion { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]

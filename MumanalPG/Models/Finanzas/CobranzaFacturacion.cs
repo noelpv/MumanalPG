@@ -7,7 +7,7 @@ namespace MumanalPG.Models.Finanzas
     [Table("CobranzaFacturacion", Schema = "Finanzas")]
     public class CobranzaFacturacion
     {
-        [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public Int32 IdCobranzaFacturacion { get; set; }
         public Int32 IdDocumentoRespaldo { get; set; }

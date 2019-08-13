@@ -7,7 +7,7 @@ namespace MumanalPG.Models.Finanzas
     [Table("CronogramaVsFacturacion", Schema = "Finanzas")]
     public class CronogramaVsFacturacion
     {
-        [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public Int32 IdCronogramaVsFacturacion { get; set; }
         public Int32 IdCobranzaCronograma { get; set; }

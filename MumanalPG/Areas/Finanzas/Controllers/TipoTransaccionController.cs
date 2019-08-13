@@ -83,7 +83,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             {
                 ApplicationUser currentUser = await GetCurrentUser();
                 item.IdUsuario = currentUser.AspNetUserId;
-                item.IdEstadoRegistro=1;
+                item.IdEstadoRegistro = 1;
                 item.FechaRegistro = DateTime.Now;
                 DB.Add(item);
                 await DB.SaveChangesAsync();
@@ -122,6 +122,10 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             {
                 try
                 {
+                    ApplicationUser currentUser = await GetCurrentUser();
+                    item.IdUsuario = currentUser.AspNetUserId;
+                    item.IdEstadoRegistro = 1;
+                    item.FechaRegistro = DateTime.Now;
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }

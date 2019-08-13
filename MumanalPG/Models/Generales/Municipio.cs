@@ -7,7 +7,7 @@ namespace MumanalPG.Models.Generales
 	[Table("Municipio", Schema = "Generales")]
 	public class Municipio
 	{
-		[DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Key]
 		public Int32 IdMunicipio { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]

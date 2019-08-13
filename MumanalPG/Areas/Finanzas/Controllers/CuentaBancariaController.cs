@@ -65,44 +65,20 @@ namespace MumanalPG.Areas.Finanzas.Controllers
         {
             var model = new Models.Finanzas.CuentaBancaria();
 
-            var items1 = new List<SelectListItem>();
-            items1 = DB.Banco.                   
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdBanco.ToString()
-                   }).
-                   ToList();
+            var items1 = DB.Banco.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             ViewBag.Banco = items1;
             
-            var items2 = new List<SelectListItem>();
-            items2 = DB.TipoCuentaBanco.                   
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdTipoCuentaBanco.ToString()
-                   }).
-                   ToList();
+            var items2 = DB.TipoCuentaBanco.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             ViewBag.TipoCuentaBanco = items2;
 
-            var items3 = new List<SelectListItem>();
-            items3 = DB.TipoMoneda.                   
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdTipoMoneda.ToString()
-                   }).
-                   ToList();
+            var items3 = DB.TipoMoneda.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             ViewBag.TipoMoneda = items3;
 
-            var items4 = new List<SelectListItem>();
-            items4 = DB.OrganismoFinanciador.                   
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdOrganismoFinanciador.ToString()
-                   }).
-                   ToList();
+            var items4 = DB.OrganismoFinanciador.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             ViewBag.OrganismoFinanciador = items4;
 
             return PartialView("Create", model);
@@ -111,21 +87,33 @@ namespace MumanalPG.Areas.Finanzas.Controllers
         // POST: Finanzas/CuentaBancaria/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Models.Finanzas.CuentaBancaria item, string Banco, string TipoCuentaBanco, string TipoMoneda, string OrganismoFinanciador)
+        public async Task<IActionResult> Create(Models.Finanzas.CuentaBancaria item)
         {
             if (ModelState.IsValid)
             {
                 ApplicationUser currentUser = await GetCurrentUser();
                 item.IdUsuario = currentUser.AspNetUserId;
-                item.IdEstadoRegistro = '1';
+                item.IdEstadoRegistro = 1;
                 item.FechaRegistro = DateTime.Now;
-                item.IdBanco = Convert.ToInt32(Banco);
-                item.IdTipoCuentaBanco = Convert.ToInt32(TipoCuentaBanco);
-                item.IdTipoMoneda = Convert.ToInt32(TipoMoneda);
-                item.IdOrganismoFinanciador = Convert.ToInt32(OrganismoFinanciador);
                 DB.Add(item);
                 await DB.SaveChangesAsync();
+                SetFlashSuccess("Registro creado satisfactoriamente");
             }
+            var items1 = DB.Banco.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Banco = items1;
+            
+            var items2 = DB.TipoCuentaBanco.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.TipoCuentaBanco = items2;
+
+            var items3 = DB.TipoMoneda.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.TipoMoneda = items3;
+
+            var items4 = DB.OrganismoFinanciador.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.OrganismoFinanciador = items4;
             return PartialView("Create",item);
         }
 
@@ -141,54 +129,29 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             {
                 return NotFound();
             }
-
-            var items1 = new List<SelectListItem>();
-            items1 = DB.Banco.                   
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdBanco.ToString()
-                   }).
-                   ToList();
+            var items1 = DB.Banco.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             ViewBag.Banco = items1;
             
-            var items2 = new List<SelectListItem>();
-            items2 = DB.TipoCuentaBanco.                   
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdTipoCuentaBanco.ToString()
-                   }).
-                   ToList();
+            var items2 = DB.TipoCuentaBanco.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             ViewBag.TipoCuentaBanco = items2;
 
-            var items3 = new List<SelectListItem>();
-            items3 = DB.TipoMoneda.                   
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdTipoMoneda.ToString()
-                   }).
-                   ToList();
+            var items3 = DB.TipoMoneda.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             ViewBag.TipoMoneda = items3;
 
-            var items4 = new List<SelectListItem>();
-            items4 = DB.OrganismoFinanciador.                   
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdOrganismoFinanciador.ToString()
-                   }).
-                   ToList();
+            var items4 = DB.OrganismoFinanciador.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             ViewBag.OrganismoFinanciador = items4;
-
+            
             return PartialView( "Edit", item);
         }
 
         // POST: Finanzas/CuentaBancaria/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, [Bind("IdCuentaBancaria,Descripcion,Sigla, IdBanco, IdTipoCuentaBanco, IdTipoMoneda, IdOrganismoFinanciador")] Models.Finanzas.CuentaBancaria item, string Banco, string TipoCuentaBanco, string TipoMoneda, string OrganismoFinanciador)
+        public async Task<IActionResult> Edit(Int32 id, Models.Finanzas.CuentaBancaria item)
         {
             if (id != item.IdCuentaBancaria)
             {
@@ -199,10 +162,10 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             {
                 try
                 {
-                    item.IdBanco = Convert.ToInt32(Banco);
-                    item.IdTipoCuentaBanco = Convert.ToInt32(TipoCuentaBanco);
-                    item.IdTipoMoneda = Convert.ToInt32(TipoMoneda);
-                    item.IdOrganismoFinanciador = Convert.ToInt32(OrganismoFinanciador);
+                    ApplicationUser currentUser = await GetCurrentUser();
+                    item.IdUsuario = currentUser.AspNetUserId;
+                    item.IdEstadoRegistro = 1;
+                    item.FechaRegistro = DateTime.Now;
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }
@@ -217,8 +180,23 @@ namespace MumanalPG.Areas.Finanzas.Controllers
                         throw;
                     }
                 }
-                
             }
+            var items1 = DB.Banco.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Banco = items1;
+            
+            var items2 = DB.TipoCuentaBanco.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.TipoCuentaBanco = items2;
+
+            var items3 = DB.TipoMoneda.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.TipoMoneda = items3;
+
+            var items4 = DB.OrganismoFinanciador.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.OrganismoFinanciador = items4;
+
             return PartialView("Edit", item);
         }
 

@@ -7,7 +7,7 @@ namespace MumanalPG.Models.Generales
 	[Table("SistemaMenu", Schema = "Generales")]
 	public class SistemaMenu
 	{
-		[DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Key]
 		public Int32 IdSistemaMenu { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]

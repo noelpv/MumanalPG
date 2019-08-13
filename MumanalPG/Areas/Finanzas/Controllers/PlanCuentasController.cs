@@ -65,34 +65,37 @@ namespace MumanalPG.Areas.Finanzas.Controllers
         {
             var model = new Models.Finanzas.PlanCuentas();
             /* Consultar si introducir combo repetido */
-            var items = new List<SelectListItem>();
-            items = DB.Auxiliar.                   
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdAuxiliar.ToString()
-                   }).
-                   ToList();
-            ViewBag.Auxiliar = items;
-
+            var items1 = DB.Auxiliar.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Auxiliar = items1;
+            var items2 = DB.TipoCuentaBanco.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.TipoCuentaBanco = items2;
             return PartialView("Create", model);
         }
 
         // POST: Finanzas/PlanCuentas/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Models.Finanzas.PlanCuentas item, string Auxiliar)
+        public async Task<IActionResult> Create(Models.Finanzas.PlanCuentas item)
         {
             if (ModelState.IsValid)
             {
                 ApplicationUser currentUser = await GetCurrentUser();
                 item.IdUsuario = currentUser.AspNetUserId;
-                item.IdEstadoRegistro = '1';
+                item.IdPlanCuentasPadre = 0;
+                item.IdEstadoRegistro = 1;
                 item.FechaRegistro = DateTime.Now;
-                item.IdAuxiliar1 = Convert.ToInt32(Auxiliar);
                 DB.Add(item);
                 await DB.SaveChangesAsync();
+                SetFlashSuccess("Registro creado satisfactoriamente");
             }
+            var items1 = DB.Auxiliar.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Auxiliar = items1;
+            var items2 = DB.TipoCuentaBanco.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.TipoCuentaBanco = items2;
             return PartialView("Create",item);
         }
 
@@ -108,23 +111,19 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             {
                 return NotFound();
             }
-            var items = new List<SelectListItem>();
-            items = DB.Auxiliar.
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdAuxiliar.ToString()
-                   }).
-                   ToList();
-            ViewBag.Auxiliar = items;
-
+            var items1 = DB.Auxiliar.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Auxiliar = items1;
+            var items2 = DB.TipoCuentaBanco.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.TipoCuentaBanco = items2;
             return PartialView( "Edit", item);
         }
 
         // POST: Finanzas/PlanCuentas/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, [Bind("IdPlanCuentas,NombreCuenta,Sigla, IdAuxiliar1")] Models.Finanzas.PlanCuentas item, string Auxiliar)
+        public async Task<IActionResult> Edit(Int32 id, Models.Finanzas.PlanCuentas item)
         {
             if (id != item.IdPlanCuentas)
             {
@@ -135,7 +134,11 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             {
                 try
                 {
-                    item.IdAuxiliar1 = Convert.ToInt32(Auxiliar);
+                    ApplicationUser currentUser = await GetCurrentUser();
+                    item.IdUsuario = currentUser.AspNetUserId;
+                    item.IdPlanCuentasPadre = 0;
+                    item.IdEstadoRegistro = 1;
+                    item.FechaRegistro = DateTime.Now;
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }
@@ -150,8 +153,13 @@ namespace MumanalPG.Areas.Finanzas.Controllers
                         throw;
                     }
                 }
-                
             }
+            var items1 = DB.Auxiliar.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Auxiliar = items1;
+            var items2 = DB.TipoCuentaBanco.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.TipoCuentaBanco = items2;
             return PartialView("Edit", item);
         }
 

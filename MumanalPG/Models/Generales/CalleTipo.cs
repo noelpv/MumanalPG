@@ -7,7 +7,7 @@ namespace MumanalPG.Models.Generales
 	[Table("CalleTipo", Schema = "Generales")]
 	public class CalleTipo
 	{
-		[DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Key]
 		public Int32 IdCalleTipo { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]
