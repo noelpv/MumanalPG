@@ -19,11 +19,26 @@ namespace MumanalPG.Data.Seeders
             AddNew(new Puesto { Descripcion = "Gerente General", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
                 IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "GG");
             
+            AddNew(new Puesto { Descripcion = "Encargado Regionales", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "GG");
+            
+            AddNew(new Puesto { Descripcion = "Mensajero Of. Central", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "SG");
+            
+            AddNew(new Puesto { Descripcion = "Portero Of. Central", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "SG");
+            
+            AddNew(new Puesto { Descripcion = "Ujier - Servicio", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "GG");
+            
             AddNew(new Puesto { Descripcion = "Jefe de Auditoria Interna", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
                 IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "AI");
             
+            AddNew(new Puesto { Descripcion = "Auditor Junior", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "AI");
+            
             AddNew(new Puesto { Descripcion = "Secretaria General", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
-                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "GG");
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "SG");
             
             AddNew(new Puesto { Descripcion = "Secretaria de Gerencia", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
                 IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "GG");
@@ -34,13 +49,16 @@ namespace MumanalPG.Data.Seeders
             AddNew(new Puesto { Descripcion = "Secretario de Infraestructura", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
                 IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "AT");
             
-            AddNew(new Puesto { Descripcion = "Jefe de Unidad Juridica", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+            AddNew(new Puesto { Descripcion = "Asesor Legal", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
                 IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UJ");
             
             AddNew(new Puesto { Descripcion = "Secretaria Juridica", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
                 IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UJ");
             
             AddNew(new Puesto { Descripcion = "Abogado", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UJ");
+            
+            AddNew(new Puesto { Descripcion = "Abogado Procurador", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
                 IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UJ");
             
             AddNew(new Puesto { Descripcion = "Jefe Administrativo Financiero", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
@@ -79,6 +97,9 @@ namespace MumanalPG.Data.Seeders
             AddNew(new Puesto { Descripcion = "Encargado de Contabilidad", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
                 IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "CON");
             
+            AddNew(new Puesto { Descripcion = "Encargado de Inversiones", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "INV");
+            
             AddNew(new Puesto { Descripcion = "Encargado de Sistemas", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
                 IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "SIS");
             
@@ -88,17 +109,197 @@ namespace MumanalPG.Data.Seeders
             AddNew(new Puesto { Descripcion = "Encargado de Activos Fijos", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
                 IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "AF");
             
+            AddNew(new Puesto { Descripcion = "Aux. Of. Contabilidad", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "CON");
+            
             AddNew(new Puesto { Descripcion = "Auxiliar de Contabilidad", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
                 IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "CON");
             
-            AddNew(new Puesto { Descripcion = "Auxiliar de Tesorería I", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+            AddNew(new Puesto { Descripcion = "Secretaria de Contabilidad", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "CON");
+            
+            AddNew(new Puesto { Descripcion = "Auxiliar de Tesorería", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
                 IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "TES");
            
-            AddNew(new Puesto { Descripcion = "Auxiliar de Tesorería II", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
-                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "TES");
+            AddNew(new Puesto { Descripcion = "Auxiliar Financiero", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UAF");
             
             AddNew(new Puesto { Descripcion = "Kardixta", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
                 IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UAF");
+            
+            AddNew(new Puesto { Descripcion = "Auditora Comité de Vigilancia", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "COMVIG");
+            
+            AddNew(new Puesto { Descripcion = "Agente Regional Cochabamba", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "REG.CBBA");
+            
+            AddNew(new Puesto { Descripcion = "Auxiliar Contable Cochabamba", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "REG.CBBA");
+            
+            AddNew(new Puesto { Descripcion = "Secretearia Agencia Regional Cochabamba", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "REG.CBBA");
+            
+            AddNew(new Puesto { Descripcion = "Portero Mensajero Cochabamba", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "REG.CBBA");
+            
+            AddNew(new Puesto { Descripcion = "Agente Regional La Paz", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "REG.LP");
+            
+            AddNew(new Puesto { Descripcion = "Secretaria Agencia Regional La Paz", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "REG.LP");
+            
+            AddNew(new Puesto { Descripcion = "Agente Regional Cobija", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "REG.COB");
+            
+            AddNew(new Puesto { Descripcion = "Agente Regional Oruro", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "REG.OR");
+            
+            AddNew(new Puesto { Descripcion = "Secretaria Agencia Regional Oruro", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "REG.OR");
+            
+            AddNew(new Puesto { Descripcion = "Agente Regional Potosi", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "REG.PT");
+            
+            AddNew(new Puesto { Descripcion = "Portero Potosi", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "REG.PT");
+            
+            AddNew(new Puesto { Descripcion = "Secretaria Agencia Regional Potosi", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "REG.PT");
+            
+            AddNew(new Puesto { Descripcion = "Agente Regional Santa Cruz", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "REG.SC");
+            
+            AddNew(new Puesto { Descripcion = "Portero Santa Cruz", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "REG.SC");
+            
+            AddNew(new Puesto { Descripcion = "Portero Santa Cruz II", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "REG.SC");
+            
+            AddNew(new Puesto { Descripcion = "Secretaria Agencia Regional Santa Cruz", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "REG.SC");
+            
+            AddNew(new Puesto { Descripcion = "Agente Regional Sucre", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "REG.SUC");
+            
+            AddNew(new Puesto { Descripcion = "Portero Sucre", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "REG.SUC");
+            
+            AddNew(new Puesto { Descripcion = "Secretaria Agencia Regional Sucre", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "REG.SUC");
+            
+            AddNew(new Puesto { Descripcion = "Agente Regional Tarija", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "REG.TJ");
+            
+            AddNew(new Puesto { Descripcion = "Portero Tarija", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "REG.TJ");
+            
+            AddNew(new Puesto { Descripcion = "Secretaria Agencia Regional Tarija", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "REG.TJ");
+            
+            AddNew(new Puesto { Descripcion = "Agente Regional Trinidad", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "REG.TRI");
+            
+            AddNew(new Puesto { Descripcion = "Secretaria Agencia Regional Trinidad", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "REG.TRI");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital El Alto", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.ALT");
+            
+            AddNew(new Puesto { Descripcion = "Secretaria Agencia Distrital El Alto", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.ALT");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Montero", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.MON");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Quillacollo", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.QUILL");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Riberalta", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.RIB");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Camiri", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.CAM");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Punata", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.PUN");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Magdalena", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.MAG");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Tupiza", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.TUP");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital San Matias", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.SANMAT");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital San Ignacio de Moxos", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.MOX");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Caranavi", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.CAR");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Uyuni", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.UYU");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Puerto Suarez", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.PSUA");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital S.J.Chiquitos", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.SJCH");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Cotagaita", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.COT");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Yacuiba", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.YAC");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Atocha", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.ATCH");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Aiquile", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.AIQU");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Rurrenabaque", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.RURRE");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital San Ignacio de Velasco", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.SIVEL");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Bermejo", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.BER");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Villazon", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.VILL");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Camargo", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.CAMG");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Robore", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.ROB");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Llallagua", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.LLA");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Santa Ana", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.SAYACU");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Monteagudo", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.MONTG");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Guayaramerin", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.GUAY");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Puerto Rico", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.PR");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Villamontes", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.VILLAM");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Vallegrande", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.VALLEG");
+            
+            AddNew(new Puesto { Descripcion = "Agente Distrital Apolo", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIS.APO");
         }
 
         // since we run this seeder when the app starts
