@@ -213,6 +213,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             ViewBag.areas = areas;
             ViewBag.instrucciones = instrucciones;
             ViewBag.Tipos = DB.CorrespondenciaTipoDocumento.Where(t => t.IdEstadoRegistro != Constantes.Anulado).ToList();
+            ViewBag.tiposAnexo = DB.CorrespondenciaTipoAnexo.Where(t => t.IdEstadoRegistro != Constantes.Anulado).ToList();
             return View("_Create", model);
         }
 
