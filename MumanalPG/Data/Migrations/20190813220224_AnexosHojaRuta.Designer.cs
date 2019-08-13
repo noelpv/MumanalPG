@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MumanalPG.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -9,9 +10,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MumanalPG.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190813220224_AnexosHojaRuta")]
+    partial class AnexosHojaRuta
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -948,7 +950,9 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<int>("HRDetalleId");
 
-                    b.Property<int>("HojaRutaId");
+                    b.Property<int>("HRId");
+
+                    b.Property<int?>("HojaRutaId");
 
                     b.Property<int>("IdEstadoRegistro");
 
@@ -3238,8 +3242,7 @@ namespace MumanalPG.Data.Migrations
 
                     b.HasOne("MumanalPG.Models.Correspondencia.HojaRuta", "HojaRuta")
                         .WithMany("Anexos")
-                        .HasForeignKey("HojaRutaId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("HojaRutaId");
 
                     b.HasOne("MumanalPG.Models.Correspondencia.TipoAnexo", "Tipo")
                         .WithMany("Anexos")

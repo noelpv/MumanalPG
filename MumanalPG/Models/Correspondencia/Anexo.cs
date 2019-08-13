@@ -26,6 +26,9 @@ namespace MumanalPG.Models.Correspondencia
 		public int HRDetalleId { get; set; }
 		public HojaRutaDetalle HRDetalle { get; set; }
 		
+		public int HojaRutaId { get; set; }
+		public HojaRuta HojaRuta { get; set; }
+		
 		public int IdEstadoRegistro { get; set; }
 		public int IdUsuario { get; set; }
 		public DateTime FechaRegistro { get; set; }

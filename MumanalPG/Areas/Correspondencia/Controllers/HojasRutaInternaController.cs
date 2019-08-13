@@ -38,9 +38,6 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         public async Task<IActionResult> Index(string filter, string type, int page = 1, string sortExpression = "-FechaRegistro", string a = "")
         {
 
-
-
-
             var consulta = DB.CorrespondenciaHRDetalle.AsNoTracking().AsQueryable();
             consulta = consulta.Include(m => m.AreaOrigen)
                                .Include(m => m.AreaDestino)
@@ -60,31 +57,51 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             {
                 case Constantes.HRTipoUrgentes:
                     consulta = consulta.Where(m => m.HojaRuta.Prioridad == Constantes.PrioridadUrgente &&
-                                                   m.FunDstId == currentUser.Funcionario.IdBeneficiario &&
                                                    m.HojaRuta.IdEstadoRegistro != Constantes.Anulado && 
                                                    m.HojaRuta.IdEstadoRegistro != Constantes.Archivado && 
                                                    m.IdEstadoRegistro == Constantes.Registrado);
+                    if (!User.IsInRole(SD.SuperAdminEndUser))
+                    {
+                        consulta = consulta.Where(m => m.FunDstId == currentUser.Funcionario.IdBeneficiario);  
+                    }
+
+                    
                     break;
                 case Constantes.HRTipoDespachados:
-                    consulta = consulta.Where(m => m.FunOrgId == currentUser.Funcionario.IdBeneficiario &&
-                                                   m.HojaRuta.IdEstadoRegistro != Constantes.Anulado && 
+                    consulta = consulta.Where(m => m.HojaRuta.IdEstadoRegistro != Constantes.Anulado && 
                                                    m.HojaRuta.IdEstadoRegistro != Constantes.Archivado);
+                    if (!User.IsInRole(SD.SuperAdminEndUser))
+                    {
+                        consulta = consulta.Where(m => m.FunOrgId == currentUser.Funcionario.IdBeneficiario);  
+                    }
+                    
                     break;
                 case Constantes.HRTipoArchivados:
                     consulta = consulta.Where(m => (m.HojaRuta.IdEstadoRegistro == Constantes.Archivado ||
-                                                   m.IdEstadoRegistro == Constantes.Archivado) && 
-                                                   m.FunDstId == currentUser.Funcionario.IdBeneficiario);
+                                                   m.IdEstadoRegistro == Constantes.Archivado));
+                    if (!User.IsInRole(SD.SuperAdminEndUser))
+                    {
+                        consulta = consulta.Where(m => m.FunDstId == currentUser.Funcionario.IdBeneficiario);  
+                    }
                     break;
                 case Constantes.HRTipoEliminados:
                     consulta = consulta.Where(m => (m.HojaRuta.IdEstadoRegistro == Constantes.Anulado ||
-                                              m.IdEstadoRegistro == Constantes.Anulado) &&
-                                              m.FunDstId == currentUser.Funcionario.IdBeneficiario);
+                                              m.IdEstadoRegistro == Constantes.Anulado));
+                    
+                    if (!User.IsInRole(SD.SuperAdminEndUser))
+                    {
+                        consulta = consulta.Where(m => m.FunDstId == currentUser.Funcionario.IdBeneficiario);  
+                    }
                     break;
                 default:
-                    consulta = consulta.Where(m => m.FunDstId == currentUser.Funcionario.IdBeneficiario &&
-                                                   m.HojaRuta.IdEstadoRegistro != Constantes.Anulado && 
+                    consulta = consulta.Where(m => m.HojaRuta.IdEstadoRegistro != Constantes.Anulado && 
                                                    m.HojaRuta.IdEstadoRegistro != Constantes.Archivado && 
                                                    m.IdEstadoRegistro == Constantes.Registrado);
+                    
+                    if (!User.IsInRole(SD.SuperAdminEndUser))
+                    {
+                        consulta = consulta.Where(m => m.FunDstId == currentUser.Funcionario.IdBeneficiario );  
+                    }
                     type = Constantes.HRTipoRecibidos;
                     break;
             }

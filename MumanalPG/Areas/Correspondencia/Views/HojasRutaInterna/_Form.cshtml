@@ -10,7 +10,7 @@
     <input type="hidden" asp-for="Id"/>
     <input type="hidden" asp-for="Parent"/>
     <div>
-    <partial name="_Anexar" view-data="ViewData"/>
+    
         @if (ViewData["Action"] == "Derivar")
         {
             <input id="origen-id" type="hidden" asp-for="OrigenId"/>
@@ -23,7 +23,7 @@
             <partial name="_DatosGenerales" view-data="ViewData"/>
         }
         <partial name="_Instrucciones" view-data="ViewData"/>
-        
+        <partial name="_Anexar" view-data="ViewData"/>
     </div>
 </form>
 

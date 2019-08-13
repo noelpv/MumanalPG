@@ -56,6 +56,9 @@ namespace MumanalPG.Models.Correspondencia
 		[InverseProperty("HojaRuta")]
 		public ICollection<HojaRutaDetalle> Derivaciones { get; set; }
 		
+		[InverseProperty("HojaRuta")]
+		public ICollection<Anexo> Anexos { get; set; }
+		
 		public int IdEstadoRegistro { get; set; }
 		public int IdUsuario { get; set; }
 		public DateTime FechaRegistro { get; set; }

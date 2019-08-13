@@ -143,6 +143,41 @@ namespace MumanalPG.Models.Correspondencia.DTO
 
         public HojaRuta populateAnexos(HojaRuta hr, int idUsuario, ApplicationDbContext DB)
         {
+            ICollection<Anexo> anexosArray = new List<Anexo>();
+
+            if (hr.Id > 0)
+            {
+                anexosArray = hr.Anexos;
+            }
+
+            foreach (var a in Anexos)
+            {
+                if (a != null)
+                {
+                    Console.WriteLine("================================================");
+                    Console.WriteLine(a);
+                    Console.WriteLine("================================================");
+                    AnexoDTO anexo = JsonConvert.DeserializeObject<AnexoDTO>(a);
+                    Anexo an = new Anexo();
+                    if (anexo.id != null)
+                    {
+                        an.Id = Int32.Parse(anexo.id);   
+                    }
+                    an.HRDetalleId = hr.Id;
+                    an.TipoId = anexo.tipoId;
+                    an.Descripcion = anexo.descripcion;
+                    an.PathArchivo = anexo.path;
+                
+                    an.IdEstadoRegistro = Constantes.Registrado;
+                    an.IdUsuario = idUsuario;
+                    an.FechaRegistro = DateTime.Now;
+                    anexosArray.Add(an);
+                }
+
+            }
+
+            hr.Anexos = anexosArray;
+            
             return hr;
         }
     }
