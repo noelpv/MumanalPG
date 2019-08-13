@@ -1,3 +1,4 @@
+@using MumanalPG.Models.Correspondencia
 <h3>Anexar y Finalizar</h3>
     <fieldset>
         <h2>Anexar y Finalizar</h2>
@@ -15,19 +16,14 @@
                <h4> Sin Anexos</h4>
             </div>
             <div id="fila-anexo" class="row pt-2 hide" style="border: solid 1px #ccc; background: #fff;">
-               
+               <input id="row_anexo_" type="hidden" name="Anexos"/>
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="form-label">Tipo de Anexo</label>
-                        <select id="tipo_anexo" class="form-control">
-                            <option value="1">Auto</option>
-                            <option value="2">Ayuda Memoria</option>
-                            <option value="3">Decreto</option>
-                            <option value="4">Exp. Trámite</option>
-                            <option value="5">Informe</option>
-                            <option value="6">Resolución</option>
-                            <option value="7">CD/DVD</option>
-                        </select>
+
+                          <select id="tipo_anexo" class="form-control"
+                                  asp-items="@(new SelectList(ViewBag.tiposAnexo, "Id", "Nombre"))">
+                          </select>
                         @* <span asp-validation-for="Prioridad" class="text-danger"></span> *@
                         <span class="text-input">Determine el tipo de anexo</span>
                     </div>

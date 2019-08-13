@@ -59,6 +59,8 @@ namespace MumanalPG.Models.Correspondencia.DTO
         [Required(ErrorMessage = "Debe seleccionar almenos una instrucción")]
         public string[] Instrucciones { get; set; }
         
+        public string[] Anexos { get; set; }
+        
         public int Parent { get; set; }
 
         public IList<InstruccionDTO> GetInstrucciones()
@@ -90,6 +92,7 @@ namespace MumanalPG.Models.Correspondencia.DTO
             hojaRuta.Prioridad = Prioridad;
             hojaRuta.DocumentoId = DocumentoId;
             hojaRuta = populateDetalle(hojaRuta, idUsuario, DB);
+            hojaRuta = populateAnexos(hojaRuta, idUsuario, DB);
             return hojaRuta;
         }
 
@@ -135,6 +138,11 @@ namespace MumanalPG.Models.Correspondencia.DTO
             }
 
             hr.Derivaciones = detalle;
+            return hr;
+        }
+
+        public HojaRuta populateAnexos(HojaRuta hr, int idUsuario, ApplicationDbContext DB)
+        {
             return hr;
         }
     }
