@@ -35,7 +35,7 @@
     </div>
     <div class="form-group m-b-40">
         @Html.LabelFor(m => m.FechaApertura, new { @class = "form-control-label" })
-        @Html.EditorFor(m => m.FechaApertura, new { @class = "form-control"})
+        @Html.EditorFor(m => m.FechaApertura, new { htmlAttributes = new { @class = "form-control"}})
         @Html.ValidationMessageFor(m => m.FechaApertura, "" ,new { @class = "text-danger" })
     </div>
     <div class="form-group m-b-40">
@@ -45,7 +45,7 @@
     </div>
     <div class="form-group m-b-40">
         @Html.LabelFor(m => m.FechaSaldoInicial, new { @class = "form-control-label" })
-        @Html.EditorFor(m => m.FechaSaldoInicial, new { @class = "form-control" })
+        @Html.EditorFor(m => m.FechaSaldoInicial, new { htmlAttributes = new { @class = "form-control"}})
         @Html.ValidationMessageFor(m => m.FechaSaldoInicial, "" ,new { @class = "text-danger" })
     </div>
     <div class="form-group m-b-40">
