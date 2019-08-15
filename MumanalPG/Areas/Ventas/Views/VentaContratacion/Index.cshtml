@@ -85,7 +85,7 @@
                     @Html.DisplayFor(modelItem => item.Estado)
                 </td>
                 <td>
-                    <a class="btn btn-skype" asp-action="Requisitos" asp-route-id="@item.IdVentaContratacion" asp-route-Beneficiario="@item.Beneficiario" asp-route-IdAsrSiver="@item.IdAsrSiver">Requisitos</a>
+                    <a class="btn btn-info" asp-action="Requisitos" asp-route-id="@item.IdVentaContratacion" asp-route-Beneficiario="@item.Beneficiario" asp-route-IdAsrSiver="@item.IdAsrSiver">Requisitos</a>
                     @if (ViewContext.HttpContext.User.IsInRole("SUPER ADMIN") || ViewContext.HttpContext.User.IsInRole("AGENTE"))
                     {
                         <a class="btn btn-success" asp-action="Enviar" asp-route-id="@item.IdVentaContratacion">Enviar</a>
