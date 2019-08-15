@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="~/lib/wizard/css/nouislider.min.css"/>
 <link rel="stylesheet" href="~/lib/jstree/themes/default/style.css"/>
 
-<form class="wizard-form" asp-action="@ViewData["Action"]">
+<form class="wizard-form" asp-action="@ViewData["Action"]" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
    
     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()"/>
