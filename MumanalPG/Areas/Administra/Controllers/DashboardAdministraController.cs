@@ -10,38 +10,38 @@ using MumanalPG.Utility;
 using ReflectionIT.Mvc.Paging;
 using SmartBreadcrumbs;
 
-namespace MumanalPG.Areas.RRHH.Controllers
+namespace MumanalPG.Areas.Administra.Controllers
 {
     //[Authorize(Roles = SD.SuperAdminEndUser)]
     [Authorize]
-    [Area("RRHH")]
-    public class DashboardRRHHController : BaseController
+    [Area("Administra")]
+    public class DashboardAdministraController : BaseController
     {        
-		public DashboardRRHHController(ApplicationDbContext db): base(db)
+		public DashboardAdministraController(ApplicationDbContext db): base(db)
         {
         }
 
-        // GET: RRHH/RRHH
-        [Breadcrumb("RRHH")]
+        // GET: Administra/Administra
+        [Breadcrumb("Administra")]
         public IActionResult Index()
         {
             return View();
         }
 
-        [Breadcrumb("AdministracionRRHH", FromAction = "Index")]
-        public async Task<IActionResult> AdministracionRRHH()
+        [Breadcrumb("Compras", FromAction = "Index")]
+        public async Task<IActionResult> Compras()
         {
             return View();
         }
 
-        [Breadcrumb("ControlRRHH", FromAction = "Index")]
-        public async Task<IActionResult> ControlRRHH()
+        [Breadcrumb("Almacenes", FromAction = "Index")]
+        public async Task<IActionResult> Almacenes()
         {
             return View();
         }
 
-        [Breadcrumb("Planillas", FromAction = "Index")]
-        public async Task<IActionResult> Planillas()
+        [Breadcrumb("ActivosFijos", FromAction = "Index")]
+        public async Task<IActionResult> ActivosFijos()
         {
             return View();
         }

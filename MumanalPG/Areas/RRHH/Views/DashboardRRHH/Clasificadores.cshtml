@@ -1,0 +1,204 @@
+@addTagHelper *, ReflectionIT.Mvc.Paging
+@{
+    ViewData["Title"] = "Recursos Humanos";
+}
+@*<div class="container-fluid">*@
+<div class="row">
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Administra" asp-controller="VacacionParametro" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-primary ribbon-vertical-l">
+                    <i class="ti-zip"></i>
+                </div>
+                <h4>Parametros Vacaciones</h4>
+                <p class="ribbon-content">Se registra los Parametros para el Control de Vacaciones.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Administra" asp-controller="ParametroPlanilla" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-primary ribbon-vertical-l">
+                    <i class="ti-import"></i>
+                </div>
+                <h4>Parametros Planillas</h4>
+                <p class="ribbon-content">Se registra los Parametros para el proceso de Planillas.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Administra" asp-controller="ParametroDescuento" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-hand-point-right"></i>
+                </div>
+                <h4>Parametros Descuentos</h4>
+                <p class="ribbon-content">Se registran los Parametros para el control de Descuentos por Planilla.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Administra" asp-controller="ParametroAntiguedad" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-export"></i>
+                </div>
+                <h4>Parametros Antiguedad</h4>
+                <p class="ribbon-content">Se registran los Parametros para el calculo de Antiguedad.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Administra" asp-controller="PermisoClasificacion" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-hand-point-right"></i>
+                </div>
+                <h4>Clasificacion Permisos</h4>
+                <p class="ribbon-content">Se registran la Clasificacion de Permisos.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Administra" asp-controller="MotivoProceso" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-hand-point-right"></i>
+                </div>
+                <h4>Motivos para Procesos</h4>
+                <p class="ribbon-content">Se registra los Motivos para los Procesos de RR.HH.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Administra" asp-controller="Horario" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-hand-point-right"></i>
+                </div>
+                <h4>Horarios</h4>
+                <p class="ribbon-content">Se registran los Horarios que se utilizan para el Control de Personal.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Administra" asp-controller="Profesion" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-hand-point-right"></i>
+                </div>
+                <h4>Profesiones u Ocupaciones</h4>
+                <p class="ribbon-content">Se registran las Profesiones u Ocupaciones de las Personas.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Administra" asp-controller="PersonalParentesco" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-hand-point-right"></i>
+                </div>
+                <h4>Parentesco</h4>
+                <p class="ribbon-content">Se registran la Clasificacion de Parentesco de las Personas.</p>
+            </div>
+        </a>
+    </div>
+
+      @*Faltan*@
+    
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Administra" asp-controller="Genero" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-primary ribbon-vertical-l">
+                    <i class="ti-zip"></i>
+                </div>
+                <h4>Genero</h4>
+                <p class="ribbon-content">Se registra la Clasificacion de Generos de las Personas.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Administra" asp-controller="EstadoCivil" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-primary ribbon-vertical-l">
+                    <i class="ti-import"></i>
+                </div>
+                <h4>Estado Civil</h4>
+                <p class="ribbon-content">Se registra los datos de Estado Civil de las Personas.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Administra" asp-controller="BeneficiarioClasificacion" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-hand-point-right"></i>
+                </div>
+                <h4>Clasificacion Persona</h4>
+                <p class="ribbon-content">Se registran la Clasificacion de tipos de personas Naturales y Juridicas.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Administra" asp-controller="Beneficiario" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-export"></i>
+                </div>
+                <h4>Registro de Personas</h4>
+                <p class="ribbon-content">Se registran los datos personales, de las Personas Naturales.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Administra" asp-controller="Puesto" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-hand-point-right"></i>
+                </div>
+                <h4>Puestos</h4>
+                <p class="ribbon-content">Se registran los Puestos que corresponden a la Estructura Organizacional.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Administra" asp-controller="UnidadEjecutora" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-hand-point-right"></i>
+                </div>
+                <h4>Estructura Organizacional</h4>
+                <p class="ribbon-content">Se registra la Estructura Organizacional de la Institucion.</p>
+            </div>
+        </a>
+    </div>
+
+    @*<div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Administra" asp-controller="Horario" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-hand-point-right"></i>
+                </div>
+                <h4>Horarios</h4>
+                <p class="ribbon-content">Se registran los Horarios que se utilizan para el Control de Personal.</p>
+            </div>
+        </a>
+    </div>*@
+
+
+</div>
+@*</div>*@

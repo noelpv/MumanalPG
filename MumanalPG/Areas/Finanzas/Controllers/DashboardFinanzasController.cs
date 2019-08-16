@@ -10,38 +10,45 @@ using MumanalPG.Utility;
 using ReflectionIT.Mvc.Paging;
 using SmartBreadcrumbs;
 
-namespace MumanalPG.Areas.RRHH.Controllers
+namespace MumanalPG.Areas.Finanzas.Controllers
 {
     //[Authorize(Roles = SD.SuperAdminEndUser)]
     [Authorize]
-    [Area("RRHH")]
-    public class DashboardRRHHController : BaseController
+    [Area("Finanzas")]
+    public class DashboardFinanzasController : BaseController
     {        
-		public DashboardRRHHController(ApplicationDbContext db): base(db)
+		public DashboardFinanzasController(ApplicationDbContext db): base(db)
         {
         }
 
-        // GET: RRHH/RRHH
-        [Breadcrumb("RRHH")]
+        // GET: Finanzas/Finanzas
+        [Breadcrumb("Finanzas")]
         public IActionResult Index()
         {
             return View();
         }
 
-        [Breadcrumb("AdministracionRRHH", FromAction = "Index")]
-        public async Task<IActionResult> AdministracionRRHH()
+        [Breadcrumb("Cobranzas", FromAction = "Index")]
+        public async Task<IActionResult> Cobranzas()
         {
             return View();
         }
 
-        [Breadcrumb("ControlRRHH", FromAction = "Index")]
-        public async Task<IActionResult> ControlRRHH()
+        [Breadcrumb("Pagos", FromAction = "Index")]
+        public async Task<IActionResult> Pagos()
         {
             return View();
         }
 
-        [Breadcrumb("Planillas", FromAction = "Index")]
-        public async Task<IActionResult> Planillas()
+        [Breadcrumb("Contabilidad", FromAction = "Index")]
+        public async Task<IActionResult> Contabilidad()
+        {
+            return View();
+        }
+
+
+        [Breadcrumb("Fondos", FromAction = "Index")]
+        public async Task<IActionResult> Fondos()
         {
             return View();
         }

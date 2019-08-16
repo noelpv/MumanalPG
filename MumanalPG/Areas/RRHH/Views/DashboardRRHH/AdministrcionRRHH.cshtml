@@ -1,0 +1,79 @@
+@addTagHelper *, ReflectionIT.Mvc.Paging
+@{
+    ViewData["Title"] = "Compras";
+}
+@*<div class="container-fluid">*@
+    <div class="row">
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <a asp-area="Administra" asp-controller="CompraSolicitud" asp-action="index">
+                <div class="ribbon-vwrapper card">
+                    <div class="ribbon ribbon-success ribbon-vertical-l">
+                        <i class="ti-hand-point-right"></i>
+                    </div>
+                    <h4>Solicitud de Compra</h4>
+                    <p class="ribbon-content">Se registra la Solicitud de una Compra de BB. y SS.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <a asp-area="Administra" asp-controller="CompraSolicitudBien" asp-action="index">
+                <div class="ribbon-vwrapper card">
+                    <div class="ribbon ribbon-primary ribbon-vertical-l">
+                        <i class="ti-import"></i>
+                    </div>
+                    <h4>Solicitud Detalle</h4>
+                    <p class="ribbon-content">Se registra el detalle de BB. y SS. de la Solicitud de Compra.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <a asp-area="Administra" asp-controller="CompraContratacion" asp-action="index">
+                <div class="ribbon-vwrapper card">
+                    <div class="ribbon ribbon-primary ribbon-vertical-l">
+                        <i class="ti-zip"></i>
+                    </div>
+                    <h4>Compra Contratacion</h4>
+                    <p class="ribbon-content">Se registra la contratación de la Compra solicitada</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <a asp-area="Administra" asp-controller="CompraContratacionBien" asp-action="index">
+                <div class="ribbon-vwrapper card">
+                    <div class="ribbon ribbon-success ribbon-vertical-l">
+                        <i class="ti-export"></i>
+                    </div>
+                    <h4>Compra BB. y SS.</h4>
+                    <p class="ribbon-content">Se registran los BB. y SS. adjudicados en la Compra.</p>
+                </div>
+            </a>
+        </div>
+
+        @*<div class="col-md-4 col-sm-6 col-xs-12">
+            <a asp-area="Administra" asp-controller="CompraContratacionCotiza" asp-action="index">
+                <div class="ribbon-vwrapper card">
+                    <div class="ribbon ribbon-success ribbon-vertical-l">
+                        <i class="ti-hand-point-right"></i>
+                    </div>
+                    <h4>Compra Cotizacion</h4>
+                    <p class="ribbon-content">Se realizan las Cotizaciones por Modalidad de Compra.</p>
+                </div>
+            </a>
+        </div>*@
+
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <a asp-area="Administra" asp-controller="CompraCronograma" asp-action="index">
+                <div class="ribbon-vwrapper card">
+                    <div class="ribbon ribbon-success ribbon-vertical-l">
+                        <i class="ti-hand-point-right"></i>
+                    </div>
+                    <h4>Compra Cronograma</h4>
+                    <p class="ribbon-content">Se realiza el Cronograma de Pagos al Proveedor.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+@*</div>*@
