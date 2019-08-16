@@ -11,7 +11,7 @@
         <h2 class="text-info">Lista de Registros ASR</h2>
     </div>
     <div class="col-6 text-right">
-        @if (ViewContext.HttpContext.User.IsInRole("SUPER ADMIN") || ViewContext.HttpContext.User.IsInRole("AGENTE"))
+        @if (ViewContext.HttpContext.User.IsInRole("Super Admin") || ViewContext.HttpContext.User.IsInRole("AGENTE"))
         {
             <a asp-action="CreateReg" class="btn btn-info">&nbsp; Nuevo Registro</a>
         }
@@ -84,7 +84,7 @@
                 </td>
                 <td>
                     <a class="btn btn-skype" asp-action="Requisitos" asp-route-id="@item.IdVentaContratacion" asp-route-Beneficiario="@item.Beneficiario" asp-route-IdAsrSiver="@item.IdAsrSiver">Requisitos</a>
-                    @if (ViewContext.HttpContext.User.IsInRole("SUPER ADMIN") || ViewContext.HttpContext.User.IsInRole("AGENTE"))
+                    @if (ViewContext.HttpContext.User.IsInRole("Super Admin") || ViewContext.HttpContext.User.IsInRole("AGENTE"))
                     {
                         <a class="btn btn-success" asp-action="Enviar" asp-route-id="@item.IdVentaContratacion">Enviar</a>
                     }

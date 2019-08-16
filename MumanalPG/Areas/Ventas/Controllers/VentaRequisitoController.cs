@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MumanalPG.Data;
 using MumanalPG.Models.Ventas;
+using ReflectionIT.Mvc.Paging;
 
 namespace MumanalPG.Areas.Ventas
 {
@@ -393,7 +394,6 @@ namespace MumanalPG.Areas.Ventas
 			{
 				return NotFound();
 			}
-
 			var ventaContratacion = await DB.Ventas_VentaContratacion.FirstOrDefaultAsync(m => m.IdVentaContratacion == id);
 			if (ventaContratacion == null)
 			{
@@ -409,13 +409,18 @@ namespace MumanalPG.Areas.Ventas
 			//-- 1 = 'Todos los Documentos fueron cargados!!!'
 			//-- 2 = 'Falta cargar documentos!!!'
 			if (CodigoRetorno == 0)
+			{
 				ViewBag.Mensaje = "Aun no se han generado los requisitos!!!";
+			}
 			else if (CodigoRetorno == 1)
+			{
 				ViewBag.Mensaje = "Esta Seguro de enviar?";
+			}
 			else
+			{
 				ViewBag.Mensaje = "Falta cargar documentos!!!";
-
-			return View(ventaContratacion);
+			}
+			return PartialView("Enviar",ventaContratacion);
 		}
 
 		[HttpPost, ActionName("Enviar")]
@@ -425,7 +430,6 @@ namespace MumanalPG.Areas.Ventas
 			var ventaContratacion = await DB.Ventas_VentaContratacion.FindAsync(id);
 			ventaContratacion.IdEstadoRegistro = 2;
 			await DB.SaveChangesAsync();
-
 			SetFlashInfo("El Tramite fue enviado satisfactoriamente!!!");
 			return RedirectToAction("Index", "VentaContratacion");
 		}

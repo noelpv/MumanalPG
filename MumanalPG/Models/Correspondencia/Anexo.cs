@@ -23,10 +23,10 @@ namespace MumanalPG.Models.Correspondencia
 		public TipoAnexo Tipo { get; set; }
 		
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]
-		public int HRDetalleId { get; set; }
+		public int? HRDetalleId { get; set; }
 		public HojaRutaDetalle HRDetalle { get; set; }
 		
-		public int HojaRutaId { get; set; }
+		public int? HojaRutaId { get; set; }
 		public HojaRuta HojaRuta { get; set; }
 		
 		public int IdEstadoRegistro { get; set; }

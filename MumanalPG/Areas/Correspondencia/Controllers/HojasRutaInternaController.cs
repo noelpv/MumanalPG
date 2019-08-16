@@ -44,7 +44,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                                .Include(m => m.FunOrg)
                                .Include(m => m.FunDst)
                                .Include(m => m.HojaRuta)
-                               .Where(m => (m.HojaRuta.TipoHojaRuta == Constantes.HojaRutaInterna)); 
+                               .Where(m => (m.HojaRuta.TipoHojaRuta == Constantes.HojaRutaInterna && m.Id > 0)); 
             
             
             if (!string.IsNullOrWhiteSpace(filter))
@@ -286,6 +286,8 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             ViewBag.areas = areas;
             ViewBag.instrucciones = instrucciones;
             ViewBag.HojaRuta = item.HojaRuta;
+            ViewBag.Tipos = DB.CorrespondenciaTipoDocumento.Where(t => t.IdEstadoRegistro != Constantes.Anulado).ToList();
+            ViewBag.tiposAnexo = DB.CorrespondenciaTipoAnexo.Where(t => t.IdEstadoRegistro != Constantes.Anulado).ToList();
             return View("_Derivar", model);
         }
 
@@ -305,6 +307,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                 var detalle = await DB.CorrespondenciaHRDetalle.FirstOrDefaultAsync(m => m.Id == item.Id);
                 detalle.IdEstadoRegistro = Constantes.Enviado;
                 hojaRuta = item.populateDetalle(hojaRuta, currentUser.AspNetUserId, DB);
+                hojaRuta = item.populateAnexos(hojaRuta, currentUser.AspNetUserId, DB);
                 DB.Update(hojaRuta);
                 DB.Update(detalle);
                 await DB.SaveChangesAsync();

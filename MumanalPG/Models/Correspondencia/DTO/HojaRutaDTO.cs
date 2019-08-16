@@ -145,7 +145,7 @@ namespace MumanalPG.Models.Correspondencia.DTO
         {
             ICollection<Anexo> anexosArray = new List<Anexo>();
 
-            if (hr.Id > 0)
+            if (hr.Id > 0 && hr.Anexos != null)
             {
                 anexosArray = hr.Anexos;
             }
@@ -163,7 +163,7 @@ namespace MumanalPG.Models.Correspondencia.DTO
                     {
                         an.Id = Int32.Parse(anexo.id);   
                     }
-                    an.HRDetalleId = hr.Id;
+                    an.HRDetalleId = 0;
                     an.TipoId = anexo.tipoId;
                     an.Descripcion = anexo.descripcion;
                     an.PathArchivo = anexo.path;
