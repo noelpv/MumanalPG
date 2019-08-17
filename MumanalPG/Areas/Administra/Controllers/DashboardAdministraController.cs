@@ -29,19 +29,19 @@ namespace MumanalPG.Areas.Administra.Controllers
         }
 
         [Breadcrumb("Compras", FromAction = "Index")]
-        public async Task<IActionResult> Compras()
+        public IActionResult Compras()
         {
             return View();
         }
 
         [Breadcrumb("Almacenes", FromAction = "Index")]
-        public async Task<IActionResult> Almacenes()
+        public IActionResult Almacenes()
         {
             return View();
         }
 
         [Breadcrumb("ActivosFijos", FromAction = "Index")]
-        public async Task<IActionResult> ActivosFijos()
+        public IActionResult ActivosFijos()
         {
             return View();
         }

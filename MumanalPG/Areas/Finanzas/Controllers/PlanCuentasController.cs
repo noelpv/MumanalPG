@@ -28,7 +28,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
         }
 
         // GET: Finanzas/PlanCuentas
-        //[Breadcrumb("PlanCuentas", FromController = "DashboardPlan", FromAction = "Clasificadores")]
+        [Breadcrumb("Plan de Cuentas", FromController = "DashboardFinanzas", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "NombreCuenta", string a = "")
         { 
             var consulta = DB.PlanCuentas.AsNoTracking().AsQueryable();

@@ -29,26 +29,26 @@ namespace MumanalPG.Areas.Finanzas.Controllers
         }
 
         [Breadcrumb("Cobranzas", FromAction = "Index")]
-        public async Task<IActionResult> Cobranzas()
+        public IActionResult Cobranzas()
         {
             return View();
         }
 
         [Breadcrumb("Pagos", FromAction = "Index")]
-        public async Task<IActionResult> Pagos()
+        public IActionResult Pagos()
         {
             return View();
         }
 
         [Breadcrumb("Contabilidad", FromAction = "Index")]
-        public async Task<IActionResult> Contabilidad()
+        public IActionResult Contabilidad()
         {
             return View();
         }
 
 
         [Breadcrumb("Fondos", FromAction = "Index")]
-        public async Task<IActionResult> Fondos()
+        public IActionResult Fondos()
         {
             return View();
         }

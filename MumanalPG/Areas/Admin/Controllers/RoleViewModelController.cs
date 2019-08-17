@@ -24,19 +24,19 @@ namespace MumanalPG.Areas.Admin
 			roleManagerM = rolemanager;
         }
 
-		public async Task<IActionResult> GetAllRoles()
-		{
-			var roles = roleManagerM.Roles.ToList();
-			var vm = new List<RoleViewModel>();
-			roles.ForEach(item => vm.Add(
-				new RoleViewModel()
-				{
-					Id = item.Id,
-					Name = item.Name
-				}
-			));
-			return View(vm);
-		}
+        public IActionResult GetAllRoles()
+        {
+            var roles = roleManagerM.Roles.ToList();
+            var vm = new List<RoleViewModel>();
+            roles.ForEach(item => vm.Add(
+                new RoleViewModel()
+                {
+                    Id = item.Id,
+                    Name = item.Name
+                }
+            ));
+            return View(vm);
+        }
 
         // GET: Admin/RoleViewModel
         public async Task<IActionResult> Index()
