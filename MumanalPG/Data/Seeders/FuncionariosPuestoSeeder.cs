@@ -516,8 +516,7 @@ namespace MumanalPG.Data.Seeders
             var puesto = _context.RRHH_Puesto.FirstOrDefault(p => EF.Functions.ILike(p.Descripcion, $"%{cargo.ToLower()}%"));
             var existing = _context.RRHH_Beneficiario.FirstOrDefault(p => p.PrimerApellido == item.PrimerApellido &&
                                                                           p.SegundoApellido == item.SegundoApellido &&
-                                                                          p.PrimerNombre == item.PrimerNombre &&
-                                                                          p.SegundoNombre == item.SegundoNombre);
+                                                                          p.PrimerNombre == item.PrimerNombre);
 
             if (existing == null)
             {
@@ -552,6 +551,10 @@ namespace MumanalPG.Data.Seeders
                 item.Denominacion = full_name.Trim();
                 _context.RRHH_Beneficiario.Add(item);
                 _context.SaveChanges();
+            }
+            else if(existing.PuestoId == 1 && puesto != null)
+            {
+                existing.PuestoId = puesto.IdPuesto;
             }
         }
     }

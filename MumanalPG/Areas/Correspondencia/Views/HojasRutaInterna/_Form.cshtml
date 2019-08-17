@@ -11,6 +11,7 @@
     <input type="hidden" asp-for="Parent"/>
     <div>
     
+        <partial name="_Instrucciones" view-data="ViewData"/>
         @if (ViewData["Action"] == "Derivar")
         {
             <input id="origen-id" type="hidden" asp-for="OrigenId"/>
@@ -22,7 +23,7 @@
         {
             <partial name="_DatosGenerales" view-data="ViewData"/>
         }
-        <partial name="_Instrucciones" view-data="ViewData"/>
+        
         <partial name="_Anexar" view-data="ViewData"/>
     </div>
 </form>
@@ -135,7 +136,7 @@
             }
         });
         var data = @Html.Raw(Json.Serialize(@ViewBag.areas));
-
+        
         $('#jstree').jstree({
             'core': {
                 'data': data,
