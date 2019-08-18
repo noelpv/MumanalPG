@@ -18,7 +18,6 @@ namespace MumanalPG.Areas.Admin.Controllers
     [Area("Admin")]
     public class AppointmentsController : Controller
     {
-
         private readonly ApplicationDbContext _db;
         private int PageSize = 3;
 
@@ -26,7 +25,6 @@ namespace MumanalPG.Areas.Admin.Controllers
         {
             _db = db;
         }
-
 
         public async Task<IActionResult> Index(int productPage=1, string searchName=null, string searchEmail =null, string searchPhone=null, string searchDate = null)
         {
@@ -63,15 +61,11 @@ namespace MumanalPG.Areas.Admin.Controllers
                 param.Append(searchDate);
             }
 
-
-
-
-            appointmentVM.Appointments = _db.Appointments.Include(a => a.SalesPerson).ToList();
+            appointmentVM.Appointments = await _db.Appointments.Include(a => a.SalesPerson).ToListAsync();
             if(User.IsInRole(SD.AdminEndUser))
             {
                 appointmentVM.Appointments = appointmentVM.Appointments.Where(a => a.SalesPersonId == claim.Value).ToList();
             }
-
 
             if (searchName != null)
             {
@@ -96,7 +90,6 @@ namespace MumanalPG.Areas.Admin.Controllers
                 {
 
                 }
-                
             }
 
             var count = appointmentVM.Appointments.Count;
@@ -134,13 +127,12 @@ namespace MumanalPG.Areas.Admin.Controllers
 
             AppointmentDetailsViewModel objAppointmentVM = new AppointmentDetailsViewModel()
             {
-                Appointment = _db.Appointments.Include(a => a.SalesPerson).Where(a => a.Id == id).FirstOrDefault(),
-                SalesPerson = _db.ApplicationUser.ToList(),
+                Appointment = await _db.Appointments.Include(a => a.SalesPerson).Where(a => a.Id == id).FirstOrDefaultAsync(),
+                SalesPerson = await _db.ApplicationUser.ToListAsync(),
                 Products = productList.ToList()
             };
 
             return View(objAppointmentVM);
-
         }
 
 
@@ -165,11 +157,9 @@ namespace MumanalPG.Areas.Admin.Controllers
                 {
                     appointmentFromDb.SalesPersonId = objAppointmentVM.Appointment.SalesPersonId;
                 }
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
-
-
             }
 
             return View(objAppointmentVM);
@@ -192,8 +182,8 @@ namespace MumanalPG.Areas.Admin.Controllers
 
             AppointmentDetailsViewModel objAppointmentVM = new AppointmentDetailsViewModel()
             {
-                Appointment = _db.Appointments.Include(a => a.SalesPerson).Where(a => a.Id == id).FirstOrDefault(),
-                SalesPerson = _db.ApplicationUser.ToList(),
+                Appointment = await _db.Appointments.Include(a => a.SalesPerson).Where(a => a.Id == id).FirstOrDefaultAsync(),
+                SalesPerson = await _db.ApplicationUser.ToListAsync(),
                 Products = productList.ToList()
             };
 
@@ -218,15 +208,14 @@ namespace MumanalPG.Areas.Admin.Controllers
 
             AppointmentDetailsViewModel objAppointmentVM = new AppointmentDetailsViewModel()
             {
-                Appointment = _db.Appointments.Include(a => a.SalesPerson).Where(a => a.Id == id).FirstOrDefault(),
-                SalesPerson = _db.ApplicationUser.ToList(),
+                Appointment = await _db.Appointments.Include(a => a.SalesPerson).Where(a => a.Id == id).FirstOrDefaultAsync(),
+                SalesPerson = await _db.ApplicationUser.ToListAsync(),
                 Products = productList.ToList()
             };
 
             return View(objAppointmentVM);
 
         }
-
 
         //POST Delete
         [HttpPost,ActionName("Delete")]
