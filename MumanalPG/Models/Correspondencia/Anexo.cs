@@ -17,6 +17,10 @@ namespace MumanalPG.Models.Correspondencia
 		
 		[Display(Name = "Archivo")]
 		public string PathArchivo { get; set; }
+		
+		public string NombreArchivo { get; set; }
+		
+		public int Size { get; set; } 
 
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]
 		public int TipoId { get; set; }

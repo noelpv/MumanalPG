@@ -1,9 +1,13 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -27,10 +31,11 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
     {        
         public const  string RedirectHRCreate = "HRCREATE";
         public const  string RedirectHRSent = "HRSENT";
+        private readonly IHostingEnvironment hostingEnvironment;
         
-        public HojasRutaInternaController(ApplicationDbContext db, UserManager<IdentityUser> userManager): base(db, userManager)
+        public HojasRutaInternaController(ApplicationDbContext db, UserManager<IdentityUser> userManager, IHostingEnvironment environment): base(db, userManager)
         {
-            
+            hostingEnvironment = environment; 
         }
 
 		// GET: Correspondencia/Documentos
@@ -157,6 +162,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                                 .Include(m => m.FunDst)
                                 .Include(m => m.HojaRuta)
                                 .Include(m => m.HRDetalleInstrucciones)
+                                .Include(m => m.HojaRuta.Anexos).ThenInclude(t => t.Tipo)
                                 .FirstOrDefaultAsync(m => m.Id == id);
             if (item == null)
             {
@@ -182,7 +188,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             {
                 ViewBag.isDstUser = true;    
             }
-
+            
             ViewBag.instrucciones = instrucciones;
             ViewBag.Tipos = DB.CorrespondenciaTipoDocumento.Where(t => t.IdEstadoRegistro != Constantes.Anulado).ToList();
             ViewBag.documentosId = DB.CorrespondenciaHRDetalle
@@ -442,6 +448,39 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             {
                 return Json(new {repositories = new {}});
             }
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> UploadFiles(IFormFile file)
+        {
+            long size = file.Length;
+
+            // full path to file in temp location
+//            var filePath = Path.GetTempFileName();
+            var uploadPath = Path.Combine("uploads", "correspondencia", DateTime.Today.ToString("yyyy-MM-dd"));
+            var filePath = Path.Combine(hostingEnvironment.WebRootPath, uploadPath);
+            var newName = $"{DateTime.Now.Ticks}_{file.FileName.RemoveDiacritics().Replace(" ", "_")}";
+            var fullPath = Path.Combine(filePath, newName);
+            
+            var fileToUpload = Path.Combine(uploadPath, newName);
+            
+            if (file.Length > 0)
+            {
+                if (!Directory.Exists(filePath)) 
+                {
+                    DirectoryInfo di = Directory.CreateDirectory(filePath);
+                }
+ 
+                using (var stream = new FileStream(fullPath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+            }
+
+            // process uploaded files
+            // Don't rely on or trust the FileName property without validation.
+
+            return Ok(new { file.FileName, size, fileToUpload});
         }
 
         private bool DocExists(Int32 id)

@@ -1,52 +1,53 @@
 @using MumanalPG.Models.Correspondencia
 <h3>Anexar y Finalizar</h3>
-    <fieldset>
-        <h2>Anexar y Finalizar</h2>
-        <p class="desc">Adjunte los archivos necesarios o los documentos anexos</p>
-        <div id="anexos-container" class="fieldset-content">
-            <div class="row justify-content-end">
-                <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
-                    <a href="#" id="agregar-anexo"type="button" class="btn btn-success" title="Agregar Nuevo Anexo">
-                        <i class="ti-plus"></i>
-                    </a>
-                </div>
-            </div>
-            <br/>
-            <div class="anexos-found text-center">
-               <h4> Sin Anexos</h4>
-            </div>
-            <div id="fila-anexo" class="row pt-2 hide" style="border: solid 1px #ccc; background: #fff;">
-               <input id="row_anexo_" type="hidden" name="Anexos"/>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label class="form-label">Tipo de Anexo</label>
-
-                          <select id="tipo_anexo" class="form-control"
-                                  asp-items="@(new SelectList(ViewBag.tiposAnexo, "Id", "Nombre"))">
-                          </select>
-                        @* <span asp-validation-for="Prioridad" class="text-danger"></span> *@
-                        <span class="text-input">Determine el tipo de anexo</span>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <div class="form-group">
-                        <label class="form-label">CITE/Descripción</label>
-                        <input id="descripcion" type="text" class="form-control pt-2"/>
-                        @* <span asp-validation-for="Prioridad" class="text-danger"></span> *@
-                        <span class="text-input">Introduzca el CITE del documento si corresponde o alguna descripción</span>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label class="form-label">Subir Archivo</label>
-                        <input id="archivo" type="file" class="form-control"/>
-                        @* <span asp-validation-for="Prioridad" class="text-danger"></span> *@
-                        <span class="text-input">Seleccione el archivo que desea anexar</span>
-                    </div>
-                </div>
-                <div class="col-md-1 text-right">
-                    <a id="remove-anexo" href="#" class="btn btn-sm btn-outline-danger"><i class="ti-close"></i></a>
-                </div>
+<fieldset>
+    <h2>Anexar y Finalizar</h2>
+    <p class="desc">Adjunte los archivos necesarios o los documentos anexos</p>
+    <div id="anexos-container" class="fieldset-content">
+        <div class="row justify-content-end">
+            <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+                <a href="#" id="agregar-anexo"type="button" class="btn btn-success" title="Agregar Nuevo Anexo">
+                    <i class="ti-plus"></i>
+                </a>
             </div>
         </div>
-    </fieldset>
+        <br/>
+        <div class="anexos-found text-center">
+            <h4> Sin Anexos</h4>
+        </div>
+        <div id="fila-anexo" class="row pt-2 hide" style="border: solid 1px #ccc; background: #fff;">
+            <input id="row_anexo_" type="hidden" name="Anexos"/>
+            <div class="col-md-3">
+                <div class="form-group my-2">
+                     <label class="form-label">Tipo de Anexo</label>
+                    <select id="tipo_anexo" class="form-control"
+                            asp-items="@(new SelectList(ViewBag.tiposAnexo, "Id", "Nombre"))">
+                    </select>
+                    @* <span asp-validation-for="Prioridad" class="text-danger"></span> *@
+                    <span class="text-input">Determine el tipo de anexo</span>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group my-2">
+                     <label class="form-label">CITE/Descripción</label>
+                    <input id="descripcion" type="text" class="form-control pt-2"/>
+                    @* <span asp-validation-for="Prioridad" class="text-danger"></span> *@
+                    <span class="text-input">Introduzca el CITE del documento si corresponde o alguna descripción</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group my-2">
+                    <div id="dropzone" class="file-dropzone"></div>
+                    <span id="file-name" class="text-input">Seleccione el archivo que desea anexar</span>
+
+                </div>
+
+            </div>
+            <div class="col-md-1 text-right">
+                <a id="remove-anexo" href="#" class="btn btn-sm btn-outline-danger">
+                    <i class="ti-close"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</fieldset>

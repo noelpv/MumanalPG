@@ -130,7 +130,11 @@ namespace MumanalPG.Areas
             List<AreasFunTreeDTO> areas = await GetAreasList("GG", currentFunId);
             areas.Sort(delegate(AreasFunTreeDTO x, AreasFunTreeDTO y)
             {
-                return x.orden.CompareTo(y.orden);
+                if (x.id.Contains("area_"))
+                {
+                    return x.orden.CompareTo(y.orden);    
+                }
+                return x.text.CompareTo(y.text);
             });
             List<AreasFunTreeDTO> comite = await GetAreasList("COM-VIG", currentFunId);
             List<AreasFunTreeDTO> regionales = await GetAreasList("REG", currentFunId);

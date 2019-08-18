@@ -154,9 +154,6 @@ namespace MumanalPG.Models.Correspondencia.DTO
             {
                 if (a != null)
                 {
-                    Console.WriteLine("================================================");
-                    Console.WriteLine(a);
-                    Console.WriteLine("================================================");
                     AnexoDTO anexo = JsonConvert.DeserializeObject<AnexoDTO>(a);
                     Anexo an = new Anexo();
                     if (anexo.id != null)
@@ -167,6 +164,8 @@ namespace MumanalPG.Models.Correspondencia.DTO
                     an.TipoId = anexo.tipoId;
                     an.Descripcion = anexo.descripcion;
                     an.PathArchivo = anexo.path;
+                    an.NombreArchivo = anexo.name;
+                    an.Size = anexo.size;
                 
                     an.IdEstadoRegistro = Constantes.Registrado;
                     an.IdUsuario = idUsuario;
