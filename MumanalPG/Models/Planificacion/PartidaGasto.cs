@@ -9,7 +9,8 @@ namespace MumanalPG.Models.Planificacion
 	{
 		[DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
 		[Key]
-		public Int32 IdPartidaGasto { get; set; }
+        [Display(Name = "Codigo")]
+        public Int32 IdPartidaGasto { get; set; }
         [Required(ErrorMessage = "{0} no puede estar en blanco")]
         [StringLength(50, ErrorMessage = "Longitud máxima es de {1} caracteres")]
         public string Descripcion { get; set; }

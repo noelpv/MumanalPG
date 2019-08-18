@@ -29,19 +29,19 @@ namespace MumanalPG.Areas.RRHH.Controllers
         }
 
         [Breadcrumb("AdministracionRRHH", FromAction = "Index")]
-        public async Task<IActionResult> AdministracionRRHH()
+        public IActionResult AdministracionRRHH()
         {
             return View();
         }
 
         [Breadcrumb("ControlRRHH", FromAction = "Index")]
-        public async Task<IActionResult> ControlRRHH()
+        public IActionResult ControlRRHH()
         {
             return View();
         }
 
         [Breadcrumb("Planillas", FromAction = "Index")]
-        public async Task<IActionResult> Planillas()
+        public IActionResult Planillas()
         {
             return View();
         }
