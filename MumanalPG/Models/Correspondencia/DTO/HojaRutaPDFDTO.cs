@@ -7,6 +7,8 @@ namespace MumanalPG.Models.Correspondencia.DTO
     {
         public HojaRuta hojaRuta { get; set; }
         public HojaRutaDetalle detalle { get; set; }
+        
+        public List<HojaRutaDetalle> derivaciones { get; set; }
         public List<Instrucciones> instrucciones { get; set; }
         
     }

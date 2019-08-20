@@ -395,12 +395,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                 .Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Nombre).ToList();
             
             var item = await DB.CorrespondenciaHRDetalle
-                .Include(m => m.AreaOrigen)
-                .Include(m => m.AreaDestino)
-                .Include(m => m.FunOrg)
-                .Include(m => m.FunDst)
                 .Include(m => m.HojaRuta)
-                .Include(m => m.HRDetalleInstrucciones)
                 .FirstOrDefaultAsync(m => m.Id == id);
             
             if (item == null)
@@ -408,11 +403,21 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                 return View("_NoEncontrado");
             }
 
+            var detalles = DB.CorrespondenciaHRDetalle
+                .Include(m => m.AreaOrigen)
+                .Include(m => m.AreaDestino)
+                .Include(m => m.FunOrg).ThenInclude(f => f.Puesto)
+                .Include(m => m.FunDst).ThenInclude(f => f.Puesto)
+                .Include(m => m.HojaRuta)
+                .Include(m => m.HRDetalleInstrucciones).ThenInclude(d => d.Instruccion)
+                .Where(hr => hr.HojaRutaId == item.HojaRutaId).ToList();
+            
             HojaRutaPDFDTO dto = new HojaRutaPDFDTO();
             dto.hojaRuta = item.HojaRuta;
             dto.detalle = item;
             dto.instrucciones = instrucciones;
-           // return PartialView("_HojaRuta", dto);
+            dto.derivaciones = detalles;
+            // return PartialView("_HojaRuta", dto);
             return new ViewAsPdf("_HojaRuta", dto)
             {
                 PageMargins = new Margins(15, 10, 12, 10),
