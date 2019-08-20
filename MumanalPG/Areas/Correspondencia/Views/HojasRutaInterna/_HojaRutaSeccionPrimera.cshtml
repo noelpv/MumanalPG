@@ -76,7 +76,15 @@
                 <label style="position: absolute; top: 15px; right: 10px;">FECHA DE RECEPCIÓN:</label>
             </div>
             <div class="col col-2">
-                <p class="bg-light">&nbsp;</p>
+                @if (detalle.FechaRecepcion != null)
+                { 
+                    <p class="bg-light">@detalle.FechaRecepcion.Value.ToString("dd/MM/yyyy")</p>
+                }
+                else
+                {
+                   <p class="bg-light">&nbsp;</p> 
+                }
+                
             </div>
             <div class="col col-2 line-height-normal small">
                 <label style="position: absolute; top: 15px; right: 10px;">NRO. FOJAS:</label>
