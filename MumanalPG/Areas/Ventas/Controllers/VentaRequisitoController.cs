@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using MumanalPG.Data;
 using MumanalPG.Models.Ventas;
 using ReflectionIT.Mvc.Paging;
+using SmartBreadcrumbs;
 
 namespace MumanalPG.Areas.Ventas
 {
@@ -30,7 +31,7 @@ namespace MumanalPG.Areas.Ventas
 			//_hostingEnvironment = environment;
 		}
 		   
-		
+		[Breadcrumb("Requisitos", FromController = "VentaContratacion", FromAction = "Index")]
         public async Task<IActionResult> Index(Int32? Id) // GET: Ventas/VentaRequisito
 		{
 			var VentaContratacion = await DB.Ventas_vContratacion.FindAsync(Id);

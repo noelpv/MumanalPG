@@ -12,6 +12,7 @@ using MumanalPG.Data;
 using MumanalPG.Models.Ventas;
 using MumanalPG.Extensions;
 using ReflectionIT.Mvc.Paging;
+using SmartBreadcrumbs;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data;
@@ -34,6 +35,7 @@ namespace MumanalPG.Areas.Ventas
 			
 		}
 
+		[Breadcrumb("ASR DIGITAL", FromController = "DashboardVenta", FromAction = "Index")]
 		public async Task<IActionResult> Index(string searchString)
         {
 			String InternalSearchString = "";
