@@ -15,7 +15,28 @@ namespace MumanalPG.Data.Seeders
 
         public void SeedData()
         {
-            //IdDepartamento = 2 => para LA PAZ, IUsuario = 1 => Admin, 
+            //IdDepartamento = 2 => para LA PAZ, IUsuario = 1 => Admin,
+            AddNew(new Puesto { Descripcion = "Presidente", Item = 0, IdDepartamento = 2, EsDePlanilla = false, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIR");
+            
+            AddNew(new Puesto { Descripcion = "Director I", Item = 0, IdDepartamento = 2, EsDePlanilla = false, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIR");
+            
+            AddNew(new Puesto { Descripcion = "Director II", Item = 0, IdDepartamento = 2, EsDePlanilla = false, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIR");
+            
+            AddNew(new Puesto { Descripcion = "Director III", Item = 0, IdDepartamento = 2, EsDePlanilla = false, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIR");
+            
+            AddNew(new Puesto { Descripcion = "Director IV", Item = 0, IdDepartamento = 2, EsDePlanilla = false, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIR");
+            
+            AddNew(new Puesto { Descripcion = "Director V", Item = 0, IdDepartamento = 2, EsDePlanilla = false, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIR");
+            
+            AddNew(new Puesto { Descripcion = "Presidente", Item = 0, IdDepartamento = 2, EsDePlanilla = false, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "DIR");
+            
             AddNew(new Puesto { Descripcion = "Gerente General", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
                 IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "GG");
             
@@ -128,6 +149,15 @@ namespace MumanalPG.Data.Seeders
                 IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "UAF");
             
             AddNew(new Puesto { Descripcion = "Auditora Comité de Vigilancia", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "COM-VIG");
+            
+            AddNew(new Puesto { Descripcion = "Comité de Vigilancia I", Item = 0, IdDepartamento = 2, EsDePlanilla = false, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "COM-VIG");
+            
+            AddNew(new Puesto { Descripcion = "Comité de Vigilancia II", Item = 0, IdDepartamento = 2, EsDePlanilla = false, 
+                IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "COM-VIG");
+            
+            AddNew(new Puesto { Descripcion = "Comité de Vigilancia III", Item = 0, IdDepartamento = 2, EsDePlanilla = false, 
                 IdUsuario = 1, FechaRegistro = DateTime.Now, IdEstadoRegistro = Constantes.Registrado}, "COM-VIG");
             
             AddNew(new Puesto { Descripcion = "Agente Regional Cochabamba", Item = 0, IdDepartamento = 2, EsDePlanilla = true, 
