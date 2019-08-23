@@ -463,11 +463,6 @@ namespace MumanalPG.Data.Seeders
             AddNew(
                 new Beneficiario
                 {
-                    PrimerApellido = "ANTELO", SegundoApellido = "ESPINOZA", PrimerNombre = "ISRAEL", SegundoNombre = ""
-                }, "Agente Distrital Puerto Suarez");
-            AddNew(
-                new Beneficiario
-                {
                     PrimerApellido = "BARBERY", SegundoApellido = "CESPEDES", PrimerNombre = "DENNY", SegundoNombre = ""
                 }, "Agente Distrital S.J.Chiquitos");
             AddNew(
