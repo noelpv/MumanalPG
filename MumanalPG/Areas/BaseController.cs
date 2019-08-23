@@ -138,9 +138,10 @@ namespace MumanalPG.Areas
             });
             List<AreasFunTreeDTO> comite = await GetAreasList("COM-VIG", currentFunId);
             List<AreasFunTreeDTO> regionales = await GetAreasList("REG", currentFunId);
+            List<AreasFunTreeDTO> directorio = await GetAreasList("DIR", currentFunId);
             //areas.Reverse();
             
-            return areas.Concat(regionales).Concat(comite).ToList();
+            return directorio.Concat(areas).Concat(regionales).Concat(comite).ToList();
         }
 
         public async Task<List<AreasFunTreeDTO>> GetAreasList(string uSigla, int currentFunId, List<AreasFunTreeDTO> areas = null)
