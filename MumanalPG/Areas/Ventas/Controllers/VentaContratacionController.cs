@@ -17,6 +17,9 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data;
 
+
+
+
 namespace MumanalPG.Areas.Ventas
 {
     [Area("Ventas")]
@@ -564,6 +567,7 @@ namespace MumanalPG.Areas.Ventas
 				return NotFound();
 			}
 		
+
 			await DB.Database.ExecuteSqlCommandAsync($"CALL \"Ventas\".\"pGeneraRequisitos\"({id})");
 
 			var ventaContratacion = await DB.Ventas_VentaContratacion.FirstOrDefaultAsync(m => m.IdVentaContratacion == id);
