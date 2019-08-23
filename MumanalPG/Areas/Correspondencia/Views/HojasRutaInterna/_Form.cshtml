@@ -3,13 +3,14 @@
 <link rel="stylesheet" href="~/lib/wizard/css/nouislider.min.css"/>
 <link rel="stylesheet" href="~/lib/jstree/themes/default/style.css"/>
 
-<form class="wizard-form" asp-action="@ViewData["Action"]">
+<form class="wizard-form" asp-action="@ViewData["Action"]" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
    
     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()"/>
     <input type="hidden" asp-for="Id"/>
     <input type="hidden" asp-for="Parent"/>
     <div>
+        
         @if (ViewData["Action"] == "Derivar")
         {
             <input id="origen-id" type="hidden" asp-for="OrigenId"/>
@@ -35,6 +36,8 @@
 
 <script>
     $(document).ready(function() {
+        Dropzone.autoDiscover = false;
+       
         var contAnexos = 0;
         var contAnexosShowing = 0;
         var url_origen = $('#origen').data('remote-url');
@@ -119,22 +122,24 @@
             on_change_doc,
             on_ini_doc));
 
-        $('input[name=radio-options]').change(function() {
+        $('input[name="radio-options"]').change(function() {
             if ($(this).val() === 'created') {
                 $('#doc-container').show();
                 $('#rem-input').show();
+                $('#doc-options').show();
                 $('#rem-select').hide();
                 $('#origen-name').prop('required',true);
             } else {
                 $('#doc-container').hide();
                 $('#rem-input').hide();
+                $('#doc-options').hide();
                 $('#rem-select').show();
                 $('#origen-name').prop('required',false);
                 $('#doc-id').attr('name', 'DocumentoId');
             }
         });
         var data = @Html.Raw(Json.Serialize(@ViewBag.areas));
-
+        
         $('#jstree').jstree({
             'core': {
                 'data': data,
@@ -173,7 +178,7 @@
         $('#agregar-anexo').click(function(e) {
             e.preventDefault();
             cloneAnexo();
-        });
+        });            
         function cloneInstrucciones(node_id, area, fun) {
             
             var container = $('#instrucciones-container');
@@ -231,13 +236,20 @@
         }
         
         function cloneAnexo() {
+            // $('a[role="menuitem"]').addClass('disabled');
             var container = $('#anexos-container');
             var rowAnexo = $('#fila-anexo');
             var newRow = rowAnexo.clone();
+            var obj = {id: null, tipoId: null, descripcion: null, path: null, size: null, name: null };
             newRow.attr('id', 'fila-anexo_' + contAnexos);
+            var input_sent = newRow.find('input[id*="row_anexo_"]').first();
+            input_sent.attr('id', 'row_anexo_' + contAnexos);
+            input_sent.val(JSON.stringify(obj));
             newRow.find('select[id*="tipo_anexo"]').first().attr('id', 'tipo_anexo_' + contAnexos);
-            newRow.find('input[id*="descripcion"]').first().attr('id', 'descripcion_' + contAnexos);;
-            newRow.find('input[id*="archivo"]').first().attr('id', 'archivo_' + contAnexos);;
+            newRow.find('input[id*="descripcion"]').first().attr('id', 'descripcion_' + contAnexos);
+            newRow.find('div[id*="dropzone"]').first().attr('id', 'dropzone_' + contAnexos);
+            newRow.find('span[id*="file-name"]').first().attr('id', 'file-name_' + contAnexos);
+            newRow.find('div[id*="dropzone"]').first().addClass("dropzone");
             newRow.appendTo(container);
             newRow.removeClass('hide');
             $('a[id*="remove-anexo"]').unbind();
@@ -248,18 +260,75 @@
                     contAnexosShowing--;
                     if (contAnexosShowing <= 0) {
                         $('.anexos-found').fadeIn('slow');
+                        $('a[role="menuitem"]').removeClass('disabled');
                     }
                 });
                 
             });
+            newRow.find('div[id*="dropzone"]').first().dropzone(
+                { 
+                    url: "@Url.Action("UploadFiles")",
+                    maxFiles:1,
+                    addRemoveLinks: true,
+                    acceptedFiles: "image/*,.doc,.docx,.rar,.zip,.xls,.xlsx,.pdf",
+                    init: function() {
+                          this.on("maxfilesexceeded", function(file) {
+                                this.removeAllFiles();
+                                this.addFile(file);}
+                           );
+                          
+                          this.on("removedfile", function(file) {
+                                var el = newRow.find('span[id*="file-name"]').first();
+                                el.text('Seleccione el archivo que desea anexar');
+                                var obj = JSON.parse(input_sent.val());
+                                obj.path = null;
+                                obj.name = null;
+                                obj.size = null;
+                                input_sent.val(JSON.stringify(obj)); 
+                            }
+                          );
+                    },
+                     success: function (file, response) {
+                        var el = newRow.find('span[id*="file-name"]').first();
+                        var obj = JSON.parse(input_sent.val());
+                        obj.path = response.fileToUpload;
+                        obj.name = response.fileName;
+                        obj.size = response.size;
+                        input_sent.val(JSON.stringify(obj)); 
+                        
+                        el.addClass('animated fadeIn');
+                        el.text(response.fileName);
+
+                     }
+                }
+            );
             newRow.find('select[id*="tipo_anexo"]').first().unbind();
             newRow.find('select[id*="tipo_anexo"]').first().selectize({
                 create: false,
                 sortField: 'text'
             });
+            
+            newRow.find('select[id*="tipo_anexo"]').first().change(function(){
+               var obj = JSON.parse(input_sent.val());
+               obj.tipoId = $(this).val();
+               input_sent.val(JSON.stringify(obj));
+            });
+            newRow.find('select[id*="tipo_anexo"]').first().trigger('change');
+            
+            newRow.find('input[id*="descripcion"]').first().on('input', function(){
+               var obj = JSON.parse(input_sent.val());
+               obj.descripcion = $(this).val();
+               input_sent.val(JSON.stringify(obj));
+            });
+            
             $('.anexos-found').hide();
             contAnexos++;
             contAnexosShowing++;
+        }
+        
+        function checkAnexo() {
+            var input_descripcion = $();    
+            
         }
         
     });

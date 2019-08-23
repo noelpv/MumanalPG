@@ -103,7 +103,8 @@ namespace MumanalPG.Areas.Planificacion.Controllers
         // POST: Planificacion/FuenteFinanciamiento/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, [Bind("IdFuenteFinanciamiento,Descripcion,Sigla")] Models.Planificacion.FuenteFinanciamiento item)
+        public async Task<IActionResult> Edit(Int32 id, Models.Planificacion.FuenteFinanciamiento item)
+        // public async Task<IActionResult> Edit(Int32 id, [Bind("IdFuenteFinanciamiento,Descripcion,Sigla")] Models.Planificacion.FuenteFinanciamiento item)
         {
             if (id != item.IdFuenteFinanciamiento)
             {

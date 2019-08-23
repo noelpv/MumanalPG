@@ -1,99 +1,119 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Dynamic;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using MumanalPG.Data;
-using MumanalPG.Models.Finanzas;
+using MumanalPG.Models;
+using MumanalPG.Utility;
+using ReflectionIT.Mvc.Paging;
+using SmartBreadcrumbs;
+using MumanalPG.Extensions;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Data;
 
-namespace MumanalPG.Areas.Finanzas
+namespace MumanalPG.Areas.Finanzas.Controllers
 {
+    //[Authorize(Roles = SD.SuperAdminEndUser)]
+    [Authorize]
     [Area("Finanzas")]
-    public class TipoTransaccionController : Controller
-    {
-        private readonly ApplicationDbContext _context;
-
-        public TipoTransaccionController(ApplicationDbContext context)
+    public class TipoTransaccionController : BaseController
+    {        
+        
+		public TipoTransaccionController(ApplicationDbContext db, UserManager<IdentityUser> userManager): base(db, userManager)
         {
-            _context = context;
+            
         }
 
-
         // GET: Finanzas/TipoTransaccion
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.TipoTransaccion.ToListAsync());
+        [Breadcrumb("Tipos de Transaccion", FromController = "DashboardFinanzas", FromAction = "Clasificadores")]
+        public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
+        { 
+            var consulta = DB.TipoTransaccion.AsNoTracking().AsQueryable();
+            consulta = consulta.Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
+            if (!string.IsNullOrWhiteSpace(filter))
+			{
+                consulta = consulta.Where(m => EF.Functions.ILike(m.Descripcion, $"%{filter}%"));
+            }
+            var resp = await PagingList.CreateAsync(consulta, Constantes.TamanoPaginacion, page, sortExpression, "Descripcion");
+            resp.RouteValue = new RouteValueDictionary {{ "filter", filter}};
+            ShowFlash(a);
+            return View(resp);
         }
 
         // GET: Finanzas/TipoTransaccion/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Int32? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var tipoTransaccion = await _context.TipoTransaccion
-                .FirstOrDefaultAsync(m => m.IdTipoTransaccion == id);
-            if (tipoTransaccion == null)
+            var item = await DB.TipoTransaccion.FirstOrDefaultAsync(m => m.IdTipoTransaccion  == id);
+            if (item == null)
             {
                 return NotFound();
             }
 
-            return View(tipoTransaccion);
+            return PartialView("Details",item);
         }
 
         // GET: Finanzas/TipoTransaccion/Create
         public IActionResult Create()
         {
-            return View();
+            var model = new Models.Finanzas.TipoTransaccion();
+            return PartialView("Create", model);
         }
 
         // POST: Finanzas/TipoTransaccion/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdTipoTransaccion, Descripcion, IdEstadoRegistro, IdUsuario, FechaRegistro")] TipoTransaccion tipoTransaccion)
+        public async Task<IActionResult> Create(Models.Finanzas.TipoTransaccion item)
         {
             if (ModelState.IsValid)
             {
-                tipoTransaccion.FechaRegistro = DateTime.Now;
-                tipoTransaccion.IdEstadoRegistro = '1';
-
-                _context.Add(tipoTransaccion);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                ApplicationUser currentUser = await GetCurrentUser();
+                item.IdUsuario = currentUser.AspNetUserId;
+                item.IdEstadoRegistro = 1;
+                item.FechaRegistro = DateTime.Now;
+                DB.Add(item);
+                await DB.SaveChangesAsync();
+                
             }
-            return View(tipoTransaccion);
+            return PartialView("Create",item);
         }
 
         // GET: Finanzas/TipoTransaccion/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(Int32? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var tipoTransaccion = await _context.TipoTransaccion.FindAsync(id);
-            if (tipoTransaccion == null)
+            var item = await DB.TipoTransaccion.FindAsync(id);
+            if (item == null)
             {
                 return NotFound();
             }
-            return View(tipoTransaccion);
+            return PartialView( "Edit", item);
         }
 
         // POST: Finanzas/TipoTransaccion/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdTipoTransaccion, Descripcion, IdEstadoRegistro, IdUsuario, FechaRegistro")] TipoTransaccion tipoTransaccion)
+        public async Task<IActionResult> Edit(Int32 id, Models.Finanzas.TipoTransaccion item)
         {
-            if (id != tipoTransaccion.IdTipoTransaccion)
+            if (id != item.IdTipoTransaccion)
             {
                 return NotFound();
             }
@@ -102,12 +122,16 @@ namespace MumanalPG.Areas.Finanzas
             {
                 try
                 {
-                    _context.Update(tipoTransaccion);
-                    await _context.SaveChangesAsync();
+                    ApplicationUser currentUser = await GetCurrentUser();
+                    item.IdUsuario = currentUser.AspNetUserId;
+                    item.IdEstadoRegistro = 1;
+                    item.FechaRegistro = DateTime.Now;
+                    DB.Update(item);
+                    await DB.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TipoTransaccionExists(tipoTransaccion.IdTipoTransaccion))
+                    if (!ItemExists(item.IdTipoTransaccion))
                     {
                         return NotFound();
                     }
@@ -116,43 +140,43 @@ namespace MumanalPG.Areas.Finanzas
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                
             }
-            return View(tipoTransaccion);
+            return PartialView("Edit", item);
         }
 
         // GET: Finanzas/TipoTransaccion/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Int32? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var tipoTransaccion = await _context.TipoTransaccion
-                .FirstOrDefaultAsync(m => m.IdTipoTransaccion == id);
-            if (tipoTransaccion == null)
+            var item = await DB.TipoTransaccion.FirstOrDefaultAsync(m => m.IdTipoTransaccion == id);
+            if (item == null)
             {
                 return NotFound();
             }
 
-            return View(tipoTransaccion);
+            return PartialView("Delete",item);
         }
 
         // POST: Finanzas/TipoTransaccion/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Int32 id)
         {
-            var tipoTransaccion = await _context.TipoTransaccion.FindAsync(id);
-            _context.TipoTransaccion.Remove(tipoTransaccion);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var item = await DB.TipoTransaccion.FindAsync(id);
+            item.IdEstadoRegistro = 2;  //Constantes.Eliminado ;
+            DB.TipoTransaccion.Update(item);
+            await DB.SaveChangesAsync();
+            return PartialView("Delete",item);
         }
 
-        private bool TipoTransaccionExists(int id)
+        private bool ItemExists(Int32 id)
         {
-            return _context.TipoTransaccion.Any(e => e.IdTipoTransaccion == id);
+            return DB.TipoTransaccion.Any(e => e.IdTipoTransaccion == id);
         }
     }
 }

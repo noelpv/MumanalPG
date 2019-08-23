@@ -1,0 +1,94 @@
+@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Finanzas.TipoMoneda>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging
+@{
+    ViewData["Title"] = "Financiero";
+}
+@*<div class="container-fluid">*@
+<div class="row">
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Finanzas" asp-controller="DashboardFinanzas" asp-action="Cobranzas">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-settings"></i>
+                </div>
+                <h4>Cobranzas</h4>
+                <p class="ribbon-content">Se administran los procesos de Cobranzas (Inversiones).</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Finanzas" asp-controller="DashboardFinanzas" asp-action="Pagos">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-warning ribbon-vertical-l">
+                    <i class="ti-zip"></i>
+                </div>
+                <h4>Pagos</h4>
+                <p class="ribbon-content">Se realiza el control y seguimiento de Pagos.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Finanzas" asp-controller="DashboardFinanzas" asp-action="Contabilidad">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-agenda"></i>
+                </div>
+                <h4>Contabilidad</h4>
+                <p class="ribbon-content">Se realiza el control y seguimiento de registros Contables</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Finanzas" asp-controller="DashboardFinanzas" asp-action="CargoCuenta">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-agenda"></i>
+                </div>
+                <h4>Administracion de Fondos</h4>
+                <p class="ribbon-content">Se realiza el control y administrcion de Fondos </p>
+            </div>
+        </a>
+    </div>
+
+    @*<div class="col-md-4 col-sm-6 col-xs-12">
+            <a href="">
+                <div class="ribbon-vwrapper card">
+                    <div class="ribbon ribbon-info ribbon-vertical-l">
+                        <i class="ti-map-alt"></i>
+                    </div>
+                    <h4>Seguimiento</h4>
+                    <p class="ribbon-content">Se realiza el Seguimiento del Presupuesto Institucional.</p>
+                </div>
+            </a>
+        </div>*@
+
+    @*<div class="col-md-4 col-sm-6 col-xs-12">
+            <a href="">
+                <div class="ribbon-vwrapper card">
+                    <div class="ribbon ribbon-primary ribbon-vertical-l">
+                        <i class="ti-bar-chart"></i>
+                    </div>
+                    <h4>Reportes</h4>
+                    <p class="ribbon-content">Reportes del Sub Sistema Administrativo.</p>
+                </div>
+            </a>
+        </div>*@
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Finanzas" asp-controller="DashboardFinanzas" asp-action="Clasificadores">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-settings"></i>
+                </div>
+                <h4>Clasificadores</h4>
+                <p class="ribbon-content">Registro de Datos Basicos para el proceso del Subsistema.</p>
+            </div>
+        </a>
+    </div>
+</div>
+@*</div>*@

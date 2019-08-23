@@ -27,7 +27,7 @@ namespace MumanalPG.Areas.Generales.Controllers
         }
 
         // GET: Generales/EdificioTipo
-        [Breadcrumb("EdificioTipo", FromController = "DashboardPlan", FromAction = "Clasificadores")]
+        //[Breadcrumb("EdificioTipo", FromController = "DashboardPlan", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
             var consulta = DB.EdificioTipo.AsNoTracking().AsQueryable();
@@ -103,7 +103,7 @@ namespace MumanalPG.Areas.Generales.Controllers
         // POST: Generales/EdificioTipo/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, [Bind("IdEdificioTipo,Descripcion,Sigla")] Models.Generales.EdificioTipo item)
+        public async Task<IActionResult> Edit(Int32 id, Models.Generales.EdificioTipo item)
         {
             if (id != item.IdEdificioTipo)
             {
@@ -114,6 +114,10 @@ namespace MumanalPG.Areas.Generales.Controllers
             {
                 try
                 {
+                    ApplicationUser currentUser = await GetCurrentUser();
+                    item.IdUsuario = currentUser.AspNetUserId;
+                    item.IdEstadoRegistro = 1;
+                    item.FechaRegistro = DateTime.Now;
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }

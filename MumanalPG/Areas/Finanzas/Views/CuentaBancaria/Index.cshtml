@@ -37,8 +37,9 @@
         <thead>
         <tr>
             <th>@Html.SortableHeaderFor(model => model.Descripcion)</th>
-            <th>Sigla</th>
-            <th>Pais</th>
+            <th>@Html.SortableHeaderFor(model => model.IdBanco)</th>
+            <th>@Html.SortableHeaderFor(model => model.CuentaCodigo)</th>
+            <th>@Html.SortableHeaderFor(model => model.IdTipoCuentaBanco)</th>
         </tr>
 
         </thead>
@@ -65,7 +66,6 @@
                 options.Id = item.IdCuentaBancaria;
                 options.ShowIntroMessages = index == 0 ? true : false;
                 index++;
-
             }
             <partial name="_TableOptionsPartial" model="options" />
         </tr>

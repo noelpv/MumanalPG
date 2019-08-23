@@ -10,7 +10,9 @@ namespace MumanalPG.Models.Administra
     {
         [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         [Key]
+        [Display(Name = "Tipo Almacen")]
         public Int32 IdTipoAlmacen { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
         public string Descripcion { get; set; }
         public Int32 IdEstadoRegistro { get; set; }
         public Int32 IdUsuario { get; set; }

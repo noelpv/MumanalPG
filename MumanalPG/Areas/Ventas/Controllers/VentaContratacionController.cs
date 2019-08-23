@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using MumanalPG.Data;
 using MumanalPG.Models.Ventas;
 using MumanalPG.Extensions;
+using ReflectionIT.Mvc.Paging;
+using SmartBreadcrumbs;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data;
@@ -33,6 +35,7 @@ namespace MumanalPG.Areas.Ventas
 			
 		}
 
+		[Breadcrumb("ASR DIGITAL", FromController = "DashboardVenta", FromAction = "Index")]
 		public async Task<IActionResult> Index(string searchString)
         {
 			String InternalSearchString = "";
@@ -72,9 +75,9 @@ namespace MumanalPG.Areas.Ventas
 
 			var contactName = Request.Form.GetPropertyValue("columns[0][search][value]").FirstOrDefault();
 			var country = Request.Form.GetPropertyValue("columns[3][search][value]").FirstOrDefault();
-
-			int pageSize = length != null ? Convert.ToInt32(length):0;
-			int skip = start != null ? Convert.ToInt16(start) : 0;
+			
+			int pageSize = Convert.ToInt32(length);
+			int skip = Convert.ToInt16(start);
 			int recordsTotal = 0;
 
 			var v = (from a in DB.Ventas_vContratacion select a);
@@ -604,13 +607,18 @@ namespace MumanalPG.Areas.Ventas
 			//-- 1 = 'Todos los Documentos fueron cargados!!!'
 			//-- 2 = 'Falta cargar documentos!!!'
 			if (CodigoRetorno == 0)
+			{
 				ViewBag.Mensaje = "Aun no se han generado los requisitos!!!";
+			}
 			else if (CodigoRetorno == 1)
+			{
 				ViewBag.Mensaje = "Esta Seguro de enviar?";
+			}
 			else
+			{
 				ViewBag.Mensaje = "Falta cargar documentos!!!";
-
-			return View(ventaContratacion);
+			}
+			return PartialView("Enviar",ventaContratacion);
 		}
 
 		[HttpPost, ActionName("Enviar")]
@@ -620,7 +628,6 @@ namespace MumanalPG.Areas.Ventas
 			var ventaContratacion = await DB.Ventas_VentaContratacion.FindAsync(id);
 			ventaContratacion.IdEstadoRegistro = 2;
 			await DB.SaveChangesAsync();
-
 			SetFlashInfo("El Tramite fue enviado satisfactoriamente!!!");
 			return RedirectToAction(nameof(Index));
 		}

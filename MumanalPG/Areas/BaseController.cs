@@ -128,9 +128,19 @@ namespace MumanalPG.Areas
         {
 
             List<AreasFunTreeDTO> areas = await GetAreasList("GG", currentFunId);
+            areas.Sort(delegate(AreasFunTreeDTO x, AreasFunTreeDTO y)
+            {
+                if (x.id.Contains("area_"))
+                {
+                    return x.orden.CompareTo(y.orden);    
+                }
+                return x.text.CompareTo(y.text);
+            });
+            List<AreasFunTreeDTO> comite = await GetAreasList("COM-VIG", currentFunId);
+            List<AreasFunTreeDTO> regionales = await GetAreasList("REG", currentFunId);
             //areas.Reverse();
             
-            return areas;
+            return areas.Concat(regionales).Concat(comite).ToList();
         }
 
         public async Task<List<AreasFunTreeDTO>> GetAreasList(string uSigla, int currentFunId, List<AreasFunTreeDTO> areas = null)
@@ -148,6 +158,7 @@ namespace MumanalPG.Areas
                 area.areaId = unidadEjecutora.IdUnidadEjecutora;
                 area.id = $"area_{unidadEjecutora.IdUnidadEjecutora}";
                 area.text = unidadEjecutora.Descripcion;
+                area.orden = unidadEjecutora.OrdenMostrar == 0 ? 100 : unidadEjecutora.OrdenMostrar;
                 area.parent = (unidadEjecutora.IdUnidadEjecutoraPadre == 0) ? "#" : $"area_{unidadEjecutora.IdUnidadEjecutoraPadre}";
 //                area.icon = "ti-folder";
                 if (unidadEjecutora.IdUnidadEjecutoraPadre == nodeRaiz.IdUnidadEjecutora || 

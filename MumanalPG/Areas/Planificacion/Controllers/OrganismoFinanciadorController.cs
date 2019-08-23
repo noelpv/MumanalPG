@@ -86,7 +86,8 @@ namespace MumanalPG.Areas.Planificacion.Controllers
             {
                 ApplicationUser currentUser = await GetCurrentUser();
                 item.IdUsuario = currentUser.AspNetUserId;
-                item.Gestion = "2019";
+                item.Gestion = Convert.ToString(DateTime.Now.Year);
+                // item.Gestion = "2019";
                 item.IdBeneficiario = 0;
                 item.IdPais = 1;
                 item.CargoRepresentante = "-";
@@ -138,7 +139,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
                 {
                     ApplicationUser currentUser = await GetCurrentUser();
                     item.IdUsuario = currentUser.AspNetUserId;
-                    item.Gestion = "2019";
+                    item.Gestion = Convert.ToString(DateTime.Now.Year);
                     item.IdBeneficiario = 0;
                     item.IdPais = 1;
                     item.CargoRepresentante = "-";

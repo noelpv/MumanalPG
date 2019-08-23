@@ -1,9 +1,13 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -27,10 +31,11 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
     {        
         public const  string RedirectHRCreate = "HRCREATE";
         public const  string RedirectHRSent = "HRSENT";
+        private readonly IHostingEnvironment hostingEnvironment;
         
-        public HojasRutaInternaController(ApplicationDbContext db, UserManager<IdentityUser> userManager): base(db, userManager)
+        public HojasRutaInternaController(ApplicationDbContext db, UserManager<IdentityUser> userManager, IHostingEnvironment environment): base(db, userManager)
         {
-            
+            hostingEnvironment = environment; 
         }
 
 		// GET: Correspondencia/Documentos
@@ -38,16 +43,13 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         public async Task<IActionResult> Index(string filter, string type, int page = 1, string sortExpression = "-FechaRegistro", string a = "")
         {
 
-
-
-
             var consulta = DB.CorrespondenciaHRDetalle.AsNoTracking().AsQueryable();
             consulta = consulta.Include(m => m.AreaOrigen)
                                .Include(m => m.AreaDestino)
                                .Include(m => m.FunOrg)
                                .Include(m => m.FunDst)
                                .Include(m => m.HojaRuta)
-                               .Where(m => (m.HojaRuta.TipoHojaRuta == Constantes.HojaRutaInterna)); 
+                               .Where(m => (m.HojaRuta.TipoHojaRuta == Constantes.HojaRutaInterna && m.Id > 0)); 
             
             
             if (!string.IsNullOrWhiteSpace(filter))
@@ -60,31 +62,51 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             {
                 case Constantes.HRTipoUrgentes:
                     consulta = consulta.Where(m => m.HojaRuta.Prioridad == Constantes.PrioridadUrgente &&
-                                                   m.FunDstId == currentUser.Funcionario.IdBeneficiario &&
                                                    m.HojaRuta.IdEstadoRegistro != Constantes.Anulado && 
                                                    m.HojaRuta.IdEstadoRegistro != Constantes.Archivado && 
                                                    m.IdEstadoRegistro == Constantes.Registrado);
+                    if (!User.IsInRole(SD.SuperAdminEndUser))
+                    {
+                        consulta = consulta.Where(m => m.FunDstId == currentUser.Funcionario.IdBeneficiario);  
+                    }
+
+                    
                     break;
                 case Constantes.HRTipoDespachados:
-                    consulta = consulta.Where(m => m.FunOrgId == currentUser.Funcionario.IdBeneficiario &&
-                                                   m.HojaRuta.IdEstadoRegistro != Constantes.Anulado && 
+                    consulta = consulta.Where(m => m.HojaRuta.IdEstadoRegistro != Constantes.Anulado && 
                                                    m.HojaRuta.IdEstadoRegistro != Constantes.Archivado);
+                    if (!User.IsInRole(SD.SuperAdminEndUser))
+                    {
+                        consulta = consulta.Where(m => m.FunOrgId == currentUser.Funcionario.IdBeneficiario);  
+                    }
+                    
                     break;
                 case Constantes.HRTipoArchivados:
                     consulta = consulta.Where(m => (m.HojaRuta.IdEstadoRegistro == Constantes.Archivado ||
-                                                   m.IdEstadoRegistro == Constantes.Archivado) && 
-                                                   m.FunDstId == currentUser.Funcionario.IdBeneficiario);
+                                                   m.IdEstadoRegistro == Constantes.Archivado));
+                    if (!User.IsInRole(SD.SuperAdminEndUser))
+                    {
+                        consulta = consulta.Where(m => m.FunDstId == currentUser.Funcionario.IdBeneficiario);  
+                    }
                     break;
                 case Constantes.HRTipoEliminados:
                     consulta = consulta.Where(m => (m.HojaRuta.IdEstadoRegistro == Constantes.Anulado ||
-                                              m.IdEstadoRegistro == Constantes.Anulado) &&
-                                              m.FunDstId == currentUser.Funcionario.IdBeneficiario);
+                                              m.IdEstadoRegistro == Constantes.Anulado));
+                    
+                    if (!User.IsInRole(SD.SuperAdminEndUser))
+                    {
+                        consulta = consulta.Where(m => m.FunDstId == currentUser.Funcionario.IdBeneficiario);  
+                    }
                     break;
                 default:
-                    consulta = consulta.Where(m => m.FunDstId == currentUser.Funcionario.IdBeneficiario &&
-                                                   m.HojaRuta.IdEstadoRegistro != Constantes.Anulado && 
+                    consulta = consulta.Where(m => m.HojaRuta.IdEstadoRegistro != Constantes.Anulado && 
                                                    m.HojaRuta.IdEstadoRegistro != Constantes.Archivado && 
                                                    m.IdEstadoRegistro == Constantes.Registrado);
+                    
+                    if (!User.IsInRole(SD.SuperAdminEndUser))
+                    {
+                        consulta = consulta.Where(m => m.FunDstId == currentUser.Funcionario.IdBeneficiario );  
+                    }
                     type = Constantes.HRTipoRecibidos;
                     break;
             }
@@ -140,6 +162,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                                 .Include(m => m.FunDst)
                                 .Include(m => m.HojaRuta)
                                 .Include(m => m.HRDetalleInstrucciones)
+                                .Include(m => m.HojaRuta.Anexos).ThenInclude(t => t.Tipo)
                                 .FirstOrDefaultAsync(m => m.Id == id);
             if (item == null)
             {
@@ -165,7 +188,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             {
                 ViewBag.isDstUser = true;    
             }
-
+            
             ViewBag.instrucciones = instrucciones;
             ViewBag.Tipos = DB.CorrespondenciaTipoDocumento.Where(t => t.IdEstadoRegistro != Constantes.Anulado).ToList();
             ViewBag.documentosId = DB.CorrespondenciaHRDetalle
@@ -213,6 +236,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             ViewBag.areas = areas;
             ViewBag.instrucciones = instrucciones;
             ViewBag.Tipos = DB.CorrespondenciaTipoDocumento.Where(t => t.IdEstadoRegistro != Constantes.Anulado).ToList();
+            ViewBag.tiposAnexo = DB.CorrespondenciaTipoAnexo.Where(t => t.IdEstadoRegistro != Constantes.Anulado).ToList();
             return View("_Create", model);
         }
 
@@ -268,6 +292,8 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             ViewBag.areas = areas;
             ViewBag.instrucciones = instrucciones;
             ViewBag.HojaRuta = item.HojaRuta;
+            ViewBag.Tipos = DB.CorrespondenciaTipoDocumento.Where(t => t.IdEstadoRegistro != Constantes.Anulado).ToList();
+            ViewBag.tiposAnexo = DB.CorrespondenciaTipoAnexo.Where(t => t.IdEstadoRegistro != Constantes.Anulado).ToList();
             return View("_Derivar", model);
         }
 
@@ -287,6 +313,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                 var detalle = await DB.CorrespondenciaHRDetalle.FirstOrDefaultAsync(m => m.Id == item.Id);
                 detalle.IdEstadoRegistro = Constantes.Enviado;
                 hojaRuta = item.populateDetalle(hojaRuta, currentUser.AspNetUserId, DB);
+                hojaRuta = item.populateAnexos(hojaRuta, currentUser.AspNetUserId, DB);
                 DB.Update(hojaRuta);
                 DB.Update(detalle);
                 await DB.SaveChangesAsync();
@@ -368,12 +395,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                 .Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Nombre).ToList();
             
             var item = await DB.CorrespondenciaHRDetalle
-                .Include(m => m.AreaOrigen)
-                .Include(m => m.AreaDestino)
-                .Include(m => m.FunOrg)
-                .Include(m => m.FunDst)
                 .Include(m => m.HojaRuta)
-                .Include(m => m.HRDetalleInstrucciones)
                 .FirstOrDefaultAsync(m => m.Id == id);
             
             if (item == null)
@@ -381,11 +403,21 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                 return View("_NoEncontrado");
             }
 
+            var detalles = DB.CorrespondenciaHRDetalle
+                .Include(m => m.AreaOrigen)
+                .Include(m => m.AreaDestino)
+                .Include(m => m.FunOrg).ThenInclude(f => f.Puesto)
+                .Include(m => m.FunDst).ThenInclude(f => f.Puesto)
+                .Include(m => m.HojaRuta)
+                .Include(m => m.HRDetalleInstrucciones).ThenInclude(d => d.Instruccion)
+                .Where(hr => hr.HojaRutaId == item.HojaRutaId).ToList();
+            
             HojaRutaPDFDTO dto = new HojaRutaPDFDTO();
             dto.hojaRuta = item.HojaRuta;
             dto.detalle = item;
             dto.instrucciones = instrucciones;
-           // return PartialView("_HojaRuta", dto);
+            dto.derivaciones = detalles;
+            // return PartialView("_HojaRuta", dto);
             return new ViewAsPdf("_HojaRuta", dto)
             {
                 PageMargins = new Margins(15, 10, 12, 10),
@@ -421,6 +453,39 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             {
                 return Json(new {repositories = new {}});
             }
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> UploadFiles(IFormFile file)
+        {
+            long size = file.Length;
+
+            // full path to file in temp location
+//            var filePath = Path.GetTempFileName();
+            var uploadPath = Path.Combine("uploads", "correspondencia", DateTime.Today.ToString("yyyy-MM-dd"));
+            var filePath = Path.Combine(hostingEnvironment.WebRootPath, uploadPath);
+            var newName = $"{DateTime.Now.Ticks}_{file.FileName.RemoveDiacritics().Replace(" ", "_")}";
+            var fullPath = Path.Combine(filePath, newName);
+            
+            var fileToUpload = Path.Combine(uploadPath, newName);
+            
+            if (file.Length > 0)
+            {
+                if (!Directory.Exists(filePath)) 
+                {
+                    DirectoryInfo di = Directory.CreateDirectory(filePath);
+                }
+ 
+                using (var stream = new FileStream(fullPath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+            }
+
+            // process uploaded files
+            // Don't rely on or trust the FileName property without validation.
+
+            return Ok(new { file.FileName, size, fileToUpload});
         }
 
         private bool DocExists(Int32 id)

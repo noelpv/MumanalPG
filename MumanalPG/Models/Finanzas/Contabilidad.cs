@@ -7,7 +7,7 @@ namespace MumanalPG.Models.Finanzas
     [Table("Contabilidad", Schema = "Finanzas")]
     public class Contabilidad
     {
-        [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public Int32 IdContabilidad { get; set; }
         public Int32 IdTipoComprobante { get; set; }

@@ -28,7 +28,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
         }
 
         // GET: Finanzas/Banco
-        //[Breadcrumb("Banco", FromController = "DashboardPlan", FromAction = "Clasificadores")]
+        [Breadcrumb("Bancos y Ent. Financieras", FromController = "DashboardFinanzas", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
             var consulta = DB.Banco.AsNoTracking().AsQueryable();
@@ -125,6 +125,10 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             {
                 try
                 {
+                    ApplicationUser currentUser = await GetCurrentUser();
+                    item.IdUsuario = currentUser.AspNetUserId;
+                    item.IdEstadoRegistro = 1;
+                    item.FechaRegistro = DateTime.Now;
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }

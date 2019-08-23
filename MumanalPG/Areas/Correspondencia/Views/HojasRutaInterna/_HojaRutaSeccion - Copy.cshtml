@@ -1,0 +1,89 @@
+@model MumanalPG.Models.Correspondencia.DTO.HojaRutaPDFDTO;
+@using MumanalPG.Models.Correspondencia;
+<div class="box box-container margin-box mt-0">
+        <div class="row">
+            <div class="col col-1 text-right">
+                <label>DE:</label>
+            </div>
+            <div class="col col-5">
+                <p class="bg-light">&nbsp;</p>
+            </div>
+            <div class="col col-1 text-right">
+                <label>PARA:</label>
+            </div>
+            <div class="col col-5">
+                <p class="bg-light">
+                   &nbsp;
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-4">
+                <label>SOLICITO A USTED:</label>
+                <div class="row box box-min bg-light line-height-normal small text-right  m-0 p-0">
+                    @{
+                        int cont = 0;
+                        string html_str = "";
+                    }
+                    <table>
+                        @foreach (Instrucciones i in Model.instrucciones)
+                        {
+                            if (cont % 2 == 0)
+                            {
+                                html_str += $@"<tr style='border: 1px solid #ccc;'><td width='115px'><span>{@i.Nombre}</span></td>
+                                        <td><input type='checkbox'></td>";
+                            }
+                            else
+                            {
+                                html_str += $@"<td width='115px'><span>{@i.Nombre}</span></td>
+                                    <td><input type='checkbox'></td></tr>";
+                            }
+                            cont++;
+                        }
+                        @Html.Raw(html_str)
+                    </table>
+                </div>
+            </div>
+            <div class="col col-5 m-0 p-0">
+                <label>COMENTARIOS ADICIONALES:</label>
+                <div class="col-12 box box-min bg-light">
+                    <table>
+                        @for (int i = 1; i < 5; i++)
+                        {
+                            <tr style="border-bottom: solid #ccc 1px;"><td width="450px" >&nbsp;</td></tr>
+                        }
+                    </table>
+                </div>
+            </div>
+            <div class="col col-3 mt-0 pt-0" style="margin-left: 18px;">
+                <label>ANEXOS:</label>
+                <div class="col-10 box box-min bg-light"></div>
+            </div>
+        </div>
+        <div class="row box bg-light text-center mr-0 mt-0  mb-0 p-0">
+            <div class="col col-1 line-height-normal small">
+                <label>FECHA DE EMISIÓN:</label>
+            </div>
+            <div class="col col-2 text-left">
+                <p class="bg-light">&nbsp;</p>
+            </div>
+            <div class="col col-1 line-height-normal small">
+                <label>FIRMA DE EMISIÓN:</label>
+            </div>
+            <div class="col col-2">
+                <p class="bg-light">&nbsp;</p>
+            </div>
+            <div class="col col-1 line-height-normal small">
+                <label>FECHA DE RECEPCIÓN:</label>
+            </div>
+            <div class="col col-2">
+                <p class="bg-light">&nbsp;</p>
+            </div>
+            <div class="col col-1 line-height-normal small">
+                <label>FIRMA DE RECEPCIÓN:</label>
+            </div>
+            <div class="col col-2">
+                <p class="bg-light">&nbsp;</p>
+            </div>
+        </div>
+    </div>

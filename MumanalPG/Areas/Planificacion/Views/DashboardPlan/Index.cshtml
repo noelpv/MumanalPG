@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "Planificacion";
 }
-<div class="container-fluid">
+@*<div class="container-fluid">*@
     <div class="row">
         @* <div class="col-md-4 col-sm-6 col-xs-12"> *@
         @*     <a href=""> *@
@@ -50,12 +50,12 @@
                         <i class="ti-agenda"></i>
                     </div>
                     <h4>Presupuesto Ingreso</h4>
-                    <p class="ribbon-content">Se registra el Presupuesto de Ingresos de la Institución</p>
+                    <p class="ribbon-content">Se registra el Presupuesto de Ingresos de la Institucion</p>
                 </div>
             </a>
         </div>
 
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        @*<div class="col-md-4 col-sm-6 col-xs-12">
             <a href="">
                 <div class="ribbon-vwrapper card">
                     <div class="ribbon ribbon-danger ribbon-vertical-l">
@@ -65,7 +65,7 @@
                     <p class="ribbon-content">Se realizan la Modificaciones Presupuestarias, despues de Aprobar el Presupuesto institucional.</p>
                 </div>
             </a>
-        </div>
+        </div>*@
 
         @*<div class="col-md-4 col-sm-6 col-xs-12">
                 <a href="">
@@ -79,7 +79,7 @@
                 </a>
             </div>*@
 
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        @*<div class="col-md-4 col-sm-6 col-xs-12">
             <a href="">
                 <div class="ribbon-vwrapper card">
                     <div class="ribbon ribbon-primary ribbon-vertical-l">
@@ -89,9 +89,8 @@
                     <p class="ribbon-content">Reportes del Sub Sistema de Planificacion.</p>
                 </div>
             </a>
-        </div>
-    </div>
-    <div class="row">
+        </div>*@
+
         <div class="col-md-4 col-sm-6 col-xs-12">
             <a asp-area="Planificacion" asp-controller="DashboardPlan" asp-action="Clasificadores">
                 <div class="ribbon-vwrapper card">
@@ -104,4 +103,4 @@
             </a>
         </div>
     </div>
-</div>
+@*</div>*@

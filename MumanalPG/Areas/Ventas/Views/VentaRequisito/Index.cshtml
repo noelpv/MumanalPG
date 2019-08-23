@@ -1,26 +1,25 @@
 ﻿@model IEnumerable<MumanalPG.Models.Ventas.vRequisito>
 
 @{
-    ViewData["Title"] = "Prestaciones / ASR / Registro / Requisitos";
+    ViewData["Title"] = "Requisitos";
 }
-
 
 <div class="row">
     <div class="col-6">
         <h3>@ViewBag.Titular</h3>
     </div>
     <div class="col-6 text-right">
-        @if (ViewContext.HttpContext.User.IsInRole("SUPER ADMIN") || ViewContext.HttpContext.User.IsInRole("AGENTE"))
+        @if (ViewContext.HttpContext.User.IsInRole("Super Admin") || ViewContext.HttpContext.User.IsInRole("AGENTE"))
         {
-            <a class="btn btn-success" asp-action="Enviar" asp-route-id="@ViewBag.IdVentaContratacion">Enviar</a>
+            <a class="btn btn-success" asp-action="Enviar" asp-route-id="@ViewBag.IdVentaContratacion" data-modal="link" data-modal-read="True">Enviar</a>
         }
-        @if (ViewContext.HttpContext.User.IsInRole("SUPER ADMIN") || ViewContext.HttpContext.User.IsInRole("ASRSUPERVISOR1"))
+        @if (ViewContext.HttpContext.User.IsInRole("Super Admin") || ViewContext.HttpContext.User.IsInRole("ASRSUPERVISOR1"))
         {
             <a class="btn btn-success" asp-action="Revisado" asp-route-id="@ViewBag.IdVentaContratacion">Revisado</a>
             <a class="btn btn-success" asp-action="Rechazar" asp-route-id="@ViewBag.IdVentaContratacion">Rechazar</a>
         }
 
-        @if (ViewContext.HttpContext.User.IsInRole("SUPER ADMIN") || ViewContext.HttpContext.User.IsInRole("ASRSUPERVISOR2"))
+        @if (ViewContext.HttpContext.User.IsInRole("Super Admin") || ViewContext.HttpContext.User.IsInRole("ASRSUPERVISOR2"))
         {
             <a class="btn btn-success" asp-action="Aprobar" asp-route-id="@ViewBag.IdVentaContratacion">Aprobar</a>
         }
@@ -66,7 +65,7 @@
                     @Html.DisplayFor(modelItem => item.EsObligatorio)
                 </td>
                 <td>
-                    @if (ViewContext.HttpContext.User.IsInRole("SUPER ADMIN") || ViewContext.HttpContext.User.IsInRole("AGENTE"))
+                    @if (ViewContext.HttpContext.User.IsInRole("Super Admin") || ViewContext.HttpContext.User.IsInRole("AGENTE"))
                     {
                         <a class="btn btn-info" asp-action="Escanear" asp-route-id="@item.IdVentaRequisito" asp-route-Documento="@item.Descripcion">Scan</a>
                         <a class="btn btn-info" asp-action="CargaArchivo" asp-route-id="@item.IdVentaRequisito" asp-route-Documento="@item.Descripcion">Cargar</a>
@@ -77,6 +76,4 @@
             </tr>
         }
     </tbody>
-
-
 </table>

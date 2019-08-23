@@ -1,120 +1,97 @@
 @model MumanalPG.Models.Correspondencia.DTO.HojaRutaPDFDTO;
 @using MumanalPG.Models.Correspondencia;
-<div class="box box-container margin-box mt-0">
+    @foreach (HojaRutaDetalle detalle in Model.derivaciones)
+    {
+       <div class="box box-container margin-box mt-0">
         <div class="row">
             <div class="col col-1 text-right">
                 <label>DE:</label>
             </div>
             <div class="col col-5">
-                <p class="bg-light">@Model.detalle.FunOrg.Denominacion</p>
+                <p class="bg-light nombre-funcionario">
+                    @detalle.FunOrg.Denominacion<br/>
+                    <b>@detalle.FunOrg.Puesto.Descripcion.ToUpper()</b>
+                </p>
             </div>
             <div class="col col-1 text-right">
                 <label>PARA:</label>
             </div>
             <div class="col col-5">
-                <p class="bg-light">
-                    @Model.detalle.FunDst.Denominacion
+                <p class="bg-light nombre-funcionario">
+                    @detalle.FunDst.Denominacion<br/>
+                    <b>@detalle.FunDst.Puesto.Descripcion.ToUpper()</b>
                 </p>
             </div>
         </div>
-        <div class="row">
-            <div class="col col-4">
-                <label>SOLICITO A USTED:</label>
-                <div class="row box box-min bg-light line-height-normal small text-right  m-0 p-0">
-                    @{
-                        int cont = 0;
-                        string html_str = "";
+        <div class="row m-0 p-0">
+            <div class="col col-12 m-0 p-0">
+                @{
+                    List<string> ins = new List<string>();
+                    foreach (var di in detalle.HRDetalleInstrucciones)
+                    {
+                        ins.Add(di.Instruccion.Nombre);
                     }
-                    <table>
-                        @foreach (Instrucciones i in Model.instrucciones)
-                        {
-                            bool is_in = false;
-                            foreach (var di in Model.detalle.HRDetalleInstrucciones)
-                            {
-                                if (di.InstruccionId == i.Id)
-                                {
-                                    is_in = true;
-                                    break;
-                                }
-
-                            }
-
-                            if (is_in)
-                            {
-                                if (cont % 2 == 0)
-                                {
-                                    html_str += $@"<tr style='border: 1px solid #ccc;'><td width='115px'><span>{@i.Nombre}</span></td>
-                                        <td><input type='checkbox' checked></td>";
-                                }
-                                else
-                                {
-                                    html_str += $@"<td width='115px'><span>{@i.Nombre}</span></td>
-                                    <td><input type='checkbox' checked></td></tr>";
-                                }
-                            }
-                            else
-                            {
-                                if (cont % 2 == 0)
-                                {
-                                    html_str += $@"<tr style='border: 1px solid #ccc;'><td width='115px'><span>{@i.Nombre}</span></td>
-                                        <td><input type='checkbox'></td>";
-                                }
-                                else
-                                {
-                                    html_str += $@"<td width='115px'><span>{@i.Nombre}</span></td>
-                                    <td><input type='checkbox'></td></tr>";
-                                }
-                            }
-                            
-                            cont++;
-                        }
-                        @Html.Raw(html_str)
-                    </table>
-                </div>
+                }
+                <label>SOLICITO A USTED:</label>
+                <span class="badge badge-primary">
+                    @Html.Raw(String.Join("</span>, <span class='badge badge-primary'> ", ins))
+                </span>
             </div>
-            <div class="col col-5 m-0 p-0">
+        </div>
+        <div class="row"> 
+            <div class="col col-6 m-0 p-0">
                 <label>COMENTARIOS ADICIONALES:</label>
-                <div class="col-12 box box-min bg-light">
+                <div class="col-12 box box-min bg-light pr-1 mt-0 pt-0">
                     <table>
-                        @for (int i = 1; i < 5; i++)
+                        @for (int i = 1; i < 6; i++)
                         {
-                            <tr style="border-bottom: solid #ccc 1px;"><td width="450px" >&nbsp;</td></tr>
+                            <tr style="border-bottom: solid #ccc 1px; padding: 0; margin:0; line-height: 26px;">
+                                <td width="450px">&nbsp;</td>
+                            </tr>
                         }
                     </table>
-                    <div class="small" style="position: absolute; top: 15px; left:10px; line-height: 32px;">
-                        @Model.detalle.Proveido
+                    <div class="small" style="position: absolute; top: 10px; left:10px; right: 10px; line-height: 27px;">
+                        <span>@detalle.Proveido</span>
                     </div>
                 </div>
             </div>
             <div class="col col-3 mt-0 pt-0" style="margin-left: 18px;">
-                <label>ANEXOS:</label>
-                <div class="col-10 box box-min bg-light"></div>
+                <label>SELLO EMISIÓN:</label>
+                <div class="col-11 box box-min bg-light mt-0 pt-0"></div>
+            </div>
+            <div class="col col-3 mt-0 pt-0" style="margin-left: -6px;">
+                <label>SELLO RECEPCIÓN:</label>
+                <div class="col-11 box box-min bg-light mt-0 pt-0"></div>
             </div>
         </div>
         <div class="row box bg-light text-center mr-0 mt-0  mb-0 p-0">
-            <div class="col col-1 line-height-normal small">
-                <label>FECHA DE EMISIÓN:</label>
+            <div class="col col-2 line-height-normal small">
+                <label style="position: absolute; top: 15px; right: 10px;">FECHA DE EMISIÓN:</label>
             </div>
             <div class="col col-2 text-left">
-                <p class="bg-light">@Model.detalle.FechaRegistro.ToString("dd/MM/yyyy")</p>
+                <p class="bg-light">@detalle.FechaRegistro.ToString("dd/MM/yyyy")</p>
             </div>
-            <div class="col col-1 line-height-normal small">
-                <label>FIRMA DE EMISIÓN:</label>
-            </div>
-            <div class="col col-2">
-                <p class="bg-light">&nbsp;</p>
-            </div>
-            <div class="col col-1 line-height-normal small">
-                <label>FECHA DE RECEPCIÓN:</label>
+            
+            <div class="col col-2 line-height-normal small">
+                <label style="position: absolute; top: 15px; right: 10px;">FECHA DE RECEPCIÓN:</label>
             </div>
             <div class="col col-2">
-                <p class="bg-light">&nbsp;</p>
+                @if (detalle.FechaRecepcion != null)
+                { 
+                    <p class="bg-light">@detalle.FechaRecepcion.Value.ToString("dd/MM/yyyy")</p>
+                }
+                else
+                {
+                   <p class="bg-light">&nbsp;</p> 
+                }
+                
             </div>
-            <div class="col col-1 line-height-normal small">
-                <label>FIRMA DE RECEPCIÓN:</label>
+            <div class="col col-2 line-height-normal small">
+                <label style="position: absolute; top: 15px; right: 10px;">NRO. FOJAS:</label>
             </div>
-            <div class="col col-2">
-                <p class="bg-light">&nbsp;</p>
+            <div class="col col-1">
+                <p class="bg-light">@detalle.HojaRuta.NroFojas</p>
             </div>
         </div>
     </div>
+    }

@@ -32,12 +32,30 @@
             </a>
         </li>
 
-
         <li class="@((String.Equals(currentArea.ToLower(), "Prestaciones")) ?  "selected" : "")">
             <a asp-area="Ventas" asp-controller="DashboardVenta" asp-action="index" class="waves-effect waves-dark">
                 <i class="mdi mdi-email-open-outline"></i><span class="hide-menu">Prestaciones</span>
             </a>
         </li>
+
+        <li class="@((String.Equals(currentArea.ToLower(), "Administra")) ?  "selected" : "")">
+            <a asp-area="Administra" asp-controller="dashboardAdministra" asp-action="index" class="waves-effect waves-dark">
+                <i class="mdi mdi-email-open-outline"></i><span class="hide-menu">Administrativo</span>
+            </a>
+        </li>
+
+        <li class="@((String.Equals(currentArea.ToLower(), "Finanzas")) ?  "selected" : "")">
+            <a asp-area="Finanzas" asp-controller="dashboardFinanzas" asp-action="index" class="waves-effect waves-dark">
+                <i class="mdi mdi-email-open-outline"></i><span class="hide-menu">Financiero</span>
+            </a>
+        </li>
+
+        <li class="@((String.Equals(currentArea.ToLower(), "RRHH")) ?  "selected" : "")">
+            <a asp-area="RRHH" asp-controller="dashboardRRHH" asp-action="index" class="waves-effect waves-dark">
+                <i class="mdi mdi-email-open-outline"></i><span class="hide-menu">Recursos Humanos</span>
+            </a>
+        </li>
+
         @*<li>
         <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
             <i class="fas fa-bezier-curve"></i><span class="hide-menu">Planificación</span>
@@ -155,7 +173,7 @@
             </ul>
         </li>*@
 
-        <li>
+        @*<li>
             <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                 <i class="fas fa-people-carry"></i><span class="hide-menu">Recursos Humanos </span>
             </a>
@@ -233,9 +251,9 @@
                     </ul>
                 </li>
             </ul>
-        </li>
+        </li>*@
         <li class="nav-small-cap"></li>
-        <li>
+        @*<li>
             <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                 <i class="fas fa-place-of-worship"></i><span class="hide-menu">Administrativo</span>
             </a>
@@ -336,13 +354,19 @@
                     <li><a href="javascript:void(0)">Modelos<i class="ti-list-ol"></i></a></li>
                     <li><a href="javascript:void(0)">Unidades de Medida<i class="ti-list-ol"></i></a></li>
                     <li><a href="javascript:void(0)">Marcas<i class="ti-list-ol"></i></a></li>
+                    <li>
+                        <a asp-area="Administra" asp-controller="TipoAlmacen" asp-action="Index">
+                            Tipo Almacenes <i class="fas fa-th-list"></i>
+                        </a>
+                    </li>
                 </ul>
                 <li>
                     <a href="form-material.html">Reportes <i class="ti-agenda"></i></a>
                 </li>
             </ul>
-        </li>
-        <li>
+        </li>*@
+
+        @*<li>
             <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                 <i class="fas fa-chart-line"></i><span class="hide-menu">Financiero</span>
             </a>
@@ -387,12 +411,12 @@
                 <li>
                     <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Clasificadores<i class="ti-align-left"></i></a>
                     <ul aria-expanded="false" class="collapse">
-                        @*<li>
+                        <li>
                             <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Clasificadores<i class="ti-align-left"></i></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="javascript:void(0)">Clasif 2<i class="ti-list-ol"></i></a></li>
                             </ul>
-                        </li>*@
+                        </li>
                         <li>
                             <a asp-area="Finanzas" asp-controller="Auxiliar" asp-action="Index">
                                 Auxiliar <i class="far fa-file-alt"></i>
@@ -409,10 +433,10 @@
                             </a>
                         </li>
                         <li>
-                            <a asp-area="Finanzas" asp-controller="Dosificacion" asp-action="Index">
-                                Dosificacion Facturas <i class="far fa-list-alt"></i>
-                            </a>
-                        </li>
+                        <a asp-area="Finanzas" asp-controller="Dosificacion" asp-action="Index">
+                            Dosificacion Facturas <i class="far fa-list-alt"></i>
+                        </a>
+                    </li>
                         <li>
                             <a asp-area="Finanzas" asp-controller="PlanCuentas" asp-action="Index">
                                 Plan de Cuentas <i class="far fa-id-badge"></i>
@@ -441,7 +465,8 @@
                     </ul>
                 </li>
             </ul>
-        </li>
+        </li>*@
+
         <li>
             <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                 <i class="fa fa-briefcase"></i><span class="hide-menu">Generales</span>
@@ -512,11 +537,9 @@
                         Frecuencia de Uso <i class="fas fa-file-alt"></i>
                     </a>
                 </li>
-                <li>
-                    <a asp-area="Generales" asp-controller="DocumentoRespaldo" asp-action="Index">
-                        Documento Respaldo <i class="fas fa-file-alt"></i>
-                    </a>
-                </li>
+                <!-- <li>
+                <li><a href="javascript:void(0)">Documento Respaldo<i class="ti-list-ol"></i></a></li>
+            </li> -->
                 <li>
                     <a asp-area="Generales" asp-controller="SistemaMenu" asp-action="Index">
                         Menú de Sistema <i class="fas fa-file-alt"></i>

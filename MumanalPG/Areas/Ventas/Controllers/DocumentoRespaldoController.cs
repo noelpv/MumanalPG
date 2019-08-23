@@ -35,7 +35,7 @@ namespace MumanalPG.Areas.Ventas.Controllers
         }
 
         // GET: Ventas/DocumentoRespaldo
-        [Breadcrumb("DocumentoRespaldo", FromController = "DashboardVenta", FromAction = "Clasificadores")]
+        [Breadcrumb("Documento Respaldo", FromController = "DashboardVenta", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
             var consulta = DB.Ventas_DocumentoRespaldo.AsNoTracking().AsQueryable();

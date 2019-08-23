@@ -71,11 +71,9 @@ namespace MumanalPG.Areas.Generales.Controllers
         public IActionResult Create()
         {
             var model = new Models.Generales.Barrio();
-            //ini combo
             var items = DB.Zona.
                 Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             ViewBag.Zona = items;
-            //ini combo
             return PartialView("Create", model);
         }
 
@@ -122,7 +120,7 @@ namespace MumanalPG.Areas.Generales.Controllers
         // POST: Generales/Barrio/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id,  Models.Generales.Barrio item)
+        public async Task<IActionResult> Edit(Int32 id, Models.Generales.Barrio item)
         {
             if (id != item.IdBarrio)
             {
@@ -133,6 +131,10 @@ namespace MumanalPG.Areas.Generales.Controllers
             {
                 try
                 {
+                    ApplicationUser currentUser = await GetCurrentUser();
+                    item.IdUsuario = currentUser.AspNetUserId;
+                    item.IdEstadoRegistro = 1;
+                    item.FechaRegistro = DateTime.Now;
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }

@@ -1,27 +1,16 @@
 @model MumanalPG.Models.Ventas.DocumentoRespaldo
 <form asp-action="@ViewData["Action"]">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    @{
-        string hasError = "has-danger";
-        string stringErrors = "";
-        if (ViewData.ModelState.IsValid) { hasError = ""; }
-        else
-        {
-            var errorList = ViewData.ModelState.Where(x => x.Value.Errors.Count > 0).ToDictionary(kvp => kvp.Key);
-            stringErrors = String.Join(",", errorList.Select(x => x.Key));
-        }
-
-    }
     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
     <input type="hidden" asp-for="IdDocumentoRespaldo" />
 
     <div class="form-group m-b-40">
         @Html.LabelFor(m => m.IdDocumentoClasificacion, new { @class = "control-label" })
         <br>
-         @*@Html.DropDownListFor(m => m.IdDocumentoClasificacion, new SelectList(ViewBag.DocumentoClasificacion, "IdDocumentoClasificacion", "Descripcion"), new { @class = "form-control" })*@
-        <select asp-for="IdDocumentoClasificacion" class="form-control"
+        @Html.DropDownListFor(m => m.IdDocumentoClasificacion, new SelectList(ViewBag.DocumentoClasificacion, "IdDocumentoClasificacion", "Descripcion"), new { @class = "form-control" })
+        @*<select asp-for="IdDocumentoClasificacion" class="form-control"
                 asp-items="@(new SelectList(ViewBag.DocumentoClasificacion, "IdDocumentoClasificacion", "Descripcion"))">
-        </select>
+        </select>*@
     </div>
     <div class="form-group m-b-40">
         @Html.LabelFor(m => m.Sigla, new { @class = "control-label" })
@@ -34,28 +23,18 @@
         @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "text-danger" })
     </div>
     <div class="form-group m-b-40">
-        <!-- DropDownList Modificado!!! -->
         @Html.LabelFor(m => m.IdFrecuenciaUso, new { @class = "control-label" })
         <br>
-        @*@Html.DropDownListFor(m => m.IdFrecuenciaUso, new SelectList(ViewBag.FrecuenciaUso, "IdFrecuenciaUso", "Descripcion"), new { @class = "form-control" })*@
-        @*<!-- Codigo Anterior - Actualizar al nuevo codigo de preferencia -->
-            <!--*@
-        @*@Html.DropDownList("IdFrecuenciaUso", ViewBag.FrecuenciaUso, "Sin asignar", new { @class = "form-control" })*@
-        <select asp-for="IdFrecuenciaUso" class="form-control"
-                asp-items="@(new SelectList(ViewBag.FrecuenciaUso, "IdFrecuenciaUso", "Descripcion"))"></select>
-        -->
+        @Html.DropDownListFor(m => m.IdFrecuenciaUso, new SelectList(ViewBag.FrecuenciaUso, "IdFrecuenciaUso", "Descripcion"), new { @class = "form-control" })
     </div>
     <div class="form-group m-b-40">
         @Html.LabelFor(m => m.IdDocumentoFormato, new { @class = "control-label" })
         <br>
-        @*@Html.DropDownList("IdDocumentoFormato", new SelectList(ViewBag.DocumentoFormato, "IdDocumentoFormato","Descripcion"), new { @class = "form-control" })*@
-        <select asp-for="IdDocumentoFormato" class="form-control"
-                asp-items="@(new SelectList(ViewBag.DocumentoFormato, "IdDocumentoFormato", "Descripcion"))">
-        </select>
+        @Html.DropDownListFor(m => m.IdDocumentoFormato, new SelectList(ViewBag.DocumentoFormato, "IdDocumentoFormato","Descripcion"), new { @class = "form-control" })
     </div>
     <div class="form-group m-b-40">
         @Html.LabelFor(m => m.NumeroCopias, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.NumeroCopias, new { @class = "form-control" })
+        @Html.EditorFor(m => m.NumeroCopias, new { htmlAttributes = new { @class = "form-control"}})
         @Html.ValidationMessageFor(m => m.NumeroCopias, "", new { @class = "text-danger" })
     </div>
     <div class="form-group m-b-40">
@@ -64,14 +43,13 @@
         @Html.ValidationMessageFor(m => m.LugarFisicoArchivado, "", new { @class = "text-danger" })
     </div>
     <div class="form-group m-b-40">
-        <!-- Checkbox para valores booleanos (true/false) -->
         @Html.LabelFor(m => m.EsUsadoComoRequisito, new { @class = "control-label" })
         &nbsp; &nbsp;
         @Html.CheckBoxFor(m => m.EsUsadoComoRequisito, new { @class = "form-control-checkboxfor" })
     </div>
     <div class="form-group m-b-40">
         @Html.LabelFor(m => m.Orden, new { @class = "control-label" })
-        @Html.TextBoxFor(m => m.Orden, new { @class = "form-control" })
+        @Html.EditorFor(m => m.Orden, new { htmlAttributes = new { @class = "form-control"}})
         @Html.ValidationMessageFor(m => m.Orden, "", new { @class = "text-danger" })
     </div>
     <div class="form-group m-b-40">

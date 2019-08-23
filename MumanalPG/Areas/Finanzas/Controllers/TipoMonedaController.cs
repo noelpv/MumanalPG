@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Dynamic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +16,10 @@ using MumanalPG.Models;
 using MumanalPG.Utility;
 using ReflectionIT.Mvc.Paging;
 using SmartBreadcrumbs;
+using MumanalPG.Extensions;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace MumanalPG.Areas.Finanzas.Controllers
 {
@@ -28,7 +35,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
         }
 
         // GET: Finanzas/TipoMoneda
-        //[Breadcrumb("TipoMoneda", FromController = "DashboardPlan", FromAction = "Clasificadores")]
+        [Breadcrumb("Tipos de Monedas", FromController = "DashboardFinanzas", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
             var consulta = DB.TipoMoneda.AsNoTracking().AsQueryable();
@@ -50,13 +57,11 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             {
                 return NotFound();
             }
-
             var item = await DB.TipoMoneda.FirstOrDefaultAsync(m => m.IdTipoMoneda  == id);
             if (item == null)
             {
                 return NotFound();
             }
-
             return PartialView("Details",item);
         }
 
@@ -64,35 +69,33 @@ namespace MumanalPG.Areas.Finanzas.Controllers
         public IActionResult Create()
         {
             var model = new Models.Finanzas.TipoMoneda();
-
-            var items = new List<SelectListItem>();
-            items = DB.Pais.                   
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdPais.ToString()
-                   }).
-                   ToList();
+            //ini combo
+            var items = DB.Pais.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             ViewBag.Pais = items;
-
+            //Fin combo
             return PartialView("Create", model);
         }
 
         // POST: Finanzas/TipoMoneda/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Models.Finanzas.TipoMoneda item, string Pais)
+        public async Task<IActionResult> Create(Models.Finanzas.TipoMoneda item)
         {
             if (ModelState.IsValid)
             {
                 ApplicationUser currentUser = await GetCurrentUser();
                 item.IdUsuario = currentUser.AspNetUserId;
-                item.IdEstadoRegistro = '1';
+                item.IdEstadoRegistro = 1;
                 item.FechaRegistro = DateTime.Now;
-                item.IdPais = Convert.ToInt32(Pais);
                 DB.Add(item);
                 await DB.SaveChangesAsync();
+                SetFlashSuccess("Registro creado satisfactoriamente");
             }
+            var items = DB.Pais.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Pais = items;
+
             return PartialView("Create",item);
         }
 
@@ -108,14 +111,8 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             {
                 return NotFound();
             }
-            var items = new List<SelectListItem>();
-            items = DB.Pais.
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdPais.ToString()
-                   }).
-                   ToList();
+            var items = DB.Pais.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             ViewBag.Pais = items;
 
             return PartialView( "Edit", item);
@@ -124,7 +121,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
         // POST: Finanzas/TipoMoneda/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, [Bind("IdTipoMoneda,Descripcion,Sigla, IdPais")] Models.Finanzas.TipoMoneda item, string Pais)
+        public async Task<IActionResult> Edit(Int32 id,  Models.Finanzas.TipoMoneda item)
         {
             if (id != item.IdTipoMoneda)
             {
@@ -135,7 +132,10 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             {
                 try
                 {
-                    item.IdPais = Convert.ToInt32(Pais);
+                    ApplicationUser currentUser = await GetCurrentUser();
+                    item.IdUsuario = currentUser.AspNetUserId;
+                    item.IdEstadoRegistro = 1;
+                    item.FechaRegistro = DateTime.Now;
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }
@@ -152,6 +152,9 @@ namespace MumanalPG.Areas.Finanzas.Controllers
                 }
                 
             }
+            var items = DB.Pais.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Pais = items;
             return PartialView("Edit", item);
         }
 

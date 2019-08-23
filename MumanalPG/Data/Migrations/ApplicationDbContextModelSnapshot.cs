@@ -16,7 +16,7 @@ namespace MumanalPG.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -898,7 +898,8 @@ namespace MumanalPG.Data.Migrations
                     b.Property<int>("IdTipoAlmacen")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Descripcion");
+                    b.Property<string>("Descripcion")
+                        .IsRequired();
 
                     b.Property<DateTime>("FechaRegistro");
 
@@ -945,19 +946,28 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<DateTime>("FechaRegistro");
 
-                    b.Property<int>("HRDetalleId");
+                    b.Property<int?>("HRDetalleId")
+                        .IsRequired();
+
+                    b.Property<int?>("HojaRutaId");
 
                     b.Property<int>("IdEstadoRegistro");
 
                     b.Property<int>("IdUsuario");
 
+                    b.Property<string>("NombreArchivo");
+
                     b.Property<string>("PathArchivo");
+
+                    b.Property<int>("Size");
 
                     b.Property<int>("TipoId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("HRDetalleId");
+
+                    b.HasIndex("HojaRutaId");
 
                     b.HasIndex("TipoId");
 
@@ -1042,6 +1052,24 @@ namespace MumanalPG.Data.Migrations
                     b.HasIndex("TipoId");
 
                     b.ToTable("Documentos","Correspondencia");
+                });
+
+            modelBuilder.Entity("MumanalPG.Models.Correspondencia.HRDetalleInstrucciones", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("HRDetalleId");
+
+                    b.Property<int>("InstruccionId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HRDetalleId");
+
+                    b.HasIndex("InstruccionId");
+
+                    b.ToTable("HRDetalleInstrucciones","Correspondencia");
                 });
 
             modelBuilder.Entity("MumanalPG.Models.Correspondencia.HojaRuta", b =>
@@ -1148,24 +1176,6 @@ namespace MumanalPG.Data.Migrations
                     b.ToTable("HojaRutaDetalle","Correspondencia");
                 });
 
-            modelBuilder.Entity("MumanalPG.Models.Correspondencia.HRDetalleInstrucciones", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("HRDetalleId");
-
-                    b.Property<int>("InstruccionId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HRDetalleId");
-
-                    b.HasIndex("InstruccionId");
-
-                    b.ToTable("HRDetalleInstrucciones","Correspondencia");
-                });
-
             modelBuilder.Entity("MumanalPG.Models.Correspondencia.Instrucciones", b =>
                 {
                     b.Property<int>("Id")
@@ -1241,7 +1251,9 @@ namespace MumanalPG.Data.Migrations
                     b.Property<int>("IdAuxiliar")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Descripcion");
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<DateTime>("FechaRegistro");
 
@@ -1249,11 +1261,17 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<int>("IdUsuario");
 
-                    b.Property<string>("NombreCampoCodigo");
+                    b.Property<string>("NombreCampoCodigo")
+                        .IsRequired()
+                        .HasMaxLength(40);
 
-                    b.Property<string>("NombreCampoDescripcion");
+                    b.Property<string>("NombreCampoDescripcion")
+                        .IsRequired()
+                        .HasMaxLength(80);
 
-                    b.Property<string>("NombreTabla");
+                    b.Property<string>("NombreTabla")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.HasKey("IdAuxiliar");
 
@@ -1265,15 +1283,25 @@ namespace MumanalPG.Data.Migrations
                     b.Property<int>("IdBanco")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("BancoIntermediario");
+                    b.Property<string>("BancoIntermediario")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
-                    b.Property<string>("CargoRepresentante");
+                    b.Property<string>("CargoRepresentante")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
-                    b.Property<string>("CodigoPostal");
+                    b.Property<string>("CodigoPostal")
+                        .IsRequired()
+                        .HasMaxLength(20);
 
-                    b.Property<string>("Descripcion");
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
-                    b.Property<string>("Direccion");
+                    b.Property<string>("Direccion")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<bool>("EsReservaFederal");
 
@@ -1285,13 +1313,21 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<int>("IdUsuario");
 
-                    b.Property<string>("NIT");
+                    b.Property<string>("NIT")
+                        .IsRequired()
+                        .HasMaxLength(20);
 
-                    b.Property<string>("Observaciones");
+                    b.Property<string>("Observaciones")
+                        .IsRequired()
+                        .HasMaxLength(200);
 
-                    b.Property<string>("Representante");
+                    b.Property<string>("Representante")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
-                    b.Property<string>("Sigla");
+                    b.Property<string>("Sigla")
+                        .IsRequired()
+                        .HasMaxLength(10);
 
                     b.HasKey("IdBanco");
 
@@ -1303,13 +1339,20 @@ namespace MumanalPG.Data.Migrations
                     b.Property<int>("IdCuentaBancaria")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CodigoSigep");
+                    b.Property<string>("CodigoSigep")
+                        .IsRequired();
 
-                    b.Property<string>("CodigoTgn");
+                    b.Property<string>("CodigoTgn")
+                        .IsRequired()
+                        .HasMaxLength(10);
 
-                    b.Property<string>("CuentaCodigo");
+                    b.Property<string>("CuentaCodigo")
+                        .IsRequired()
+                        .HasMaxLength(40);
 
-                    b.Property<string>("Descripcion");
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(150);
 
                     b.Property<decimal>("EgresosBs");
 
@@ -1365,7 +1408,9 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<DateTime>("DosificacionFecha");
 
-                    b.Property<string>("DosificacionLlave");
+                    b.Property<string>("DosificacionLlave")
+                        .IsRequired()
+                        .HasMaxLength(256);
 
                     b.Property<DateTime>("FechaFinal");
 
@@ -1386,7 +1431,8 @@ namespace MumanalPG.Data.Migrations
                     b.Property<int>("IdUsuario");
 
                     b.Property<string>("NumeroAutorizacion")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(40);
 
                     b.HasKey("IdDosificacion");
 
@@ -1398,7 +1444,9 @@ namespace MumanalPG.Data.Migrations
                     b.Property<int>("IdPlanCuentas")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Cuenta");
+                    b.Property<string>("Cuenta")
+                        .IsRequired()
+                        .HasMaxLength(5);
 
                     b.Property<bool>("EsDeMovimiento");
 
@@ -1420,11 +1468,17 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<int>("Nivel");
 
-                    b.Property<string>("NombreCuenta");
+                    b.Property<string>("NombreCuenta")
+                        .IsRequired()
+                        .HasMaxLength(200);
 
-                    b.Property<string>("SubCuenta1");
+                    b.Property<string>("SubCuenta1")
+                        .IsRequired()
+                        .HasMaxLength(3);
 
-                    b.Property<string>("SubCuenta2");
+                    b.Property<string>("SubCuenta2")
+                        .IsRequired()
+                        .HasMaxLength(3);
 
                     b.HasKey("IdPlanCuentas");
 
@@ -1436,7 +1490,9 @@ namespace MumanalPG.Data.Migrations
                     b.Property<int>("IdTipoComprobante")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Descripcion");
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<bool>("EsCobranza");
 
@@ -1454,7 +1510,9 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<int>("IdUsuario");
 
-                    b.Property<string>("Sigla");
+                    b.Property<string>("Sigla")
+                        .IsRequired()
+                        .HasMaxLength(5);
 
                     b.HasKey("IdTipoComprobante");
 
@@ -1466,7 +1524,9 @@ namespace MumanalPG.Data.Migrations
                     b.Property<int>("IdTipoCuentaBanco")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Descripcion");
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<DateTime>("FechaRegistro");
 
@@ -1484,7 +1544,9 @@ namespace MumanalPG.Data.Migrations
                     b.Property<int>("IdTipoMoneda")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Descripcion");
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<DateTime>("FechaRegistro");
 
@@ -1494,7 +1556,9 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<int>("IdUsuario");
 
-                    b.Property<string>("Sigla");
+                    b.Property<string>("Sigla")
+                        .IsRequired()
+                        .HasMaxLength(5);
 
                     b.HasKey("IdTipoMoneda");
 
@@ -1506,7 +1570,9 @@ namespace MumanalPG.Data.Migrations
                     b.Property<int>("IdTipoTransaccion")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Descripcion");
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<DateTime>("FechaRegistro");
 
@@ -1519,12 +1585,80 @@ namespace MumanalPG.Data.Migrations
                     b.ToTable("TipoTransaccion","Finanzas");
                 });
 
+            modelBuilder.Entity("MumanalPG.Models.Generales.Barrio", b =>
+                {
+                    b.Property<int>("IdBarrio")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime>("FechaRegistro");
+
+                    b.Property<int>("IdEstadoRegistro");
+
+                    b.Property<int>("IdUsuario");
+
+                    b.Property<int>("IdZona");
+
+                    b.HasKey("IdBarrio");
+
+                    b.ToTable("Barrio","Generales");
+                });
+
+            modelBuilder.Entity("MumanalPG.Models.Generales.Calle", b =>
+                {
+                    b.Property<int>("IdCalle")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime>("FechaRegistro");
+
+                    b.Property<int>("IdBarrio");
+
+                    b.Property<int>("IdCalleTipo");
+
+                    b.Property<int>("IdEstadoRegistro");
+
+                    b.Property<int>("IdUsuario");
+
+                    b.HasKey("IdCalle");
+
+                    b.ToTable("Calle","Generales");
+                });
+
+            modelBuilder.Entity("MumanalPG.Models.Generales.CalleTipo", b =>
+                {
+                    b.Property<int>("IdCalleTipo")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime>("FechaRegistro");
+
+                    b.Property<int>("IdEstadoRegistro");
+
+                    b.Property<int>("IdUsuario");
+
+                    b.HasKey("IdCalleTipo");
+
+                    b.ToTable("CalleTipo","Generales");
+                });
+
             modelBuilder.Entity("MumanalPG.Models.Generales.Continente", b =>
                 {
                     b.Property<int>("IdContinente")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Descripcion");
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<DateTime>("FechaRegistro");
 
@@ -1542,7 +1676,9 @@ namespace MumanalPG.Data.Migrations
                     b.Property<int>("IdDepartamento")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Descripcion");
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<DateTime>("FechaRegistro");
 
@@ -1552,49 +1688,324 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<int>("IdUsuario");
 
-                    b.Property<string>("Sigla");
+                    b.Property<string>("Sigla")
+                        .IsRequired()
+                        .HasMaxLength(5);
 
                     b.HasKey("IdDepartamento");
 
                     b.ToTable("Departamento","Generales");
                 });
 
-            modelBuilder.Entity("MumanalPG.Models.Generales.DocumentoRespaldo", b =>
+            modelBuilder.Entity("MumanalPG.Models.Generales.DocumentoClasificacion", b =>
                 {
-                    b.Property<int>("IdDocumentoRespaldo")
+                    b.Property<int>("IdDocumentoClasificacion")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Descripcion");
-
-                    b.Property<bool>("EsObligatorio");
-
-                    b.Property<bool>("EsUsadoComoRequisito");
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(80);
 
                     b.Property<DateTime>("FechaRegistro");
 
-                    b.Property<int>("IdDocumentoClasificacion");
-
-                    b.Property<int>("IdDocumentoFormato");
-
                     b.Property<int>("IdEstadoRegistro");
-
-                    b.Property<int>("IdFrecuenciaUso");
-
-                    b.Property<int>("IdProceso");
 
                     b.Property<int>("IdUsuario");
 
-                    b.Property<string>("LugarFisicoArchivado");
+                    b.Property<string>("Sigla")
+                        .IsRequired()
+                        .HasMaxLength(3);
 
-                    b.Property<int>("NumeroCopias");
+                    b.HasKey("IdDocumentoClasificacion");
 
-                    b.Property<int>("Orden");
+                    b.ToTable("DocumentoClasificacion","Generales");
+                });
 
-                    b.Property<string>("Sigla");
+            modelBuilder.Entity("MumanalPG.Models.Generales.DocumentoFormato", b =>
+                {
+                    b.Property<int>("IdDocumentoFormato")
+                        .ValueGeneratedOnAdd();
 
-                    b.HasKey("IdDocumentoRespaldo");
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(30);
 
-                    b.ToTable("DocumentoRespaldo","Generales");
+                    b.Property<DateTime>("FechaRegistro");
+
+                    b.Property<int>("IdEstadoRegistro");
+
+                    b.Property<int>("IdUsuario");
+
+                    b.HasKey("IdDocumentoFormato");
+
+                    b.ToTable("DocumentoFormato","Generales");
+                });
+
+            modelBuilder.Entity("MumanalPG.Models.Generales.EdificioTipo", b =>
+                {
+                    b.Property<int>("IdEdificioTipo")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime>("FechaRegistro");
+
+                    b.Property<int>("IdEstadoRegistro");
+
+                    b.Property<int>("IdUsuario");
+
+                    b.HasKey("IdEdificioTipo");
+
+                    b.ToTable("EdificioTipo","Generales");
+                });
+
+            modelBuilder.Entity("MumanalPG.Models.Generales.FrecuenciaUso", b =>
+                {
+                    b.Property<int>("IdFrecuenciaUso")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(30);
+
+                    b.Property<DateTime>("FechaRegistro");
+
+                    b.Property<int>("IdEstadoRegistro");
+
+                    b.Property<int>("IdUsuario");
+
+                    b.HasKey("IdFrecuenciaUso");
+
+                    b.ToTable("FrecuenciaUso","Generales");
+                });
+
+            modelBuilder.Entity("MumanalPG.Models.Generales.Municipio", b =>
+                {
+                    b.Property<int>("IdMunicipio")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime>("FechaRegistro");
+
+                    b.Property<string>("GestionCreacion")
+                        .IsRequired()
+                        .HasMaxLength(4);
+
+                    b.Property<int>("IdEstadoRegistro");
+
+                    b.Property<int>("IdProvincia");
+
+                    b.Property<int>("IdRegion");
+
+                    b.Property<int>("IdUsuario");
+
+                    b.Property<int>("Poblacion");
+
+                    b.Property<string>("Sigla")
+                        .IsRequired()
+                        .HasMaxLength(5);
+
+                    b.HasKey("IdMunicipio");
+
+                    b.ToTable("Municipio","Generales");
+                });
+
+            modelBuilder.Entity("MumanalPG.Models.Generales.Pais", b =>
+                {
+                    b.Property<int>("IdPais")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CodigoAeropuerto")
+                        .IsRequired()
+                        .HasMaxLength(10);
+
+                    b.Property<string>("CodigoHorario")
+                        .IsRequired()
+                        .HasMaxLength(10);
+
+                    b.Property<string>("CodigoIso")
+                        .IsRequired()
+                        .HasMaxLength(10);
+
+                    b.Property<string>("CodigoPais")
+                        .IsRequired()
+                        .HasMaxLength(3);
+
+                    b.Property<string>("CodigoTelefonico")
+                        .IsRequired()
+                        .HasMaxLength(10);
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("DescripcionIngles")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime>("FechaRegistro");
+
+                    b.Property<int>("IdContinente");
+
+                    b.Property<int>("IdEstadoRegistro");
+
+                    b.Property<int>("IdUsuario");
+
+                    b.Property<string>("Sigla")
+                        .IsRequired()
+                        .HasMaxLength(5);
+
+                    b.HasKey("IdPais");
+
+                    b.ToTable("Pais","Generales");
+                });
+
+            modelBuilder.Entity("MumanalPG.Models.Generales.ParametrosGenerales", b =>
+                {
+                    b.Property<int>("IdParametrosGenerales")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime>("FechaRegistro");
+
+                    b.Property<string>("Gestion")
+                        .IsRequired();
+
+                    b.Property<int>("IdEstadoRegistro");
+
+                    b.Property<int>("IdUsuario");
+
+                    b.Property<int>("MunicipioCodigo");
+
+                    b.Property<string>("NombreBD")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.Property<string>("NombreServidor")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.Property<string>("PathDocumentos")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.Property<string>("PathSistema")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.HasKey("IdParametrosGenerales");
+
+                    b.ToTable("ParametrosGenerales","Generales");
+                });
+
+            modelBuilder.Entity("MumanalPG.Models.Generales.Provincia", b =>
+                {
+                    b.Property<int>("IdProvincia")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime>("FechaRegistro");
+
+                    b.Property<int>("IdDepartamento");
+
+                    b.Property<int>("IdEstadoRegistro");
+
+                    b.Property<int>("IdUsuario");
+
+                    b.Property<string>("Sigla")
+                        .IsRequired()
+                        .HasMaxLength(5);
+
+                    b.HasKey("IdProvincia");
+
+                    b.ToTable("Provincia","Generales");
+                });
+
+            modelBuilder.Entity("MumanalPG.Models.Generales.SistemaFormulario", b =>
+                {
+                    b.Property<int>("IdSistemaFormulario")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime>("FechaRegistro");
+
+                    b.Property<int>("IdEstadoRegistro");
+
+                    b.Property<int>("IdSistemaMenu");
+
+                    b.Property<int>("IdUsuario");
+
+                    b.Property<string>("NombreObjeto")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.HasKey("IdSistemaFormulario");
+
+                    b.ToTable("SistemaFormulario","Generales");
+                });
+
+            modelBuilder.Entity("MumanalPG.Models.Generales.SistemaMenu", b =>
+                {
+                    b.Property<int>("IdSistemaMenu")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<bool>("EsTerminal");
+
+                    b.Property<DateTime>("FechaRegistro");
+
+                    b.Property<int>("IdEstadoRegistro");
+
+                    b.Property<int>("IdUsuario");
+
+                    b.Property<string>("MenuName")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.HasKey("IdSistemaMenu");
+
+                    b.ToTable("SistemaMenu","Generales");
+                });
+
+            modelBuilder.Entity("MumanalPG.Models.Generales.Zona", b =>
+                {
+                    b.Property<int>("IdZona")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime>("FechaRegistro");
+
+                    b.Property<int>("IdComunidad");
+
+                    b.Property<int>("IdEstadoRegistro");
+
+                    b.Property<int>("IdMunicipio");
+
+                    b.Property<int>("IdUsuario");
+
+                    b.HasKey("IdZona");
+
+                    b.ToTable("Zona","Generales");
                 });
 
             modelBuilder.Entity("MumanalPG.Models.Generales.fBuscaId", b =>
@@ -1627,68 +2038,6 @@ namespace MumanalPG.Data.Migrations
                     b.ToTable("Generales_fRetornaEntero");
                 });
 
-            modelBuilder.Entity("MumanalPG.Models.Generales.Municipio", b =>
-                {
-                    b.Property<int>("IdMunicipio")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Descripcion");
-
-                    b.Property<DateTime>("FechaRegistro");
-
-                    b.Property<int>("GestionCreacion");
-
-                    b.Property<int>("IdEstadoRegistro");
-
-                    b.Property<int>("IdProvincia");
-
-                    b.Property<int>("IdRegion");
-
-                    b.Property<int>("IdUsuario");
-
-                    b.Property<int>("Poblacion");
-
-                    b.Property<string>("Sigla");
-
-                    b.HasKey("IdMunicipio");
-
-                    b.ToTable("Municipio","Generales");
-                });
-
-            modelBuilder.Entity("MumanalPG.Models.Generales.Pais", b =>
-                {
-                    b.Property<int>("IdPais")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("CodigoAeropuerto");
-
-                    b.Property<string>("CodigoHorario");
-
-                    b.Property<string>("CodigoIso");
-
-                    b.Property<string>("CodigoPais");
-
-                    b.Property<string>("CodigoTelefonico");
-
-                    b.Property<string>("Descripcion");
-
-                    b.Property<string>("DescripcionIngles");
-
-                    b.Property<DateTime>("FechaRegistro");
-
-                    b.Property<int>("IdContinente");
-
-                    b.Property<int>("IdEstadoRegistro");
-
-                    b.Property<int>("IdUsuario");
-
-                    b.Property<string>("Sigla");
-
-                    b.HasKey("IdPais");
-
-                    b.ToTable("Pais","Generales");
-                });
-
             modelBuilder.Entity("MumanalPG.Models.Planificacion.EstructuraProgramatica", b =>
                 {
                     b.Property<int>("IdEstructuraProgramatica")
@@ -1696,7 +2045,9 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<string>("CodigoSisin");
 
-                    b.Property<string>("Descripcion");
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<DateTime>("FechaRegistro");
 
@@ -1708,7 +2059,9 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<string>("Nivel");
 
-                    b.Property<string>("Sigla");
+                    b.Property<string>("Sigla")
+                        .IsRequired()
+                        .HasMaxLength(5);
 
                     b.HasKey("IdEstructuraProgramatica");
 
@@ -1720,7 +2073,9 @@ namespace MumanalPG.Data.Migrations
                     b.Property<int>("IdFuenteFinanciamiento")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Descripcion");
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<DateTime>("FechaRegistro");
 
@@ -1728,7 +2083,9 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<int>("IdUsuario");
 
-                    b.Property<string>("Sigla");
+                    b.Property<string>("Sigla")
+                        .IsRequired()
+                        .HasMaxLength(5);
 
                     b.HasKey("IdFuenteFinanciamiento");
 
@@ -1764,7 +2121,8 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<string>("CargoRepresentante");
 
-                    b.Property<string>("Descripcion");
+                    b.Property<string>("Descripcion")
+                        .IsRequired();
 
                     b.Property<bool>("EsExterno");
 
@@ -1782,7 +2140,8 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<int>("IdUsuario");
 
-                    b.Property<string>("Sigla");
+                    b.Property<string>("Sigla")
+                        .IsRequired();
 
                     b.HasKey("IdOrganismoFinanciador");
 
@@ -1796,13 +2155,16 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<int>("CoeficienteDepreciacion");
 
-                    b.Property<string>("Descripcion");
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<bool>("EsUltimoNivel");
 
                     b.Property<DateTime>("FechaRegistro");
 
-                    b.Property<string>("Gestion");
+                    b.Property<string>("Gestion")
+                        .IsRequired();
 
                     b.Property<int>("IdEstadoRegistro");
 
@@ -1824,7 +2186,8 @@ namespace MumanalPG.Data.Migrations
                     b.Property<int>("IdPresupuestoGasto")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Descripcion");
+                    b.Property<string>("Descripcion")
+                        .IsRequired();
 
                     b.Property<decimal>("EjecucionAnulado");
 
@@ -1842,7 +2205,8 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<DateTime>("FechaRegistro");
 
-                    b.Property<string>("Gestion");
+                    b.Property<string>("Gestion")
+                        .IsRequired();
 
                     b.Property<int>("IdBeneficiario");
 
@@ -1884,7 +2248,8 @@ namespace MumanalPG.Data.Migrations
                     b.Property<int>("IdPresupuestoIngreso")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Descripcion");
+                    b.Property<string>("Descripcion")
+                        .IsRequired();
 
                     b.Property<decimal>("EjecucionDevengado");
 
@@ -1894,7 +2259,8 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<DateTime>("FechaRegistro");
 
-                    b.Property<string>("Gestion");
+                    b.Property<string>("Gestion")
+                        .IsRequired();
 
                     b.Property<int>("IdDocumentoRespaldo");
 
@@ -1962,13 +2328,15 @@ namespace MumanalPG.Data.Migrations
                     b.Property<int>("IdRubroIngreso")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Descripcion");
+                    b.Property<string>("Descripcion")
+                        .IsRequired();
 
                     b.Property<bool>("EsUltimoNivel");
 
                     b.Property<DateTime>("FechaRegistro");
 
-                    b.Property<string>("Gestion");
+                    b.Property<string>("Gestion")
+                        .IsRequired();
 
                     b.Property<int>("IdEstadoRegistro");
 
@@ -1981,6 +2349,19 @@ namespace MumanalPG.Data.Migrations
                     b.HasKey("IdRubroIngreso");
 
                     b.ToTable("RubroIngreso","Planificacion");
+                });
+
+            modelBuilder.Entity("MumanalPG.Models.ProductTypes", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductTypes");
                 });
 
             modelBuilder.Entity("MumanalPG.Models.Products", b =>
@@ -2027,31 +2408,6 @@ namespace MumanalPG.Data.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductsSelectedForAppointment");
-                });
-
-            modelBuilder.Entity("MumanalPG.Models.ProductTypes", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProductTypes");
-                });
-
-            modelBuilder.Entity("MumanalPG.Models.RoleViewModel", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RoleViewModel");
                 });
 
             modelBuilder.Entity("MumanalPG.Models.RRHH.Beneficiario", b =>
@@ -2198,6 +2554,8 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<string>("Descripcion");
 
+                    b.Property<bool>("EsExterna");
+
                     b.Property<bool?>("EsUltimoNivel");
 
                     b.Property<DateTime?>("FechaRegistro");
@@ -2215,6 +2573,8 @@ namespace MumanalPG.Data.Migrations
                     b.Property<decimal?>("MontoLimite");
 
                     b.Property<int?>("Nivel");
+
+                    b.Property<int>("OrdenMostrar");
 
                     b.Property<string>("Sigla");
 
@@ -2313,6 +2673,18 @@ namespace MumanalPG.Data.Migrations
                     b.ToTable("TipoBeneficiario","RRHHParam");
                 });
 
+            modelBuilder.Entity("MumanalPG.Models.RoleViewModel", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RoleViewModel");
+                });
+
             modelBuilder.Entity("MumanalPG.Models.Seguridad.Usuario", b =>
                 {
                     b.Property<string>("Id")
@@ -2387,7 +2759,11 @@ namespace MumanalPG.Data.Migrations
                     b.Property<int>("IdDocumentoRespaldo")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Descripcion");
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<bool>("EsObligatorio");
 
                     b.Property<bool>("EsUsadoComoRequisito");
 
@@ -2403,27 +2779,21 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<int>("IdUsuario");
 
-                    b.Property<string>("LugarFisicoArchivado");
+                    b.Property<string>("LugarFisicoArchivado")
+                        .IsRequired()
+                        .HasMaxLength(20);
 
                     b.Property<int>("NumeroCopias");
 
-                    b.Property<string>("Sigla");
+                    b.Property<int>("Orden");
+
+                    b.Property<string>("Sigla")
+                        .IsRequired()
+                        .HasMaxLength(6);
 
                     b.HasKey("IdDocumentoRespaldo");
 
                     b.ToTable("DocumentoRespaldo","Ventas");
-                });
-
-            modelBuilder.Entity("MumanalPG.Models.Ventas.pVerificaLimite", b =>
-                {
-                    b.Property<short>("CantidadLimite")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<decimal>("MontoLimite");
-
-                    b.HasKey("CantidadLimite");
-
-                    b.ToTable("Ventas_pVerificaLimite");
                 });
 
             modelBuilder.Entity("MumanalPG.Models.Ventas.TablaPDF", b =>
@@ -2440,32 +2810,6 @@ namespace MumanalPG.Data.Migrations
                     b.HasKey("IdTablaPDF");
 
                     b.ToTable("TablaPDF","Ventas");
-                });
-
-            modelBuilder.Entity("MumanalPG.Models.Ventas.vContratacion", b =>
-                {
-                    b.Property<int>("IdVentaContratacion")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Beneficiario");
-
-                    b.Property<int>("CorrelativoUnidad");
-
-                    b.Property<string>("Estado");
-
-                    b.Property<DateTime>("FechaVenta");
-
-                    b.Property<string>("Garante");
-
-                    b.Property<string>("Gestion");
-
-                    b.Property<string>("IdAsrSiver");
-
-                    b.Property<string>("UnidadEjecutora");
-
-                    b.HasKey("IdVentaContratacion");
-
-                    b.ToTable("vContratacion","Ventas");
                 });
 
             modelBuilder.Entity("MumanalPG.Models.Ventas.VentaContratacion", b =>
@@ -2683,7 +3027,8 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<int>("CorrelativoUnidad");
 
-                    b.Property<string>("Descripcion");
+                    b.Property<string>("Descripcion")
+                        .IsRequired();
 
                     b.Property<DateTime>("FechaAprueba");
 
@@ -2733,7 +3078,8 @@ namespace MumanalPG.Data.Migrations
                     b.Property<int>("IdVentaTarifario")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Descripcion");
+                    b.Property<string>("Descripcion")
+                        .IsRequired();
 
                     b.Property<int>("Escala");
 
@@ -2762,6 +3108,44 @@ namespace MumanalPG.Data.Migrations
                     b.HasKey("IdVentaTarifario");
 
                     b.ToTable("VentaTarifario","Ventas");
+                });
+
+            modelBuilder.Entity("MumanalPG.Models.Ventas.pVerificaLimite", b =>
+                {
+                    b.Property<short>("CantidadLimite")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<decimal>("MontoLimite");
+
+                    b.HasKey("CantidadLimite");
+
+                    b.ToTable("Ventas_pVerificaLimite");
+                });
+
+            modelBuilder.Entity("MumanalPG.Models.Ventas.vContratacion", b =>
+                {
+                    b.Property<int>("IdVentaContratacion")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Beneficiario");
+
+                    b.Property<int>("CorrelativoUnidad");
+
+                    b.Property<string>("Estado");
+
+                    b.Property<DateTime>("FechaVenta");
+
+                    b.Property<string>("Garante");
+
+                    b.Property<string>("Gestion");
+
+                    b.Property<string>("IdAsrSiver");
+
+                    b.Property<string>("UnidadEjecutora");
+
+                    b.HasKey("IdVentaContratacion");
+
+                    b.ToTable("vContratacion","Ventas");
                 });
 
             modelBuilder.Entity("MumanalPG.Models.Ventas.vRequisito", b =>
@@ -2798,8 +3182,6 @@ namespace MumanalPG.Data.Migrations
 
                     b.HasIndex("AspNetUserId")
                         .IsUnique();
-
-                    b.ToTable("ApplicationUser");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
@@ -2863,6 +3245,10 @@ namespace MumanalPG.Data.Migrations
                         .HasForeignKey("HRDetalleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("MumanalPG.Models.Correspondencia.HojaRuta", "HojaRuta")
+                        .WithMany("Anexos")
+                        .HasForeignKey("HojaRutaId");
+
                     b.HasOne("MumanalPG.Models.Correspondencia.TipoAnexo", "Tipo")
                         .WithMany("Anexos")
                         .HasForeignKey("TipoId")
@@ -2894,6 +3280,19 @@ namespace MumanalPG.Data.Migrations
                     b.HasOne("MumanalPG.Models.Correspondencia.TipoDocumento", "Tipo")
                         .WithMany("Documentos")
                         .HasForeignKey("TipoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MumanalPG.Models.Correspondencia.HRDetalleInstrucciones", b =>
+                {
+                    b.HasOne("MumanalPG.Models.Correspondencia.HojaRutaDetalle", "HRDetalle")
+                        .WithMany("HRDetalleInstrucciones")
+                        .HasForeignKey("HRDetalleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MumanalPG.Models.Correspondencia.Instrucciones", "Instruccion")
+                        .WithMany("HRDetalleInstrucciones")
+                        .HasForeignKey("InstruccionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -2945,19 +3344,6 @@ namespace MumanalPG.Data.Migrations
                     b.HasOne("MumanalPG.Models.Correspondencia.HojaRuta", "HojaRuta")
                         .WithMany("Derivaciones")
                         .HasForeignKey("HojaRutaId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("MumanalPG.Models.Correspondencia.HRDetalleInstrucciones", b =>
-                {
-                    b.HasOne("MumanalPG.Models.Correspondencia.HojaRutaDetalle", "HRDetalle")
-                        .WithMany("HRDetalleInstrucciones")
-                        .HasForeignKey("HRDetalleId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("MumanalPG.Models.Correspondencia.Instrucciones", "Instruccion")
-                        .WithMany("HRDetalleInstrucciones")
-                        .HasForeignKey("InstruccionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

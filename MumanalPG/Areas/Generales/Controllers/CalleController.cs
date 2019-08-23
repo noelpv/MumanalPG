@@ -131,7 +131,7 @@ namespace MumanalPG.Areas.Generales.Controllers
         // POST: Generales/Calle/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id,  Models.Generales.Calle item)
+        public async Task<IActionResult> Edit(Int32 id, Models.Generales.Calle item)
         {
             if (id != item.IdCalle)
             {
@@ -142,6 +142,10 @@ namespace MumanalPG.Areas.Generales.Controllers
             {
                 try
                 {
+                    ApplicationUser currentUser = await GetCurrentUser();
+                    item.IdUsuario = currentUser.AspNetUserId;
+                    item.IdEstadoRegistro = 1;
+                    item.FechaRegistro = DateTime.Now;
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }

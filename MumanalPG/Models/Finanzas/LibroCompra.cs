@@ -7,7 +7,7 @@ namespace MumanalPG.Models.Finanzas
     [Table("LibroCompra", Schema = "Finanzas")]
     public class LibroCompra
     {
-        [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public Int32 IdLibroCompra { get; set; }
         public Int32 IdPagoRegistro { get; set; }

@@ -7,7 +7,7 @@ namespace MumanalPG.Models.Finanzas
     [Table("Chequera", Schema = "Finanzas")]
     public class Chequera
     {
-        [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public Int32 IdChequera { get; set; }
         public Int32 IdDocumentoRespaldo { get; set; }

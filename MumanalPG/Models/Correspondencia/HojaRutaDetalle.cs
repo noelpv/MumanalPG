@@ -34,7 +34,7 @@ namespace MumanalPG.Models.Correspondencia
 		public Beneficiario FunDst { get; set; }
 		
 		public ICollection<HRDetalleInstrucciones> HRDetalleInstrucciones { get; set; }
-		
+
 		[Required]
 		public int PlazoDias { get; set; }
 		

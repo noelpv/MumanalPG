@@ -1,0 +1,69 @@
+@addTagHelper *, ReflectionIT.Mvc.Paging
+@{
+    ViewData["Title"] = "Cobranzas (Inversiones)";
+}
+@*<div class="container-fluid">*@
+<div class="row">
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Finanzas" asp-controller="CobranzaFacturacion" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-hand-point-right"></i>
+                </div>
+                <h4>Facturacion</h4>
+                <p class="ribbon-content">Se registra la Facturacion por Prestacion de Servicios u otras Ventas.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Finanzas" asp-controller="CobranzaRegistro" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-primary ribbon-vertical-l">
+                    <i class="ti-import"></i>
+                </div>
+                <h4>Registro de Cobranzas</h4>
+                <p class="ribbon-content">Se registra la Cobranza por Prestacion de Servicios u otras Ventas.</p>
+            </div>
+        </a>
+    </div>
+
+
+    @*<div class="col-md-4 col-sm-6 col-xs-12">
+            <a asp-area="Finanzas" asp-controller="EjecucionIngreso" asp-action="index">
+                <div class="ribbon-vwrapper card">
+                    <div class="ribbon ribbon-success ribbon-vertical-l">
+                        <i class="ti-hand-point-right"></i>
+                    </div>
+                    <h4>Ejecucion de Ingresos</h4>
+                    <p class="ribbon-content">Se realiza el Seguimiento de la Ejecucion de Ingresos.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <a asp-area="Finanzas" asp-controller="CobranzaRegistro" asp-action="index">
+                <div class="ribbon-vwrapper card">
+                    <div class="ribbon ribbon-success ribbon-vertical-l">
+                        <i class="ti-hand-point-right"></i>
+                    </div>
+                    <h4>Seguimiento de Cobranzas</h4>
+                    <p class="ribbon-content">Se realiza el Seguimiento de Cobranzas (Inversiones).</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <a asp-area="Finanzas" asp-controller="CobranzaRegistro" asp-action="index">
+                <div class="ribbon-vwrapper card">
+                    <div class="ribbon ribbon-success ribbon-vertical-l">
+                        <i class="ti-hand-point-right"></i>
+                    </div>
+                    <h4>Reportes</h4>
+                    <p class="ribbon-content">Se emiten Reportes de Cobranzas.</p>
+                </div>
+            </a>
+        </div>
+    *@
+</div>
+@*</div>*@

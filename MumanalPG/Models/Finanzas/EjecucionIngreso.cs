@@ -7,7 +7,7 @@ namespace MumanalPG.Models.Finanzas
     [Table("EjecucionIngreso", Schema = "Finanzas")]
     public class EjecucionIngreso
     {
-        [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public Int32 IdEjecucionIngreso { get; set; }
         public string Gestion { get; set; }

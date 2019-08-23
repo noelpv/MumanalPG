@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<MumanalPG.Models.Ventas.vContratacion>
 
 @{
-    ViewData["Title"] = "Prestaciones / ASR / Registro";
+    ViewData["Title"] = "Registro";
 }
 
 <h3>@ViewBag.Mensaje</h3>
@@ -11,13 +11,12 @@
         <h2 class="text-info">Lista de Registros ASR Digital</h2>
     </div>
     <div class="col-6 text-right">
-        @if (ViewContext.HttpContext.User.IsInRole("SUPER ADMIN") || ViewContext.HttpContext.User.IsInRole("AGENTE"))
+        @if (ViewContext.HttpContext.User.IsInRole("Super Admin") || ViewContext.HttpContext.User.IsInRole("AGENTE"))
         {
             <a asp-action="Create" class="btn btn-info">&nbsp; Nuevo Registro</a>
         }
     </div>
 </div>
-
 
 <form asp-action="index" method="get">
     <div class="form-actions no-color">
@@ -28,9 +27,6 @@
 
     </div>
 </form>
-
-
-
 
 <table class="table">
     <thead>
@@ -85,10 +81,10 @@
                     @Html.DisplayFor(modelItem => item.Estado)
                 </td>
                 <td>
-                    <a class="btn btn-skype" asp-action="Requisitos" asp-route-id="@item.IdVentaContratacion" asp-route-Beneficiario="@item.Beneficiario" asp-route-IdAsrSiver="@item.IdAsrSiver">Requisitos</a>
-                    @if (ViewContext.HttpContext.User.IsInRole("SUPER ADMIN") || ViewContext.HttpContext.User.IsInRole("AGENTE"))
+                    <a class="btn btn-info" asp-action="Requisitos" asp-route-id="@item.IdVentaContratacion" asp-route-Beneficiario="@item.Beneficiario" asp-route-IdAsrSiver="@item.IdAsrSiver">Requisitos</a>
+                    @if (ViewContext.HttpContext.User.IsInRole("Super Admin") || ViewContext.HttpContext.User.IsInRole("AGENTE"))
                     {
-                        <a class="btn btn-success" asp-action="Enviar" asp-route-id="@item.IdVentaContratacion">Enviar</a>
+                        <a class="btn btn-success" asp-action="Enviar" asp-route-id="@item.IdVentaContratacion" data-modal="link" data-modal-read="True">Enviar</a>
                     }
                     @*<a class="btn btn-info" asp-action="Details" asp-route-id="@item.IdVentaContratacion">Detalle</a>*@
                     @*<a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.IdVentaContratacion">Eliminar</a>*@

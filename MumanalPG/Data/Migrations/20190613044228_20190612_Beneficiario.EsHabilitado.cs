@@ -12,80 +12,80 @@ namespace MumanalPG.Data.Migrations
             //    name: "HojaRutaDocumentos",
             //    schema: "Planificacion");
 
-            migrationBuilder.RenameColumn(
-                name: "NuemroPeriodos",
-                schema: "Ventas",
-                table: "VentaTarifario",
-                newName: "NumeroPeriodos");
-
-            migrationBuilder.RenameColumn(
-                name: "IdProcesoNivel2",
-                schema: "Ventas",
-                table: "VentaTarifario",
-                newName: "IdProceso");
-
-            migrationBuilder.RenameColumn(
-                name: "Justificacion",
-                schema: "Ventas",
-                table: "VentaSolicitud",
-                newName: "Descripcion");
-
-            migrationBuilder.AddColumn<int>(
-                name: "Escala",
-                schema: "Ventas",
-                table: "VentaTarifario",
-                nullable: false,
-                defaultValue: 0);
-
-            migrationBuilder.AddColumn<bool>(
-                name: "EsHabilitado",
-                schema: "RRHH",
-                table: "Beneficiario",
-                nullable: false,
-                defaultValue: false);
-
-            migrationBuilder.DropTable(
-                name: "RubroIngreso",
-                schema: "Planificacion");
-
-            migrationBuilder.CreateTable(
-                name: "RubroIngreso",
-                schema: "Planificacion",
-                columns: table => new
-                {
-                    IdRubroIngreso = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    Descripcion = table.Column<string>(nullable: true),
-                    IdRubroIngresoPadre = table.Column<int>(nullable: false),
-                    Nivel = table.Column<int>(nullable: false),
-                    EsUltimoNivel = table.Column<bool>(nullable: false),
-                    Gestion = table.Column<string>(nullable: true),
-                    IdEstadoRegistro = table.Column<int>(nullable: false),
-                    IdUsuario = table.Column<int>(nullable: false),
-                    FechaRegistro = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RubroIngreso", x => x.IdRubroIngreso);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BeneficiarioCategoria",
-                schema: "RRHH",
-                columns: table => new
-                {
-                    IdBeneficiarioCategoria = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    Descripcion = table.Column<string>(nullable: true),
-                    Porcentaje = table.Column<decimal>(nullable: false),
-                    IdEstadoRegistro = table.Column<int>(nullable: false),
-                    IdUsuario = table.Column<int>(nullable: false),
-                    FechaRegistro = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BeneficiarioCategoria", x => x.IdBeneficiarioCategoria);
-                });
+//            migrationBuilder.RenameColumn(
+//                name: "NuemroPeriodos",
+//                schema: "Ventas",
+//                table: "VentaTarifario",
+//                newName: "NumeroPeriodos");
+//
+//            migrationBuilder.RenameColumn(
+//                name: "IdProcesoNivel2",
+//                schema: "Ventas",
+//                table: "VentaTarifario",
+//                newName: "IdProceso");
+//
+//            migrationBuilder.RenameColumn(
+//                name: "Justificacion",
+//                schema: "Ventas",
+//                table: "VentaSolicitud",
+//                newName: "Descripcion");
+//
+//            migrationBuilder.AddColumn<int>(
+//                name: "Escala",
+//                schema: "Ventas",
+//                table: "VentaTarifario",
+//                nullable: false,
+//                defaultValue: 0);
+//
+//            migrationBuilder.AddColumn<bool>(
+//                name: "EsHabilitado",
+//                schema: "RRHH",
+//                table: "Beneficiario",
+//                nullable: false,
+//                defaultValue: false);
+//
+//            migrationBuilder.DropTable(
+//                name: "RubroIngreso",
+//                schema: "Planificacion");
+//
+//            migrationBuilder.CreateTable(
+//                name: "RubroIngreso",
+//                schema: "Planificacion",
+//                columns: table => new
+//                {
+//                    IdRubroIngreso = table.Column<int>(nullable: false)
+//                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+//                    Descripcion = table.Column<string>(nullable: true),
+//                    IdRubroIngresoPadre = table.Column<int>(nullable: false),
+//                    Nivel = table.Column<int>(nullable: false),
+//                    EsUltimoNivel = table.Column<bool>(nullable: false),
+//                    Gestion = table.Column<string>(nullable: true),
+//                    IdEstadoRegistro = table.Column<int>(nullable: false),
+//                    IdUsuario = table.Column<int>(nullable: false),
+//                    FechaRegistro = table.Column<DateTime>(nullable: false)
+//                },
+//                constraints: table =>
+//                {
+//                    table.PrimaryKey("PK_RubroIngreso", x => x.IdRubroIngreso);
+//                });
+//
+//            migrationBuilder.CreateTable(
+//                name: "BeneficiarioCategoria",
+//                schema: "RRHH",
+//                columns: table => new
+//                {
+//                    IdBeneficiarioCategoria = table.Column<int>(nullable: false)
+//                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+//                    Descripcion = table.Column<string>(nullable: true),
+//                    Porcentaje = table.Column<decimal>(nullable: false),
+//                    IdEstadoRegistro = table.Column<int>(nullable: false),
+//                    IdUsuario = table.Column<int>(nullable: false),
+//                    FechaRegistro = table.Column<DateTime>(nullable: false)
+//                },
+//                constraints: table =>
+//                {
+//                    table.PrimaryKey("PK_BeneficiarioCategoria", x => x.IdBeneficiarioCategoria);
+//                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

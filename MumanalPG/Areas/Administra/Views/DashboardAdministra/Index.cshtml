@@ -1,0 +1,82 @@
+@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Administra.TipoAlmacen>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging
+@{
+    ViewData["Title"] = "Administrativo";
+}
+@*<div class="container-fluid">*@
+<div class="row">
+        
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Administra" asp-controller="DashboardAdministra" asp-action="Compras">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-settings"></i>
+                </div>
+                <h4>Compras</h4>
+                <p class="ribbon-content">Se administran los procesos de Adquisicion de Bienes y Servicios, de de la Institucion.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Administra" asp-controller="DashboardAdministra" asp-action="Almacenes">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-warning ribbon-vertical-l">
+                    <i class="ti-zip"></i>
+                </div>
+                <h4>Almacenes</h4>
+                <p class="ribbon-content">Se realiza el control y seguimiento de Almacenes, de la Institucion.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Administra" asp-controller="DashboardAdministra" asp-action="ActivosFijos">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-agenda"></i>
+                </div>
+                <h4>Activos Fijos</h4>
+                <p class="ribbon-content">Se realiza el control y seguimiento de Activos Fijos, de la Institucion</p>
+            </div>
+        </a>
+    </div>
+
+        @*<div class="col-md-4 col-sm-6 col-xs-12">
+                <a href="">
+                    <div class="ribbon-vwrapper card">
+                        <div class="ribbon ribbon-info ribbon-vertical-l">
+                            <i class="ti-map-alt"></i>
+                        </div>
+                        <h4>Seguimiento</h4>
+                        <p class="ribbon-content">Se realiza el Seguimiento del Presupuesto Institucional.</p>
+                    </div>
+                </a>
+            </div>*@
+
+    @*<div class="col-md-4 col-sm-6 col-xs-12">
+        <a href="">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-primary ribbon-vertical-l">
+                    <i class="ti-bar-chart"></i>
+                </div>
+                <h4>Reportes</h4>
+                <p class="ribbon-content">Reportes del Sub Sistema Administrativo.</p>
+            </div>
+        </a>
+    </div>*@
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Administra" asp-controller="DashboardAdministra" asp-action="Clasificadores">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-settings"></i>
+                </div>
+                <h4>Clasificadores</h4>
+                <p class="ribbon-content">Registro de Datos Basicos para el proceso del Subsistema.</p>
+            </div>
+        </a>
+    </div>
+</div>
+@*</div>*@

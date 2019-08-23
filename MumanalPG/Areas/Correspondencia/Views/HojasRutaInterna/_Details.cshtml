@@ -87,7 +87,7 @@
                        
                         <a asp-action="HojaRutaPDF" asp-route-id="@Model.Id" title="Hoja de Ruta" target="_blank"
                            class="btn btn-secondary" data-intro="Haciendo click sobre esta opción podra generar la hoja de Ruta en PDF para poder imprimirlo">
-                            <i class="far fa-file-pdf mr-2"></i> <span class="d-none d-sm-inline">Hoja de Ruta</span>
+                            <i class="far fa-file-pdf mr-2"></i> <span class="d-none d-sm-inline">Imprimir</span>
                         </a>
                         @if (Model.HojaRuta.DocumentoId > 0)
                         {
@@ -183,13 +183,12 @@
                             <td class="text-capitalize">@Model.FunOrg.Denominacion.ToLower()</td>
                             <td class="font-bold text-right">Para: </td>
                             <td class="text-capitalize">@Model.FunDst.Denominacion.ToLower()</td>
-                            <td colspan="2"></td>
-
+                            
                         </tr>
                         <tr>
                             <td colspan="2">SOLICITO A USTED:</td>
-                            <td colspan="3">COMENTARIOS ADICIONALES</td>
-                            <td>ANEXOS</td>
+                            <td colspan="4">COMENTARIOS ADICIONALES</td>
+                            
                         </tr>
                         <tr>
                             <td colspan="2" width="150px">
@@ -232,17 +231,35 @@
                                     }
                                 </div>
                             </td>
-                            <td colspan="3">
+                            <td colspan="4">
                                 <div class="comentarios-adicionales">
                                     @Model.Proveido
                                 </div>
                             </td>
-                            <td></td>
 
                         </tr>
                     </table>
                 </div>
-
+                <div class="row" data-intro="Muestra los anexos relacionados a la Hoja de Ruta">
+                    <table class="table table-bordered table-sm table-striped">
+                        <thead><h4>ANEXOS:</h4></thead>
+                        <th>Tipo</th>
+                        <th>Descripción</th>
+                        <th>Archivo</th>
+                        <th>Tamaño</th>
+                        <th></th>
+                        @foreach (var a in Model.HojaRuta.Anexos)
+                        {
+                            <tr>
+                              <td>@a.Tipo.Nombre</td>
+                              <td>@a.Descripcion</td>
+                                <td><a target="_blank" href="/@a.PathArchivo">@a.NombreArchivo</a></td>
+                                <td>@SD.BytesToString(a.Size)</td>
+                                <td><a class="btn btn-sm btn-secondary" target="_blank" href="/@a.PathArchivo"><i class="ti-download"></i></a></td>
+                            </tr>
+                        }
+                    </table>
+                </div>
             </div>
         </div>
     </div>
