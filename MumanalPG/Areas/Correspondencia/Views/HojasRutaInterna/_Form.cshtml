@@ -222,6 +222,7 @@
 
                 obj.instrucciones = values;             
                 input_ins.val(JSON.stringify(obj));
+                checkInstrucciones();
             });
 
             $('.comentarios').unbind();
@@ -233,6 +234,7 @@
                 
                 input_ins.val(JSON.stringify(obj));
             });
+            checkInstrucciones();
         }
         
         function cloneAnexo() {
@@ -352,6 +354,27 @@
             } else {
                $('a[role="menuitem"]').addClass('disabled');     
             }
+        }
+        
+        function checkInstrucciones(){
+            var is_valid = false;
+            
+             $('[id*="ins_fun_"]').each(function() {
+                  if($(this).val()){
+                      var ins_value = JSON.parse($(this).val());
+                      if(ins_value.instrucciones.length === 0) {
+                          is_valid = false;
+                          return false;
+                      } else {
+                          is_valid = true;   
+                      }
+                  }
+             });
+             if(is_valid) {
+                 $('a[role="menuitem"]').removeClass('disabled');       
+             } else {
+                $('a[role="menuitem"]').addClass('disabled');     
+             }
         }
     });
 </script>
