@@ -5,7 +5,7 @@
 @{
     ViewData["Title"] = "Estructura Programatica";
     OptionPartial options = new OptionPartial();
-    string intro_msg_search = "Puede buscar una Estructura Programatica introduciendo el nombre en este campo, " +
+    string intro_msg_search = "Puede buscar una Categoria Programatica introduciendo el nombre en este campo, " +
                               "luego presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
                               "<i class='fas fa-search'></i></button>";
 }
@@ -13,7 +13,7 @@
     <div class="col-12 text-right">
         <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nuevo EstructuraProgramatica"
            data-modal="link", data-redirect="@Url.Action("Index", new{@a=Constantes.Creado})" 
-           data-intro="Click, en este botón para crear una nueva EstructuraProgramatica">
+           data-intro="Click, en este botón para crear una nueva Categoria Programatica">
             <i class="fas fa-plus"></i><span class="d-none d-sm-inline">&nbsp; Nuevo </span>
         </a>
     </div>

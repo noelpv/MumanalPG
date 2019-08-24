@@ -1,6 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Dynamic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +16,10 @@ using MumanalPG.Models;
 using MumanalPG.Utility;
 using ReflectionIT.Mvc.Paging;
 using SmartBreadcrumbs;
+using MumanalPG.Extensions;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace MumanalPG.Areas.Planificacion.Controllers
 {
@@ -63,6 +71,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
         public IActionResult Create()
         {
             var model = new Models.Planificacion.PartidaGasto();
+
             return PartialView("Create", model);
         }
 
@@ -73,9 +82,9 @@ namespace MumanalPG.Areas.Planificacion.Controllers
         {
             if (ModelState.IsValid)
             {
-                //ApplicationUser currentUser = await GetCurrentUser();
-                //item.IdUsuario = currentUser.AspNetUserId;
-                item.Gestion = "2019";
+                ApplicationUser currentUser = await GetCurrentUser();
+                item.IdUsuario = currentUser.AspNetUserId;
+                item.Gestion = Convert.ToString(DateTime.Now.Year);
                 item.IdPartidaGastoPadre = '1';
                 item.CoeficienteDepreciacion = '1';
                 item.FechaRegistro = DateTime.Now;

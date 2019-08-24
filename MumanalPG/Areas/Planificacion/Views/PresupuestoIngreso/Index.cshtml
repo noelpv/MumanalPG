@@ -5,7 +5,7 @@
 @{
     ViewData["Title"] = "Presupuesto de Ingresos";
     OptionPartial options = new OptionPartial();
-    string intro_msg_search = "Puede buscar un Presupuesto de Ingresos introduciendo el nombre en este campo, " +
+    string intro_msg_search = "Puede buscar un registro del Presupuesto de Ingresos introduciendo la Descripcion de este campo, " +
                               "luego presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
                               "<i class='fas fa-search'></i></button>";
 }
@@ -13,7 +13,7 @@
     <div class="col-12 text-right">
         <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nuevo PresupuestoIngreso"
            data-modal="link", data-redirect="@Url.Action("Index", new{@a=Constantes.Creado})" 
-           data-intro="Click, en este botón para crear una nueva PresupuestoIngreso">
+           data-intro="Click, en este botón para crear un nuevo registro del Presupuesto de Ingresos">
             <i class="fas fa-plus"></i><span class="d-none d-sm-inline">&nbsp; Nuevo </span>
         </a>
     </div>
@@ -22,7 +22,7 @@
     <div class="col-12">
         <form method="get" class="form form-search" data-intro="@intro_msg_search">
             <div class="input-group mb-3">
-                <input name="filter" class="form-control search" placeholder="Buscar por IdRubroIngreso ..."
+                <input name="filter" class="form-control search" placeholder="Buscar por Descripcion ..."
                        value="@Model.RouteValue["Filter"]"/>
                 <button type="submit" class="btn btn-secondary input-group-append">
                     <span class="fas fa-search" aria-hidden="true"></span>
@@ -37,7 +37,7 @@
         <thead>
             <tr>
                 <th>@Html.SortableHeaderFor(model => model.Descripcion)</th>
-                <th>Rubro.Ingreso</th>
+                <th>Codigo.Rubro</th>
                 <th>Unidad.Ejecutora</th>
                 <th>Organismo.Financiador</th>
                 <th>Monto.Formulado</th>
@@ -64,9 +64,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdOrganismoFinanciador)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdRubroIngreso)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PptoFormulado)

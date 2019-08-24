@@ -40,7 +40,7 @@ namespace MumanalPG.Areas.Planificacion.Controllers
                 consulta = consulta.Where(m => EF.Functions.ILike(m.Descripcion, $"%{filter}%"));
                 //consulta = consulta.Where(m =>  m.IdRubroIngreso.Equals(filter));
             }
-            var resp = await PagingList.CreateAsync(consulta, Constantes.TamanoPaginacion, page, sortExpression, "IdRubroIngreso");
+            var resp = await PagingList.CreateAsync(consulta, Constantes.TamanoPaginacion, page, sortExpression, "Descripcion");
             resp.RouteValue = new RouteValueDictionary {{ "filter", filter}};
             ShowFlash(a);
             return View(resp);

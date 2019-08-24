@@ -10,19 +10,19 @@ using MumanalPG.Utility;
 using ReflectionIT.Mvc.Paging;
 using SmartBreadcrumbs;
 
-namespace MumanalPG.Areas.Planificacion.Controllers
+namespace MumanalPG.Areas.Generales.Controllers
 {
     //[Authorize(Roles = SD.SuperAdminEndUser)]
     [Authorize]
-    [Area("Planificacion")]
-    public class DashboardPlanController : BaseController
+    [Area("Generales")]
+    public class DashboardGeneralesController : BaseController
     {        
-		public DashboardPlanController(ApplicationDbContext db): base(db)
+		public DashboardGeneralesController(ApplicationDbContext db): base(db)
         {
         }
 
-        // GET: Planificacion/Planificacion
-        [Breadcrumb("Planificacion")]
+        // GET: Generales/Generales
+        [Breadcrumb("Generales")]
         public IActionResult Index()
         {
             return View();

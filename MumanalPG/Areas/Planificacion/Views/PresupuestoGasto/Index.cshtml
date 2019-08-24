@@ -5,7 +5,7 @@
 @{
     ViewData["Title"] = "Presupuesto del Gasto";
     OptionPartial options = new OptionPartial();
-    string intro_msg_search = "Puede buscar Presupuesto del Gasto introduciendo el nombre en este campo, " +
+    string intro_msg_search = "Puede buscar un registro de Presupuesto del Gasto introduciendo la descripcion de este, " +
                               "luego presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
                               "<i class='fas fa-search'></i></button>";
 }
@@ -13,7 +13,7 @@
     <div class="col-12 text-right">
         <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nuevo PresupuestoGasto"
            data-modal="link", data-redirect="@Url.Action("Index", new{@a=Constantes.Creado})" 
-           data-intro="Click, en este botón para crear una nuevo registro de Presupuesto del Gasto">
+           data-intro="Click, en este botón para crear un nuevo registro de Presupuesto del Gasto">
             <i class="fas fa-plus"></i><span class="d-none d-sm-inline">&nbsp; Nuevo </span>
         </a>
     </div>
@@ -37,10 +37,10 @@
         <thead>
             <tr>
                 <th>@Html.SortableHeaderFor(model => model.Descripcion)</th>
-                <th>Partida.Gasto</th>
+                <th>Codigo.Partida</th>
                 <th>Unidad.Ejecutora</th>
                 <th>Organismo.Financiador</th>
-                <th>Estructura.Programatica</th>
+                <th>Categoria.Programatica</th>
                 <th>Monto.Formulado</th>
                 @*<th>Monto.Modificado</th>
         <th>Monto.Vigente</th>*@
@@ -68,9 +68,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdEstructuraProgramatica)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdPartidaGasto)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PptoFormulado)

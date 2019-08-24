@@ -1,7 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using MumanalPG.Models;
+using MumanalPG.Utility;
+using System.Collections.Generic;
 
 namespace MumanalPG.Models.Planificacion
 {
@@ -12,7 +15,8 @@ namespace MumanalPG.Models.Planificacion
 		[Key]
 		public Int32 IdOrganismoFinanciador { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]
-		public Int32 IdFuenteFinanciamiento { get; set; }
+        [DisplayName("Fuente de Financiamiento")]
+        public Int32 IdFuenteFinanciamiento { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]
 		public string Descripcion { get; set; }
 		[Required(ErrorMessage = "{0} no puede estar en blanco")]

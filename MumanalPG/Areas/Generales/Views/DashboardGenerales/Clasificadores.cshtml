@@ -1,0 +1,189 @@
+@addTagHelper *, ReflectionIT.Mvc.Paging
+@{
+    ViewData["Title"] = "Generales";
+}
+@*<div class="container-fluid">*@
+<div class="row">
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Generales" asp-controller="Continente" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-hand-point-right"></i>
+                </div>
+                <h4>Continentes</h4>
+                <p class="ribbon-content">Se registran los Continentes del planeta.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Generales" asp-controller="Pais" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-primary ribbon-vertical-l">
+                    <i class="ti-import"></i>
+                </div>
+                <h4>Paises</h4>
+                <p class="ribbon-content">Se registran los Paises de cada Continente.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Generales" asp-controller="Departamento" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-primary ribbon-vertical-l">
+                    <i class="ti-zip"></i>
+                </div>
+                <h4>Departamentos</h4>
+                <p class="ribbon-content">Se registran los Departamentos del Pais.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Generales" asp-controller="Provincia" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-export"></i>
+                </div>
+                <h4>Provincias</h4>
+                <p class="ribbon-content">Se registran las Provincias por cada Departamento.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Generales" asp-controller="Municipio" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-hand-point-right"></i>
+                </div>
+                <h4>Municipios</h4>
+                <p class="ribbon-content">Se registran los Municipios de cada Provincia.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Generales" asp-controller="Zona" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-hand-point-right"></i>
+                </div>
+                <h4>Zonas o Macro Distritos</h4>
+                <p class="ribbon-content">Se registran las Zonas o Macrodistritos por cada Municipio.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Generales" asp-controller="Barrio" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-primary ribbon-vertical-l">
+                    <i class="ti-import"></i>
+                </div>
+                <h4>Barrios</h4>
+                <p class="ribbon-content">Se registran los Barrios por cada Zona.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Generales" asp-controller="Calle" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-primary ribbon-vertical-l">
+                    <i class="ti-zip"></i>
+                </div>
+                <h4>Calles</h4>
+                <p class="ribbon-content">Se registran las Vias de Acceso por cada Barrio.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Generales" asp-controller="CalleTipo" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-export"></i>
+                </div>
+                <h4>Tipo de Vias de Acceso</h4>
+                <p class="ribbon-content">Se registra la Clasificacion de Vias de Acceso (Calle, Av, Plaza, etc.).</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Generales" asp-controller="EdificioTipo" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-hand-point-right"></i>
+                </div>
+                <h4>Tipo de Edificacion</h4>
+                <p class="ribbon-content">Se registran la Clasificacion de Edificaciones (Casa Particular, Comercial, Deprtmentos, etc.).</p>
+            </div>
+        </a>
+    </div>
+
+    @*<div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Generales" asp-controller="Edificio" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-hand-point-right"></i>
+                </div>
+                <h4>Edificaciones</h4>
+                <p class="ribbon-content">Se registran las Edificaciones (Ed.Mumanal, ExFocsaf, etc.).</p>
+            </div>
+        </a>
+    </div>*@
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Generales" asp-controller="DocumentoClasificacion" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-primary ribbon-vertical-l">
+                    <i class="ti-import"></i>
+                </div>
+                <h4>Clasificacion de Documentos</h4>
+                <p class="ribbon-content">Se registra la Clasificacion de Documentos (Financieros, Administrativos. etc.).</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Generales" asp-controller="DocumentoFormato" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-primary ribbon-vertical-l">
+                    <i class="ti-zip"></i>
+                </div>
+                <h4>Fromatos de Documentos</h4>
+                <p class="ribbon-content">Se registran los Formatos en los que se Manejan los Documentos (Impreso, Digital, etc.).</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Generales" asp-controller="FrecuenciaUso" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-export"></i>
+                </div>
+                <h4>FrecuenciaUso</h4>
+                <p class="ribbon-content">Se registra la Frecuencia de Uso de Documentos.</p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <a asp-area="Generales" asp-controller="ParametrosGenerales" asp-action="index">
+            <div class="ribbon-vwrapper card">
+                <div class="ribbon ribbon-success ribbon-vertical-l">
+                    <i class="ti-hand-point-right"></i>
+                </div>
+                <h4>Parametros Generales</h4>
+                <p class="ribbon-content">Se registran los Parametros Generales del Sistema.</p>
+            </div>
+        </a>
+    </div>
+
+</div>
+@*</div>*@
