@@ -29,6 +29,48 @@ namespace MumanalPG.Data.Seeders
             AddNew(
                 new Beneficiario
                 {
+                    PrimerApellido = "SÁNCHEZ", SegundoApellido = "HEREDIA", PrimerNombre = "ADHEMAR",
+                    SegundoNombre = ""
+                }, "PRESIDENTE");
+            
+            AddNew(
+                new Beneficiario
+                {
+                    PrimerApellido = "RAMOS", SegundoApellido = "CHAMBI", PrimerNombre = "ANTONIO",
+                    SegundoNombre = ""
+                }, "DIRECTOR I");
+            
+            AddNew(
+                new Beneficiario
+                {
+                    PrimerApellido = "REVILLA", SegundoApellido = "CHUMACERO", PrimerNombre = "ALFREDO",
+                    SegundoNombre = ""
+                }, "DIRECTOR II");
+            
+            AddNew(
+                new Beneficiario
+                {
+                    PrimerApellido = "CLAROS", SegundoApellido = "URQHUART", PrimerNombre = "MARIA",
+                    SegundoNombre = "PATRICIA"
+                }, "DIRECTOR III");
+
+            AddNew(
+                new Beneficiario
+                {
+                    PrimerApellido = "DASILVA", SegundoApellido = "RODRIGUEZ", PrimerNombre = "ANTONIA",
+                    SegundoNombre = ""
+                }, "DIRECTOR IV");
+            
+            AddNew(
+                new Beneficiario
+                {
+                    PrimerApellido = "JAIMES", SegundoApellido = "MAMANI", PrimerNombre = "JUAN",
+                    SegundoNombre = "JOSE"
+                }, "DIRECTOR V");
+            
+            AddNew(
+                new Beneficiario
+                {
                     PrimerApellido = "SERRANO", SegundoApellido = "VILLAFUERTE", PrimerNombre = "PEDRO",
                     SegundoNombre = "HERNÁN"
                 }, "GERENTE");
@@ -67,6 +109,24 @@ namespace MumanalPG.Data.Seeders
                     PrimerApellido = "RIVERO", SegundoApellido = "TERRAZAS", PrimerNombre = "VIVIANA",
                     SegundoNombre = "TERESA"
                 }, "AUDITORA COMITÉ DE VIGILANCIA");
+            AddNew(
+                new Beneficiario
+                {
+                    PrimerApellido = "GUZMAN", SegundoApellido = "LARA", PrimerNombre = "GLADYS",
+                    SegundoNombre = "MIRIAM"
+                }, "COMITÉ DE VIGILANCIA I");
+            AddNew(
+                new Beneficiario
+                {
+                    PrimerApellido = "DÁVILA", SegundoApellido = "AMADOR", PrimerNombre = "ELEUTERIO",
+                    SegundoNombre = ""
+                }, "COMITÉ DE VIGILANCIA II");
+            AddNew(
+                new Beneficiario
+                {
+                    PrimerApellido = "ANTELO", SegundoApellido = "ESPINOZA", PrimerNombre = "ISRAEL",
+                    SegundoNombre = ""
+                }, "COMITÉ DE VIGILANCIA III");
             AddNew(
                 new Beneficiario
                 {
@@ -400,11 +460,6 @@ namespace MumanalPG.Data.Seeders
                     PrimerApellido = "ALBINO", SegundoApellido = "MENDOZA", PrimerNombre = "SANTIAGO",
                     SegundoNombre = ""
                 }, "Agente Distrital Uyuni");
-            AddNew(
-                new Beneficiario
-                {
-                    PrimerApellido = "ANTELO", SegundoApellido = "ESPINOZA", PrimerNombre = "ISRAEL", SegundoNombre = ""
-                }, "Agente Distrital Puerto Suarez");
             AddNew(
                 new Beneficiario
                 {

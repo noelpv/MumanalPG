@@ -13,7 +13,8 @@ namespace MumanalPG.Data.Seeders
 
         public void SeedData()
         {
-            AddNew(new UnidadEjecutora { Descripcion = "Gerencia General", Sigla = "GG", OrdenMostrar = 1});
+            AddNew(new UnidadEjecutora { Descripcion = "Directorio", Sigla = "DIR", OrdenMostrar = 1});
+            AddNew(new UnidadEjecutora { Descripcion = "Gerencia General", Sigla = "GG", OrdenMostrar = 2});
             AddNew(new UnidadEjecutora { Descripcion = "Regionales", Sigla = "REG", OrdenMostrar = 3});
             AddNew(new UnidadEjecutora { Descripcion = "Secretaría General", Sigla = "SG", OrdenMostrar = 1}, "GG");
             AddNew(new UnidadEjecutora { Descripcion = "Comité de Vigilancia", Sigla = "COM-VIG", OrdenMostrar = 2});

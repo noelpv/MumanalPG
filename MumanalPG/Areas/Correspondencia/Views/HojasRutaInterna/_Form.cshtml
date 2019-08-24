@@ -222,6 +222,7 @@
 
                 obj.instrucciones = values;             
                 input_ins.val(JSON.stringify(obj));
+                checkInstrucciones();
             });
 
             $('.comentarios').unbind();
@@ -233,10 +234,11 @@
                 
                 input_ins.val(JSON.stringify(obj));
             });
+            checkInstrucciones();
         }
         
         function cloneAnexo() {
-            // $('a[role="menuitem"]').addClass('disabled');
+            $('a[role="menuitem"]').addClass('disabled');
             var container = $('#anexos-container');
             var rowAnexo = $('#fila-anexo');
             var newRow = rowAnexo.clone();
@@ -262,6 +264,7 @@
                         $('.anexos-found').fadeIn('slow');
                         $('a[role="menuitem"]').removeClass('disabled');
                     }
+                    checkAnexos();
                 });
                 
             });
@@ -285,6 +288,7 @@
                                 obj.name = null;
                                 obj.size = null;
                                 input_sent.val(JSON.stringify(obj)); 
+                                checkAnexos();
                             }
                           );
                     },
@@ -298,6 +302,7 @@
                         
                         el.addClass('animated fadeIn');
                         el.text(response.fileName);
+                        checkAnexos();
 
                      }
                 }
@@ -319,17 +324,57 @@
                var obj = JSON.parse(input_sent.val());
                obj.descripcion = $(this).val();
                input_sent.val(JSON.stringify(obj));
+               checkAnexos();
             });
-            
+                       
             $('.anexos-found').hide();
             contAnexos++;
             contAnexosShowing++;
         }
         
-        function checkAnexo() {
-            var input_descripcion = $();    
+        function checkAnexos() {
+            var is_valid = false;
+            $('[id*="row_anexo_"]').each(function() {
+                if($(this).val()){
+                  var row_value = JSON.parse($(this).val());
+                  try {
+                      if(!(row_value.descripcion.length && row_value.path.length)){
+                         is_valid = false;
+                      }else {
+                          is_valid = true;
+                      }
+                  }catch (e) {
+                      is_valid = false;
+                  }       
+                }
+            });
             
+            if(is_valid) {
+                $('a[role="menuitem"]').removeClass('disabled');       
+            } else {
+               $('a[role="menuitem"]').addClass('disabled');     
+            }
         }
         
+        function checkInstrucciones(){
+            var is_valid = false;
+            
+             $('[id*="ins_fun_"]').each(function() {
+                  if($(this).val()){
+                      var ins_value = JSON.parse($(this).val());
+                      if(ins_value.instrucciones.length === 0) {
+                          is_valid = false;
+                          return false;
+                      } else {
+                          is_valid = true;   
+                      }
+                  }
+             });
+             if(is_valid) {
+                 $('a[role="menuitem"]').removeClass('disabled');       
+             } else {
+                $('a[role="menuitem"]').addClass('disabled');     
+             }
+        }
     });
 </script>
