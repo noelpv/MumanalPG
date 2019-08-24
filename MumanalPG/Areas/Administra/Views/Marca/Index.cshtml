@@ -1,19 +1,19 @@
-@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Administra.TipoAlmacen>
+@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Administra.Marca>
 @using MumanalPG.Utility
 @using ReflectionIT.Mvc.Paging
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @{
-    ViewData["Title"] = "Tipo Almacen";
+    ViewData["Title"] = "Marca";
     OptionPartial options = new OptionPartial();
-    string intro_msg_search = "Puede buscar un Tipo de Almacen introduciendo el nombre en este campo, " +
+    string intro_msg_search = "Puede buscar una Marca introduciendo el nombre en este campo, " +
                               "luego presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
                               "<i class='fas fa-search'></i></button>";
 }
 <div class="row">
     <div class="col-12 text-right">
-        <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nuevo Tipo de Almacen"
+        <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nueva Marca"
            data-modal="link", data-redirect="@Url.Action("Index", new{@a=Constantes.Creado})" 
-           data-intro="Click, en este botón para crear un nuevo Tipo de Almacen">
+           data-intro="Click, en este botón para crear una nueva Marca">
             <i class="fas fa-plus"></i><span class="d-none d-sm-inline">&nbsp; Nuevo </span>
         </a>
     </div>
@@ -37,7 +37,7 @@
         <thead>
         <tr>
             <th>@Html.SortableHeaderFor(model => model.Descripcion)</th>
-            <th>Codigo</th>
+            <th>Sigla</th>
             <th></th>
         </tr>
 
@@ -47,17 +47,17 @@
         {
             <tr>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.IdTipoAlmacen" title="Detalle" 
+                    <a asp-action="Details" asp-route-id="@item.IdMarca" title="Detalle" 
                        data-modal="link" data-modal-read="True">
                         @Html.DisplayFor(modelItem => item.Descripcion)
                     </a>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.IdTipoAlmacen)
+                    @Html.DisplayFor(modelItem => item.Sigla)
                 </td>
                  
                 @{
-                    options.Id = item.IdTipoAlmacen;
+                    options.Id = item.IdMarca;
                     options.ShowIntroMessages = index == 0 ? true : false;
                     index++;
                     

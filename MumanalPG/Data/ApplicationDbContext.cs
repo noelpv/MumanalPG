@@ -92,6 +92,10 @@ namespace MumanalPG.Data
 
         /*Ini Administrativo*/
         public DbSet<MumanalPG.Models.Administra.TipoAlmacen> TipoAlmacen { get; set; }
+        public DbSet<MumanalPG.Models.Administra.TipoUnidadMedida> TipoUnidadMedida { get; set; }
+        public DbSet<MumanalPG.Models.Administra.Marca> Marca { get; set; }
+        public DbSet<MumanalPG.Models.Administra.UnidadMedida> UnidadMedida { get; set; }
+        public DbSet<MumanalPG.Models.Administra.Modelo> Modelo { get; set; }
         public DbSet<MumanalPG.Models.Administra.Almacen> Almacen { get; set; }
         public DbSet<MumanalPG.Models.Administra.AlmacenIngreso> AlmacenIngreso { get; set; }
         public DbSet<MumanalPG.Models.Administra.AlmacenInventario> AlmacenInventario { get; set; }
