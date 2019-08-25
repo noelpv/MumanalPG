@@ -12,6 +12,7 @@
     <Compile Remove="Areas\Administra\Data\**" />
     <Compile Remove="Areas\Administra\Models\**" />
     <Compile Remove="Areas\RRHH\Models\**" />
+    <Compile Remove="Controllers\**" />
     <Compile Remove="Models\ContableParam\**" />
     <Compile Remove="Models\Contable\**" />
     <Compile Remove="Models\GeneralesParam\**" />
@@ -21,6 +22,7 @@
     <Content Remove="Areas\Administra\Data\**" />
     <Content Remove="Areas\Administra\Models\**" />
     <Content Remove="Areas\RRHH\Models\**" />
+    <Content Remove="Controllers\**" />
     <Content Remove="Models\ContableParam\**" />
     <Content Remove="Models\Contable\**" />
     <Content Remove="Models\GeneralesParam\**" />
@@ -30,6 +32,7 @@
     <EmbeddedResource Remove="Areas\Administra\Data\**" />
     <EmbeddedResource Remove="Areas\Administra\Models\**" />
     <EmbeddedResource Remove="Areas\RRHH\Models\**" />
+    <EmbeddedResource Remove="Controllers\**" />
     <EmbeddedResource Remove="Models\ContableParam\**" />
     <EmbeddedResource Remove="Models\Contable\**" />
     <EmbeddedResource Remove="Models\GeneralesParam\**" />
@@ -39,6 +42,7 @@
     <None Remove="Areas\Administra\Data\**" />
     <None Remove="Areas\Administra\Models\**" />
     <None Remove="Areas\RRHH\Models\**" />
+    <None Remove="Controllers\**" />
     <None Remove="Models\ContableParam\**" />
     <None Remove="Models\Contable\**" />
     <None Remove="Models\GeneralesParam\**" />
@@ -162,9 +166,9 @@
     <Folder Include="Areas\Administra\Controllers\" />
     <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Areas\RRHH\Views\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Data\Migrations" />
     <Folder Include="Models\Finanzas\" />
+    <Folder Include="Reportes\" />
     <Folder Include="wwwroot\images\ProductImage\" />
     <Folder Include="wwwroot\docs\" />
     <Folder Include="wwwroot\uploads\" />

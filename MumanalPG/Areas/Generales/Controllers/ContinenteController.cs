@@ -35,7 +35,7 @@ namespace MumanalPG.Areas.Generales.Controllers
         }
 
         // GET: Generales/Continente
-        //[Breadcrumb("Continente", FromController = "DashboardPlan", FromAction = "Clasificadores")]
+        [Breadcrumb("Continente", FromController = "DashboardGenerales", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
             var consulta = DB.Continente.AsNoTracking().AsQueryable();
