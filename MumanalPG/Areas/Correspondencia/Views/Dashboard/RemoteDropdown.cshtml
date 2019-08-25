@@ -1,0 +1,46 @@
+<label class="form-control-label">Remote Dropdown</label>
+<div>
+    <select class="form-control remote" id="origen" placeholder="Escribir Nombre..."
+            data-remote-url="@Url.Action("ListaUnidadesEjecutoras")">
+    </select>
+</div>
+<script>
+$(function() {
+    
+    var url = $('#origen').data('remote-url');
+     $('#origen').selectize({
+            valueField: 'id',
+            labelField: 'nombre',
+            searchField: ['nombre', 'sigla'],
+            create: false,
+            render: {
+                option: function(item, escape) {
+                    return '<div class="font-bold">'+ escape(item.sigla) + ' - ' + escape(item.nombre) +'</div>';
+                }
+            },
+             score: function(search) {
+                var score = this.getScoreFunction(search);
+                return function(item) {
+                    return score(item);
+                };
+            },
+            load: function(query, callback) {
+                if (!query.length) return callback();
+                $.ajax({
+                    url: url + '?filter=' + encodeURIComponent(query),
+                    type: 'GET',
+                    error: function() {
+                        callback();
+                    },
+                    success: function(res) {
+                        try {
+                            callback(res.repositories);
+                        } catch (e) {
+
+                        }  
+                    }
+                });
+            }
+      });
+});
+</script>
