@@ -106,6 +106,10 @@ namespace MumanalPG.Data
         public DbSet<MumanalPG.Models.Administra.ActivoAsignacion> ActivoAsignacion { get; set; }
         public DbSet<MumanalPG.Models.Administra.ActivoFijo> ActivoFijo { get; set; }
         public DbSet<MumanalPG.Models.Administra.ActivoTransferencia> ActivoTransferencia { get; set; }
+        public DbSet<MumanalPG.Models.Administra.Marca> Marca { get; set; }
+        public DbSet<MumanalPG.Models.Administra.TipoUnidadMedida> TipoUnidadMedida { get; set; }
+        public DbSet<MumanalPG.Models.Administra.Modelo> Modelo { get; set; }
+        public DbSet<MumanalPG.Models.Administra.UnidadMedida> UnidadMedida { get; set; }
         /*Fin Administrativo*/
 
         /*Ini Planificacion*/

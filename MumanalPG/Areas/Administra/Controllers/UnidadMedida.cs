@@ -1,6 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Dynamic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,25 +16,29 @@ using MumanalPG.Models;
 using MumanalPG.Utility;
 using ReflectionIT.Mvc.Paging;
 using SmartBreadcrumbs;
+using MumanalPG.Extensions;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace MumanalPG.Areas.Administra.Controllers
 {
     //[Authorize(Roles = SD.SuperAdminEndUser)]
     [Authorize]
     [Area("Administra")]
-    public class TipoAlmacenController : BaseController
+    public class UnidadMedidaController : BaseController
     {        
         
-		public TipoAlmacenController(ApplicationDbContext db, UserManager<IdentityUser> userManager): base(db, userManager)
+		public UnidadMedidaController(ApplicationDbContext db, UserManager<IdentityUser> userManager): base(db, userManager)
         {
             
         }
 
-        // GET: Administra/TipoAlmacen
-        [Breadcrumb("TipoAlmacen", FromController = "DashboardAdministra", FromAction = "Clasificadores")]
+        // GET: Administra/UnidadMedida
+        [Breadcrumb("UnidadMedida", FromController = "DashboardAdministra", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
-            var consulta = DB.TipoAlmacen.AsNoTracking().AsQueryable();
+            var consulta = DB.UnidadMedida.AsNoTracking().AsQueryable();
             consulta = consulta.Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
             if (!string.IsNullOrWhiteSpace(filter))
 			{
@@ -42,34 +50,37 @@ namespace MumanalPG.Areas.Administra.Controllers
             return View(resp);
         }
 
-        // GET: Administra/TipoAlmacen/Details/5
+        // GET: Administra/UnidadMedida/Details/5
         public async Task<IActionResult> Details(Int32? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var item = await DB.TipoAlmacen.FirstOrDefaultAsync(m => m.IdTipoAlmacen  == id);
+            var item = await DB.UnidadMedida.FirstOrDefaultAsync(m => m.IdUnidadMedida  == id);
             if (item == null)
             {
                 return NotFound();
             }
-
             return PartialView("Details",item);
         }
 
-        // GET: Administra/TipoAlmacen/Create
+        // GET: Administra/UnidadMedida/Create
         public IActionResult Create()
         {
-            var model = new Models.Administra.TipoAlmacen();
+            var model = new Models.Administra.UnidadMedida();
+            //ini combo
+            var items = DB.TipoUnidadMedida.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.TipoUnidadMedida = items;
+            //Fin combo
             return PartialView("Create", model);
         }
 
-        // POST: Administra/TipoAlmacen/Create
+        // POST: Administra/UnidadMedida/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Models.Administra.TipoAlmacen item)
+        public async Task<IActionResult> Create(Models.Administra.UnidadMedida item)
         {
             if (ModelState.IsValid)
             {
@@ -79,34 +90,40 @@ namespace MumanalPG.Areas.Administra.Controllers
                 item.FechaRegistro = DateTime.Now;
                 DB.Add(item);
                 await DB.SaveChangesAsync();
-                
+                SetFlashSuccess("Registro creado satisfactoriamente");
             }
+            var items = DB.TipoUnidadMedida.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.TipoUnidadMedida = items;
+
             return PartialView("Create",item);
         }
 
-        // GET: Administra/TipoAlmacen/Edit/5
+        // GET: Administra/UnidadMedida/Edit/5
         public async Task<IActionResult> Edit(Int32? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var item = await DB.TipoAlmacen.FindAsync(id);
+            var item = await DB.UnidadMedida.FindAsync(id);
             if (item == null)
             {
                 return NotFound();
             }
+            var items = DB.TipoUnidadMedida.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.TipoUnidadMedida = items;
+
             return PartialView( "Edit", item);
         }
 
-        // POST: Administra/TipoAlmacen/Edit/5
+        // POST: Administra/UnidadMedida/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, Models.Administra.TipoAlmacen item)
-        //public async Task<IActionResult> Edit(Int32 id, [Bind("IdTipoAlmacen,Descripcion,Sigla")] Models.Administra.TipoAlmacen item)
+        public async Task<IActionResult> Edit(Int32 id,  Models.Administra.UnidadMedida item)
         {
-            if (id != item.IdTipoAlmacen)
+            if (id != item.IdUnidadMedida)
             {
                 return NotFound();
             }
@@ -124,7 +141,7 @@ namespace MumanalPG.Areas.Administra.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ItemExists(item.IdTipoAlmacen))
+                    if (!ItemExists(item.IdUnidadMedida))
                     {
                         return NotFound();
                     }
@@ -135,10 +152,14 @@ namespace MumanalPG.Areas.Administra.Controllers
                 }
                 
             }
+            var items = DB.TipoUnidadMedida.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.TipoUnidadMedida = items;
+
             return PartialView("Edit", item);
         }
 
-        // GET: Administra/TipoAlmacen/Delete/5
+        // GET: Administra/UnidadMedida/Delete/5
         public async Task<IActionResult> Delete(Int32? id)
         {
             if (id == null)
@@ -146,7 +167,7 @@ namespace MumanalPG.Areas.Administra.Controllers
                 return NotFound();
             }
 
-            var item = await DB.TipoAlmacen.FirstOrDefaultAsync(m => m.IdTipoAlmacen == id);
+            var item = await DB.UnidadMedida.FirstOrDefaultAsync(m => m.IdUnidadMedida == id);
             if (item == null)
             {
                 return NotFound();
@@ -155,21 +176,21 @@ namespace MumanalPG.Areas.Administra.Controllers
             return PartialView("Delete",item);
         }
 
-        // POST: Administra/TipoAlmacen/Delete/5
+        // POST: Administra/UnidadMedida/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Int32 id)
         {
-            var item = await DB.TipoAlmacen.FindAsync(id);
+            var item = await DB.UnidadMedida.FindAsync(id);
             item.IdEstadoRegistro = 2;  //Constantes.Eliminado ;
-            DB.TipoAlmacen.Update(item);
+            DB.UnidadMedida.Update(item);
             await DB.SaveChangesAsync();
             return PartialView("Delete",item);
         }
 
         private bool ItemExists(Int32 id)
         {
-            return DB.TipoAlmacen.Any(e => e.IdTipoAlmacen == id);
+            return DB.UnidadMedida.Any(e => e.IdUnidadMedida == id);
         }
     }
 }

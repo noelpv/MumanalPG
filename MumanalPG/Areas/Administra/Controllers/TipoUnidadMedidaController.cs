@@ -18,19 +18,19 @@ namespace MumanalPG.Areas.Administra.Controllers
     //[Authorize(Roles = SD.SuperAdminEndUser)]
     [Authorize]
     [Area("Administra")]
-    public class TipoAlmacenController : BaseController
+    public class TipoUnidadMedidaController : BaseController
     {        
         
-		public TipoAlmacenController(ApplicationDbContext db, UserManager<IdentityUser> userManager): base(db, userManager)
+		public TipoUnidadMedidaController(ApplicationDbContext db, UserManager<IdentityUser> userManager): base(db, userManager)
         {
             
         }
 
-        // GET: Administra/TipoAlmacen
-        [Breadcrumb("TipoAlmacen", FromController = "DashboardAdministra", FromAction = "Clasificadores")]
+        // GET: Administra/TipoUnidadMedida
+        [Breadcrumb("TipoUnidadMedida", FromController = "DashboardAdministra", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
-            var consulta = DB.TipoAlmacen.AsNoTracking().AsQueryable();
+            var consulta = DB.TipoUnidadMedida.AsNoTracking().AsQueryable();
             consulta = consulta.Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
             if (!string.IsNullOrWhiteSpace(filter))
 			{
@@ -42,7 +42,7 @@ namespace MumanalPG.Areas.Administra.Controllers
             return View(resp);
         }
 
-        // GET: Administra/TipoAlmacen/Details/5
+        // GET: Administra/TipoUnidadMedida/Details/5
         public async Task<IActionResult> Details(Int32? id)
         {
             if (id == null)
@@ -50,7 +50,7 @@ namespace MumanalPG.Areas.Administra.Controllers
                 return NotFound();
             }
 
-            var item = await DB.TipoAlmacen.FirstOrDefaultAsync(m => m.IdTipoAlmacen  == id);
+            var item = await DB.TipoUnidadMedida.FirstOrDefaultAsync(m => m.IdTipoUnidadMedida  == id);
             if (item == null)
             {
                 return NotFound();
@@ -59,17 +59,17 @@ namespace MumanalPG.Areas.Administra.Controllers
             return PartialView("Details",item);
         }
 
-        // GET: Administra/TipoAlmacen/Create
+        // GET: Administra/TipoUnidadMedida/Create
         public IActionResult Create()
         {
-            var model = new Models.Administra.TipoAlmacen();
+            var model = new Models.Administra.TipoUnidadMedida();
             return PartialView("Create", model);
         }
 
-        // POST: Administra/TipoAlmacen/Create
+        // POST: Administra/TipoUnidadMedida/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Models.Administra.TipoAlmacen item)
+        public async Task<IActionResult> Create(Models.Administra.TipoUnidadMedida item)
         {
             if (ModelState.IsValid)
             {
@@ -84,7 +84,7 @@ namespace MumanalPG.Areas.Administra.Controllers
             return PartialView("Create",item);
         }
 
-        // GET: Administra/TipoAlmacen/Edit/5
+        // GET: Administra/TipoUnidadMedida/Edit/5
         public async Task<IActionResult> Edit(Int32? id)
         {
             if (id == null)
@@ -92,7 +92,7 @@ namespace MumanalPG.Areas.Administra.Controllers
                 return NotFound();
             }
 
-            var item = await DB.TipoAlmacen.FindAsync(id);
+            var item = await DB.TipoUnidadMedida.FindAsync(id);
             if (item == null)
             {
                 return NotFound();
@@ -100,13 +100,13 @@ namespace MumanalPG.Areas.Administra.Controllers
             return PartialView( "Edit", item);
         }
 
-        // POST: Administra/TipoAlmacen/Edit/5
+        // POST: Administra/TipoUnidadMedida/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, Models.Administra.TipoAlmacen item)
-        //public async Task<IActionResult> Edit(Int32 id, [Bind("IdTipoAlmacen,Descripcion,Sigla")] Models.Administra.TipoAlmacen item)
+        public async Task<IActionResult> Edit(Int32 id, Models.Administra.TipoUnidadMedida item)
+        // public async Task<IActionResult> Edit(Int32 id, [Bind("IdTipoUnidadMedida,Descripcion,Sigla")] Models.Administra.TipoUnidadMedida item)
         {
-            if (id != item.IdTipoAlmacen)
+            if (id != item.IdTipoUnidadMedida)
             {
                 return NotFound();
             }
@@ -115,16 +115,12 @@ namespace MumanalPG.Areas.Administra.Controllers
             {
                 try
                 {
-                    ApplicationUser currentUser = await GetCurrentUser();
-                    item.IdUsuario = currentUser.AspNetUserId;
-                    item.IdEstadoRegistro = 1;
-                    item.FechaRegistro = DateTime.Now;
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ItemExists(item.IdTipoAlmacen))
+                    if (!ItemExists(item.IdTipoUnidadMedida))
                     {
                         return NotFound();
                     }
@@ -138,7 +134,7 @@ namespace MumanalPG.Areas.Administra.Controllers
             return PartialView("Edit", item);
         }
 
-        // GET: Administra/TipoAlmacen/Delete/5
+        // GET: Administra/TipoUnidadMedida/Delete/5
         public async Task<IActionResult> Delete(Int32? id)
         {
             if (id == null)
@@ -146,7 +142,7 @@ namespace MumanalPG.Areas.Administra.Controllers
                 return NotFound();
             }
 
-            var item = await DB.TipoAlmacen.FirstOrDefaultAsync(m => m.IdTipoAlmacen == id);
+            var item = await DB.TipoUnidadMedida.FirstOrDefaultAsync(m => m.IdTipoUnidadMedida == id);
             if (item == null)
             {
                 return NotFound();
@@ -155,21 +151,21 @@ namespace MumanalPG.Areas.Administra.Controllers
             return PartialView("Delete",item);
         }
 
-        // POST: Administra/TipoAlmacen/Delete/5
+        // POST: Administra/TipoUnidadMedida/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Int32 id)
         {
-            var item = await DB.TipoAlmacen.FindAsync(id);
+            var item = await DB.TipoUnidadMedida.FindAsync(id);
             item.IdEstadoRegistro = 2;  //Constantes.Eliminado ;
-            DB.TipoAlmacen.Update(item);
+            DB.TipoUnidadMedida.Update(item);
             await DB.SaveChangesAsync();
             return PartialView("Delete",item);
         }
 
         private bool ItemExists(Int32 id)
         {
-            return DB.TipoAlmacen.Any(e => e.IdTipoAlmacen == id);
+            return DB.TipoUnidadMedida.Any(e => e.IdTipoUnidadMedida == id);
         }
     }
 }
