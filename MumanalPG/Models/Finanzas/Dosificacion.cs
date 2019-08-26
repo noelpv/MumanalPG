@@ -23,7 +23,7 @@ namespace MumanalPG.Models.Finanzas
         public DateTime DosificacionFecha { get; set; }
         [Required(ErrorMessage = "{0} no puede estar en blanco")]
         [Range(1, Int32.MaxValue, ErrorMessage = "Debe seleccionar un {0}")]
-        [Display(Name="Beneficiario")]
+        [Display(Name="CI-Beneficiario")]
         public Int32 IdBeneficiario { get; set; }
         public Int32 IdBeneficiarioResponsable { get; set; }
         [Required(ErrorMessage = "{0} no puede estar en blanco")]
