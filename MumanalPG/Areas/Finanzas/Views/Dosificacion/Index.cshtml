@@ -37,7 +37,8 @@
         <thead>
         <tr>
             <th>@Html.SortableHeaderFor(model => model.NumeroAutorizacion)</th>
-            <th>DosificacionFecha</th>
+            <th>@Html.SortableHeaderFor(model => model.DosificacionFecha)</th>
+            <th>@Html.SortableHeaderFor(model => model.IdBeneficiario)</th>
         </tr>
 
         </thead>
@@ -53,6 +54,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DosificacionFecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdBeneficiario)
             </td>
             @{
                 options.Id = item.IdDosificacion;

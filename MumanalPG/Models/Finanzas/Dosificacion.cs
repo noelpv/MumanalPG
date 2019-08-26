@@ -10,6 +10,8 @@ namespace MumanalPG.Models.Finanzas
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public Int32 IdDosificacion { get; set; }
+        [Range(1, Int32.MaxValue, ErrorMessage = "Debe seleccionar un {0}")]
+        [Display(Name="Documento de Respaldo")]
         public Int32 IdDocumentoRespaldo { get; set; }
         [Required(ErrorMessage = "{0} no puede estar en blanco")]
         [StringLength(40, ErrorMessage = "La longitud máxima es de {1} caracteres")]
@@ -23,7 +25,6 @@ namespace MumanalPG.Models.Finanzas
         [Range(1, Int32.MaxValue, ErrorMessage = "Debe seleccionar un {0}")]
         [Display(Name="Beneficiario")]
         public Int32 IdBeneficiario { get; set; }
-        //[Required(ErrorMessage = "{0} no puede estar en blanco")]
         public Int32 IdBeneficiarioResponsable { get; set; }
         [Required(ErrorMessage = "{0} no puede estar en blanco")]
         [Range(0, Int32.MaxValue, ErrorMessage = "El {0} no es válido")]

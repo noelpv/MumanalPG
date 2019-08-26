@@ -28,7 +28,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
         }
 
         // GET: Finanzas/Dosificacion
-        //[Breadcrumb("Dosificacion", FromController = "DashboardPlan", FromAction = "Clasificadores")]
+        [Breadcrumb("Dosificacion", FromController = "DashboardFinanzas", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "NumeroAutorizacion", string a = "")
         { 
             var consulta = DB.Dosificacion.AsNoTracking().AsQueryable();
@@ -65,35 +65,9 @@ namespace MumanalPG.Areas.Finanzas.Controllers
         {
             var model = new Models.Finanzas.Dosificacion();
 
-            var items1 = new List<SelectListItem>();
-            items1 = DB.Ventas_DocumentoRespaldo.                   
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdDocumentoRespaldo.ToString()
-                   }).
-                   ToList();
+            var items1 = DB.Ventas_DocumentoRespaldo.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             ViewBag.DocumentoRespaldo = items1;
-            
-            var items2 = new List<SelectListItem>();
-            items2 = DB.RRHH_Beneficiario.                   
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.DocumentoIdentidad,
-                       Value = c.IdBeneficiario.ToString()
-                   }).
-                   ToList();
-            ViewBag.Beneficiario = items2;
-
-            /* var items3 = new List<SelectListItem>();
-            items3 = DB.RRHH_BeneficiarioResponsable.                   
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdBeneficiarioResponsable.ToString()
-                   }).
-                   ToList();
-            ViewBag.RRHH_BeneficiarioResponsable = items3; */
 
             return PartialView("Create", model);
         }
@@ -101,20 +75,21 @@ namespace MumanalPG.Areas.Finanzas.Controllers
         // POST: Finanzas/Dosificacion/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Models.Finanzas.Dosificacion item, string DocumentoRespaldo, string RRHH_Beneficiario)
+        public async Task<IActionResult> Create(Models.Finanzas.Dosificacion item)
         {
             if (ModelState.IsValid)
             {
                 ApplicationUser currentUser = await GetCurrentUser();
                 item.IdUsuario = currentUser.AspNetUserId;
-                item.IdEstadoRegistro = '1';
+                item.IdEstadoRegistro = 1;
                 item.FechaRegistro = DateTime.Now;
-                item.IdDocumentoRespaldo = Convert.ToInt32(DocumentoRespaldo);
-                item.IdBeneficiario = Convert.ToInt32(RRHH_Beneficiario);
-                // item.IdBeneficiarioResponsable = Convert.ToInt32(RRHH_BeneficiarioResponsable);
+                item.IdBeneficiarioResponsable = 0;
                 DB.Add(item);
                 await DB.SaveChangesAsync();
             }
+            var items1 = DB.Ventas_DocumentoRespaldo.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.DocumentoRespaldo = items1;
             return PartialView("Create",item);
         }
 
@@ -131,43 +106,17 @@ namespace MumanalPG.Areas.Finanzas.Controllers
                 return NotFound();
             }
 
-            var items1 = new List<SelectListItem>();
-            items1 = DB.Ventas_DocumentoRespaldo.                   
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdDocumentoRespaldo.ToString()
-                   }).
-                   ToList();
+            var items1 = DB.Ventas_DocumentoRespaldo.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             ViewBag.DocumentoRespaldo = items1;
-            
-            var items2 = new List<SelectListItem>();
-            items2 = DB.RRHH_Beneficiario.                   
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.DocumentoIdentidad,
-                       Value = c.IdBeneficiario.ToString()
-                   }).
-                   ToList();
-            ViewBag.Beneficiario = items2;
 
-            /* var items3 = new List<SelectListItem>();
-            items3 = DB.RRHH_BeneficiarioResponsable.                   
-                   Select(c => new SelectListItem()
-                   {
-                       Text = c.Descripcion,
-                       Value = c.IdBeneficiarioResponsable.ToString()
-                   }).
-                   ToList();
-            ViewBag.RRHH_BeneficiarioResponsable = items3; */
-
-            return PartialView( "Edit", item);
+            return PartialView("Edit", item);
         }
 
         // POST: Finanzas/Dosificacion/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, [Bind("IdDosificacion,NumeroAutorizacion, IdDocumentoRespaldo, IdTipoCuentaBanco, IdTipoMoneda, IdOrganismoFinanciador")] Models.Finanzas.Dosificacion item, string DocumentoRespaldo, string RRHH_Beneficiario)
+        public async Task<IActionResult> Edit(Int32 id, Models.Finanzas.Dosificacion item)
         {
             if (id != item.IdDosificacion)
             {
@@ -178,9 +127,11 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             {
                 try
                 {
-                    item.IdDocumentoRespaldo = Convert.ToInt32(DocumentoRespaldo);
-                    item.IdBeneficiario = Convert.ToInt32(RRHH_Beneficiario);
-                // item.IdBeneficiarioResponsable = Convert.ToInt32(RRHH_BeneficiarioResponsable);
+                    ApplicationUser currentUser = await GetCurrentUser();
+                    item.IdUsuario = currentUser.AspNetUserId;
+                    item.IdEstadoRegistro = 1;
+                    item.FechaRegistro = DateTime.Now;
+                    item.IdBeneficiarioResponsable = 0;
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }
@@ -197,6 +148,9 @@ namespace MumanalPG.Areas.Finanzas.Controllers
                 }
                 
             }
+            var items1 = DB.Ventas_DocumentoRespaldo.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.DocumentoRespaldo = items1;
             return PartialView("Edit", item);
         }
 
@@ -232,6 +186,25 @@ namespace MumanalPG.Areas.Finanzas.Controllers
         private bool ItemExists(Int32 id)
         {
             return DB.Dosificacion.Any(e => e.IdDosificacion == id);
+        }
+
+        public JsonResult ListaBeneficiarios(string filter = "")
+        {
+            if (filter.Length > 2)
+            {
+                var listaBenef = DB.RRHH_Beneficiario
+                    .Where(b => (b.IdEstadoRegistro != Constantes.Anulado || b.IdEstadoRegistro == null))
+                    .Where(b => EF.Functions.ILike(b.PrimerNombre, "%" + filter + "%") || EF.Functions.ILike(b.PrimerApellido, "%" + filter + "%") || EF.Functions.ILike(b.DocumentoIdentidad, "%" + filter + "%"))
+                    .OrderBy(d => d.PrimerApellido).Take(20)
+                    .Select(c => new {Id=c.IdBeneficiario, Nombre = c.PrimerNombre, Apellido = c.PrimerApellido, Carnet = c.DocumentoIdentidad})
+                    .ToList(); 
+                
+                return Json(new {repositories = listaBenef});
+            }
+            else
+            {
+                return Json(new {repositories = new {}});
+            }
         }
     }
 }
