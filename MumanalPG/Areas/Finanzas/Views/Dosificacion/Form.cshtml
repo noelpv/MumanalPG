@@ -81,17 +81,11 @@ $(document).ready(function() {
     $('#origen').selectize(getOptions());
 
     // *FUNCIONES*
-    // Verifica si ya existen valores
-    function verifyDefaultOptions() {
-        if ($('#origen-id').val() > 0) {
-            loadDefaultOptions();
-        }
-    }
-
-    // Carga las opciones por default****
+    // Carga los items si ya existen *Se creo una propiedad en el modelo para guardar el valor del nombre con propiedad "no mapeada"
     function loadDefaultOptions() {
-        //console.log($('#nombre-origen-id').val());
-        $('#origen-selectized').val($('#nombre-origen-id').val().trim()).attr("style", "width:100%");
+        if ($('#origen-id').val() > 0) {
+            $('#origen-selectized').val($('#nombre-origen-id').val().trim()).attr("style", "width:100%");    
+        }
     }
 
     // Consigue los items/genera el filtro
@@ -103,7 +97,6 @@ $(document).ready(function() {
             create: false,
             render: {
                 option: function(item, escape) {
-                    $('.selectize-control.remote').removeClass('loading');
                     return '<div class="row"><div class="col">' + escape(item.carnet) + ' - ' + escape(item.nombre) + '</div></div>';
                 }
             },
@@ -131,7 +124,7 @@ $(document).ready(function() {
                 });
             },
             onInitialize: function(data) {
-                verifyDefaultOptions();
+                loadDefaultOptions();
             },
             onChange: function(selected) {
                 var idElement = this.$input.attr('id');
@@ -142,6 +135,5 @@ $(document).ready(function() {
             }
         }
     }
-      //});
 });
 </script>
