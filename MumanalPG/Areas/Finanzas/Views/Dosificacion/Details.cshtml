@@ -8,7 +8,7 @@
                         @Html.DisplayNameFor(model => model.IdDocumentoRespaldo)
                     </dt>
                     <dd>
-                        @Html.DisplayFor(model => model.IdDocumentoRespaldo)
+                        @Html.DisplayFor(model => model.DocumentoRespaldoDB.Descripcion)
                     </dd>
                     <dt>
                         @Html.DisplayNameFor(model => model.NumeroAutorizacion)
@@ -21,6 +21,56 @@
                     </dt>
                     <dd>
                         @Html.DisplayFor(model => model.DosificacionFecha)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.IdBeneficiario)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.BeneficiarioDB.Denominacion)
+                        <br>
+                        CI: @Html.DisplayFor(model => model.BeneficiarioDB.DocumentoIdentidad)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CorrelativoInicial)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CorrelativoInicial)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CorrelativoFinal)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CorrelativoFinal)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CorrelativoFactura)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CorrelativoFactura)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.FechaInicial)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.FechaInicial)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.FechaFinal)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.FechaFinal)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.FechaLimite)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.FechaLimite)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.DosificacionLlave)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.DosificacionLlave)
                     </dd>
                 </dl>
             </div>

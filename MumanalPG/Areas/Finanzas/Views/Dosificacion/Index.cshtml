@@ -1,4 +1,5 @@
 @model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Finanzas.Dosificacion>
+@using MumanalPG.Models.Finanzas
 @using MumanalPG.Utility
 @using ReflectionIT.Mvc.Paging
 @addTagHelper *, ReflectionIT.Mvc.Paging
@@ -36,6 +37,7 @@
     <table class="table table-hover table-striped">
         <thead>
         <tr>
+            <th>@Html.SortableHeaderFor(model => model.IdDocumentoRespaldo)</th>
             <th>@Html.SortableHeaderFor(model => model.NumeroAutorizacion)</th>
             <th>@Html.SortableHeaderFor(model => model.DosificacionFecha)</th>
             <th>@Html.SortableHeaderFor(model => model.IdBeneficiario)</th>
@@ -49,14 +51,19 @@
             <td>
                 <a asp-action="Details" asp-route-id="@item.IdDosificacion" title="Detalle"
                    data-modal="link" data-modal-read="True">
-                    @Html.DisplayFor(modelItem => item.NumeroAutorizacion)
+                    @Html.DisplayFor(modelItem => item.DocumentoRespaldoDB.Descripcion)
                 </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroAutorizacion)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DosificacionFecha)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdBeneficiario)
+                @Html.DisplayFor(modelItem => item.BeneficiarioDB.Denominacion)
+                <br>
+                CI: @Html.DisplayFor(modelItem => item.BeneficiarioDB.DocumentoIdentidad)
             </td>
             @{
                 options.Id = item.IdDosificacion;

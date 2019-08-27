@@ -1,6 +1,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using MumanalPG.Models.RRHH;
+using MumanalPG.Models.Ventas;
 
 namespace MumanalPG.Models.Finanzas
 {
@@ -13,9 +15,10 @@ namespace MumanalPG.Models.Finanzas
         [Range(1, Int32.MaxValue, ErrorMessage = "Debe seleccionar un {0}")]
         [Display(Name="Documento de Respaldo")]
         public Int32 IdDocumentoRespaldo { get; set; }
+        public DocumentoRespaldo DocumentoRespaldoDB { get; set; }
         [Required(ErrorMessage = "{0} no puede estar en blanco")]
         [StringLength(40, ErrorMessage = "La longitud máxima es de {1} caracteres")]
-        [Display(Name="Número de Autorización")]
+        [Display(Name="Nro de Autorización")]
         public string NumeroAutorizacion { get; set; }
         [Required(ErrorMessage = "{0} no puede estar en blanco")]
         [DataType(DataType.Date)]
@@ -23,8 +26,11 @@ namespace MumanalPG.Models.Finanzas
         public DateTime DosificacionFecha { get; set; }
         [Required(ErrorMessage = "{0} no puede estar en blanco")]
         [Range(1, Int32.MaxValue, ErrorMessage = "Debe seleccionar un {0}")]
-        [Display(Name="CI-Beneficiario")]
+        [Display(Name="Beneficiario")]
         public Int32 IdBeneficiario { get; set; }
+        public Beneficiario BeneficiarioDB {get; set;}
+        [NotMapped]
+		public string NombreBeneficiario { get; set; }
         public Int32 IdBeneficiarioResponsable { get; set; }
         [Required(ErrorMessage = "{0} no puede estar en blanco")]
         [Range(0, Int32.MaxValue, ErrorMessage = "El {0} no es válido")]

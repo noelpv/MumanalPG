@@ -74,7 +74,7 @@ namespace MumanalPG.Areas.Admin.Controllers
         //Post Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit (string id, ApplicationUser applicationUser)
+        public async Task<IActionResult> Edit (string id, ApplicationUser applicationUser)
         {
             if(id!=applicationUser.Id)
             {
@@ -87,7 +87,7 @@ namespace MumanalPG.Areas.Admin.Controllers
                 userFromDb.Name = applicationUser.Name;
                 userFromDb.PhoneNumber = applicationUser.PhoneNumber;
 
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
@@ -116,12 +116,12 @@ namespace MumanalPG.Areas.Admin.Controllers
         //Post Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeletePOST(string id)
+        public async Task<IActionResult> DeletePOST(string id)
         {
                 ApplicationUser userFromDb = _db.ApplicationUser.Where(u => u.Id == id).FirstOrDefault();
                 userFromDb.LockoutEnd= DateTime.Now.AddYears(1000);
 
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
         }
 	}

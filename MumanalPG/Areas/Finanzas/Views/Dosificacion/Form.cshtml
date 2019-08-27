@@ -1,59 +1,74 @@
 @model MumanalPG.Models.Finanzas.Dosificacion
 <form asp-action="@ViewData["Action"]">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @{
+        var hasError = "has-danger";
+        var stringErrors = "";
+        if (ViewData.ModelState.IsValid)
+        {
+            hasError = "";
+        }
+        else
+        {
+            var errorList = ViewData.ModelState.Where(x => x.Value.Errors.Count > 0).ToDictionary(kvp => kvp.Key);
+            stringErrors = string.Join(",", errorList.Select(x => x.Key));
+        }
+    }
     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
     <input type="hidden" asp-for="IdDosificacion" />
-    @Html.HiddenFor(m => m.IdBeneficiario, new { id = "origen-id" })
-    <div class="form-group m-b-40">
-        @Html.LabelFor(m => m.IdDocumentoRespaldo, new { @class = "control-label" } )
+    @Html.HiddenFor(m => m.IdBeneficiario, new { @id = "origen-id" })
+    @Html.HiddenFor(m => m.NombreBeneficiario, new { @id = "nombre-origen-id" })
+    <div class="form-group m-b-10 @if(stringErrors.Contains("IdDocumentoRespaldo")){@hasError}">
+        @Html.LabelFor(m => m.IdDocumentoRespaldo, new { @class = "form-control-label" } )
         <br>
         @Html.DropDownListFor(m => m.IdDocumentoRespaldo, new SelectList(ViewBag.DocumentoRespaldo,"IdDocumentoRespaldo","Descripcion"), new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.IdDocumentoRespaldo, "" ,new { @class = "text-danger" })
     </div>
-    <div class="form-group m-b-40">
-        @Html.LabelFor(m => m.NumeroAutorizacion, new { @class = "control-label" } )
+    <div class="form-group m-b-10 @if(stringErrors.Contains("NumeroAutorizacion")){@hasError}">
+        @Html.LabelFor(m => m.NumeroAutorizacion, new { @class = "form-control-label" } )
         @Html.EditorFor(m => m.NumeroAutorizacion, new { htmlAttributes = new { @class = "form-control"}})
         @Html.ValidationMessageFor(m => m.NumeroAutorizacion, "" ,new { @class = "text-danger" })
     </div>
-    <div class="form-group m-b-10">
-        @Html.LabelFor(m => m.IdBeneficiario, new { @class = "control-label" } )
+    <div class="form-group m-b-10 @if(stringErrors.Contains("IdBeneficiario")){@hasError}">
+        @Html.LabelFor(m => m.IdBeneficiario, new { @class = "form-control-label" } )
         <br>
         <select asp-for="IdBeneficiario" class="form-control remote" id="origen" placeholder="Escribir Nombre, Apellido o CI..."
             data-remote-url="@Url.Action("ListaBeneficiarios")">
         </select>
         @Html.ValidationMessageFor(m => m.IdBeneficiario, "" ,new { @class = "text-danger" })
     </div>
-    <div class="form-group m-b-40">
-        @Html.LabelFor(m => m.CorrelativoInicial, new { @class = "control-label" } )
+    <div class="form-group m-b-10 @if(stringErrors.Contains("CorrelativoInicial")){@hasError}">
+        @Html.LabelFor(m => m.CorrelativoInicial, new { @class = "form-control-label" } )
         @Html.EditorFor(m => m.CorrelativoInicial, new { htmlAttributes = new { @class = "form-control"}})
         @Html.ValidationMessageFor(m => m.CorrelativoInicial, "" ,new { @class = "text-danger" })
     </div>
-    <div class="form-group m-b-40">
-        @Html.LabelFor(m => m.CorrelativoFinal, new { @class = "control-label" } )
+    <div class="form-group m-b-10 @if(stringErrors.Contains("CorrelativoFinal")){@hasError}">
+        @Html.LabelFor(m => m.CorrelativoFinal, new { @class = "form-control-label" } )
         @Html.EditorFor(m => m.CorrelativoFinal, new { htmlAttributes = new { @class = "form-control"}})
         @Html.ValidationMessageFor(m => m.CorrelativoFinal, "" ,new { @class = "text-danger" })
     </div>
-    <div class="form-group m-b-40">
-        @Html.LabelFor(m => m.CorrelativoFactura, new { @class = "control-label" } )
+    <div class="form-group m-b-10 @if(stringErrors.Contains("CorrelativoFactura")){@hasError}">
+        @Html.LabelFor(m => m.CorrelativoFactura, new { @class = "form-control-label" } )
         @Html.EditorFor(m => m.CorrelativoFactura, new { htmlAttributes = new { @class = "form-control"}})
         @Html.ValidationMessageFor(m => m.CorrelativoFactura, "" ,new { @class = "text-danger" })        
     </div>
-    <div class="form-group m-b-40">
-        @Html.LabelFor(m => m.FechaInicial, new { @class = "control-label" })
+    <div class="form-group m-b-10 @if(stringErrors.Contains("FechaInicial")){@hasError}">
+        @Html.LabelFor(m => m.FechaInicial, new { @class = "form-control-label" })
         @Html.EditorFor(m => m.FechaInicial, new { htmlAttributes = new { @class = "form-control"}})
         @Html.ValidationMessageFor(m => m.FechaInicial, "" ,new { @class = "text-danger" })
     </div>
-    <div class="form-group m-b-40">
-        @Html.LabelFor(m => m.FechaFinal, new { @class = "control-label" })
+    <div class="form-group m-b-10 @if(stringErrors.Contains("FechaFinal")){@hasError}">
+        @Html.LabelFor(m => m.FechaFinal, new { @class = "form-control-label" })
         @Html.EditorFor(m => m.FechaFinal, new { htmlAttributes = new { @class = "form-control"}})
         @Html.ValidationMessageFor(m => m.FechaFinal, "" ,new { @class = "text-danger" })
     </div>
-    <div class="form-group m-b-40">
-        @Html.LabelFor(m => m.FechaLimite, new { @class = "control-label" })
+    <div class="form-group m-b-10 @if(stringErrors.Contains("FechaLimite")){@hasError}">
+        @Html.LabelFor(m => m.FechaLimite, new { @class = "form-control-label" })
         @Html.EditorFor(m => m.FechaLimite, new { htmlAttributes = new { @class = "form-control"}})
         @Html.ValidationMessageFor(m => m.FechaLimite, "" ,new { @class = "text-danger" })
     </div>
-    <div class="form-group m-b-40">
-        @Html.LabelFor(m => m.DosificacionLlave, new { @class = "control-label" })
+    <div class="form-group m-b-10 @if(stringErrors.Contains("DosificacionLLave")){@hasError}">
+        @Html.LabelFor(m => m.DosificacionLlave, new { @class = "form-control-label" })
         @Html.TextAreaFor(m => m.DosificacionLlave, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.DosificacionLlave, "" ,new { @class = "text-danger" })
     </div>
@@ -75,24 +90,21 @@ $(document).ready(function() {
 
     // Carga las opciones por default****
     function loadDefaultOptions() {
-        console.log($('#origen-id').val());
-        console.log("Prueba 1");
-        $('#origen-selectized').val($('#origen-id').val().trim());
-        $('#origen-selectized').attr("style", "width:100%");
-        console.log("Prueba 2");
+        //console.log($('#nombre-origen-id').val());
+        $('#origen-selectized').val($('#nombre-origen-id').val().trim()).attr("style", "width:100%");
     }
 
     // Consigue los items/genera el filtro
     function getOptions() {
         return {
             valueField: 'id',
-            labelField: 'carnet',
-            searchField: ['nombre', 'apellido' ,'carnet'],
+            labelField: 'nombre',
+            searchField: ['nombre', 'carnet'],
             create: false,
             render: {
                 option: function(item, escape) {
                     $('.selectize-control.remote').removeClass('loading');
-                    return '<div class="row"><div class="col">' + escape(item.carnet) + ' - ' + escape(item.apellido) + ', ' + escape(item.nombre) + '</div></div>';
+                    return '<div class="row"><div class="col">' + escape(item.carnet) + ' - ' + escape(item.nombre) + '</div></div>';
                 }
             },
             score: function(search) {
@@ -124,8 +136,9 @@ $(document).ready(function() {
             onChange: function(selected) {
                 var idElement = this.$input.attr('id');
                 var dataSelected = this.options[selected];
-                //console.log(dataSelected);
+                console.log(dataSelected);
                 $('#' + idElement + '-id').val(selected);
+                $('#nombre-' + idElement + '-id').val(dataSelected.nombre);
             }
         }
     }

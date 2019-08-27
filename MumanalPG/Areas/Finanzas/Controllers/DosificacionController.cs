@@ -1,15 +1,15 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using MumanalPG.Data;
 using MumanalPG.Models;
+using MumanalPG.Models.Finanzas;
 using MumanalPG.Utility;
 using ReflectionIT.Mvc.Paging;
 using SmartBreadcrumbs;
@@ -32,7 +32,9 @@ namespace MumanalPG.Areas.Finanzas.Controllers
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "NumeroAutorizacion", string a = "")
         { 
             var consulta = DB.Dosificacion.AsNoTracking().AsQueryable();
-            consulta = consulta.Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
+            consulta = consulta.Include(m => m.DocumentoRespaldoDB)
+                               .Include(m => m.BeneficiarioDB)
+                               .Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
             if (!string.IsNullOrWhiteSpace(filter))
 			{
                 consulta = consulta.Where(m => EF.Functions.ILike(m.NumeroAutorizacion, $"%{filter}%"));
@@ -51,7 +53,10 @@ namespace MumanalPG.Areas.Finanzas.Controllers
                 return NotFound();
             }
 
-            var item = await DB.Dosificacion.FirstOrDefaultAsync(m => m.IdDosificacion  == id);
+            var item = await DB.Dosificacion
+                            .Include(m => m.DocumentoRespaldoDB)
+                            .Include(m => m.BeneficiarioDB)
+                            .FirstOrDefaultAsync(m => m.IdDosificacion  == id);
             if (item == null)
             {
                 return NotFound();
@@ -100,12 +105,16 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             {
                 return NotFound();
             }
-            var item = await DB.Dosificacion.FindAsync(id);
+            var item = await DB.Dosificacion
+                .Include(m => m.BeneficiarioDB)
+                .FirstOrDefaultAsync(m => m.IdDosificacion == id);
             if (item == null)
             {
                 return NotFound();
             }
 
+            item.NombreBeneficiario = item.BeneficiarioDB.Denominacion;
+            
             var items1 = DB.Ventas_DocumentoRespaldo.
                 Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             ViewBag.DocumentoRespaldo = items1;
@@ -194,9 +203,9 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             {
                 var listaBenef = DB.RRHH_Beneficiario
                     .Where(b => (b.IdEstadoRegistro != Constantes.Anulado || b.IdEstadoRegistro == null))
-                    .Where(b => EF.Functions.ILike(b.PrimerNombre, "%" + filter + "%") || EF.Functions.ILike(b.PrimerApellido, "%" + filter + "%") || EF.Functions.ILike(b.DocumentoIdentidad, "%" + filter + "%"))
+                    .Where(b => EF.Functions.ILike(b.Denominacion, "%" + filter + "%") || EF.Functions.ILike(b.DocumentoIdentidad, "%" + filter + "%"))
                     .OrderBy(d => d.PrimerApellido).Take(20)
-                    .Select(c => new {Id=c.IdBeneficiario, Nombre = c.PrimerNombre, Apellido = c.PrimerApellido, Carnet = c.DocumentoIdentidad})
+                    .Select(c => new {Id=c.IdBeneficiario, Nombre = c.Denominacion, Carnet = c.DocumentoIdentidad})
                     .ToList(); 
                 
                 return Json(new {repositories = listaBenef});
