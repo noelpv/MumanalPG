@@ -1,59 +1,70 @@
 @model MumanalPG.Models.Finanzas.Banco
 <form asp-action="@ViewData["Action"]">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @{
+        string hasError = "has-danger";
+        string stringErrors = "";
+        if (ViewData.ModelState.IsValid) { hasError = ""; }
+        else
+        {
+            var errorList = ViewData.ModelState.Where(x => x.Value.Errors.Count > 0).ToDictionary(kvp => kvp.Key);
+            stringErrors = String.Join(",", errorList.Select(x => x.Key));
+        }
+    }
     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
     <input type="hidden" asp-for="IdBanco" />
-    <div class="form-group m-b-40">
+    <div class="form-group m-b-10 @if(stringErrors.Contains("Descripcion")){@hasError}">
         @Html.LabelFor(m => m.Descripcion, new { @class = "form-control-label" }) 
         @Html.TextAreaFor(m => m.Descripcion, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Descripcion, "" ,new { @class = "text-danger" })
     </div>
-    <div class="form-group m-b-40">
+    <div class="form-group m-b-10 @if(stringErrors.Contains("Sigla")){@hasError}">
         @Html.LabelFor(m => m.Sigla, new { @class = "form-control-label" }) 
         @Html.TextBoxFor(m => m.Sigla, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Sigla, "" ,new { @class = "text-danger" })
     </div>
-    <div class="form-group m-b-40">
+    <div class="form-group m-b-10 @if(stringErrors.Contains("NIT")){@hasError}">
         @Html.LabelFor(m => m.NIT, new { @class = "form-control-label" })
         @Html.TextBoxFor(m => m.NIT, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.NIT, "" ,new { @class = "text-danger" })
     </div>
-    <div class="form-group m-b-40">
+    <div class="form-group m-b-10 @if(stringErrors.Contains("IdMunicipio")){@hasError}">
         @Html.LabelFor(m => m.IdMunicipio, new { @class = "form-control-label" })
         <br>
         @Html.DropDownListFor(m => m.IdMunicipio, new SelectList(ViewBag.Municipio,"IdMunicipio","Descripcion"), new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.IdMunicipio, "" ,new { @class = "text-danger" })
     </div>
-    <div class="form-group m-b-40">
+    <div class="form-group m-b-10 @if(stringErrors.Contains("Direccion")){@hasError}">
         @Html.LabelFor(m => m.Direccion, new { @class = "form-control-label" })
         @Html.TextAreaFor(m => m.Direccion, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Direccion, "" ,new { @class = "text-danger" })
     </div>
-    <div class="form-group m-b-40">
+    <div class="form-group m-b-10 @if(stringErrors.Contains("Representante")){@hasError}">
         @Html.LabelFor(m => m.Representante, new { @class = "form-control-label" })
         @Html.TextBoxFor(m => m.Representante, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Representante, "" ,new { @class = "text-danger" })
     </div>
-    <div class="form-group m-b-40">
+    <div class="form-group m-b-10 @if(stringErrors.Contains("CargoRepresentante")){@hasError}">
         @Html.LabelFor(m => m.CargoRepresentante, new { @class = "form-control-label" })
         @Html.TextAreaFor(m => m.CargoRepresentante, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.CargoRepresentante, "" ,new { @class = "text-danger" })
     </div>
-    <div class="form-group m-b-40">
+    <div class="form-group m-b-10 @if(stringErrors.Contains("CodigoPostal")){@hasError}">
         @Html.LabelFor(m => m.CodigoPostal, new { @class = "form-control-label" })
         @Html.TextAreaFor(m => m.CodigoPostal, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.CodigoPostal, "" ,new { @class = "text-danger" })
     </div>
-    <div class="form-group m-b-40">
+    <div class="form-group m-b-10">
         @Html.LabelFor(m => m.EsReservaFederal, new {@class = "form-control-label"})
         &nbsp; &nbsp;
         @Html.CheckBoxFor(m => m.EsReservaFederal, new { @class = "form-control-checkboxfor" })
     </div>
-    <div class="form-group m-b-40">
+    <div class="form-group m-b-10 @if(stringErrors.Contains("BancoIntermediario")){@hasError}">
         @Html.LabelFor(m => m.BancoIntermediario, new { @class = "form-control-label" })
         @Html.TextBoxFor(m => m.BancoIntermediario, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.BancoIntermediario, "" ,new { @class = "text-danger" })
     </div>
-    <div class="form-group m-b-40">
+    <div class="form-group m-b-10 @if(stringErrors.Contains("Observaciones")){@hasError}">
         @Html.LabelFor(m => m.Observaciones, new { @class = "form-control-label" })
         @Html.TextAreaFor(m => m.Observaciones, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Observaciones, "" ,new { @class = "text-danger" })

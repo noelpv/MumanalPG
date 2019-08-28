@@ -1,14 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Dynamic;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using MumanalPG.Data;
@@ -16,10 +11,6 @@ using MumanalPG.Models;
 using MumanalPG.Utility;
 using ReflectionIT.Mvc.Paging;
 using SmartBreadcrumbs;
-using MumanalPG.Extensions;
-using System.Data.Common;
-using System.Data.SqlClient;
-using System.Data;
 
 namespace MumanalPG.Areas.Finanzas.Controllers
 {
@@ -39,7 +30,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
             var consulta = DB.TipoMoneda.AsNoTracking().AsQueryable();
-            consulta = consulta.Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
+            consulta = consulta.Include(m => m.PaisDB).Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
             if (!string.IsNullOrWhiteSpace(filter))
 			{
                 consulta = consulta.Where(m => EF.Functions.ILike(m.Descripcion, $"%{filter}%"));
@@ -57,7 +48,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             {
                 return NotFound();
             }
-            var item = await DB.TipoMoneda.FirstOrDefaultAsync(m => m.IdTipoMoneda  == id);
+            var item = await DB.TipoMoneda.Include(m => m.PaisDB).FirstOrDefaultAsync(m => m.IdTipoMoneda  == id);
             if (item == null)
             {
                 return NotFound();

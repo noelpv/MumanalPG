@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using MumanalPG.Data;
@@ -32,7 +30,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
             var consulta = DB.CuentaBancaria.AsNoTracking().AsQueryable();
-            consulta = consulta.Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
+            consulta = consulta.Include(m => m.BancoDB).Include(m => m.TipoCuentaBancoDB).Include(m => m.TipoMonedaDB).Include(m => m.OrganismoFinanciadorDB).Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
             if (!string.IsNullOrWhiteSpace(filter))
 			{
                 consulta = consulta.Where(m => EF.Functions.ILike(m.Descripcion, $"%{filter}%"));
@@ -51,7 +49,8 @@ namespace MumanalPG.Areas.Finanzas.Controllers
                 return NotFound();
             }
 
-            var item = await DB.CuentaBancaria.FirstOrDefaultAsync(m => m.IdCuentaBancaria  == id);
+            var item = await DB.CuentaBancaria.Include(m => m.BancoDB).Include(m => m.TipoCuentaBancoDB).Include(m => m.TipoMonedaDB).Include(m => m.OrganismoFinanciadorDB).FirstOrDefaultAsync(m => m.IdCuentaBancaria  == id);
+            
             if (item == null)
             {
                 return NotFound();

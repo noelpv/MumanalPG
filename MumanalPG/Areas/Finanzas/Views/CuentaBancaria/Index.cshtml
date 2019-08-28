@@ -3,7 +3,7 @@
 @using ReflectionIT.Mvc.Paging
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @{
-    ViewData["Title"] = "CuentaBancaria";
+    ViewData["Title"] = "Cuentas Bancarias";
     OptionPartial options = new OptionPartial();
     string intro_msg_search = "Puede buscar una Cuenta Bancaria introduciendo el nombre en este campo, " +
                               "luego presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
@@ -36,10 +36,10 @@
     <table class="table table-hover table-striped">
         <thead>
         <tr>
-            <th>@Html.SortableHeaderFor(model => model.Descripcion)</th>
             <th>@Html.SortableHeaderFor(model => model.IdBanco)</th>
             <th>@Html.SortableHeaderFor(model => model.CuentaCodigo)</th>
             <th>@Html.SortableHeaderFor(model => model.IdTipoCuentaBanco)</th>
+            <th>@Html.SortableHeaderFor(model => model.IdTipoMoneda)</th>
         </tr>
 
         </thead>
@@ -50,17 +50,17 @@
             <td>
                 <a asp-action="Details" asp-route-id="@item.IdCuentaBancaria" title="Detalle"
                    data-modal="link" data-modal-read="True">
-                    @Html.DisplayFor(modelItem => item.Descripcion)
+                    @Html.DisplayFor(modelItem => item.BancoDB.Descripcion)
                 </a>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdBanco)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CuentaCodigo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdTipoCuentaBanco)
+                @Html.DisplayFor(modelItem => item.TipoCuentaBancoDB.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoMonedaDB.Descripcion)
             </td>
             @{
                 options.Id = item.IdCuentaBancaria;

@@ -35,16 +35,13 @@ namespace MumanalPG.Models.Finanzas
         [Required(ErrorMessage = "{0} no puede estar en blanco")]
         [Display(Name="Auxiliar 3")]
         public Int32 IdAuxiliar3 { get; set; }
-        [Required(ErrorMessage = "{0} no puede estar en blanco")]
-        [Display(Name="Plan de Cuentas Padre")]
+        [Required(ErrorMessage = "{0} no puede estar en blanco"), Display(Name="Plan de Cuentas Padre")]
         public Int32 IdPlanCuentasPadre { get; set; }
         [Display(Name="¿Estado de movimiento?")]
         public Boolean EsDeMovimiento { get; set; }
-        [Required(ErrorMessage = "{0} no puede estar en blanco")]
-        [Display(Name="Tipo Cuenta")]
+        [Required(ErrorMessage = "{0} no puede estar en blanco"), Display(Name="Tipo Cuenta")]
         public Int32 IdTipoCuenta { get; set; }
-        [Required(ErrorMessage = "{0} no puede estar en blanco")]
-        [Range(0, Int32.MaxValue, ErrorMessage = "El {0} no es válido")]
+        [Required(ErrorMessage = "{0} no puede estar en blanco"), Range(0, 1000, ErrorMessage = "El {0} no es válido")]
         public Int32 Nivel { get; set; }
         public Int32 IdEstadoRegistro { get; set; }
         public Int32 IdUsuario { get; set; }

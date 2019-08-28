@@ -3,7 +3,7 @@
 @using ReflectionIT.Mvc.Paging
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @{
-    ViewData["Title"] = "Banco";
+    ViewData["Title"] = "Bancos y Entidades Financieras";
     OptionPartial options = new OptionPartial();
     string intro_msg_search = "Puede buscar un Banco introduciendo el nombre en este campo, " +
                               "luego presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
@@ -65,7 +65,7 @@
                 @Html.DisplayFor(modelItem => item.Sigla)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdMunicipio)
+                @Html.DisplayFor(modelItem => item.MunicipioDB.Descripcion)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EsReservaFederal)

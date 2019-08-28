@@ -1,9 +1,19 @@
 @model MumanalPG.Models.Finanzas.TipoTransaccion
 <form asp-action="@ViewData["Action"]">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @{
+        string hasError = "has-danger";
+        string stringErrors = "";
+        if (ViewData.ModelState.IsValid) { hasError = ""; }
+        else
+        {
+            var errorList = ViewData.ModelState.Where(x => x.Value.Errors.Count > 0).ToDictionary(kvp => kvp.Key);
+            stringErrors = String.Join(",", errorList.Select(x => x.Key));
+        }
+    }
     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
     <input type="hidden" asp-for="IdTipoTransaccion" />
-    <div class="form-group m-b-40">
+    <div class="form-group m-b-10 @if(stringErrors.Contains("Descripcion")){@hasError}">
         @Html.LabelFor(m => m.Descripcion, new { @class = "form-control-label" })
         @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Descripcion, "" ,new { @class = "text-danger" })
