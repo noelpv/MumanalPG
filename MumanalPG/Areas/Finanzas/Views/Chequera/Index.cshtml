@@ -1,20 +1,20 @@
-@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Finanzas.Dosificacion>
+@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Finanzas.Chequera>
 @using MumanalPG.Models.Finanzas
 @using MumanalPG.Utility
 @using ReflectionIT.Mvc.Paging
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @{
-    ViewData["Title"] = "Dosificación de Facturas";
+    ViewData["Title"] = "Dosificación de Chequeras";
     OptionPartial options = new OptionPartial();
-    string intro_msg_search = "Puede buscar una dosificacion de facturas introduciendo la descripción del documento de respaldo en este campo, " +
+    string intro_msg_search = "Puede buscar una Dosificación de Chequera introduciendo la descripción del documento de respaldo en este campo, " +
                               "luego presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
                               "<i class='fas fa-search'></i></button>";
 }
 <div class="row">
     <div class="col-12 text-right">
-        <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nuevo Dosificacion"
+        <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nueva Dosificacion de Chequera"
            data-modal="link", data-redirect="@Url.Action("Index", new{@a=Constantes.Creado})" 
-           data-intro="Click, en este botón para crear una nueva dosificacion de facturas">
+           data-intro="Click, en este botón para crear una nueva Dosificación de Chequeras">
             <i class="fas fa-plus"></i><span class="d-none d-sm-inline">&nbsp; Nuevo </span>
         </a>
     </div>
@@ -23,7 +23,7 @@
     <div class="col-12">
         <form method="get" class="form form-search" data-intro="@intro_msg_search">
             <div class="input-group mb-3">
-                <input name="filter" class="form-control search" placeholder="Buscar por Documento de Respaldo ..."
+                <input name="filter" class="form-control search" placeholder="Buscar por Documento de respaldo ..."
                        value="@Model.RouteValue["Filter"]"/>
                 <button type="submit" class="btn btn-secondary input-group-append">
                     <span class="fas fa-search" aria-hidden="true"></span>
@@ -38,9 +38,9 @@
         <thead>
         <tr>
             <th>@Html.SortableHeaderFor(model => model.IdDocumentoRespaldo)</th>
-            <th>@Html.SortableHeaderFor(model => model.NumeroAutorizacion)</th>
-            <th>@Html.SortableHeaderFor(model => model.DosificacionFecha)</th>
+            <th>@Html.SortableHeaderFor(model => model.FechaChequera)</th>
             <th>@Html.SortableHeaderFor(model => model.IdBeneficiario)</th>
+            <th>@Html.SortableHeaderFor(model => model.CorrelativoInicial)</th>
         </tr>
 
         </thead>
@@ -49,24 +49,24 @@
         {
         <tr>
             <td>
-                <a asp-action="Details" asp-route-id="@item.IdDosificacion" title="Detalle"
+                <a asp-action="Details" asp-route-id="@item.IdChequera" title="Detalle"
                    data-modal="link" data-modal-read="True">
                     @Html.DisplayFor(modelItem => item.DocumentoRespaldoDB.Descripcion)
                 </a>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NumeroAutorizacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DosificacionFecha)
+                @Html.DisplayFor(modelItem => item.FechaChequera)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BeneficiarioDB.Denominacion)
                 <br>
                 CI: @Html.DisplayFor(modelItem => item.BeneficiarioDB.DocumentoIdentidad)
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CorrelativoInicial)
+            </td>
             @{
-                options.Id = item.IdDosificacion;
+                options.Id = item.IdChequera;
                 options.ShowIntroMessages = index == 0 ? true : false;
                 index++;
             }

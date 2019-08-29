@@ -1,0 +1,73 @@
+@model MumanalPG.Models.Finanzas.Chequera
+<div class="row justify-content-center">
+    <div class="col-10">
+        <div class="card border-info">
+            <div class="card-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.IdDocumentoRespaldo)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.DocumentoRespaldoDB.Descripcion)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.FechaChequera)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.FechaChequera)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.IdBeneficiario)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.BeneficiarioDB.Denominacion)
+                        <br>
+                        CI: @Html.DisplayFor(model => model.BeneficiarioDB.DocumentoIdentidad)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CorrelativoInicial)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CorrelativoInicial)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CorrelativoFinal)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CorrelativoFinal)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CorrelativoCheque)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CorrelativoCheque)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.FechaInicial)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.FechaInicial)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.FechaFinal)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.FechaFinal)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.FechaLimite)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.FechaLimite)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Observacion)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Observacion)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

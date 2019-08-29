@@ -64,6 +64,7 @@ namespace MumanalPG.Data
         public DbSet<MumanalPG.Models.Finanzas.Auxiliar> Auxiliar { get; set; }
         public DbSet<MumanalPG.Models.Finanzas.Banco> Banco { get; set; }
         public DbSet<MumanalPG.Models.Finanzas.CuentaBancaria> CuentaBancaria { get; set; }
+        public DbSet<MumanalPG.Models.Finanzas.Chequera> Chequera { get; set; }
         public DbSet<MumanalPG.Models.Finanzas.Dosificacion> Dosificacion { get; set; }
         public DbSet<MumanalPG.Models.Finanzas.PlanCuentas> PlanCuentas { get; set; }
         public DbSet<MumanalPG.Models.Finanzas.TipoTransaccion> TipoTransaccion { get; set; }

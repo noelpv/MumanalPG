@@ -18,19 +18,19 @@ namespace MumanalPG.Areas.Finanzas.Controllers
     //[Authorize(Roles = SD.SuperAdminEndUser)]
     [Authorize]
     [Area("Finanzas")]
-    public class DosificacionController : BaseController
+    public class ChequeraController : BaseController
     {        
         
-		public DosificacionController(ApplicationDbContext db, UserManager<IdentityUser> userManager): base(db, userManager)
+		public ChequeraController(ApplicationDbContext db, UserManager<IdentityUser> userManager): base(db, userManager)
         {
             
         }
 
-        // GET: Finanzas/Dosificacion
-        [Breadcrumb("Dosificacion", FromController = "DashboardFinanzas", FromAction = "Clasificadores")]
+        // GET: Finanzas/Chequera
+        [Breadcrumb("Dosificación de Chequeras", FromController = "DashboardFinanzas", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "IdDocumentoRespaldo", string a = "")
         { 
-            var consulta = DB.Dosificacion.AsNoTracking().AsQueryable();
+            var consulta = DB.Chequera.AsNoTracking().AsQueryable();
             consulta = consulta.Include(m => m.DocumentoRespaldoDB)
                                .Include(m => m.BeneficiarioDB)
                                .Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
@@ -44,7 +44,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             return View(resp);
         }
 
-        // GET: Finanzas/Dosificacion/Details/5
+        // GET: Finanzas/Chequera/Details/5
         public async Task<IActionResult> Details(Int32? id)
         {
             if (id == null)
@@ -52,8 +52,9 @@ namespace MumanalPG.Areas.Finanzas.Controllers
                 return NotFound();
             }
 
-            var item = await DB.Dosificacion.Include(m => m.DocumentoRespaldoDB).Include(m => m.BeneficiarioDB).FirstOrDefaultAsync(m => m.IdDosificacion  == id);
-            
+            var item = await DB.Chequera.Include(m => m.DocumentoRespaldoDB)
+                                    .Include(m => m.BeneficiarioDB)
+                                    .FirstOrDefaultAsync(m => m.IdChequera  == id);
             if (item == null)
             {
                 return NotFound();
@@ -62,10 +63,10 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             return PartialView("Details",item);
         }
 
-        // GET: Finanzas/Dosificacion/Create
+        // GET: Finanzas/Chequera/Create
         public IActionResult Create()
         {
-            var model = new Models.Finanzas.Dosificacion();
+            var model = new Models.Finanzas.Chequera();
 
             var items1 = DB.Ventas_DocumentoRespaldo.
                 Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
@@ -74,10 +75,10 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             return PartialView("Create", model);
         }
 
-        // POST: Finanzas/Dosificacion/Create
+        // POST: Finanzas/Chequera/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Models.Finanzas.Dosificacion item)
+        public async Task<IActionResult> Create(Models.Finanzas.Chequera item)
         {
             if (ModelState.IsValid)
             {
@@ -95,16 +96,15 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             return PartialView("Create",item);
         }
 
-        // GET: Finanzas/Dosificacion/Edit/5
+        // GET: Finanzas/Chequera/Edit/5
         public async Task<IActionResult> Edit(Int32? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var item = await DB.Dosificacion
-                .Include(m => m.BeneficiarioDB)
-                .FirstOrDefaultAsync(m => m.IdDosificacion == id);
+            var item = await DB.Chequera.Include(m => m.BeneficiarioDB)
+                .FirstOrDefaultAsync(m => m.IdChequera == id);
             if (item == null)
             {
                 return NotFound();
@@ -119,12 +119,12 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             return PartialView("Edit", item);
         }
 
-        // POST: Finanzas/Dosificacion/Edit/5
+        // POST: Finanzas/Chequera/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, Models.Finanzas.Dosificacion item)
+        public async Task<IActionResult> Edit(Int32 id, Models.Finanzas.Chequera item)
         {
-            if (id != item.IdDosificacion)
+            if (id != item.IdChequera)
             {
                 return NotFound();
             }
@@ -143,7 +143,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ItemExists(item.IdDosificacion))
+                    if (!ItemExists(item.IdChequera))
                     {
                         return NotFound();
                     }
@@ -160,7 +160,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             return PartialView("Edit", item);
         }
 
-        // GET: Finanzas/Dosificacion/Delete/5
+        // GET: Finanzas/Chequera/Delete/5
         public async Task<IActionResult> Delete(Int32? id)
         {
             if (id == null)
@@ -168,7 +168,7 @@ namespace MumanalPG.Areas.Finanzas.Controllers
                 return NotFound();
             }
 
-            var item = await DB.Dosificacion.FirstOrDefaultAsync(m => m.IdDosificacion == id);
+            var item = await DB.Chequera.FirstOrDefaultAsync(m => m.IdChequera == id);
             if (item == null)
             {
                 return NotFound();
@@ -177,21 +177,21 @@ namespace MumanalPG.Areas.Finanzas.Controllers
             return PartialView("Delete",item);
         }
 
-        // POST: Finanzas/Dosificacion/Delete/5
+        // POST: Finanzas/Chequera/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Int32 id)
         {
-            var item = await DB.Dosificacion.FindAsync(id);
+            var item = await DB.Chequera.FindAsync(id);
             item.IdEstadoRegistro = 2;  //Constantes.Eliminado ;
-            DB.Dosificacion.Update(item);
+            DB.Chequera.Update(item);
             await DB.SaveChangesAsync();
             return PartialView("Delete",item);
         }
 
         private bool ItemExists(Int32 id)
         {
-            return DB.Dosificacion.Any(e => e.IdDosificacion == id);
+            return DB.Chequera.Any(e => e.IdChequera == id);
         }
 
         public JsonResult ListaBeneficiarios(string filter = "")
