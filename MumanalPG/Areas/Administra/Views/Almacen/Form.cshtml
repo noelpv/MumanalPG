@@ -1,0 +1,147 @@
+@model MumanalPG.Models.Administra.Almacen
+<form asp-action="@ViewData["Action"]">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @{
+        var hasError = "has-danger";
+        var stringErrors = "";
+        if (ViewData.ModelState.IsValid)
+        {
+            hasError = "";
+        }
+        else
+        {
+            var errorList = ViewData.ModelState.Where(x => x.Value.Errors.Count > 0).ToDictionary(kvp => kvp.Key);
+            stringErrors = string.Join(",", errorList.Select(x => x.Key));
+        }
+    }
+    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+    <input type="hidden" asp-for="IdAlmacen" />
+    @Html.HiddenFor(m => m.IdBeneficiario, new { @id = "origen-id" })
+    @Html.HiddenFor(m => m.NombreBeneficiario, new { @id = "nombre-origen-id" })
+    <div class="form-group m-b-10 @if(stringErrors.Contains("IdTipoAlmacen")){@hasError}">
+        @Html.LabelFor(m => m.IdTipoAlmacen, new { @class = "form-control-label" } )
+        <br>
+        @Html.DropDownListFor(m => m.IdTipoAlmacen, new SelectList(ViewBag.TipoAlmacen,"IdTipoAlmacen","Descripcion"), new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.IdTipoAlmacen, "" ,new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-10 @if(stringErrors.Contains("Descripcion")){@hasError}">
+        @Html.LabelFor(m => m.Descripcion, new { @class = "form-control-label" } )
+        @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Descripcion, "" ,new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-10 @if(stringErrors.Contains("IdBeneficiario")){@hasError}">
+        @Html.LabelFor(m => m.IdBeneficiario, new { @class = "form-control-label" } )
+        <br>
+        <select asp-for="IdBeneficiario" class="form-control remote" id="origen" placeholder="Escribir Nombre, Apellido o CI..."
+            data-remote-url="@Url.Action("ListaBeneficiarios")">
+        </select>
+        @Html.ValidationMessageFor(m => m.IdBeneficiario, "" ,new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-10 @if(stringErrors.Contains("IdMunicipio")){@hasError}">
+        @Html.LabelFor(m => m.IdMunicipio, new { @class = "form-control-label" } )
+        <br>
+        @Html.DropDownListFor(m => m.IdMunicipio, new SelectList(ViewBag.Municipio,"IdMunicipio","Descripcion"), new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.IdMunicipio, "" ,new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-10 @if(stringErrors.Contains("IdBarrio")){@hasError}">
+        @Html.LabelFor(m => m.IdBarrio, new { @class = "form-control-label" } )
+        <br>
+        @Html.DropDownListFor(m => m.IdBarrio, new SelectList(ViewBag.Barrio,"IdBarrio","Descripcion"), new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.IdBarrio, "" ,new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-10 @if(stringErrors.Contains("IdCalle")){@hasError}">
+        @Html.LabelFor(m => m.IdCalle, new { @class = "form-control-label" } )
+        <br>
+        @Html.DropDownListFor(m => m.IdCalle, new SelectList(ViewBag.Calle,"IdCalle","Descripcion"), new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.IdCalle, "" ,new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-10 @if(stringErrors.Contains("NumeroEdificio")){@hasError}">
+        @Html.LabelFor(m => m.NumeroEdificio, new { @class = "form-control-label" } )
+        @Html.TextBoxFor(m => m.NumeroEdificio, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NumeroEdificio, "" ,new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-10 @if(stringErrors.Contains("NumeroPiso")){@hasError}">
+        @Html.LabelFor(m => m.NumeroPiso, new { @class = "form-control-label" } )
+        @Html.TextBoxFor(m => m.NumeroPiso, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NumeroPiso, "" ,new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-10 @if(stringErrors.Contains("NumeroDepartamento")){@hasError}">
+        @Html.LabelFor(m => m.NumeroDepartamento, new { @class = "form-control-label" } )
+        @Html.TextBoxFor(m => m.NumeroDepartamento, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NumeroDepartamento, "" ,new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-10 @if(stringErrors.Contains("Telefono")){@hasError}">
+        @Html.LabelFor(m => m.Telefono, new { @class = "form-control-label" } )
+        @Html.TextBoxFor(m => m.Telefono, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Telefono, "" ,new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-10 @if(stringErrors.Contains("Observacion")){@hasError}">
+        @Html.LabelFor(m => m.Observacion, new { @class = "form-control-label" })
+        @Html.TextAreaFor(m => m.Observacion, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Observacion, "" ,new { @class = "text-danger" })
+    </div>
+</form>
+
+<script>
+$(document).ready(function() {
+    // *Metodo Principal*
+    var url = $('#origen').data('remote-url');
+    $('#origen').selectize(getOptions());
+
+    // *FUNCIONES*
+    // Carga los items si ya existen *Se creo una propiedad en el modelo para guardar el valor del nombre con propiedad "no mapeada"
+    function loadDefaultOptions() {
+        if ($('#origen-id').val() > 0) {
+            $('#origen-selectized').val($('#nombre-origen-id').val().trim()).attr("style", "width:100%");    
+        }
+    }
+
+    // Consigue los items/genera el filtro
+    function getOptions() {
+        return {
+            valueField: 'id',
+            labelField: 'nombre',
+            searchField: ['nombre', 'carnet'],
+            create: false,
+            render: {
+                option: function(item, escape) {
+                    return '<div class="row"><div class="col">' + escape(item.carnet) + ' - ' + escape(item.nombre) + '</div></div>';
+                }
+            },
+            score: function(search) {
+                var score = this.getScoreFunction(search);
+                return function(item) {
+                    return score(item);
+                };
+            },
+            load: function(query, callback) {
+                if (!query.length) return callback();
+                $.ajax({
+                    url: url + '?filter=' + encodeURIComponent(query),
+                    type: 'GET',
+                    error: function() {
+                        callback();
+                    },
+                    success: function(res) {
+                        try {
+                            callback(res.repositories.slice(0,10));
+                        } catch (e) {
+                            
+                        }  
+                    }
+                });
+            },
+            onInitialize: function(data) {
+                loadDefaultOptions();
+            },
+            onChange: function(selected) {
+                var idElement = this.$input.attr('id');
+                var dataSelected = this.options[selected];
+                console.log(dataSelected);
+                $('#' + idElement + '-id').val(selected);
+                $('#nombre-' + idElement + '-id').val(dataSelected.nombre);
+            }
+        }
+    }
+});
+</script>
