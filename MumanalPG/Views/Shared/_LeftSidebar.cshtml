@@ -56,6 +56,12 @@
             </a>
         </li>
 
+        <li class="@((String.Equals(currentArea.ToLower(), "Generales")) ?  "selected" : "")">
+            <a asp-area="Generales" asp-controller="dashboardGenerales" asp-action="index" class="waves-effect waves-dark">
+                <i class="mdi mdi-email-open-outline"></i><span class="hide-menu">Generales</span>
+            </a>
+        </li>
+
         @*<li>
         <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
             <i class="fas fa-bezier-curve"></i><span class="hide-menu">Planificación</span>
@@ -252,8 +258,8 @@
                 </li>
             </ul>
         </li>*@
-        <li class="nav-small-cap"></li>
-        @*<li>
+        @*<li class="nav-small-cap"></li>
+        <li>
             <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                 <i class="fas fa-place-of-worship"></i><span class="hide-menu">Administrativo</span>
             </a>
@@ -467,7 +473,7 @@
             </ul>
         </li>*@
 
-        <li>
+        @*<li>
             <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                 <i class="fa fa-briefcase"></i><span class="hide-menu">Generales</span>
             </a>
@@ -555,14 +561,14 @@
                         Parametros Generales <i class="far fa-list-alt"></i>
                     </a>
                 </li>
-                @*<li>
+                <li>
                     <a class="has-arrow" href="javascript:void(0)" aria-expanded="false">Clasificadores<i class="ti-align-left"></i></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="javascript:void(0)">Clasif 2<i class="ti-list-ol"></i></a></li>
                     </ul>
-                </li>*@
+                </li>
             </ul>
-        </li>
+        </li>*@
         @*<li class="nav-small-cap"></li>
         <li>
             <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">

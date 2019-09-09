@@ -1,0 +1,80 @@
+@model MumanalPG.Models.Generales.Edificio
+<form asp-action="@ViewData["Action"]">
+    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+    <input type="hidden" asp-for="IdEdificio" />
+
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.Descripcion, new { @class = "form-control-label" }) 
+        @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Descripcion, "" ,new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.IdEdificioTipo, new { @class = "form-control-label" })
+        <br>
+        @Html.DropDownListFor(m => m.IdEdificioTipo, new SelectList(ViewBag.TipoEdificio,"IdEdificioTipo","Descripcion"), new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.IdEdificioTipo, "" ,new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.IdMunicipio, new { @class = "form-control-label" })
+        <br>
+        @Html.DropDownListFor(m => m.IdMunicipio, new SelectList(ViewBag.Municipio,"IdMunicipio","Descripcion"), new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.IdMunicipio, "" ,new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.IdBarrio, new { @class = "form-control-label" })
+        <br>
+        @Html.DropDownListFor(m => m.IdBarrio, new SelectList(ViewBag.Barrio,"IdBarrio","Descripcion"), new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.IdBarrio, "" ,new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.IdCalle, new { @class = "form-control-label" })
+        <br>
+        @Html.DropDownListFor(m => m.IdCalle, new SelectList(ViewBag.Calle,"IdCalle","Descripcion"), new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.IdCalle, "" ,new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.EdificioNumero, new { @class = "form-control-label" }) 
+        @Html.TextBoxFor(m => m.EdificioNumero, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.EdificioNumero, "" ,new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.ReferenciaCercana, new { @class = "form-control-label" }) 
+        @Html.TextBoxFor(m => m.ReferenciaCercana, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ReferenciaCercana, "" ,new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.LocalizacionEjeX, new { @class = "form-control-label" })
+        @Html.EditorFor(m => m.LocalizacionEjeX, new { htmlAttributes = new { @class = "form-control"}})
+        @Html.ValidationMessageFor(m => m.LocalizacionEjeX, "" ,new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.LocalizacionEjeY, new { @class = "form-control-label" })
+        @Html.EditorFor(m => m.LocalizacionEjeY, new { htmlAttributes = new { @class = "form-control"}})
+        @Html.ValidationMessageFor(m => m.LocalizacionEjeY, "" ,new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.Latitud, new { @class = "form-control-label" }) 
+        @Html.TextBoxFor(m => m.Latitud, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Latitud, "" ,new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.Longitud, new { @class = "form-control-label" }) 
+        @Html.TextBoxFor(m => m.Longitud, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Longitud, "" ,new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.AltitudSNM, new { @class = "form-control-label" })
+        @Html.EditorFor(m => m.AltitudSNM, new { htmlAttributes = new { @class = "form-control"}})
+        @Html.ValidationMessageFor(m => m.AltitudSNM, "" ,new { @class = "text-danger" })
+    </div>
+    <div class="form-group m-b-40">
+        @Html.LabelFor(m => m.ArchivoFoto, new { @class = "form-control-label" }) 
+        @Html.TextBoxFor(m => m.ArchivoFoto, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ArchivoFoto, "" ,new { @class = "text-danger" })
+    </div>
+    @*<div class="form-group m-b-40">
+        @Html.LabelFor(m => m.ArchivoFotoCargado, new { @class = "form-control-label" }) 
+        @Html.EditorFor(m => m.ArchivoFotoCargado, new { htmlAttributes = new { @class = "form-control"}})
+        @Html.ValidationMessageFor(m => m.ArchivoFotoCargado, "" ,new { @class = "text-danger" })
+    </div>*@
+</form>

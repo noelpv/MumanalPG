@@ -39,6 +39,7 @@ namespace MumanalPG.Data
         public DbSet<MumanalPG.Models.Generales.DocumentoClasificacion> DocumentoClasificacion { get; set; }
         public DbSet<MumanalPG.Models.Generales.DocumentoFormato> DocumentoFormato { get; set; }
         //public DbSet<MumanalPG.Models.Generales.DocumentoRespaldo> DocumentoRespaldo { get; set; }
+        public DbSet<MumanalPG.Models.Generales.Edificio> Edificio { get; set; }
         public DbSet<MumanalPG.Models.Generales.EdificioTipo> EdificioTipo { get; set; }
         public DbSet<MumanalPG.Models.Generales.FrecuenciaUso> FrecuenciaUso { get; set; }
         public DbSet<MumanalPG.Models.Generales.Municipio> Municipio { get; set; }

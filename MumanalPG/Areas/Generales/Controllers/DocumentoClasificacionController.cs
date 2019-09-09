@@ -35,7 +35,7 @@ namespace MumanalPG.Areas.Generales.Controllers
         }
 
         // GET: Generales/DocumentoClasificacion
-        //[Breadcrumb("DocumentoClasificacion", FromController = "DashboardPlan", FromAction = "Clasificadores")]
+        [Breadcrumb("Clasificación de Documentos", FromController = "DashboardGenerales", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
             var consulta = DB.DocumentoClasificacion.AsNoTracking().AsQueryable();

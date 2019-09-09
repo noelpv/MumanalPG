@@ -53,10 +53,10 @@
                 </a>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdBarrio)
+                @Html.DisplayFor(modelItem => item.BarrioDB.Descripcion)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdCalleTipo)
+                @Html.DisplayFor(modelItem => item.CalleTipoDB.Descripcion)
             </td>
             @{
                 options.Id = item.IdCalle;

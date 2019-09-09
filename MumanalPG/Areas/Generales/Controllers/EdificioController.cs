@@ -26,20 +26,20 @@ namespace MumanalPG.Areas.Generales.Controllers
     //[Authorize(Roles = SD.SuperAdminEndUser)]
     [Authorize]
     [Area("Generales")]
-    public class DepartamentoController : BaseController
+    public class EdificioController : BaseController
     {        
         
-		public DepartamentoController(ApplicationDbContext db, UserManager<IdentityUser> userManager): base(db, userManager)
+		public EdificioController(ApplicationDbContext db, UserManager<IdentityUser> userManager): base(db, userManager)
         {
             
         }
 
-        // GET: Generales/Departamento
-        [Breadcrumb("Departamento", FromController = "DashboardGenerales", FromAction = "Clasificadores")]
+        // GET: Generales/Edificio
+        [Breadcrumb("Edificio", FromController = "DashboardGenerales", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
-            var consulta = DB.Departamento.AsNoTracking().AsQueryable();
-            consulta = consulta.Include(m => m.PaisDB).Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
+            var consulta = DB.Edificio.AsNoTracking().AsQueryable();
+            consulta = consulta.Include(m => m.EdificioTipoDB).Include(m => m.MunicipioDB).Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
             if (!string.IsNullOrWhiteSpace(filter))
 			{
                 consulta = consulta.Where(m => EF.Functions.ILike(m.Descripcion, $"%{filter}%"));
@@ -50,7 +50,7 @@ namespace MumanalPG.Areas.Generales.Controllers
             return View(resp);
         }
 
-        // GET: Generales/Departamento/Details/5
+        // GET: Generales/Edificio/Details/5
         public async Task<IActionResult> Details(Int32? id)
         {
             if (id == null)
@@ -58,7 +58,7 @@ namespace MumanalPG.Areas.Generales.Controllers
                 return NotFound();
             }
 
-            var item = await DB.Departamento.Include(m => m.PaisDB).FirstOrDefaultAsync(m => m.IdDepartamento  == id);
+            var item = await DB.Edificio.Include(m => m.EdificioTipoDB).Include(m => m.MunicipioDB).Include(m => m.BarrioDB).Include(m => m.CalleDB).FirstOrDefaultAsync(m => m.IdEdificio  == id);
             if (item == null)
             {
                 return NotFound();
@@ -67,56 +67,67 @@ namespace MumanalPG.Areas.Generales.Controllers
             return PartialView("Details",item);
         }
 
-        // GET: Generales/Departamento/Create
+        // GET: Generales/Edificio/Create
         public IActionResult Create()
         {
-            var model = new Models.Generales.Departamento();
-            ViewBag.Pais = DB.Pais.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();;
+            var model = new Models.Generales.Edificio();
+            ViewBag.TipoEdificio = DB.EdificioTipo.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Municipio = DB.Municipio.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Barrio = DB.Barrio.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Calle = DB.Calle.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             return PartialView("Create", model);
         }
 
-        // POST: Generales/Departamento/Create
+        // POST: Generales/Edificio/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Models.Generales.Departamento item)
+        public async Task<IActionResult> Create(Models.Generales.Edificio item)
         {
             if (ModelState.IsValid)
             {
                 ApplicationUser currentUser = await GetCurrentUser();
                 item.IdUsuario = currentUser.AspNetUserId;
+                item.IdBeneficiario = "0";
+                item.IdBeneficiarioEmpresa = "0";
+                item.ArchivoFotoCargado = "t";
                 item.IdEstadoRegistro = 1;
                 item.FechaRegistro = DateTime.Now;
                 DB.Add(item);
                 await DB.SaveChangesAsync();
                 SetFlashSuccess("Registro creado satisfactoriamente");
             }
-            ViewBag.Pais = DB.Pais.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.TipoEdificio = DB.EdificioTipo.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Municipio = DB.Municipio.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Barrio = DB.Barrio.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Calle = DB.Calle.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             return PartialView("Create",item);
         }
 
-        // GET: Generales/Departamento/Edit/5
+        // GET: Generales/Edificio/Edit/5
         public async Task<IActionResult> Edit(Int32? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var item = await DB.Departamento.FirstOrDefaultAsync(m => m.IdDepartamento == id);
+            var item = await DB.Edificio.FindAsync(id);
             if (item == null)
             {
                 return NotFound();
             }
-            ViewBag.Pais = DB.Pais.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
-
+            ViewBag.TipoEdificio = DB.EdificioTipo.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Municipio = DB.Municipio.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Barrio = DB.Barrio.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Calle = DB.Calle.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             return PartialView( "Edit", item);
         }
 
-        // POST: Generales/Departamento/Edit/5
+        // POST: Generales/Edificio/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Int32 id, Models.Generales.Departamento item)
+        public async Task<IActionResult> Edit(Int32 id,  Models.Generales.Edificio item)
         {
-            if (id != item.IdDepartamento)
+            if (id != item.IdEdificio)
             {
                 return NotFound();
             }
@@ -127,14 +138,18 @@ namespace MumanalPG.Areas.Generales.Controllers
                 {
                     ApplicationUser currentUser = await GetCurrentUser();
                     item.IdUsuario = currentUser.AspNetUserId;
+                    item.IdBeneficiario = "0";
+                    item.IdBeneficiarioEmpresa = "0";
+                    item.ArchivoFotoCargado = "t";
                     item.IdEstadoRegistro = 1;
                     item.FechaRegistro = DateTime.Now;
+                    DB.Add(item);
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ItemExists(item.IdDepartamento))
+                    if (!ItemExists(item.IdEdificio))
                     {
                         return NotFound();
                     }
@@ -144,11 +159,14 @@ namespace MumanalPG.Areas.Generales.Controllers
                     }
                 }
             }
-            ViewBag.Pais = DB.Pais.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.TipoEdificio = DB.EdificioTipo.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Municipio = DB.Municipio.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Barrio = DB.Barrio.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Calle = DB.Calle.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             return PartialView("Edit", item);
         }
 
-        // GET: Generales/Departamento/Delete/5
+        // GET: Generales/Edificio/Delete/5
         public async Task<IActionResult> Delete(Int32? id)
         {
             if (id == null)
@@ -156,7 +174,7 @@ namespace MumanalPG.Areas.Generales.Controllers
                 return NotFound();
             }
 
-            var item = await DB.Departamento.FirstOrDefaultAsync(m => m.IdDepartamento == id);
+            var item = await DB.Edificio.FirstOrDefaultAsync(m => m.IdEdificio == id);
             if (item == null)
             {
                 return NotFound();
@@ -165,21 +183,21 @@ namespace MumanalPG.Areas.Generales.Controllers
             return PartialView("Delete",item);
         }
 
-        // POST: Generales/Departamento/Delete/5
+        // POST: Generales/Edificio/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Int32 id)
         {
-            var item = await DB.Departamento.FindAsync(id);
+            var item = await DB.Edificio.FindAsync(id);
             item.IdEstadoRegistro = 2;  //Constantes.Eliminado ;
-            DB.Departamento.Update(item);
+            DB.Edificio.Update(item);
             await DB.SaveChangesAsync();
             return PartialView("Delete",item);
         }
 
         private bool ItemExists(Int32 id)
         {
-            return DB.Departamento.Any(e => e.IdDepartamento == id);
+            return DB.Edificio.Any(e => e.IdEdificio == id);
         }
     }
 }

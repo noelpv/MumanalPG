@@ -1,0 +1,95 @@
+@model MumanalPG.Models.Generales.Edificio
+<div class="row justify-content-center">
+    <div class="col-10">
+        <div class="card border-info">
+            <div class="card-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Descripcion)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Descripcion)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.IdEdificioTipo)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.EdificioTipoDB.Descripcion)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.IdMunicipio)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.MunicipioDB.Descripcion)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.IdBarrio)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.BarrioDB.Descripcion)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.IdCalle)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CalleDB.Descripcion)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.EdificioNumero)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.EdificioNumero)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ReferenciaCercana)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ReferenciaCercana)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.LocalizacionEjeX)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.LocalizacionEjeX)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.LocalizacionEjeY)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.LocalizacionEjeY)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Latitud)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Latitud)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Longitud)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Longitud)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.AltitudSNM)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.AltitudSNM)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ArchivoFoto)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ArchivoFoto)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ArchivoFotoCargado)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ArchivoFotoCargado)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

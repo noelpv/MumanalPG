@@ -35,7 +35,7 @@ namespace MumanalPG.Areas.Generales.Controllers
         }
 
         // GET: Generales/FrecuenciaUso
-        //[Breadcrumb("FrecuenciaUso", FromController = "DashboardPlan", FromAction = "Clasificadores")]
+        [Breadcrumb("Frecuencia de Uso", FromController = "DashboardGenerales", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
             var consulta = DB.FrecuenciaUso.AsNoTracking().AsQueryable();

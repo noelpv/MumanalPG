@@ -22,7 +22,7 @@
     <div class="form-group m-b-10 @if(stringErrors.Contains("IdPartidaGasto")){@hasError}">
         @Html.LabelFor(m => m.IdPartidaGasto, new { @class = "form-control-label" })
         <br>
-        <select asp-for="IdPartidaGasto" class="form-control remote" id="origen" placeholder="Escribir Nombre, Apellido o CI..."
+        <select asp-for="IdPartidaGasto" class="form-control remote" id="origen" placeholder="Escribir el ID o Descripción..."
                 data-remote-url="@Url.Action("ListaPartidaGastos")"></select>
         @Html.ValidationMessageFor(m => m.IdPartidaGasto, "", new { @class = "text-danger" })
     </div>
@@ -98,7 +98,7 @@ $(document).ready(function() {
             create: false,
             render: {
                 option: function(item, escape) {
-                    return '<div class="row"><div class="col">' + escape(item.id) + ' - ' + escape(item.nombre) + '</div></div>';
+                    return '<div class="row"><div class="col"> Id: ' + escape(item.id) + ' - ' + escape(item.nombre) + '</div></div>';
                 }
             },
             score: function(search) {

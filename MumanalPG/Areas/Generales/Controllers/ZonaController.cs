@@ -35,11 +35,11 @@ namespace MumanalPG.Areas.Generales.Controllers
         }
 
         // GET: Generales/Zona
-        //[Breadcrumb("Zona", FromController = "DashboardPlan", FromAction = "Clasificadores")]
+        [Breadcrumb("Zona", FromController = "DashboardGenerales", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
             var consulta = DB.Zona.AsNoTracking().AsQueryable();
-            consulta = consulta.Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
+            consulta = consulta.Include(m => m.MunicipioDB).Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
             if (!string.IsNullOrWhiteSpace(filter))
 			{
                 consulta = consulta.Where(m => EF.Functions.ILike(m.Descripcion, $"%{filter}%"));
@@ -58,7 +58,7 @@ namespace MumanalPG.Areas.Generales.Controllers
                 return NotFound();
             }
 
-            var item = await DB.Zona.FirstOrDefaultAsync(m => m.IdZona  == id);
+            var item = await DB.Zona.Include(m => m.MunicipioDB).FirstOrDefaultAsync(m => m.IdZona  == id);
             if (item == null)
             {
                 return NotFound();
@@ -71,11 +71,7 @@ namespace MumanalPG.Areas.Generales.Controllers
         public IActionResult Create()
         {
             var model = new Models.Generales.Zona();
-            //ini combo
-            var items = DB.Municipio.
-                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
-            ViewBag.Municipio = items;
-            //ini combo
+            ViewBag.Municipio = DB.Municipio.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             return PartialView("Create", model);
         }
 
@@ -95,9 +91,7 @@ namespace MumanalPG.Areas.Generales.Controllers
                 await DB.SaveChangesAsync();
                 SetFlashSuccess("Registro creado satisfactoriamente");
             }
-            var items = DB.Municipio.
-                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
-            ViewBag.Municipio = items;
+            ViewBag.Municipio = DB.Municipio.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             return PartialView("Create",item);
         }
 
@@ -113,9 +107,7 @@ namespace MumanalPG.Areas.Generales.Controllers
             {
                 return NotFound();
             }
-            var items = DB.Municipio.
-                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
-            ViewBag.Municipio = items;
+            ViewBag.Municipio = DB.Municipio.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
 
             return PartialView( "Edit", item);
         }
@@ -155,9 +147,7 @@ namespace MumanalPG.Areas.Generales.Controllers
                 }
                 
             }
-            var items = DB.Municipio.
-                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
-            ViewBag.Municipio = items;
+            ViewBag.Municipio = DB.Municipio.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
             return PartialView("Edit", item);
         }
 

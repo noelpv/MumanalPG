@@ -3,17 +3,17 @@
 @using ReflectionIT.Mvc.Paging
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @{
-    ViewData["Title"] = "FrecuenciaUso";
+    ViewData["Title"] = "Frecuencia de Uso";
     OptionPartial options = new OptionPartial();
-    string intro_msg_search = "Puede buscar una FrecuenciaUso introduciendo el nombre en este campo, " +
+    string intro_msg_search = "Puede buscar una Frecuencia de Uso introduciendo el nombre en este campo, " +
                               "luego presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
                               "<i class='fas fa-search'></i></button>";
 }
 <div class="row">
     <div class="col-12 text-right">
-        <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nuevo FrecuenciaUso"
+        <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nueva Frecuencia de Uso"
            data-modal="link", data-redirect="@Url.Action("Index", new{@a=Constantes.Creado})" 
-           data-intro="Click, en este botón para crear un nuevo FrecuenciaUso">
+           data-intro="Click, en este botón para crear un nueva Frecuencia de Uso">
             <i class="fas fa-plus"></i><span class="d-none d-sm-inline">&nbsp; Nuevo </span>
         </a>
     </div>
