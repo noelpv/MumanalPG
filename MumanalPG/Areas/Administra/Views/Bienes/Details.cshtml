@@ -1,192 +1,52 @@
-﻿@model MumanalPG.Models.Administra.Bienes
+@model MumanalPG.Models.Administra.Bienes
 
-@{
-    ViewData["Title"] = "Bienes";
-}
-
-<h2>Detalle</h2>
-
-<div>
-    <h4>Bienes</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.IdPartidaGasto)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IdPartidaGasto)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CodigoBien)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CodigoBien)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Descripcion)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Observacion)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Observacion)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IdUnidadMedida)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IdUnidadMedida)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IdUnidadMedidaEmpaque)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IdUnidadMedidaEmpaque)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IdModelo)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IdModelo)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IdPais)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IdPais)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CodigoBienAnterior)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CodigoBienAnterior)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.DescripcionAnterior)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DescripcionAnterior)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IdRotacionBien)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IdRotacionBien)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.NombreArchivo)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NombreArchivo)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Foto)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Foto)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Kit)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Kit)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.StockMinimo)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.StockMinimo)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.StockInicial)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.StockInicial)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.StockIngreso)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.StockIngreso)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.StockSalida)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.StockSalida)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.StockActual)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.StockActual)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PrecioReferenciaCompra)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PrecioReferenciaCompra)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PrecioVentaBase)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PrecioVentaBase)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PrecioVentaFinal)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PrecioVentaFinal)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalAcumuladoCompraBs)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TotalAcumuladoCompraBs)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalAcumuladoVentaBs)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TotalAcumuladoVentaBs)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalUtilidadBs)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.TotalUtilidadBs)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IdEstadoVigente)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IdEstadoVigente)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IdEstadoRegistro)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IdEstadoRegistro)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IdUsuario)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IdUsuario)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.FechaRegistro)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.FechaRegistro)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.IdBienes">Editar</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="row justify-content-center">
+    <div class="col-10">
+        <div class="card border-info">
+            <div class="card-body">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.IdUnidadMedida)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.UnidadMedidaDB.Descripcion)
+                        @*@Html.DisplayFor(model => model.IdUnidadMedida)*@
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.CodigoBien)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.CodigoBien)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Descripcion)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Descripcion)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.IdPartidaGasto)
+                    </dt>
+                    <dd>
+                        @*@Html.DisplayFor(model => model.PartidaGasto.Descripcion)*@
+                        @Html.DisplayFor(model => model.IdPartidaGasto)
+                        <br>
+                        @*Codigo: @Html.DisplayFor(model => model.IdPartidaGasto)*@
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Observacion)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Observacion)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.IdEstadoVigente)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.IdEstadoVigente)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
 </div>

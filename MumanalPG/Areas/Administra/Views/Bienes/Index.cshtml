@@ -1,203 +1,89 @@
-﻿@model IEnumerable<MumanalPG.Models.Administra.Bienes>
-
+@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Administra.Bienes>
+@using MumanalPG.Models.Administra
+@using MumanalPG.Utility
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging
 @{
-    ViewData["Title"] = "Bienes";
+    ViewData["Title"] = "Registro de Bienes";
+    OptionPartial options = new OptionPartial();
+    string intro_msg_search = "Puede buscar un Bien introduciendo la descripción del registro en este campo, " +
+                              "luego presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
+                              "<i class='fas fa-search'></i></button>";
 }
+<div class="row">
+    <div class="col-12 text-right">
+        <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nuevo Bien"
+           data-modal="link", data-redirect="@Url.Action("Index", new{@a=Constantes.Creado})" 
+           data-intro="Click, en este botón para crear un nuevo Bien">
+            <i class="fas fa-plus"></i><span class="d-none d-sm-inline">&nbsp; Nuevo </span>
+        </a>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-12">
+        <form method="get" class="form form-search" data-intro="@intro_msg_search">
+            <div class="input-group mb-3">
+                <input name="filter" class="form-control search" placeholder="Buscar por Descripcion ..."
+                       value="@Model.RouteValue["Filter"]"/>
+                <button type="submit" class="btn btn-secondary input-group-append">
+                    <span class="fas fa-search" aria-hidden="true"></span>
+                </button>
+            </div>            
+        </form>
+    </div>
+</div>
 
-<h2>Lista</h2>
+<div class="row table-responsive mt-4">
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>@Html.SortableHeaderFor(model => model.Descripcion)</th>
+                <th>Codigo</th>
+                <th>Partida</th>
+                <th>Unidad Medida</th>
+                @*<th>@Html.SortableHeaderFor(model => model.IdUnidadMedida)</th>
+        <th>@Html.SortableHeaderFor(model => model.CodigoBien)</th>
+        <th>@Html.SortableHeaderFor(model => model.IdPartidaGasto)</th>*@
+            </tr>
 
-<p>
-    <a asp-action="Create">Nuevo</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IdPartidaGasto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CodigoBien)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Observacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdUnidadMedida)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdUnidadMedidaEmpaque)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdModelo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdPais)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CodigoBienAnterior)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DescripcionAnterior)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdRotacionBien)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NombreArchivo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Foto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Kit)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StockMinimo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StockInicial)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StockIngreso)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StockSalida)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StockActual)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PrecioReferenciaCompra)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PrecioVentaBase)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PrecioVentaFinal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalAcumuladoCompraBs)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalAcumuladoVentaBs)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalUtilidadBs)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdEstadoVigente)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdEstadoRegistro)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdUsuario)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaRegistro)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
+        </thead>
+        @{int index = 0;}
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.IdPartidaGasto)
+                <a asp-action="Details" asp-route-id="@item.IdBienes" title="Detalle"
+                   data-modal="link" data-modal-read="True">
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                    @*@Html.DisplayFor(modelItem => item.UnidadMedida.Descripcion)
+                @Html.DisplayFor(modelItem => item.IdUnidadMedida)*@
+                </a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CodigoBien)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
+                @*@Html.DisplayFor(modelItem => item.PartidaGasto.Descripcion)*@
+                @Html.DisplayFor(modelItem => item.IdPartidaGasto)
+                <br>
+                @*Codigo: @Html.DisplayFor(modelItem => item.PartidaGasto.IdPartidaGasto)*@
+
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Observacion)
+                @Html.DisplayFor(modelItem => item.UnidadMedidaDB.Descripcion)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdUnidadMedida)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdUnidadMedidaEmpaque)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdModelo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdPais)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CodigoBienAnterior)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DescripcionAnterior)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdRotacionBien)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreArchivo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Foto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Kit)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StockMinimo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StockInicial)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StockIngreso)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StockSalida)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StockActual)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PrecioReferenciaCompra)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PrecioVentaBase)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PrecioVentaFinal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalAcumuladoCompraBs)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalAcumuladoVentaBs)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalUtilidadBs)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdEstadoVigente)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdEstadoRegistro)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdUsuario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaRegistro)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdBienes">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.IdBienes">Detalle</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdBienes">Borrar</a>
-            </td>
+            @{
+                options.Id = item.IdBienes;
+                options.ShowIntroMessages = index == 0 ? true : false;
+                index++;
+            }
+            <partial name="_TableOptionsPartial" model="options" />
         </tr>
-}
-    </tbody>
-</table>
+        }
+    </table>
+</div>
+<div class="row justify-content-center">
+    <nav>
+        <vc:pager paging-list="@Model"/>
+    </nav>
+</div>

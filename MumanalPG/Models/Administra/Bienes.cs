@@ -2,6 +2,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using MumanalPG.Models.Planificacion;
+using MumanalPG.Models.Administra;
 
 namespace MumanalPG.Models.Administra
 {
@@ -11,19 +13,29 @@ namespace MumanalPG.Models.Administra
         [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
         [Key]
         public Int32 IdBienes { get; set; }
+        [Range(1, Int32.MaxValue, ErrorMessage = "Debe seleccionar un {0}")]
+        [Display(Name = "Partida del Gasto")]
         public Int32 IdPartidaGasto { get; set; }
+        public PartidaGasto PartidaGastoDB { get; set; }
+        [NotMapped]
+        public string NombrePartidaGasto { get; set; }
+
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
         public string CodigoBien { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
         public string Descripcion { get; set; }
+        [Required(ErrorMessage = "{0} no puede estar en blanco")]
         public string Observacion { get; set; }
         public Int32 IdUnidadMedida { get; set; }
+        public UnidadMedida UnidadMedidaDB { get; set; }
         public Int32 IdUnidadMedidaEmpaque { get; set; }
         public Int32 IdModelo { get; set; }
         public Int32 IdPais { get; set; }
         public string CodigoBienAnterior { get; set; }
         public string DescripcionAnterior { get; set; }
         public Int32 IdRotacionBien { get; set; }
-        public string NombreArchivo { get; set; }
-        public string Foto { get; set; }
+        public string PathArchivo { get; set; }
+        //public string Foto { get; set; }
         public Int32 Kit { get; set; }
         public Decimal StockMinimo { get; set; }
         public Decimal StockInicial { get; set; }
