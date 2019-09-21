@@ -31,7 +31,9 @@ namespace MumanalPG.Areas.Administra.Controllers
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
             var consulta = DB.Bienes.AsNoTracking().AsQueryable();
-            consulta = consulta.Include(m => m.PartidaGastoDB).Include(m => m.UnidadMedidaDB).Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
+            consulta = consulta.Include(m => m.UnidadMedidaDB).Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
+                                                                        // .Include(m => m.PartidaGasto)
+                                                                        // Include(m => m.Descripcion)
             if (!string.IsNullOrWhiteSpace(filter))
 			{
                 consulta = consulta.Where(m => EF.Functions.ILike(m.Descripcion, $"%{filter}%"));
@@ -51,6 +53,8 @@ namespace MumanalPG.Areas.Administra.Controllers
             }
 
             var item = await DB.Bienes.Include(m => m.PartidaGastoDB).Include(m => m.UnidadMedidaDB).FirstOrDefaultAsync(m => m.IdBienes  == id);
+            // .Include(m => m.PartidaGastoDB)            
+            // .Include(m => m.Descripcion)
             if (item == null)
             {
                 return NotFound();
@@ -64,7 +68,9 @@ namespace MumanalPG.Areas.Administra.Controllers
         {
             var model = new Models.Administra.Bienes();
 
-            ViewBag.UnidadMedida = DB.UnidadMedida.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
+            var items1 = DB.UnidadMedida.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.UnidadMedida = items1;
 
             return PartialView("Create", model);
         }
@@ -108,7 +114,9 @@ namespace MumanalPG.Areas.Administra.Controllers
                 DB.Add(item);
                 await DB.SaveChangesAsync();
             }
-            ViewBag.UnidadMedida = DB.UnidadMedida.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
+            var items1 = DB.UnidadMedida.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.UnidadMedida = items1;
 
             return PartialView("Create",item);
         }
@@ -197,7 +205,9 @@ namespace MumanalPG.Areas.Administra.Controllers
                 }
                 
             }
-            ViewBag.UnidadMedida = DB.UnidadMedida.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
+            var items1 = DB.UnidadMedida.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.UnidadMedida = items1;
             return PartialView("Edit", item);
         }
 
@@ -237,16 +247,18 @@ namespace MumanalPG.Areas.Administra.Controllers
 
         public JsonResult ListaPartidaGastos(string filter = "")
         {
-            if (filter.Length > 0)
+            if (filter.Length > 2)
             {
-                var listPartGasto = DB.PartidaGasto
-                    .Where(b => (b.IdEstadoRegistro != Constantes.Anulado))
-                    .Where(b => EF.Functions.ILike(b.Descripcion, "%" + filter + "%") || EF.Functions.ILike(b.IdPartidaGasto.ToString(), "%" + filter + "%"))
+                // || EF.Functions.ILike(b.IdPartidaGasto, "%" + filter + "%")
+                // || b.IdEstadoRegistro == null)
+                var listaBenef = DB.PartidaGasto
+                    .Where(b => (b.IdEstadoRegistro != Constantes.Anulado ))
+                    .Where(b => EF.Functions.ILike(b.Descripcion, "%" + filter + "%") )
                     .OrderBy(d => d.Descripcion).Take(20)
                     .Select(c => new {Id=c.IdPartidaGasto, Nombre = c.Descripcion})
                     .ToList(); 
                 
-                return Json(new {repositories = listPartGasto});
+                return Json(new {repositories = listaBenef});
             }
             else
             {

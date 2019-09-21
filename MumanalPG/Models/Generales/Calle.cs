@@ -10,17 +10,14 @@ namespace MumanalPG.Models.Generales
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Key]
 		public Int32 IdCalle { get; set; }
-		[Range(1, Int32.MaxValue, ErrorMessage = "Debe seleccionar un {0}")]
 		[Display(Name="Barrio")]
 		public Int32 IdBarrio { get; set; }
-		public Barrio BarrioDB { get; set; }
-		[Required(ErrorMessage = "{0} no puede estar en blanco"), StringLength(100, ErrorMessage = "La longitud máxima es de {1} caracteres")]
+		[Required(ErrorMessage = "{0} no puede estar en blanco")]
+		[StringLength(100, ErrorMessage = "La longitud máxima es de {1} caracteres")]
 		[Display(Name="Descripción")]
 		public String Descripcion { get; set; }
-		[Range(1, Int32.MaxValue, ErrorMessage = "Debe seleccionar un {0}")]
 		[Display(Name="Tipo de Calle")]
 		public Int32 IdCalleTipo { get; set; }
-		public CalleTipo CalleTipoDB { get; set; }
 		public Int32 IdEstadoRegistro { get; set; }
 		public Int32 IdUsuario { get; set; }
 		public DateTime FechaRegistro { get; set; }

@@ -26,8 +26,6 @@ namespace MumanalPG.Models.Administra
         public string Descripcion { get; set; }
         [Required(ErrorMessage = "{0} no puede estar en blanco")]
         public string Observacion { get; set; }
-        [Range(1, Int32.MaxValue, ErrorMessage = "Debe seleccionar un {0}")]
-        [Display(Name = "Unidad de Medida")]
         public Int32 IdUnidadMedida { get; set; }
         public UnidadMedida UnidadMedidaDB { get; set; }
         public Int32 IdUnidadMedidaEmpaque { get; set; }

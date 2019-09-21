@@ -3,9 +3,9 @@
 @using ReflectionIT.Mvc.Paging
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @{
-    ViewData["Title"] = "Tipo de Edificación";
+    ViewData["Title"] = "TIPO DE EDIFICIO";
     OptionPartial options = new OptionPartial();
-    string intro_msg_search = "Puede buscar un Tipo de Edificación introduciendo el nombre en este campo, " +
+    string intro_msg_search = "Puede buscar un TIPO DE EDIFICIO introduciendo el nombre en este campo, " +
                               "luego presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
                               "<i class='fas fa-search'></i></button>";
 }
@@ -13,7 +13,7 @@
     <div class="col-12 text-right">
         <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nueva EdificioTipo"
            data-modal="link", data-redirect="@Url.Action("Index", new{@a=Constantes.Creado})" 
-           data-intro="Click, en este botón para crear una nuevo Tipo de Edificación">
+           data-intro="Click, en este botón para crear una nueva EdificioTipo">
             <i class="fas fa-plus"></i><span class="d-none d-sm-inline">&nbsp; Nuevo </span>
         </a>
     </div>

@@ -10,13 +10,12 @@ namespace MumanalPG.Models.Generales
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Key]
 		public Int32 IdZona { get; set; }
-		[Required(ErrorMessage = "{0} no puede estar en blanco"), StringLength(100, ErrorMessage = "La longitud máxima es de {1} caracteres")]
+		[Required(ErrorMessage = "{0} no puede estar en blanco")]
+		[StringLength(100, ErrorMessage = "La longitud máxima es de {1} caracteres")]
 		[Display(Name="Descripción")]
 		public String Descripcion { get; set; }
-		[Range(1, Int32.MaxValue, ErrorMessage = "Debe seleccionar un {0}")]
 		[Display(Name="Municipio")]
 		public Int32 IdMunicipio { get; set; }
-		public Municipio MunicipioDB { get; set; }
 		public Int32 IdComunidad { get; set; }
 		public Int32 IdEstadoRegistro { get; set; }
 		public Int32 IdUsuario { get; set; }

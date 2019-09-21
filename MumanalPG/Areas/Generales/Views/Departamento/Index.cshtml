@@ -37,8 +37,8 @@
         <thead>
         <tr>
             <th>@Html.SortableHeaderFor(model => model.Descripcion)</th>
-            <th>@Html.SortableHeaderFor(model => model.Sigla)</th>
-            <th>@Html.SortableHeaderFor(model => model.IdPais)</th>
+            <th>Sigla</th>
+            <th>Pais</th>
         </tr>
 
         </thead>
@@ -56,7 +56,7 @@
                 @Html.DisplayFor(modelItem => item.Sigla)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PaisDB.Descripcion)
+                @Html.DisplayFor(modelItem => item.IdPais)
             </td>
             @{
                 options.Id = item.IdDepartamento;

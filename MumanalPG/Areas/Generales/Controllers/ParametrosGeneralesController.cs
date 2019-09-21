@@ -35,7 +35,7 @@ namespace MumanalPG.Areas.Generales.Controllers
         }
 
         // GET: Generales/ParametrosGenerales
-        [Breadcrumb("Parametros Generales", FromController = "DashboardGenerales", FromAction = "Clasificadores")]
+        //[Breadcrumb("ParametrosGenerales", FromController = "DashboardPlan", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
             var consulta = DB.ParametrosGenerales.AsNoTracking().AsQueryable();

@@ -3,17 +3,17 @@
 @using ReflectionIT.Mvc.Paging
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @{
-    ViewData["Title"] = "Formato de Documento";
+    ViewData["Title"] = "DocumentoFormato";
     OptionPartial options = new OptionPartial();
-    string intro_msg_search = "Puede buscar un Formato de Documento introduciendo el nombre en este campo, " +
+    string intro_msg_search = "Puede buscar un DocumentoFormato introduciendo el nombre en este campo, " +
                               "luego presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
                               "<i class='fas fa-search'></i></button>";
 }
 <div class="row">
     <div class="col-12 text-right">
-        <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nuevo Formato de Documento"
+        <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nuevo DocumentoFormato"
            data-modal="link", data-redirect="@Url.Action("Index", new{@a=Constantes.Creado})" 
-           data-intro="Click, en este botón para crear un nuevo Formato de Documento">
+           data-intro="Click, en este botón para crear un nuevo DocumentoFormato">
             <i class="fas fa-plus"></i><span class="d-none d-sm-inline">&nbsp; Nuevo </span>
         </a>
     </div>

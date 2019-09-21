@@ -27,7 +27,7 @@ namespace MumanalPG.Areas.Generales.Controllers
         }
 
         // GET: Generales/EdificioTipo
-        [Breadcrumb("Tipo de Edificación", FromController = "DashboardGenerales", FromAction = "Clasificadores")]
+        //[Breadcrumb("EdificioTipo", FromController = "DashboardPlan", FromAction = "Clasificadores")]
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
             var consulta = DB.EdificioTipo.AsNoTracking().AsQueryable();

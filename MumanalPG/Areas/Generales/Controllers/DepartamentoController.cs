@@ -39,7 +39,7 @@ namespace MumanalPG.Areas.Generales.Controllers
         public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Descripcion", string a = "")
         { 
             var consulta = DB.Departamento.AsNoTracking().AsQueryable();
-            consulta = consulta.Include(m => m.PaisDB).Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
+            consulta = consulta.Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
             if (!string.IsNullOrWhiteSpace(filter))
 			{
                 consulta = consulta.Where(m => EF.Functions.ILike(m.Descripcion, $"%{filter}%"));
@@ -58,7 +58,7 @@ namespace MumanalPG.Areas.Generales.Controllers
                 return NotFound();
             }
 
-            var item = await DB.Departamento.Include(m => m.PaisDB).FirstOrDefaultAsync(m => m.IdDepartamento  == id);
+            var item = await DB.Departamento.FirstOrDefaultAsync(m => m.IdDepartamento  == id);
             if (item == null)
             {
                 return NotFound();
@@ -71,7 +71,9 @@ namespace MumanalPG.Areas.Generales.Controllers
         public IActionResult Create()
         {
             var model = new Models.Generales.Departamento();
-            ViewBag.Pais = DB.Pais.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();;
+            var items = DB.Pais.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Pais = items;
             return PartialView("Create", model);
         }
 
@@ -90,7 +92,9 @@ namespace MumanalPG.Areas.Generales.Controllers
                 await DB.SaveChangesAsync();
                 SetFlashSuccess("Registro creado satisfactoriamente");
             }
-            ViewBag.Pais = DB.Pais.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            var items = DB.Pais.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Pais = items;
             return PartialView("Create",item);
         }
 
@@ -101,12 +105,14 @@ namespace MumanalPG.Areas.Generales.Controllers
             {
                 return NotFound();
             }
-            var item = await DB.Departamento.FirstOrDefaultAsync(m => m.IdDepartamento == id);
+            var item = await DB.Departamento.FindAsync(id);
             if (item == null)
             {
                 return NotFound();
             }
-            ViewBag.Pais = DB.Pais.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            var items = DB.Pais.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Pais = items;
 
             return PartialView( "Edit", item);
         }
@@ -144,7 +150,9 @@ namespace MumanalPG.Areas.Generales.Controllers
                     }
                 }
             }
-            ViewBag.Pais = DB.Pais.Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            var items = DB.Pais.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Descripcion).ToList();
+            ViewBag.Pais = items;
             return PartialView("Edit", item);
         }
 

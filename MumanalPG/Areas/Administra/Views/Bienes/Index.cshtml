@@ -38,9 +38,12 @@
         <thead>
             <tr>
                 <th>@Html.SortableHeaderFor(model => model.Descripcion)</th>
-                <th>@Html.SortableHeaderFor(model => model.CodigoBien)</th>
-                <th>@Html.SortableHeaderFor(model => model.IdPartidaGasto)</th>
-                <th>@Html.SortableHeaderFor(model => model.IdUnidadMedida)</th>
+                <th>Codigo</th>
+                <th>Partida</th>
+                <th>Unidad Medida</th>
+                @*<th>@Html.SortableHeaderFor(model => model.IdUnidadMedida)</th>
+        <th>@Html.SortableHeaderFor(model => model.CodigoBien)</th>
+        <th>@Html.SortableHeaderFor(model => model.IdPartidaGasto)</th>*@
             </tr>
 
         </thead>
@@ -52,15 +55,19 @@
                 <a asp-action="Details" asp-route-id="@item.IdBienes" title="Detalle"
                    data-modal="link" data-modal-read="True">
                     @Html.DisplayFor(modelItem => item.Descripcion)
+                    @*@Html.DisplayFor(modelItem => item.UnidadMedida.Descripcion)
+                @Html.DisplayFor(modelItem => item.IdUnidadMedida)*@
                 </a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CodigoBien)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PartidaGastoDB.Descripcion)
+                @*@Html.DisplayFor(modelItem => item.PartidaGasto.Descripcion)*@
+                @Html.DisplayFor(modelItem => item.IdPartidaGasto)
                 <br>
-                Codigo: @Html.DisplayFor(modelItem => item.PartidaGastoDB.IdPartidaGasto)
+                @*Codigo: @Html.DisplayFor(modelItem => item.PartidaGasto.IdPartidaGasto)*@
+
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UnidadMedidaDB.Descripcion)
