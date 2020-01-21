@@ -29,9 +29,9 @@ $(document).ready(function() {
             // if (currentIndex === 0) {
             //     form.parent().parent().parent().append('<div class="footer footer-' + currentIndex + '"></div>');
             // }
-            // if (currentIndex === 1) {
-            //     form.parent().parent().parent().find('.footer').removeClass('footer-0').addClass('footer-' + currentIndex + '');
-            // }
+            if (currentIndex > 1) {
+                $('a[role="menuitem"]').addClass('disabled');
+            }
             // if (currentIndex === 2) {
             //     form.parent().parent().parent().find('.footer').removeClass('footer-1').addClass('footer-' + currentIndex + '');
             // }
@@ -53,7 +53,7 @@ $(document).ready(function() {
             form.submit();
         },
         onStepChanged: function(event, currentIndex, priorIndex) {
-
+            $('a[role="menuitem"]').addClass('disabled');
             return true;
         }
     });
