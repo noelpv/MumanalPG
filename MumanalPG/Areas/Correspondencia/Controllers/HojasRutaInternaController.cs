@@ -49,7 +49,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                                .Include(m => m.FunOrg)
                                .Include(m => m.FunDst)
                                .Include(m => m.HojaRuta)
-                               .Where(m => (m.HojaRuta.TipoHojaRuta == Constantes.HojaRutaInterna && m.Id > 0)); 
+                               .Where(m => (m.HojaRuta.TipoHojaRuta == Constantes.HojaRutaInterna && m.Id > 0 && m.Padre > 0)); 
             
             
             if (!string.IsNullOrWhiteSpace(filter))
@@ -138,6 +138,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             resp.RouteValue = new RouteValueDictionary {{ "filter", filter}, {"type", type}};
 
             ShowFlash(a);
+            ViewBag.filter = filter;
             ViewBag.page = page;
             ViewBag.type = type;
             return View(resp);
@@ -251,6 +252,21 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                 HojaRuta hojaRuta = item.prepare(currentUser.AspNetUserId, DB);
                 DB.Add(hojaRuta);
                 await DB.SaveChangesAsync();
+                
+                var parent = hojaRuta.Derivaciones.First(d => d.Padre == -1);
+
+                if (parent != null)
+                {
+                    foreach (var child in hojaRuta.Derivaciones.Where(d=> d.Padre == 0))
+                    {
+                        child.Padre = parent.Id;
+                    }
+
+                    parent.Padre = 0;
+                    DB.SaveChanges();
+
+                }
+
                 SetFlashSuccess("La Hoja de Ruta fue creada correctamente");
                 return RedirectToAction(nameof(Index), new{type = Constantes.HRTipoDespachados});
             }
@@ -327,8 +343,9 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         {
             var item = await DB.CorrespondenciaHRDetalle
                 .Include(m => m.HojaRuta)
+                .OrderBy(a => a.FechaRegistro)
                 .FirstOrDefaultAsync(m => m.Id == id);
-
+            
             if (item == null)
             {
                 return PartialView("_NoEncontrado");
@@ -348,8 +365,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             ViewBag.derivaciones = derivaciones;
             return PartialView("_Flujo", item);
         }
-
-
+        
         public async Task<IActionResult> CambiarEstado(Int32? id, int nuevoEstado = Constantes.Registrado,
             string from = null)
         {

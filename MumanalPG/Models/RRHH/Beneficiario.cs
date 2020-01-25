@@ -73,6 +73,22 @@ namespace MumanalPG.Models.RRHH
 		public ICollection<HojaRutaDetalle> Originados { get; set; } 
 		
 		[InverseProperty("FunDst")]
-		public ICollection<HojaRutaDetalle> Destinados { get; set; } 
+		public ICollection<HojaRutaDetalle> Destinados { get; set; }
+
+		public string Name()
+		{
+			string name = $"{PrimerApellido}";
+			if (PrimerNombre != null)
+			{
+				name = $"{name} {PrimerNombre}";
+			}else if(SegundoNombre != null){
+				name = $"{name} {SegundoNombre}";
+			} else if (SegundoApellido != null)
+			{
+				name = $"{name} {SegundoApellido}";
+			}
+
+			return name;
+		}
 	}
 }

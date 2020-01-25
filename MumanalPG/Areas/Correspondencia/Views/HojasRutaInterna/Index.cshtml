@@ -28,7 +28,7 @@
                         <ul class="list-group list-group-full">
                             @{ active_class = ((String.Equals(ViewBag.type, Constantes.HRTipoRecibidos)) ? "active" : "");} 
                             <li class="list-group-item @active_class" data-intro="Muestra toda la correspondencia Recibida y no está en estado Archivada o Anulada">
-                                <a href="@Url.Action("Index", new {type = Constantes.HRTipoRecibidos})">
+                                <a href="@Url.Action("Index", new {type = Constantes.HRTipoRecibidos, filter = ViewBag.filter})">
                                     <i class="mdi mdi-gmail"></i> Recibidos
                                 </a>
                                 @* <span class="badge badge-success ml-auto">6</span> *@
@@ -36,26 +36,26 @@
                             @{active_class = ((String.Equals(ViewBag.type, Constantes.HRTipoUrgentes)) ?  "active" : "");}
                             <li class="list-group-item @active_class" 
                                 data-intro="Muestra toda la correspondencia que ha sido marcada como Urgente y no está en estado Archivada o Anulada">
-                                <a href="@Url.Action("Index", new {type = Constantes.HRTipoUrgentes})">
+                                <a href="@Url.Action("Index", new {type = Constantes.HRTipoUrgentes, filter = ViewBag.filter})">
                                     <i class="mdi mdi-alert"></i> Urgentes
                                 </a>
                             </li>
                             @{active_class = ((String.Equals(ViewBag.type, Constantes.HRTipoDespachados)) ?  "active" : "");}
                             <li class="list-group-item @active_class" data-intro="Muestra toda la correspondecia que ha sido generada por mi y no está en estado Archivada o Anulada">
-                                <a href="@Url.Action("Index", new {type = Constantes.HRTipoDespachados})">
+                                <a href="@Url.Action("Index", new {type = Constantes.HRTipoDespachados, filter = ViewBag.filter})">
                                     <i class="mdi mdi-send"></i> Derivados
                                 </a>
                                 @* <span class="badge badge-danger ml-auto">3</span> *@
                             </li>
                             @{active_class = ((String.Equals(ViewBag.type, Constantes.HRTipoArchivados)) ?  "active" : "");}
                             <li class="list-group-item @active_class" data-intro="Muestra toda la correspondecia que a sido archivada">
-                                <a href="@Url.Action("Index", new {type = Constantes.HRTipoArchivados})">
+                                <a href="@Url.Action("Index", new {type = Constantes.HRTipoArchivados, filter = ViewBag.filter})">
                                     <i class="mdi mdi-file-document-box"></i> Archivados
                                 </a>
                             </li>
                             @{active_class = ((String.Equals(ViewBag.type, Constantes.HRTipoEliminados)) ?  "active" : "");}
                             <li class="list-group-item @active_class" data-intro="Muestra toda la correspondencia que ha sido Anulada">
-                                <a href="@Url.Action("Index", new {type = Constantes.HRTipoEliminados})">
+                                <a href="@Url.Action("Index", new {type = Constantes.HRTipoEliminados, filter = ViewBag.filter})">
                                     <i class="mdi mdi-delete"></i> Anulados
                                 </a>
                             </li>
@@ -69,6 +69,7 @@
                             <div class="input-group mb-3">
                                 <input name="filter" class="form-control search" placeholder="Buscar por Cite o Referencia..."
                                        value="@Model.RouteValue["Filter"]"/>
+                                <input name="type"  type="hidden" value="@ViewBag.type"/>
                                 <button type="submit" class="btn btn-secondary input-group-append">
                                     <span class="fas fa-search" aria-hidden="true"></span>
                                 </button>
@@ -84,8 +85,8 @@
                                 <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    if (currentHR != item.HojaRutaId)
-                                    {
+                                    //if (currentHR != item.HojaRutaId)
+                                    //{
                                         string unread_class = (item.Leido) ? "" : "unread";
 
                                         <tr class="@unread_class">
@@ -101,7 +102,7 @@
                                                 </div>
                                             </td>
                                             <td class="max-texts referencia">
-                                                <a asp-action="Details" asp-route-id="@item.Id" title=" @item.HojaRuta.Referencia">
+                                                <a asp-action="Details" asp-route-id="@item.Id" title="@item.HojaRuta.Referencia (@item.Proveido)"}">
                                                     @{
                                                         string label_class = "label-info";
                                                         switch (item.HojaRuta.Prioridad)
@@ -121,11 +122,13 @@
                                                         @item.HojaRuta.Prioridad.ToLower()
                                                     </span>
                                                     @item.HojaRuta.Referencia
+                                                    <span class="small">(@item.Proveido)</span>                     
                                                 </a>
                                             </td>
                                             <td class="hidden-xs-down">
-                                                @*<i class="icon-paper-clip"></i>*@
-                                                <a class="icon-paper-clip"  asp-action="VerPDF" asp-route-id="xyz.pdf"></a>
+                                                @if(item.Anexos != null){
+                                                    <a class="icon-paper-clip"  asp-action="VerPDF" asp-route-id="xyz.pdf"></a>
+                                                }
                                             </td>
                                             <td class=" small text-right text-capitalize">
                                                 @item.FechaRegistro.ToString("MMM dd, HH:mm", new CultureInfo("es-ES"))
@@ -190,7 +193,7 @@
                                             </td>
                                         </tr>
                                        currentHR = item.HojaRutaId;
-                                    }
+                                    //}
                                    
                                 }
 

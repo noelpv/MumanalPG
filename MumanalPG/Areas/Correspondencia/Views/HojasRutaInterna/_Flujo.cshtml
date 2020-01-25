@@ -25,8 +25,10 @@
             {
                 string visible_class = "";
                 visible_class = (d.Id == Model.Id) ? "" : "hide";
-                
-            <div id="instruccion_@d.Id" class="content-large instruccion @visible_class">
+
+                if (d.Padre > 0)
+                {
+                    <div id="instruccion_@d.Id" class="content-large instruccion @visible_class">
                     <div class="ribbon-wrapper card float-right" >
                         @switch (@d.IdEstadoRegistro)
                         {
@@ -122,7 +124,15 @@
                         </div>
 
                     </div>
-                </div>
+                </div>        
+                }
+                else
+                {
+                    <div id="instruccion_@d.Id" class="content-large instruccion text-center py-5 my-5 @visible_class">
+                        No existe detalle
+                    </div>
+                }
+
             }
             </div>
 
@@ -133,24 +143,29 @@
 <script>
     $(document).ready(function() {
         var data = @Html.Raw(Json.Serialize(@ViewBag.flow));
+        
+        console.log(data);
         $('#jstree').jstree({
             'core': {
                 'data': data,
                 'multiple': false
             }
-        }).on("changed.jstree", function (e, data) {
-
-           
-            var node_id = $(data.node).attr('id');
-            var instruccion_id = node_id.replace('hrd_', '');
-            $('.not-selected').fadeOut();
-            if ($('#instruccion_' + instruccion_id).length) {
-                $('.instruccion').hide();
-                $('#instruccion_' + instruccion_id).fadeIn();
-            } else {
-                alert('not found');
+        }).on("changed.jstree", function (e, data) {   
+            try{
+             
+                var node_id = $(data.node).attr('id');
+                var instruccion_id = node_id.replace('hrd_', '');
+                $('.not-selected').fadeOut();
+                if ($('#instruccion_' + instruccion_id).length) {
+                    $('.instruccion').hide();
+                    $('#instruccion_' + instruccion_id).fadeIn();
+                } else {
+                    alert('No Valido');
+                }
+   
+            }catch (e) {
+              
             }
-
         }).on('ready.jstree', function () {
 //            $('a[id*="area_"]').addClass("no_checkbox");
         });

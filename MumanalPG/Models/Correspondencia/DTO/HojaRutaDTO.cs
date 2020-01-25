@@ -96,12 +96,35 @@ namespace MumanalPG.Models.Correspondencia.DTO
             return hojaRuta;
         }
 
+        public HojaRutaDetalle buildParent(HojaRuta hr, int idUsuario)
+        {
+            HojaRutaDetalle parent = new HojaRutaDetalle();
+            parent.AreaDestinoId = hr.UnidadEjecutoraId;
+            parent.AreaOrigenId = hr.UnidadEjecutoraId;
+            parent.FunDstId = hr.OrigenId;
+            parent.FunOrgId = hr.OrigenId;
+            parent.PlazoDias = 1;
+            parent.Proveido = "-";
+            parent.IdEstadoRegistro = Constantes.Registrado;
+            parent.IdUsuario = idUsuario;
+            parent.FechaRegistro = DateTime.Now;
+            parent.DocumentoId = DocumentoId;
+            parent.Padre = -1;
+            
+            return parent;
+        }
+
         public HojaRuta populateDetalle(HojaRuta hr, int idUsuario, ApplicationDbContext DB)
         {
             ICollection<HojaRutaDetalle> detalle = new List<HojaRutaDetalle>();
             if (hr.Id > 0)
             {
                detalle = hr.Derivaciones; 
+            }
+            else
+            {
+                var parentHRDetalle = buildParent(hr, idUsuario);
+                detalle.Add(parentHRDetalle);
             }
 
             foreach (var i in Instrucciones)
@@ -179,5 +202,6 @@ namespace MumanalPG.Models.Correspondencia.DTO
             
             return hr;
         }
+        
     }
 }

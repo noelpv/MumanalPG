@@ -12,6 +12,7 @@ using MumanalPG.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Internal;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using MumanalPG.Extensions;
 using MumanalPG.Models.Correspondencia;
@@ -239,9 +240,7 @@ namespace MumanalPG.Areas
 
             var nodeRaiz = await DB.CorrespondenciaHRDetalle.FirstOrDefaultAsync(a => a.HojaRutaId == hrId && a.Padre == 0);
             List<AreasFunTreeDTO> flow = await FlujoHojaRutaList(nodeRaiz.Id, hrdSelected);
-            
-            //areas.Reverse();
-            
+
             return flow;
         }
 
@@ -267,8 +266,16 @@ namespace MumanalPG.Areas
                 itemTree.id = $"hrd_{hrDetalle.Id}";
                 itemTree.parent = (hrDetalle.Padre == 0) ? "#" : $"hrd_{hrDetalle.Padre}";
                 itemTree.state = new {opened = true, disabled = false, selected = false};
+                
+                string NameFunOrg = hrDetalle.FunOrg.Name();
+                string NameFunDst = hrDetalle.FunDst.Name();
 
-                string title = $"De: {hrDetalle.FunOrg.Denominacion} para: {hrDetalle.FunDst.Denominacion}";
+                string title = $"De: {NameFunOrg} para: {NameFunDst}";
+                if (hrDetalle.Padre == 0)
+                {
+                    title = "Inicio";
+                }
+                
                 if (hrDetalle.IdEstadoRegistro == Constantes.Anulado)
                 {
                     title = $"{title} (ANULADO)";
@@ -282,15 +289,24 @@ namespace MumanalPG.Areas
                     itemTree.state = new {opened = true, disabled = false, selected = true};  
                 }
 
-                itemTree.text = $@"<span class='small text-capitalize jstree-text' title='{title}'>
+                if (hrDetalle.Padre == 0)
+                {
+                    itemTree.text = $@"<span class='small text-capitalize jstree-text' title='{title}'>{title}</span>";
+                }
+                else
+                {
+                    
+                    itemTree.text = $@"<span class='small text-capitalize jstree-text' title='{title}'>
                                    <div class='row float-right' style='margin: 5px 0;line-height: 12px;'>
-                                   <div class='col-6 text-left pl-0 text-truncate'><b>De:</b> {hrDetalle.FunOrg.Denominacion.ToLower()}
+                                   <div class='col-6 text-left pl-0 text-truncate'><b>De:</b> {NameFunOrg.ToLower()}
                                    <div class='text-center'><b>({hrDetalle.FunOrg.Puesto.Descripcion})</b></div>                                   
                                    </div>
-                                   <div class='col-6 text-left p-0 text-truncate'><b> Para:</b> {hrDetalle.FunDst.Denominacion.ToLower()}
+                                   <div class='col-6 text-left p-0 text-truncate'><b> Para:</b> {NameFunDst.ToLower()}
                                    <div class='text-center'><b>({hrDetalle.FunDst.Puesto.Descripcion})</b></div> 
                                    </div> 
-                                   </div>";
+                                   </div></span>";    
+                }
+                
 
                 flow.Add(itemTree);
 

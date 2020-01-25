@@ -29,9 +29,9 @@ $(document).ready(function() {
             // if (currentIndex === 0) {
             //     form.parent().parent().parent().append('<div class="footer footer-' + currentIndex + '"></div>');
             // }
-            if (currentIndex > 1) {
-                $('a[role="menuitem"]').addClass('disabled');
-            }
+            // if (currentIndex > 1) {
+            //     $('a[role="menuitem"]').addClass('disabled');
+            // }
             // if (currentIndex === 2) {
             //     form.parent().parent().parent().find('.footer').removeClass('footer-1').addClass('footer-' + currentIndex + '');
             // }
@@ -53,7 +53,28 @@ $(document).ready(function() {
             form.submit();
         },
         onStepChanged: function(event, currentIndex, priorIndex) {
-            $('a[role="menuitem"]').addClass('disabled');
+            if(currentIndex === 1) {
+                var is_valid = false;
+
+                $('[id*="ins_fun_"]').each(function() {
+                    if($(this).val()){
+                        var ins_value = JSON.parse($(this).val());
+                        if(ins_value.instrucciones.length === 0) {
+                            is_valid = false;
+                            return false;
+                        } else {
+                            is_valid = true;
+                        }
+                    }
+                });
+                if(is_valid) {
+                    $('a[role="menuitem"]').removeClass('disabled');
+                } else {
+                    $('a[role="menuitem"]').addClass('disabled');
+                }
+            } else {
+                $('a[role="menuitem"]').removeClass('disabled');
+            }
             return true;
         }
     });
