@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MumanalPG.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -9,9 +10,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MumanalPG.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200202234948_AddCorrelativeToHRTemp")]
+    partial class AddCorrelativeToHRTemp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1537,17 +1539,23 @@ namespace MumanalPG.Data.Migrations
 
                     b.Property<int>("IdUsuario");
 
-                    b.Property<decimal>("IngresosBs");
+                    b.Property<decimal>("IngresosBs")
+                        .HasColumnType("decimal(18, 2)");
 
-                    b.Property<decimal>("IngresosDolares");
+                    b.Property<decimal>("IngresosDolares")
+                        .HasColumnType("decimal(18, 2)");
 
-                    b.Property<decimal>("SaldoActualBs");
+                    b.Property<decimal>("SaldoActualBs")
+                        .HasColumnType("decimal(18, 2)");
 
-                    b.Property<decimal>("SaldoActualDolares");
+                    b.Property<decimal>("SaldoActualDolares")
+                        .HasColumnType("decimal(18, 2)");
 
-                    b.Property<decimal>("SaldoInicialBs");
+                    b.Property<decimal>("SaldoInicialBs")
+                        .HasColumnType("decimal(18, 2)");
 
-                    b.Property<decimal>("SaldoInicialDolares");
+                    b.Property<decimal>("SaldoInicialDolares")
+                        .HasColumnType("decimal(18, 2)");
 
                     b.HasKey("IdCuentaBancaria");
 

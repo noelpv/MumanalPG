@@ -138,6 +138,11 @@
                         <div class="text-center text-dark">
                             <h3>CORRESPONDENCIA INTERNA</h3>
                             <h5>@Model.HojaRuta.CiteHojaRuta</h5>
+                            @if (Model.HojaRuta.CiteUE != null)
+                            {
+                                <h6>@Model.HojaRuta.CiteUE</h6>    
+                            }
+                            
                         </div>
                         @{
                             string label_class = "label-info";

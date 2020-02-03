@@ -249,7 +249,9 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             if (ModelState.IsValid)
             {
                 ApplicationUser currentUser = await GetCurrentUser();
+                string cite = await GetCite(item.UnidadEjecutoraId);
                 HojaRuta hojaRuta = item.prepare(currentUser.AspNetUserId, DB);
+                hojaRuta.CiteUE = $"{cite}-CORR.";
                 DB.Add(hojaRuta);
                 await DB.SaveChangesAsync();
                 
