@@ -62,6 +62,8 @@ namespace MumanalPG.Models.Correspondencia.DTO
         public string[] Anexos { get; set; }
         
         public int Parent { get; set; }
+        
+        public string TipoHojaRuta { get; set; }
 
         public IList<InstruccionDTO> GetInstrucciones()
         {
@@ -75,7 +77,7 @@ namespace MumanalPG.Models.Correspondencia.DTO
             return list;
         }
 
-        public HojaRuta prepare(int idUsuario, ApplicationDbContext DB, string tipo = Constantes.HojaRutaInterna)
+        public HojaRuta prepare(int idUsuario, ApplicationDbContext DB)
         {
             HojaRuta hojaRuta = new HojaRuta();
             hojaRuta.UnidadEjecutoraId = UnidadEjecutoraId;
@@ -84,13 +86,15 @@ namespace MumanalPG.Models.Correspondencia.DTO
             hojaRuta.CiteTramite = CiteDoc;
             hojaRuta.CiteFecha = FechaDoc;
             hojaRuta.NroFojas = NroFojas;
-            hojaRuta.CiteHojaRuta = $"MUMANAL/CORR.{tipo} ";
-            hojaRuta.TipoHojaRuta = tipo;
+            hojaRuta.CiteHojaRuta = $"MUMANAL/CORR.{TipoHojaRuta} ";
+            hojaRuta.TipoHojaRuta = TipoHojaRuta;
             hojaRuta.IdEstadoRegistro = Constantes.Enviado;
             hojaRuta.IdUsuario = idUsuario;
             hojaRuta.FechaRegistro = DateTime.Now;
             hojaRuta.Prioridad = Prioridad;
             hojaRuta.DocumentoId = DocumentoId;
+            hojaRuta.RemitenteExterno = Remitente;
+            hojaRuta.EntidadExterna = UnidadEjecutoraNombre;
             hojaRuta = populateDetalle(hojaRuta, idUsuario, DB);
             hojaRuta = populateAnexos(hojaRuta, idUsuario, DB);
             return hojaRuta;

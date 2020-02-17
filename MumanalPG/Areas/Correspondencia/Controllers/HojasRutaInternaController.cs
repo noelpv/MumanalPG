@@ -37,21 +37,25 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         {
             hostingEnvironment = environment; 
         }
-
-		// GET: Correspondencia/Documentos
-        [Breadcrumb("Correspondencia Interna", FromController = "Dashboard", FromAction = "Index")]
-        public async Task<IActionResult> Index(string filter, string type, int page = 1, string sortExpression = "-FechaRegistro", string a = "")
+        
+        [Breadcrumb("Bandeja de Entrada", FromController = "Dashboard", FromAction = "Index")]
+        public async Task<IActionResult> Index(string filter, string type, string typeHR, int page = 1, string sortExpression = "-FechaRegistro", string a = "")
         {
-
+            
             var consulta = DB.CorrespondenciaHRDetalle.AsNoTracking().AsQueryable();
             consulta = consulta.Include(m => m.AreaOrigen)
                                .Include(m => m.AreaDestino)
                                .Include(m => m.FunOrg)
                                .Include(m => m.FunDst)
                                .Include(m => m.HojaRuta)
-                               .Where(m => (m.HojaRuta.TipoHojaRuta == Constantes.HojaRutaInterna && m.Id > 0 && m.Padre > 0)); 
-            
-            
+                               .Where(m => (m.Id > 0 && m.Padre > 0));
+
+
+            if (typeHR != null)
+            {
+                consulta = consulta.Where(m => m.HojaRuta.TipoHojaRuta == typeHR);
+            }
+
             if (!string.IsNullOrWhiteSpace(filter))
             {
                 consulta = consulta.Where(m => EF.Functions.ILike(m.HojaRuta.Referencia, $"%{filter}%"));
@@ -141,6 +145,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             ViewBag.filter = filter;
             ViewBag.page = page;
             ViewBag.type = type;
+            ViewBag.typeHR = typeHR;
             return View(resp);
         }
 
@@ -251,7 +256,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                 ApplicationUser currentUser = await GetCurrentUser();
                 string cite = await GetCite(item.UnidadEjecutoraId);
                 HojaRuta hojaRuta = item.prepare(currentUser.AspNetUserId, DB);
-                hojaRuta.CiteUE = $"{cite}-CORR.";
+                hojaRuta.CiteUE = $"{cite}-CORR.".Replace("NN-", "");
                 DB.Add(hojaRuta);
                 await DB.SaveChangesAsync();
                 
@@ -428,7 +433,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                 .Include(m => m.FunDst).ThenInclude(f => f.Puesto)
                 .Include(m => m.HojaRuta)
                 .Include(m => m.HRDetalleInstrucciones).ThenInclude(d => d.Instruccion)
-                .Where(hr => hr.HojaRutaId == item.HojaRutaId).ToList();
+                .Where(hr => hr.HojaRutaId == item.HojaRutaId && hr.Padre > 0).ToList();
             
             HojaRutaPDFDTO dto = new HojaRutaPDFDTO();
             dto.hojaRuta = item.HojaRuta;

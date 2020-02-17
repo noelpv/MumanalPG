@@ -122,6 +122,33 @@
             on_change_doc,
             on_ini_doc));
 
+        $('input[name="TipoHojaRuta"]').change(function() {
+                    if ($(this).val() === 'INTERNA') {
+                        $('input[name="radio-options"]').prop('disabled', false);
+                        $('#doc-container').show();
+                        $('#doc-options').show();
+                        $('#rem-input').hide();
+                        $('#rem-select').show();
+                        $('#origen-id').val('');
+                        $('#origen-name').prop('required', false);
+                        $('#area-id').val('');
+                        $('#area-name').attr('readonly', true);
+                        $('#help-text-area').text('Área al que pertenece el remitente');
+                    } else {
+                        $('input[name="radio-options"]').prop('disabled', true);
+                        $('#doc-container').hide();
+                        $('#doc-options').hide();
+                        $('#rem-input').show();
+                        $('#rem-select').hide();
+                        $('#origen-id').val(-1);
+                        $('#origen-name').prop('required',true);
+                        $('#doc-id').attr('name', 'DocumentoId');
+                        $('#area-name').removeAttr('readonly');
+                        $('#area-id').val(1);
+                        $('#help-text-area').text('Entidad externa');
+                    }
+         });
+        
         $('input[name="radio-options"]').change(function() {
             if ($(this).val() === 'created') {
                 $('#doc-container').show();

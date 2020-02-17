@@ -136,9 +136,9 @@
                         }
                         
                         <div class="text-center text-dark">
-                            <h3>CORRESPONDENCIA INTERNA</h3>
+                            <h3>CORRESPONDENCIA @Model.HojaRuta.TipoHojaRuta</h3>
                             <h5>@Model.HojaRuta.CiteHojaRuta</h5>
-                            @if (Model.HojaRuta.CiteUE != null)
+                            @if (Model.HojaRuta.CiteUE != null && Model.HojaRuta.TipoHojaRuta == Constantes.HojaRutaInterna)
                             {
                                 <h6>@Model.HojaRuta.CiteUE</h6>    
                             }
@@ -186,6 +186,13 @@
                             <td class="font-bold text-right">Referencia: </td>
                             <td colspan="5">@Model.HojaRuta.Referencia</td>
                         </tr>
+                        @if (Model.HojaRuta.TipoHojaRuta == Constantes.HojaRutaExterna)
+                        {
+                            <tr>
+                                <td class="font-bold text-right">Remitente: </td>
+                                <td colspan="5">@Model.HojaRuta.RemitenteExterno - @Model.HojaRuta.EntidadExterna</td>
+                            </tr>
+                        }
                         <tr>
                             <td class="font-bold text-right">De: </td>
                             <td class="text-capitalize">@Model.FunOrg.Denominacion.ToLower()</td>

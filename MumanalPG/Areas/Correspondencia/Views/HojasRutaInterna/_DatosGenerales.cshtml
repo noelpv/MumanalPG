@@ -24,27 +24,52 @@
                 @if (Model.DocumentoId <= 0)
                 {
                     <div class="form-row">
-                        <label class="form-label">Crear Hoja de Ruta a partir de:</label>
-                        <div class="form-flex">
-                            <div class="col-md-12">
-                                <div class="m-b-10" data-intro="Use esta opción cuando haya creado un documento mediante el sistema">
-                                    <label class="custom-control custom-radio">
-                                        <input id="radio1" name="radio-options" type="radio" class="custom-control-input"
-                                               checked="checked" value="created">
-                                        <span class="custom-control-label">Documento Creado en el Sistema</span>
-                                    </label>
+                        <div class="col-6">
+                            <label class="form-label">Tipo de Hoja de Ruta:</label>
+                            <div class="form-flex">
+                                <div class="col-md-12">
+                                    <div class="m-b-10" data-intro="Use esta opción para crear una Hoja de Ruta a nivel institucional">
+                                        <label class="custom-control custom-radio">
+                                            <input id="tipo_hr1" asp-for="TipoHojaRuta" type="radio" class="custom-control-input"
+                                                   checked="checked" value="INTERNA">
+                                            <span class="custom-control-label">Hoja de Ruta Interna</span>
+                                        </label>
+                                    </div>
+                                    <div class="m-b-10" data-intro="Use esta opción cuando quiera crear una Hoja de Ruta proveniente de instituciones externas">
+                                        <label class="custom-control custom-radio">
+                                            <input id="tipo_hr2" asp-for="TipoHojaRuta" type="radio" class="custom-control-input"
+                                                   value="EXTERNA">
+                                            <span class="custom-control-label">Hoja de Ruta Externa</span>
+                                        </label>
+                                    </div>
                                 </div>
-                                <div class="m-b-10" data-intro="Use esta opción si no tiene un documento creado en el sistema 
-                                                    y quiere escanearlo para poder subirlo">
-                                    <label class="custom-control custom-radio">
-                                        <input id="radio2" name="radio-options" type="radio" class="custom-control-input"
-                                               value="no-created">
-                                        <span class="custom-control-label">Digitalizar Documento Físico</span>
-                                    </label>
+                            </div>
+                        </div>
+                                            
+                        <div class="col-6">
+                            <label class="form-label">Crear Hoja de Ruta a partir de:</label>
+                            <div class="form-flex">
+                                <div class="col-md-12">
+                                    <div class="m-b-10" data-intro="Use esta opción cuando haya creado un documento mediante el sistema">
+                                        <label class="custom-control custom-radio">
+                                            <input id="radio1" name="radio-options" type="radio" class="custom-control-input disabled"
+                                                   checked="checked" value="created">
+                                            <span class="custom-control-label">Documento Creado en el Sistema</span>
+                                        </label>
+                                    </div>
+                                    <div class="m-b-10" data-intro="Use esta opción si no tiene un documento creado en el sistema 
+                                                        y quiere escanearlo para poder subirlo">
+                                        <label class="custom-control custom-radio">
+                                            <input id="radio2" name="radio-options" type="radio" class="custom-control-input"
+                                                   value="no-created">
+                                            <span class="custom-control-label">Digitalizar Documento Físico</span>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    
                     <div class="form-row">
                         <div class="col-sm-10 col-md-8">
                             <div id="doc-container" class="form-group m-t-10 @if (stringErrors.Contains("DocumentoId"))
@@ -116,7 +141,7 @@
                             <input id="area-id" type="hidden" asp-for="UnidadEjecutoraId"/>
                             <input id="area-name" type="text" class="form-control" asp-for="UnidadEjecutoraNombre" required readonly/>
                             <span asp-validation-for="UnidadEjecutoraNombre" class="text-danger"></span>
-                            <span class="text-input">Área al que pertenece el remitente</span>
+                            <span id="help-text-area" class="text-input">Área al que pertenece el remitente</span>
                         </div>
                     </div>
                 </div>

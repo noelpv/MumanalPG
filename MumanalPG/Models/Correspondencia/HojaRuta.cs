@@ -66,5 +66,9 @@ namespace MumanalPG.Models.Correspondencia
 		public string CiteUE { get; set; }
 		
 		public int? CorrelativoUE { get; set; }
+		
+		public string RemitenteExterno { get; set; }
+		
+		public string EntidadExterna { get; set; }
 	}
 }
