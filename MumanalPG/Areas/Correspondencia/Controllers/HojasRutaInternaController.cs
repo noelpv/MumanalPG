@@ -81,7 +81,8 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                                                    m.HojaRuta.IdEstadoRegistro != Constantes.Archivado);
                     if (!User.IsInRole(SD.SuperAdminEndUser))
                     {
-                        consulta = consulta.Where(m => m.FunOrgId == currentUser.Funcionario.IdBeneficiario);  
+                        consulta = consulta.Where(m => m.FunOrgId == currentUser.Funcionario.IdBeneficiario || 
+                                                       m.IdUsuario == currentUser.Funcionario.IdBeneficiario);  
                     }
                     
                     break;
