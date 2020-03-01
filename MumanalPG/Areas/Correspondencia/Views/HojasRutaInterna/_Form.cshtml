@@ -42,6 +42,10 @@
         var contAnexosShowing = 0;
         var url_origen = $('#origen').data('remote-url');
         var url_doc = $('#documento').data('remote-url');
+        var origen_id = $('#origen-id').val();
+        var entidad_id = $('#area-id').val();
+        var entidad = $('#area-name').val();
+        var remitente = $('#origen-name').val();
 
         var render = function(item, escape) {
             $('.selectize-control.remote').removeClass('loading');
@@ -127,13 +131,20 @@
                         $('input[name="radio-options"]').prop('disabled', false);
                         $('#doc-container').show();
                         $('#doc-options').show();
-                        $('#rem-input').hide();
-                        $('#rem-select').show();
-                        $('#origen-id').val('');
-                        $('#origen-name').prop('required', false);
-                        $('#area-id').val('');
+                                        
+                        $('#origen-id').val(origen_id);
+                        $('#origen-name').val(remitente);
+                        $('#area-id').val(entidad_id);
+                        $('#area-name').val(entidad);
                         $('#area-name').attr('readonly', true);
                         $('#help-text-area').text('Área al que pertenece el remitente');
+                        var choose_user = "@ViewBag.choose_user"; 
+                        if (choose_user === "True")
+                        {
+                            $('#rem-input').hide();
+                            $('#rem-select').show();
+                            $('#origen-name').prop('required',false);
+                        }
                     } else {
                         $('input[name="radio-options"]').prop('disabled', true);
                         $('#doc-container').hide();
@@ -141,9 +152,11 @@
                         $('#rem-input').show();
                         $('#rem-select').hide();
                         $('#origen-id').val(-1);
+                        $('#origen-name').val('');
                         $('#origen-name').prop('required',true);
                         $('#doc-id').attr('name', 'DocumentoId');
                         $('#area-name').removeAttr('readonly');
+                        $('#area-name').val('');
                         $('#area-id').val(1);
                         $('#help-text-area').text('Entidad externa');
                     }
@@ -158,12 +171,19 @@
                 $('#origen-name').prop('required',true);
             } else {
                 $('#doc-container').hide();
-                $('#rem-input').hide();
-                $('#doc-options').hide();
-                $('#rem-select').show();
-                $('#origen-name').prop('required',false);
+                $('#doc-options').hide();           
                 $('#doc-id').attr('name', 'DocumentoId');
+                
+                var choose_user = "@ViewBag.choose_user"; 
+                if (choose_user === "True")
+                {
+                    $('#rem-input').hide();
+                    $('#rem-select').show();
+                    $('#origen-name').prop('required',false);
+                }
             }
+            
+                
         });
         var data = @Html.Raw(Json.Serialize(@ViewBag.areas));
         

@@ -139,7 +139,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
 //            }
             
             var resp = await PagingList.CreateAsync(consulta, Constantes.TamanoPaginacion, page, sortExpression,"FechaRegistro");
-            resp.RouteValue = new RouteValueDictionary {{ "filter", filter}, {"type", type}};
+            resp.RouteValue = new RouteValueDictionary {{ "filter", filter}, {"type", type}, {"typeHR", typeHR}};
 
             ShowFlash(a);
             ViewBag.filter = filter;
@@ -213,11 +213,16 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         public async Task<IActionResult> Create(int? idDoc)
         {
             var model = new HojaRutaDTO();
+            ApplicationUser currentUser = await GetCurrentUser();
+            
             model.FechaDoc = DateTime.Now;
             model.NroFojas = 1;
             model.Parent = 0;
             model.DocumentoId = 0;
-            
+            model.OrigenId = currentUser.Funcionario.IdBeneficiario;
+            model.Remitente = currentUser.Funcionario.Denominacion;
+            model.UnidadEjecutoraId = currentUser.Funcionario.Puesto.UnidadEjecutora.IdUnidadEjecutora;
+            model.UnidadEjecutoraNombre = currentUser.Funcionario.Puesto.UnidadEjecutora.Descripcion;
             if (idDoc > 0)
             {
              var doc = await DB.CorrespondenciaDocumento
@@ -236,9 +241,11 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                     model.FechaDoc = doc.Fecha;
                 }
             }
-            ApplicationUser currentUser = await GetCurrentUser();
+            
             var areas = await GetAreas(currentUser.Funcionario.IdBeneficiario);
             var instrucciones = GetInstrucciones();
+
+            ViewBag.choose_user = (User.IsInRole(SD.SecretariaUser) || User.IsInRole(SD.SuperAdminEndUser));
             ViewBag.areas = areas;
             ViewBag.instrucciones = instrucciones;
             ViewBag.Tipos = DB.CorrespondenciaTipoDocumento.Where(t => t.IdEstadoRegistro != Constantes.Anulado).ToList();
@@ -452,24 +459,34 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
            };
         }
 
-        public JsonResult GetDocuments(string filter = "")
+        public async Task<JsonResult> GetDocuments(string filter = "")
         {
             if (filter.Length > 2)
             {
-                var documentos = DB.CorrespondenciaDocumento
+                ApplicationUser currentUser = await GetCurrentUser();
+                
+                var consulta = DB.CorrespondenciaDocumento
                     .Include(d => d.FuncionarioOrigen)
                     .Include(d => d.FuncionarioOrigen.Puesto.UnidadEjecutora)
                     .Include(d => d.Tipo)
                     .Where(d => (d.IdEstadoRegistro != Constantes.Anulado))
-                    .Where(d => EF.Functions.ILike(d.Cite, "%" + filter + "%") || EF.Functions.ILike(d.Referencia, "%" + filter + "%"))
-                    .OrderBy(d => d.Fecha).Take(20)
+                    .Where(d => EF.Functions.ILike(d.Cite, "%" + filter + "%") || EF.Functions.ILike(d.Referencia, "%" + filter + "%"));
+                    
+                if (!(User.IsInRole(SD.SecretariaUser) || User.IsInRole(SD.SuperAdminEndUser)))
+                {
+                    consulta = consulta.Where(d => (d.IdUsuario == currentUser.Funcionario.IdBeneficiario));
+                }
+                    
+                   var documentos = consulta.OrderBy(d => d.Fecha).Take(20)
                     .Select(d => new {Id=d.Id, cite = d.Cite, remitenteId = d.FuncionarioOrigen.IdBeneficiario,
                                       remitente = d.FuncionarioOrigen.Denominacion, cargo = d.CargoFuncionarioOrigen,
                                       area = d.AreaFuncionarioOrigen, areaId = d.FuncionarioOrigen.Puesto.UnidadEjecutora.IdUnidadEjecutora, 
                                       referencia = d.Referencia, fecha = d.Fecha.ToString("yyyy-MM-dd"), fechastr = d.Fecha.ToString("dddd, dd 'de' MMMM  'de' yyyy", new CultureInfo("es-ES")), 
                                       tipo = d.Tipo.Nombre})
-                    .ToList(); 
+                    .ToList();
+
                 
+
                 return Json(new {repositories = documentos});
             }
             else
