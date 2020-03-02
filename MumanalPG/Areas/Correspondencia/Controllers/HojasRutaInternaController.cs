@@ -150,6 +150,30 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             return View(resp);
         }
 
+        [Breadcrumb("Seguimiento", FromController = "Dashboard", FromAction = "Index")]
+        public async Task<IActionResult> Tracking(string filter, string type, string typeHR, int page = 1,
+            string sortExpression = "-FechaRegistro", string a = "")
+        {
+            var consulta = DB.CorrespondenciaHojaRuta.AsNoTracking().AsQueryable();
+            consulta = consulta.Include(m => m.UnidadEjecutora)
+                .Include(m => m.Origen)
+                .Where(m => (m.Id > 0));
+            
+            if (!string.IsNullOrWhiteSpace(filter))
+            {
+                consulta = consulta.Where(m => EF.Functions.ILike(m.Referencia, $"%{filter}%") ||
+                                               EF.Functions.ILike(m.RemitenteExterno, $"%{filter}%") ||
+                                               EF.Functions.ILike(m.EntidadExterna, $"%{filter}%") ||
+                                               EF.Functions.ILike(m.Origen.Denominacion, $"%{filter}%") ||
+                                               EF.Functions.ILike(m.UnidadEjecutora.Descripcion, $"%{filter}%"));
+            }
+            
+            var resp = await PagingList.CreateAsync(consulta, Constantes.TamanoPaginacion, page, sortExpression,"FechaRegistro");
+            resp.Action = "Tracking";
+            resp.RouteValue = new RouteValueDictionary {{ "filter", filter}};
+            return View(resp);
+        }
+
         // GET: Correspondencia/Documentos/Details/5
         [Breadcrumb("Hoja de Ruta", FromAction = "Index")]
         public async Task<IActionResult> Details(Int32? id)
@@ -354,13 +378,26 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             return View("_Derivar",item);
         }
         
-        public async Task<IActionResult> Flujo(int id)
+        public async Task<IActionResult> Flujo(int id, int hrId = 0)
         {
-            var item = await DB.CorrespondenciaHRDetalle
-                .Include(m => m.HojaRuta)
-                .OrderBy(a => a.FechaRegistro)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            
+
+            HojaRutaDetalle item;
+            if (hrId > 0)
+            {
+                item = await DB.CorrespondenciaHRDetalle
+                   .Include(m => m.HojaRuta)
+                   .OrderBy(a => a.FechaRegistro)
+                   .FirstOrDefaultAsync(m => m.HojaRutaId == hrId);
+            }
+            else
+            {
+                item = await DB.CorrespondenciaHRDetalle
+                    .Include(m => m.HojaRuta)
+                    .OrderBy(a => a.FechaRegistro)
+                    .FirstOrDefaultAsync(m => m.Id == id);
+                
+            }
+
             if (item == null)
             {
                 return PartialView("_NoEncontrado");

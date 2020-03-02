@@ -4,8 +4,12 @@
 <link rel="stylesheet" href="~/lib/jstree/themes/default/style.css" asp-append-version="true"/>
 
 <div class="text-center">
-    <h2 class="card-title text-uppercase">CORRESPONDENCIA INTERNA</h2>
+    <h2 class="card-title text-uppercase">CORRESPONDENCIA @Model.HojaRuta.TipoHojaRuta</h2>
     <h5>@Model.HojaRuta.CiteHojaRuta</h5>
+    @if (Model.HojaRuta.CiteUE != null && Model.HojaRuta.TipoHojaRuta == Constantes.HojaRutaInterna)
+    {
+        <h6>@Model.HojaRuta.CiteUE</h6>
+    }
 </div>
 <div class="row justify-content-center p-4">
     <div class="col-sm-12 col-md-6">
