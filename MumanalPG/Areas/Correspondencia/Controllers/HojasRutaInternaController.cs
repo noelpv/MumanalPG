@@ -151,13 +151,22 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
         }
 
         [Breadcrumb("Seguimiento", FromController = "Dashboard", FromAction = "Index")]
-        public async Task<IActionResult> Tracking(string filter, string type, string typeHR, int page = 1,
-            string sortExpression = "-FechaRegistro", string a = "")
+        public async Task<IActionResult> Tracking(string filter, string type, string typeHR, DateTime startDate, 
+            DateTime endDate, int page = 1, string sortExpression = "-FechaRegistro", string a = "")
         {
             var consulta = DB.CorrespondenciaHojaRuta.AsNoTracking().AsQueryable();
             consulta = consulta.Include(m => m.UnidadEjecutora)
                 .Include(m => m.Origen)
                 .Where(m => (m.Id > 0));
+
+            if (startDate.Year == 1)
+            {
+                DateTime today = DateTime.Now;
+                startDate = new DateTime(today.Year, today.Month, 1);
+                endDate = today.AddDays(1);
+            }
+
+            consulta = consulta.Where(m => m.FechaRegistro >= startDate && m.FechaRegistro <= endDate);
             
             if (!string.IsNullOrWhiteSpace(filter))
             {
@@ -165,12 +174,15 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                                                EF.Functions.ILike(m.RemitenteExterno, $"%{filter}%") ||
                                                EF.Functions.ILike(m.EntidadExterna, $"%{filter}%") ||
                                                EF.Functions.ILike(m.Origen.Denominacion, $"%{filter}%") ||
-                                               EF.Functions.ILike(m.UnidadEjecutora.Descripcion, $"%{filter}%"));
+                                               EF.Functions.ILike(m.UnidadEjecutora.Descripcion, $"%{filter}%") ||
+                                               EF.Functions.ILike(m.CiteTramite, $"%{filter}%") ||
+                                               EF.Functions.ILike(m.CiteHojaRuta, $"%{filter}%") ||
+                                               EF.Functions.ILike(m.CiteUE, $"%{filter}%"));
             }
-            
+
             var resp = await PagingList.CreateAsync(consulta, Constantes.TamanoPaginacion, page, sortExpression,"FechaRegistro");
             resp.Action = "Tracking";
-            resp.RouteValue = new RouteValueDictionary {{ "filter", filter}};
+            resp.RouteValue = new RouteValueDictionary {{ "filter", filter}, {"startDate", startDate}, {"endDate", endDate}};
             return View(resp);
         }
 
