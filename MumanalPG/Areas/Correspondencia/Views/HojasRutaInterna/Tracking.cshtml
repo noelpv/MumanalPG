@@ -41,6 +41,18 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-12 text-right">
+        <a asp-action="TrackingPDF" asp-route-filter="@Model.RouteValue["Filter"]" 
+           asp-route-startDate="@ViewBag.startDate" asp-route-endDate="@ViewBag.endDate"
+           class="btn btn-success m-b-20 p-10 waves-effect waves-light" 
+           data-toggle="tooltip" title="Imprimir PDF" target="_blank"
+           data-intro="Click, en este botón para imprimir el reporte de seguimiento">
+            <i class="fas fa-print"></i><span>&nbsp; PDF </span>
+        </a>
+    </div>
+</div>
+
 <div class="row table-responsive mt-4">
     <table class="table table-hover table-striped">
         <thead>

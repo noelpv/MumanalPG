@@ -1,0 +1,64 @@
+@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.Correspondencia.HojaRuta>
+@using MumanalPG.Models.Correspondencia
+@using MumanalPG.Utility
+@{ Layout = "~/Views/Shared/_PDFLayout.cshtml";}
+@{
+    ViewData["Title"] = "Seguimiento";
+}
+
+<div class="row mb-2">
+    <div class=" col-1">
+        <img height="65px" src="@Context.Request.PathBase/lib/theme-elegant/img/logo-80.png" alt="homepage" class="light-logo"/>
+    </div>
+    <div class="col-10 text-center">
+        <h3 class="mb-0">REPORTE DE SEGUIMIENTO</h3>
+    </div>
+</div>
+
+<table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Nro</th>
+            <th>Fecha de Registro</th>
+            <th>Hoja de Ruta</th>
+            <th>Tipo</th>
+            <th>Remitente</th>
+            <th>Entidad</th>
+            <th>Referencia</th>
+        </tr>
+
+        </thead>
+        @{int index = 1;}
+        @foreach (var item in Model)
+        {
+            <tr class="small">
+                <td>@index</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" title="Detalle"
+                       data-modal="link" data-modal-read="True">
+                        @Html.DisplayFor(modelItem => item.FechaRegistro)
+                    </a>
+                </td>
+                <td>
+                    <b>Cite Tramite:</b> @Html.DisplayFor(modelItem => item.CiteTramite)<br/>
+                    <b>Cite Hoja Ruta:</b> @Html.DisplayFor(modelItem => item.CiteHojaRuta)
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.TipoHojaRuta)</td>
+                @if (item.TipoHojaRuta == Constantes.HojaRutaExterna)
+                {
+                    <td>@Html.DisplayFor(modelItem => item.RemitenteExterno)</td>
+                    <td>@Html.DisplayFor(modelItem => item.EntidadExterna)</td>
+                }
+                else
+                {
+                    <td>@Html.DisplayFor(modelItem => item.Origen.Denominacion)</td>
+                    <td>@Html.DisplayFor(modelItem => item.UnidadEjecutora.Descripcion)</td>
+                }
+                <td style="width: 500px">@Html.DisplayFor(modelItem => item.Referencia)</td>
+
+            </tr>
+
+            index++;
+        }
+    </table>
+
