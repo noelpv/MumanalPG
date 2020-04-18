@@ -115,7 +115,7 @@
                                                 </div>
                                             </td>
                                             <td class="max-texts referencia">
-                                                <a asp-action="Details" asp-route-id="@item.Id" title="@item.HojaRuta.Referencia (@item.Proveido)"}">
+                                                <a asp-action="Details" asp-route-id="@item.Id" title="@item.HojaRuta.Referencia (@item.Proveido)">
                                                     @{
                                                         string label_class = "label-info";
                                                         switch (item.HojaRuta.Prioridad)
@@ -136,18 +136,22 @@
                                                     </span>
                                                     @item.HojaRuta.Referencia
                                                     <span class="small">(@item.Proveido)</span><br/>
-                                                    @if (item.HojaRuta.TipoHojaRuta == Constantes.HojaRutaInterna)
+                                                    @if (item.HojaRuta.TipoHojaRuta != null)
                                                     {
-                                                        <span class="text-capitalize label label-warning">
-                                                            @item.HojaRuta.TipoHojaRuta.ToLower()
-                                                        </span>
+                                                        @if (item.HojaRuta.TipoHojaRuta == Constantes.HojaRutaInterna)
+                                                         {
+                                                             <span class="text-capitalize label label-warning">
+                                                                 @item.HojaRuta.TipoHojaRuta.ToLower()
+                                                             </span>
+                                                         }
+                                                         else if(item.HojaRuta.TipoHojaRuta == Constantes.HojaRutaExterna)
+                                                         {
+                                                             <span class="text-capitalize label label-purple">
+                                                                 @item.HojaRuta.TipoHojaRuta.ToLower()
+                                                             </span>
+                                                         }     
                                                     }
-                                                    else if(item.HojaRuta.TipoHojaRuta == Constantes.HojaRutaExterna)
-                                                    {
-                                                        <span class="text-capitalize label label-purple">
-                                                            @item.HojaRuta.TipoHojaRuta.ToLower()
-                                                        </span>
-                                                    }
+                                                   
                                                 </a>
                                             </td>
                                             <td class="hidden-xs-down">
