@@ -25,6 +25,7 @@ $(document).ready(function() {
             finish: 'Finalizar',
             current: ''
         },
+        
         onStepChanging: function(event, currentIndex, newIndex) {
             // if (currentIndex === 0) {
             //     // form.parent().parent().parent().append('<div class="footer footer-' + currentIndex + '"></div>');

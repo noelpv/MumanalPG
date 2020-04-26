@@ -13,13 +13,22 @@
         
         @if (ViewData["Action"] == "Derivar")
         {
-            <input id="origen-id" type="hidden" asp-for="OrigenId"/>
-            <input id="area-id" type="hidden" asp-for="UnidadEjecutoraId"/>
-            <input type="hidden" asp-for="DocumentoId"/>
-            <input type="hidden" asp-for="HojaRutaId"/>
+            <h3>Datos Generales</h3>
+            <fieldset>
+                <h2>Datos Generales</h2>
+                <p class="text-center p-5">
+                    Los datos generales no estan disponibles en esta vista.
+                </p>
+                <input id="origen-id" type="hidden" asp-for="OrigenId"/>
+                <input id="area-id" type="hidden" asp-for="UnidadEjecutoraId"/>
+                <input type="hidden" asp-for="DocumentoId"/>
+                <input type="hidden" asp-for="HojaRutaId"/>
+            </fieldset>
+            <script>action_derivar = true</script>
         }
         else
         {
+            <script>action_derivar = false</script>
             <partial name="_DatosGenerales" view-data="ViewData"/>
         }
         <partial name="_Instrucciones" view-data="ViewData"/>
@@ -32,10 +41,17 @@
 <script src="~/lib/wizard/js/nouislider.min.js"></script>
 <script src="~/lib/wizard/js/wNumb.js"></script>
 <script src="~/lib/jstree/jstree.js"></script>
-<script src="~/lib/wizard/js/main.js"></script>
+@* aqui esta la logica del wizard *@
+<script src="~/lib/wizard/js/main.js"></script> 
 
 <script>
     $(document).ready(function() {
+       
+        if(action_derivar)
+        {
+           $("[href='#next']").trigger('click');
+        }
+                
         Dropzone.autoDiscover = false;
        
         var contAnexos = 0;
