@@ -26,7 +26,7 @@
         <partial name="_Anexar" view-data="ViewData"/>
     </div>
 </form>
-
+<partial name="_ValidationScriptsPartial" />
 <script src="~/lib/wizard/js/jquery.steps.min.js"></script>
 <script src="~/lib/wizard/js/dobpicker.js"></script>
 <script src="~/lib/wizard/js/nouislider.min.js"></script>
@@ -212,10 +212,14 @@
             $(this).jstree(true).check_node(data.node);
 
         }).on("check_node.jstree", function(e, data) {
+            $('li#' + data.node.li_attr.id).addClass('derive-selected'); //para saber que se ha seleccionado para derivacion
             $('a#' + data.node.a_attr.id).trigger('click');
             $('input#ins_' + data.node.id).attr('name', 'Instrucciones');
             $('input#com_' + data.node.id).attr('name', 'Comentarios');
         }).on("uncheck_node.jstree", function(e, data) {
+            let item = $('li#' + data.node.li_attr.id);
+            item.removeClass('derive-selected');
+            item.removeClass('derive-selected-error');
             $('input#ins_' + data.node.id).removeAttr('name');
             $('input#com_' + data.node.id).removeAttr('name');
         }).on('ready.jstree', function () {
@@ -269,7 +273,6 @@
 
                 obj.instrucciones = values;             
                 input_ins.val(JSON.stringify(obj));
-                checkInstrucciones();
             });
 
             $('.comentarios').unbind();
@@ -281,11 +284,9 @@
                 
                 input_ins.val(JSON.stringify(obj));
             });
-            checkInstrucciones();
         }
         
         function cloneAnexo() {
-            $('a[role="menuitem"]').addClass('disabled');
             var container = $('#anexos-container');
             var rowAnexo = $('#fila-anexo');
             var newRow = rowAnexo.clone();
@@ -309,9 +310,7 @@
                     contAnexosShowing--;
                     if (contAnexosShowing <= 0) {
                         $('.anexos-found').fadeIn('slow');
-                        $('a[role="menuitem"]').removeClass('disabled');
                     }
-                    checkAnexos();
                 });
                 
             });
@@ -335,7 +334,6 @@
                                 obj.name = null;
                                 obj.size = null;
                                 input_sent.val(JSON.stringify(obj)); 
-                                checkAnexos();
                             }
                           );
                     },
@@ -349,7 +347,6 @@
                         
                         el.addClass('animated fadeIn');
                         el.text(response.fileName);
-                        checkAnexos();
 
                      }
                 }
@@ -371,57 +368,12 @@
                var obj = JSON.parse(input_sent.val());
                obj.descripcion = $(this).val();
                input_sent.val(JSON.stringify(obj));
-               checkAnexos();
             });
                        
             $('.anexos-found').hide();
             contAnexos++;
             contAnexosShowing++;
         }
-        
-        function checkAnexos() {
-            var is_valid = false;
-            $('[id*="row_anexo_"]').each(function() {
-                if($(this).val()){
-                  var row_value = JSON.parse($(this).val());
-                  try {
-                      if(!(row_value.descripcion.length && row_value.path.length)){
-                         is_valid = false;
-                      }else {
-                          is_valid = true;
-                      }
-                  }catch (e) {
-                      is_valid = false;
-                  }       
-                }
-            });
-            
-            if(is_valid) {
-                $('a[role="menuitem"]').removeClass('disabled');       
-            } else {
-               $('a[role="menuitem"]').addClass('disabled');     
-            }
-        }
-        
-        function checkInstrucciones(){
-            var is_valid = false;
-            
-             $('[id*="ins_fun_"]').each(function() {
-                  if($(this).val()){
-                      var ins_value = JSON.parse($(this).val());
-                      if(ins_value.instrucciones.length === 0) {
-                          is_valid = false;
-                          return false;
-                      } else {
-                          is_valid = true;   
-                      }
-                  }
-             });
-             if(is_valid) {
-                 $('a[role="menuitem"]').removeClass('disabled');       
-             } else {
-                $('a[role="menuitem"]').addClass('disabled');     
-             }
-        }
+       
     });
 </script>

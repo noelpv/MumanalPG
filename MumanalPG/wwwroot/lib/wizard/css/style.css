@@ -473,3 +473,19 @@ p.desc {
     height: 61px; } }
 
 /*# sourceMappingURL=style.css.map */
+
+
+.derive-selected-error {
+  color: #f62d51 !important;
+}
+.has-danger, .has-danger span {
+  color:  #f62d51 !important;
+}
+.has-danger .dropzone, .input-validation-error {
+  color: #f62d51 !important;
+  border-color:  #f62d51 !important;
+}
+
+.dropzone .dz-preview.dz-image-preview, .dropzone .dz-preview .dz-image {
+  max-width: 100%;
+}
