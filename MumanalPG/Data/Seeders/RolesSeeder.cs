@@ -21,6 +21,9 @@ namespace MumanalPG.Data.Seeders
             AgregarRol(SD.DefaultUser);
             AgregarRol(SD.VentanillaUnicaUser);
             AgregarRol(SD.SecretariaUser);
+            AgregarRol(SD.AdminEndUser);
+            AgregarRol(SD.RecursosHumanos);
+            AgregarRol(SD.Prestaciones);
         }
 
         // since we run this seeder when the app starts

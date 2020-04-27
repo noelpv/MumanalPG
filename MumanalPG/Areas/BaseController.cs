@@ -28,7 +28,7 @@ namespace MumanalPG.Areas
     public abstract class BaseController : Controller
     {
         protected ApplicationDbContext DB { get; }
-        private readonly UserManager<IdentityUser> _userManager;
+        protected readonly UserManager<IdentityUser> _userManager;
 
 
         protected BaseController(ApplicationDbContext db)
@@ -86,7 +86,8 @@ namespace MumanalPG.Areas
         public async Task<ApplicationUser> GetCurrentUser()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-
+            // var roles = await _userManager.GetRolesAsync(user);
+            
             ApplicationUser currentUser = DB.ApplicationUser
                 .Include(u => u.Funcionario)
                 .Include(u => u.Funcionario.Puesto)
@@ -232,6 +233,22 @@ namespace MumanalPG.Areas
             else
             {
                 return Json(new {repositories = new {}});
+            }
+        }
+        
+        public JsonResult GetPuestos(int unidadId = 0)
+        {
+            if (unidadId > 0)
+            {
+                var puestos = DB.RRHH_Puesto.
+                    Where(p => p.IdEstadoRegistro != Constantes.Anulado && p.IdUnidadEjecutora == unidadId)
+                    .OrderBy(i => i.Descripcion).ToList();
+
+                return Json(new {response = puestos});
+            }
+            else
+            {
+                return Json(new {response = new {}});
             }
         }
         

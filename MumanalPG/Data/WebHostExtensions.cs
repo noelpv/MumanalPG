@@ -21,12 +21,12 @@ namespace MumanalPG.Data
                 context.Database.Migrate();
 
                 // now that the database is up to date. Let's seed
-                new UnidadEjecutoraSeeder(context).SeedData();
-                new PuestoSeeder(context).SeedData();
-                new FuncionariosPuestoSeeder(context).SeedData();
+                // new UnidadEjecutoraSeeder(context).SeedData();
+                // new PuestoSeeder(context).SeedData();
+                // new FuncionariosPuestoSeeder(context).SeedData();
                 new RolesSeeder(context, _roleContext).SeedData();
-                new UsersSeeder(context, _userContext).SeedData();
-                new TipoAnexoSeeder(context).SeedData();
+                // new UsersSeeder(context, _userContext).SeedData();
+                // new TipoAnexoSeeder(context).SeedData();
 
 //#if DEBUG
 //                // if we are debugging, then let's run the test data seeder

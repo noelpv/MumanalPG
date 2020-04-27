@@ -12,9 +12,14 @@ namespace MumanalPG.Utility
 
         public const string AdminEndUser = "Admin";
         public const string SuperAdminEndUser = "Super Admin";
-        public const string DefaultUser = "Default";
+        public const string DefaultUser = "Normal";
         public const string VentanillaUnicaUser = "Ventanilla Unica";
         public const string SecretariaUser = "Secretaria";
+        public const string RecursosHumanos = "RecursosHumanos";
+        public const string Prestaciones = "Prestaciones";
+
+        public const string BeneficarioAccess = AdminEndUser + ", " + SuperAdminEndUser + ", " + RecursosHumanos + ", " + Prestaciones;
+        public const string RecursosHumanosAccess = AdminEndUser + ", " + SuperAdminEndUser + ", " + RecursosHumanos;
         
         public static String BytesToString(long byteCount)
         {

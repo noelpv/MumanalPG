@@ -12,8 +12,7 @@ using SmartBreadcrumbs;
 
 namespace MumanalPG.Areas.RRHH.Controllers
 {
-    //[Authorize(Roles = SD.SuperAdminEndUser)]
-    [Authorize]
+    [Authorize(Roles = SD.RecursosHumanosAccess)]
     [Area("RRHH")]
     public class DashboardRRHHController : BaseController
     {        

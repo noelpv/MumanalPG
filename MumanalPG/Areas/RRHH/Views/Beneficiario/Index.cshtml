@@ -37,10 +37,10 @@
         <thead>
             <tr>
                 <th>@Html.SortableHeaderFor(model => model.PrimerApellido)</th>
-                <th>SegundoApellido</th>
-                <th>Nombre</th>
-                <th>Documento.Identidad</th>
-                <th>Puesto</th>
+                <th>@Html.SortableHeaderFor(model => model.SegundoApellido)</th>
+                <th>@Html.SortableHeaderFor(model => model.PrimerNombre)</th>
+                <th>@Html.SortableHeaderFor(model => model.DocumentoIdentidad)</th>
+                <th>@Html.SortableHeaderFor(model => model.Puesto)</th>
             </tr>
 
         </thead>
@@ -64,7 +64,7 @@
                 @Html.DisplayFor(modelItem => item.DocumentoIdentidad)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PuestoId)
+                @Html.DisplayFor(modelItem => item.Puesto.Descripcion)
             </td>
             @{
                 options.Id = item.IdBeneficiario;

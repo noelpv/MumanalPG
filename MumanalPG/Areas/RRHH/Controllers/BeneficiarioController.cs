@@ -20,12 +20,12 @@ using MumanalPG.Extensions;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data;
+using Microsoft.AspNetCore.Razor.Language.Extensions;
 
 
 namespace MumanalPG.Areas.RRHH.Controllers
 {
-    //[Authorize(Roles = SD.SuperAdminEndUser)]
-    [Authorize]
+    [Authorize(Roles = SD.RecursosHumanosAccess)]
     [Area("RRHH")]
     public class BeneficiarioController : BaseController
     {        
@@ -36,18 +36,21 @@ namespace MumanalPG.Areas.RRHH.Controllers
         }
 
 		// GET: RRHH/Beneficiario
-        //[Breadcrumb("Beneficiario", FromController = "DashboardRRHH", FromAction = "Clasificadores")]
-        public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Denominacion", string a = "")
-        { 
+        [Breadcrumb("Funcionarios", FromController = "DashboardRRHH", FromAction = "Index")]
+        public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Denominacion", string a = "" )
+        {
             var consulta = DB.RRHH_Beneficiario.AsNoTracking().AsQueryable();
+            consulta = consulta.Include(b => b.Puesto);
             consulta = consulta.Where(m => m.IdEstadoRegistro != 2);    //!= Constantes.Eliminado); // != el estado es diferente a ANULADO
+            consulta = consulta.Where(b => b.PuestoId > 1); //Puesto > 1 quiere decir que es un funcionario y no un beneficiario   
+
             if (!string.IsNullOrWhiteSpace(filter))
 			{
                 consulta = consulta.Where(m => EF.Functions.ILike(m.Denominacion, $"%{filter}%"));
             }
-            var resp = await PagingList.CreateAsync(consulta, Constantes.TamanoPaginacion, page, sortExpression, "Denominacion");
+            var resp = await PagingList.CreateAsync(consulta, Constantes.TamanoPaginacion*2, page, sortExpression, "Denominacion");
             resp.RouteValue = new RouteValueDictionary {{ "filter", filter}};
-            ShowFlash(a);
+            // ShowFlash(a);
             return View(resp);
         }
 
@@ -59,7 +62,7 @@ namespace MumanalPG.Areas.RRHH.Controllers
                 return NotFound();
             }
 
-            var item = await DB.RRHH_Beneficiario.FirstOrDefaultAsync(m => m.IdBeneficiario  == id);
+            var item = await DB.RRHH_Beneficiario.Include(b => b.Puesto).FirstOrDefaultAsync(m => m.IdBeneficiario  == id);
             if (item == null)
             {
                 return NotFound();
@@ -72,10 +75,24 @@ namespace MumanalPG.Areas.RRHH.Controllers
         public IActionResult Create()
         {
             var model = new Models.RRHH.Beneficiario();
-            //UnidadEjecutora
-            var itemsU = DB.RRHH_UnidadEjecutora.
-               Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
-            ViewBag.UnidadEjecutora = itemsU;
+            model.RolUsuario = "4c7e18e8-0305-42ed-ade3-ab1640f7b00e"; //Normal
+           
+            var unidades = DB.RRHH_UnidadEjecutora.
+               Where(i => i.IdEstadoRegistro != Constantes.Anulado && i.EsExterna == false)
+               .OrderBy(i => i.Descripcion).ToList();
+            
+            var puestos = DB.RRHH_Puesto.
+                Where(p => p.IdEstadoRegistro != Constantes.Anulado)
+                .OrderBy(i => i.Descripcion).ToList();
+            
+            var roles = DB.Roles.
+                Where(r => r.Name != SD.SuperAdminEndUser)
+                .OrderBy(r => r.Name).ToList();
+
+            
+            ViewBag.Unidades = unidades;
+            ViewBag.Puestos = puestos;
+            ViewBag.Roles = roles;
 
             return PartialView("Create", model);
         }
@@ -91,10 +108,8 @@ namespace MumanalPG.Areas.RRHH.Controllers
                 item.IdUsuario = currentUser.AspNetUserId;
                 item.IdBeneficiarioClasificacion = 2;
                 item.Nit = "0";
-                item.DepartamentoSigla = "LP";
                 item.Iniciales = "NN";
                 item.IdDocumentoRespaldo = 0;
-                item.Denominacion = "0";
                 item.FechaNacimiento = DateTime.Now;
                 item.IdGenero = 0;
                 item.TelefonoFijo = "0";
@@ -112,14 +127,53 @@ namespace MumanalPG.Areas.RRHH.Controllers
                 item.EsDeudor = "NO";
                 item.EsHabilitado = false;
                 item.FechaRegistro = DateTime.Now;
+                item.Denominacion = $"{item.PrimerApellido} {item.SegundoApellido} {item.PrimerNombre} {item.SegundoNombre}";
                 DB.Add(item);
                 await DB.SaveChangesAsync();
+                var ben = DB.RRHH_Beneficiario.FirstOrDefault(b => b.DocumentoIdentidad == item.DocumentoIdentidad);
+                if (ben != null)
+                {
+                    var userCreated = _userManager.CreateAsync(new ApplicationUser
+                    {
+                        UserName = item.Username,
+                        Email = item.Email,
+                        Name = item.Denominacion,
+                        EmailConfirmed = true,
+                        AspNetUserId = ben.IdBeneficiario
+                    }, "User123*").GetAwaiter().GetResult();
+                
+                    if (userCreated.Succeeded)
+                    {
+                        var user =  DB.Users.FirstOrDefault(u => u.UserName == item.Username);
+
+                        if (user != null)
+                        {
+                            var userRole = new IdentityUserRole<string>();
+                            userRole.UserId = user.Id;
+                            userRole.RoleId = item.RolUsuario;
+                            DB.UserRoles.Add(userRole);
+                            await DB.SaveChangesAsync();
+                        }
+                    }
+                }
                 SetFlashSuccess("Registro creado satisfactoriamente");
             }
             //Puesto
-            var itemP = DB.RRHH_Puesto.
-                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
-            ViewBag.Puesto = itemP;
+            var unidades = DB.RRHH_UnidadEjecutora.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado && i.EsExterna == false)
+                .OrderBy(i => i.Descripcion).ToList();
+            
+            var puestos = DB.RRHH_Puesto.
+                Where(p => p.IdEstadoRegistro != Constantes.Anulado)
+                .OrderBy(i => i.Descripcion).ToList();
+            
+            var roles = DB.Roles.
+                Where(r => r.Name != SD.SuperAdminEndUser)
+                .OrderBy(r => r.Name).ToList();
+            
+            ViewBag.Unidades = unidades;
+            ViewBag.Puestos = puestos;
+            ViewBag.Roles = roles;
 
             return PartialView("Create",item);
         }
@@ -136,10 +190,22 @@ namespace MumanalPG.Areas.RRHH.Controllers
             {
                 return NotFound();
             }
-            //Puesto
-            var itemP = DB.RRHH_Puesto.
-                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
-            ViewBag.Puesto = itemP;
+            
+            //Esto es solo para evitar la validacion no se modificara nada
+            item.Username = "username";
+            item.Email = "nomail@mail.com"; 
+            
+            var unidades = DB.RRHH_UnidadEjecutora.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado && i.EsExterna == false)
+                .OrderBy(i => i.Descripcion).ToList();
+            
+            var puestos = DB.RRHH_Puesto.
+                Where(p => p.IdEstadoRegistro != Constantes.Anulado)
+                .OrderBy(i => i.Descripcion).ToList();
+
+
+            ViewBag.Unidades = unidades;
+            ViewBag.Puestos = puestos;
 
             return PartialView( "Edit", item);
         }
@@ -163,10 +229,8 @@ namespace MumanalPG.Areas.RRHH.Controllers
                     item.IdUsuario = currentUser.AspNetUserId;
                     item.IdBeneficiarioClasificacion = 2;
                     item.Nit = "0";
-                    item.DepartamentoSigla = "LP";
                     item.Iniciales = "NN";
                     item.IdDocumentoRespaldo = 0;
-                    item.Denominacion = "0";
                     item.FechaNacimiento = DateTime.Now;
                     item.IdGenero = 0;
                     item.TelefonoFijo = "0";
@@ -184,6 +248,7 @@ namespace MumanalPG.Areas.RRHH.Controllers
                     item.EsDeudor = "NO";
                     item.EsHabilitado = false;
                     item.FechaRegistro = DateTime.Now;
+                    item.Denominacion = $"{item.PrimerApellido} {item.SegundoApellido} {item.PrimerNombre} {item.SegundoNombre}";
                     DB.Update(item);
                     await DB.SaveChangesAsync();
                 }
@@ -200,10 +265,17 @@ namespace MumanalPG.Areas.RRHH.Controllers
                 }
                 
             }
-            //Puesto
-            var itemP = DB.RRHH_Puesto.
-                Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i => i.Descripcion).ToList();
-            ViewBag.Puesto = itemP;
+            var unidades = DB.RRHH_UnidadEjecutora.
+                Where(i => i.IdEstadoRegistro != Constantes.Anulado && i.EsExterna == false)
+                .OrderBy(i => i.Descripcion).ToList();
+            
+            var puestos = DB.RRHH_Puesto.
+                Where(p => p.IdEstadoRegistro != Constantes.Anulado)
+                .OrderBy(i => i.Descripcion).ToList();
+
+
+            ViewBag.Unidades = unidades;
+            ViewBag.Puestos = puestos;
 
             return PartialView("Edit", item);
         }

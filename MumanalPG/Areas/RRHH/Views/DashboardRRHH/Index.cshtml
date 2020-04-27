@@ -1,82 +1,77 @@
 @model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.RRHH.Beneficiario>
-@using ReflectionIT.Mvc.Paging
+@using MumanalPG.Utility
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @{
     ViewData["Title"] = "Recursos Humanos";
 }
 @*<div class="container-fluid">*@
 <div class="row">
-        
-    <div class="col-md-4 col-sm-6 col-xs-12">
-        <a asp-area="RRHH" asp-controller="DashboardRRHH" asp-action="AdministracionRRHH">
-            <div class="ribbon-vwrapper card">
-                <div class="ribbon ribbon-success ribbon-vertical-l">
-                    <i class="ti-settings"></i>
-                </div>
-                <h4>Administracion de RRHH</h4>
-                <p class="ribbon-content">Se reliza el proceso de Administracion de Recursos Humanos.</p>
-            </div>
-        </a>
-    </div>
 
-    <div class="col-md-4 col-sm-6 col-xs-12">
-        <a asp-area="RRHH" asp-controller="DashboardRRHH" asp-action="ControlRRHH">
-            <div class="ribbon-vwrapper card">
-                <div class="ribbon ribbon-warning ribbon-vertical-l">
-                    <i class="ti-zip"></i>
-                </div>
-                <h4>Control de RRHH</h4>
-                <p class="ribbon-content">Se realiza el proceso de Control de Recursos Humanos.</p>
-            </div>
-        </a>
-    </div>
-
-    <div class="col-md-4 col-sm-6 col-xs-12">
-        <a asp-area="RRHH" asp-controller="DashboardRRHH" asp-action="Planillas">
-            <div class="ribbon-vwrapper card">
-                <div class="ribbon ribbon-success ribbon-vertical-l">
-                    <i class="ti-agenda"></i>
-                </div>
-                <h4>Planillas</h4>
-                <p class="ribbon-content">Se realiza el procesamiento de Planillas y Otros Pagos de RR.HH.</p>
-            </div>
-        </a>
-    </div>
-
-        @*<div class="col-md-4 col-sm-6 col-xs-12">
-                <a href="">
-                    <div class="ribbon-vwrapper card">
-                        <div class="ribbon ribbon-info ribbon-vertical-l">
-                            <i class="ti-map-alt"></i>
-                        </div>
-                        <h4>Seguimiento</h4>
-                        <p class="ribbon-content">Se realiza el Seguimiento del Presupuesto Institucional.</p>
+    @if (ApplicationUser.IsRecursosHumanos(User))
+    {
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <a asp-area="RRHH" asp-controller="Beneficiario" asp-action="Index">
+                <div class="ribbon-vwrapper card">
+                    <div class="ribbon ribbon-info ribbon-vertical-l">
+                        <i class="fas fa-user-friends"></i>
                     </div>
-                </a>
-            </div>*@
-
-    @*<div class="col-md-4 col-sm-6 col-xs-12">
-        <a href="">
-            <div class="ribbon-vwrapper card">
-                <div class="ribbon ribbon-primary ribbon-vertical-l">
-                    <i class="ti-bar-chart"></i>
+                    <h4>Funcionarios</h4>
+                    <p class="ribbon-content">Registro de Datos Basicos de un Funcionario.</p>
                 </div>
-                <h4>Reportes</h4>
-                <p class="ribbon-content">Reportes del Sub Sistema Administrativo.</p>
-            </div>
-        </a>
-    </div>*@
+            </a>
+        </div>
 
-    <div class="col-md-4 col-sm-6 col-xs-12">
-        <a asp-area="RRHH" asp-controller="DashboardRRHH" asp-action="Clasificadores">
-            <div class="ribbon-vwrapper card">
-                <div class="ribbon ribbon-success ribbon-vertical-l">
-                    <i class="ti-settings"></i>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <a asp-area="RRHH" asp-controller="DashboardRRHH" asp-action="AdministracionRRHH">
+                <div class="ribbon-vwrapper card">
+                    <div class="ribbon ribbon-success ribbon-vertical-l">
+                        <i class="ti-settings"></i>
+                    </div>
+                    <h4>Administracion de RRHH</h4>
+                    <p class="ribbon-content">Se reliza el proceso de Administracion de Recursos Humanos.</p>
                 </div>
-                <h4>Clasificadores</h4>
-                <p class="ribbon-content">Registro de Datos Basicos para el proceso del Subsistema.</p>
-            </div>
-        </a>
-    </div>
+            </a>
+        </div>
+
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <a asp-area="RRHH" asp-controller="DashboardRRHH" asp-action="ControlRRHH">
+                <div class="ribbon-vwrapper card">
+                    <div class="ribbon ribbon-warning ribbon-vertical-l">
+                        <i class="ti-zip"></i>
+                    </div>
+                    <h4>Control de RRHH</h4>
+                    <p class="ribbon-content">Se realiza el proceso de Control de Recursos Humanos.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <a asp-area="RRHH" asp-controller="DashboardRRHH" asp-action="Planillas">
+                <div class="ribbon-vwrapper card">
+                    <div class="ribbon ribbon-success ribbon-vertical-l">
+                        <i class="ti-agenda"></i>
+                    </div>
+                    <h4>Planillas</h4>
+                    <p class="ribbon-content">Se realiza el procesamiento de Planillas y Otros Pagos de RR.HH.</p>
+                </div>
+            </a>
+        </div>
+    }
+
+    @if (ApplicationUser.IsAdmin(User))
+    {
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <a asp-area="RRHH" asp-controller="DashboardRRHH" asp-action="Clasificadores">
+                <div class="ribbon-vwrapper card">
+                    <div class="ribbon ribbon-success ribbon-vertical-l">
+                        <i class="ti-settings"></i>
+                    </div>
+                    <h4>Clasificadores</h4>
+                    <p class="ribbon-content">Registro de Datos Basicos para el proceso del Subsistema.</p>
+                </div>
+            </a>
+        </div>
+    }
+
 </div>
 @*</div>*@

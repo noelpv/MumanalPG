@@ -1,0 +1,162 @@
+@using Microsoft.AspNetCore.Razor.Language.Extensions
+@using MumanalPG.Models.RRHH
+@model MumanalPG.Models.RRHH.Beneficiario
+<form asp-action="@ViewData["Action"]">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @{
+        string hasError = "has-danger";
+        string stringErrors = "";
+        if (ViewData.ModelState.IsValid)
+        {
+            hasError = "";
+        }
+        else
+        {
+            var errorList = ViewData.ModelState.Where(x => x.Value.Errors.Count > 0).ToDictionary(kvp => kvp.Key);
+            stringErrors = String.Join(",", errorList.Select(x => x.Key));
+        }
+
+    }
+    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()"/>
+    <input type="hidden" asp-for="IdBeneficiario"/>
+
+    <h4>Datos Básicos</h4>
+    <blockquote class="row">
+        <div class="col-12 col-md-6">
+            <div class="form-group m-b-40 @if (stringErrors.Contains("PrimerApellido")){@hasError}">
+                <label asp-for="PrimerApellido" class="form-control-label"></label>
+                <input asp-for="PrimerApellido" class="form-control"/>
+                <span asp-validation-for="PrimerApellido" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-group m-b-40 @if (stringErrors.Contains("SegundoApellido")){@hasError}">
+                <label asp-for="SegundoApellido" class="form-control-label"></label>
+                <input asp-for="SegundoApellido" class="form-control"/>
+                <span asp-validation-for="SegundoApellido" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-group m-b-40 @if (stringErrors.Contains("PrimerNombre")){@hasError}">
+                <label asp-for="PrimerNombre" class="form-control-label"></label>
+                <input asp-for="PrimerNombre" class="form-control"/>
+                <span asp-validation-for="PrimerNombre" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-group m-b-40 @if (stringErrors.Contains("SegundoNombre")){@hasError}">
+                <label asp-for="SegundoNombre" class="form-control-label"></label>
+                <input asp-for="SegundoNombre" class="form-control"/>
+                <span asp-validation-for="SegundoNombre" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="form-group m-b-40 @if (stringErrors.Contains("DocumentoIdentidad")){@hasError}">
+                <label asp-for="DocumentoIdentidad" class="form-control-label"></label>
+                <input asp-for="DocumentoIdentidad" class="form-control"/>
+                <span asp-validation-for="DocumentoIdentidad" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-12 col-md-2">
+            <div class="form-group m-b-40 @if (stringErrors.Contains("DepartamentoSigla")){@hasError}">
+                <label asp-for="DepartamentoSigla" class="form-control-label">&nbsp;</label>
+                <select asp-for="DepartamentoSigla" class="form-control"
+                        asp-items="@Beneficiario.SiglasDepartamentos()">
+                </select>
+                <span asp-validation-for="DepartamentoSigla" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-group m-b-40 @if (stringErrors.Contains("TelefonoCelular")){@hasError}">
+                <label asp-for="TelefonoCelular" class="form-control-label"></label>
+                <input asp-for="TelefonoCelular" class="form-control"/>
+                <span asp-validation-for="TelefonoCelular" class="text-danger"></span>
+            </div>
+        </div>
+
+    </blockquote>
+
+
+    <h4>Datos Laborales</h4>
+    <blockquote class="row">
+        <div class="col-12 col-md-6">
+            <div class="form-group m-b-40 @if (stringErrors.Contains("AreaId")){@hasError}">
+                <label asp-for="AreaId" class="form-control-label"></label>
+                <select asp-for="AreaId" class="form-control"
+                        asp-items="@(new SelectList(ViewBag.Unidades, "IdUnidadEjecutora", "Descripcion"))">
+                </select>
+                <span asp-validation-for="AreaId" class="text-danger"></span>
+            </div>
+
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="form-group m-b-40 @if (stringErrors.Contains("PuestoId")){@hasError}">
+                <label asp-for="PuestoId" class="form-control-label"></label>
+                <select asp-for="PuestoId" class="form-control">
+                    @foreach (var option in ViewBag.Puestos)
+                    {
+                        <option data-unidad="@option.IdUnidadEjecutora" value="@option.IdPuesto" data-whatever="blah">@option.Descripcion</option>
+                    }
+                </select>
+                <span asp-validation-for="PuestoId" class="text-danger"></span>
+            </div>
+        </div>
+        @if (ViewData["Action"] != "Edit")
+        {
+            <div class="col-12 col-md-6">
+                <div class="form-group m-b-40 @if (stringErrors.Contains("Username")){@hasError}">
+                    <label asp-for="Username" class="form-control-label"></label>
+                    <input asp-for="Username" class="form-control"/>
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group m-b-40 @if (stringErrors.Contains("Email")){@hasError}">
+                    <label asp-for="Email" class="form-control-label"></label>
+                    <input asp-for="Email" class="form-control"/>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group m-b-40 @if (stringErrors.Contains("RolUsuario")){@hasError}">
+                    <label asp-for="RolUsuario" class="form-control-label"></label>
+                    <select asp-for="RolUsuario" class="form-control"
+                            asp-items="@(new SelectList(ViewBag.Roles, "Id", "Name"))">
+                    </select>
+                    <span asp-validation-for="RolUsuario" class="text-danger"></span>
+                </div>
+            </div>
+        }
+        else
+        {
+            <input type="hidden" asp-for="Username"/>
+            <input type="hidden" asp-for="Email"/>
+        }
+    </blockquote>
+    @if (ViewData["Action"] != "Edit")
+    {
+        <div class="alert alert-info">
+            <i class="text-input"><b>Nota.-</b> El password por defecto del usuario creado es "User123*". Al ingresar por primera vez se le pedira cambiar el password.</i>
+        </div>
+    }
+
+
+</form>
+<script>
+    $(function() {
+        $('select').selectize();
+        let item;
+        let puestoSelectize = $('#PuestoId')[0].selectize;
+        $('#AreaId').change(function() {
+            let me = $(this);
+            puestoSelectize.clearOptions();
+            $.get("@Url.Action("GetPuestos")",{unidadId: me.val()}, function(data, status) {
+                $.each(data.response, function() {
+                    item = $(this)[0];
+                    puestoSelectize.addOption({value: item.idPuesto, text: item.descripcion});
+                    puestoSelectize.refreshOptions();
+                });
+            });
+        });
+    })
+</script>
