@@ -173,18 +173,19 @@ namespace MumanalPG.Areas
 
                 var funcionarios = DB.RRHH_Beneficiario
                     .Include(b => b.Puesto)
-                    .Where(b => b.PuestoId > 0)
-                    .Where(b => b.Puesto.IdUnidadEjecutora == unidadEjecutora.IdUnidadEjecutora && 
-                                b.IdBeneficiario != currentFunId)
-                    .OrderBy(b => b.Denominacion).ToList();
+                    .Where(b => b.PuestoId > 1 && b.IdBeneficiario != currentFunId)
+                    .Where(b => (b.IdEstadoRegistro != Constantes.Anulado || b.IdEstadoRegistro == null))
+                    .Where(b => b.Puesto.IdUnidadEjecutora == unidadEjecutora.IdUnidadEjecutora)
+                    .OrderBy(b => b.Denominacion)
+                    .Select(c => new {Id=c.IdBeneficiario, Nombre = c.Denominacion, cargo = c.Puesto.Descripcion}).ToList();
 
                 foreach (var f in funcionarios)
                 {
                     AreasFunTreeDTO fun = new AreasFunTreeDTO();
                     fun.areaId = unidadEjecutora.IdUnidadEjecutora;
-                    fun.funId = f.IdBeneficiario;
-                    fun.id = $"fun_{f.IdBeneficiario}";
-                    fun.text = $"<span class='small jstree-text'>{f.Denominacion}<div class='ml-5'><b>({f.Puesto.Descripcion})</b></div></span>";
+                    fun.funId = f.Id;
+                    fun.id = $"fun_{f.Id}";
+                    fun.text = $"<span class='small jstree-text text-uppercase'>{f.Nombre}<div class='ml-5'><b>({f.cargo})</b></div></span>";
                     fun.parent = area.id;
                     fun.icon = "/lib/theme-elegant/img/users/user-male-iconx24.png";
                     areas.Add(fun);

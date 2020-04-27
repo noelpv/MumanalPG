@@ -127,6 +127,7 @@ namespace MumanalPG.Areas.RRHH.Controllers
                 item.EsDeudor = "NO";
                 item.EsHabilitado = false;
                 item.FechaRegistro = DateTime.Now;
+                item.IdEstadoRegistro = Constantes.Registrado;
                 item.Denominacion = $"{item.PrimerApellido} {item.SegundoApellido} {item.PrimerNombre} {item.SegundoNombre}";
                 DB.Add(item);
                 await DB.SaveChangesAsync();
