@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using MumanalPG.Data;
+using MumanalPG.Models;
 using MumanalPG.Utility;
 
 namespace MumanalPG.Areas.Identity.Pages.Account
@@ -19,11 +21,13 @@ namespace MumanalPG.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        protected ApplicationDbContext DB;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, ApplicationDbContext db)
         {
             _signInManager = signInManager;
             _logger = logger;
+            DB = db;
         }
 
         [BindProperty]
@@ -102,7 +106,19 @@ namespace MumanalPG.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("Usuario conectado.");
-                    return LocalRedirect(returnUrl);
+                    
+                    var user = await _signInManager.UserManager.FindByNameAsync(Input.Email);
+
+                    ApplicationUser currentUser = DB.ApplicationUser
+                    .FirstOrDefault(u => u.Id == user.Id);
+                    if (currentUser?.LastChangedPassword == null)
+                    {
+                        return RedirectToPage("./Manage/ChangePassword", new { ReturnUrl = returnUrl });
+                    }
+                    else
+                    {
+                        return LocalRedirect(returnUrl);   
+                    }
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -113,6 +129,7 @@ namespace MumanalPG.Areas.Identity.Pages.Account
                     _logger.LogWarning("Cuenta de Usuario bloqueada.");
                     return RedirectToPage("./Lockout");
                 }
+                
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Nombre de Usuario o contraseña inválidos.");

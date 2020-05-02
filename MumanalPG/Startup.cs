@@ -43,14 +43,15 @@ namespace MumanalPG
 
 			services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 
-			services.AddIdentity<IdentityUser, IdentityRole>()
-				.AddEntityFrameworkStores<ApplicationDbContext>()
+			services.AddIdentity<IdentityUser, IdentityRole>(options => 
+			{
+				options.Password.RequireLowercase = false;
+				options.Password.RequireUppercase = false;
+				options.Password.RequireNonAlphanumeric = false;
+				options.Password.RequireDigit = false;
+			}).AddEntityFrameworkStores<ApplicationDbContext>()
 				.AddDefaultUI()
 				.AddDefaultTokenProviders();
-			//services.AddIdentity<MumanalPG.Models.ApplicationUser, IdentityRole>()
-			//	.AddEntityFrameworkStores<ApplicationDbContext>()
-			//	.AddDefaultUI()
-			//	.AddDefaultTokenProviders();
 
 			services.AddScoped<IDbInitializer, DbInitializer>();
 
@@ -70,7 +71,7 @@ namespace MumanalPG
 
 			services.AddDistributedMemoryCache();
 
-        }
+		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IDbInitializer dbInitializer)

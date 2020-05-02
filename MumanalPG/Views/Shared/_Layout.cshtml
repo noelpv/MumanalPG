@@ -86,7 +86,6 @@
                 <!-- ============================================================== -->
                 <!-- Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
-
                 <div class="card p-0">
                     <div class="card-body pt-0 pb-0">
                         <div class="row page-titles pt-0 pb-0">
@@ -111,6 +110,8 @@
                 <!-- ============================================================== -->
                 <!-- End Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
+                @* <partial name="_StatusMessage"/> *@
+                @* @Vereyon.Web.FlashMessageHtmlHelper.RenderFlashMessages(Html) *@
                 <div class="card">
                     <div class="card-body">
                         @RenderBody()
@@ -176,10 +177,14 @@
 
 
 @RenderSection("Scripts", required: false)
+@{
+    string msgType = (string)TempData["FlashMsgType"];
+    string msg = (string) TempData["FlashMsg"];
+}
 <script>
     $(document).ready(function() {
-        var type = '@TempData["FlashMsgType"]';
-        var message = '@TempData["FlashMsg"]';
+        var type = '@msgType';
+        var message = '@msg';
         console.log(message);
         $.toastMsg(type, message);
     });

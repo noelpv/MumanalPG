@@ -3,12 +3,16 @@
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
 <ul class="list-group">
-    <li class="list-group-item"><a asp-page="./Index">Profile</a></li>
-    <li class="list-group-item"><a id="change-password" asp-page="./ChangePassword">Password</a></li>
-    @if (hasExternalLogins)
-    {
-        <li class="list-group-item"><a id="external-login" asp-page="./ExternalLogins">External logins</a></li>
-    }
-    <li class="list-group-item"><a asp-page="./TwoFactorAuthentication">Two-factor authentication</a></li>
-    <li class="list-group-item"><a asp-page="./PersonalData">Personal data</a></li>
+    <li class="list-group-item list-group-item-action">
+        <a asp-page="./Index" class="text-dark waves-effect waves-dark">Perfil de Usuario</a>
+    </li>
+    <li class="list-group-item list-group-item-action">
+        <a id="change-password" asp-page="./ChangePassword" class="text-dark waves-effect waves-dark">Contraseña</a>
+    </li>
+@*      @if (hasExternalLogins) *@
+@*      { *@
+@*          <li class="list-group-item"><a id="external-login" asp-page="./ExternalLogins">External logins</a></li> *@
+@*      } *@
+@*      <li class="list-group-item"><a asp-page="./TwoFactorAuthentication">Two-factor authentication</a></li> *@
+@*      <li class="list-group-item"><a asp-page="./PersonalData">Personal data</a></li> *@
 </ul>

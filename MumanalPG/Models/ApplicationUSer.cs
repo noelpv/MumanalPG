@@ -22,6 +22,8 @@ namespace MumanalPG.Models
         [ForeignKey("AspNetUserId")]
         public Beneficiario Funcionario { get; set; }
 
+        public DateTime ? LastChangedPassword { get; set; }
+
         public static bool IsSuperAdmin(ClaimsPrincipal User)
         {
             return User.IsInRole(SD.SuperAdminEndUser);
