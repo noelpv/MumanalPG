@@ -28,6 +28,7 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             return View();
         }
 
+        [Authorize(Roles = SD.AdminAccess)]
         [Breadcrumb("Clasificadores", FromAction = "Index")]
         public IActionResult Clasificadores()
         {

@@ -20,6 +20,7 @@ namespace MumanalPG.Utility
 
         public const string BeneficarioAccess = AdminEndUser + ", " + SuperAdminEndUser + ", " + RecursosHumanos + ", " + Prestaciones;
         public const string RecursosHumanosAccess = AdminEndUser + ", " + SuperAdminEndUser + ", " + RecursosHumanos;
+        public const string AdminAccess = AdminEndUser + ", " + SuperAdminEndUser;
         
         public static String BytesToString(long byteCount)
         {

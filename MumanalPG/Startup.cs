@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using ReflectionIT.Mvc.Paging;
+using Rotativa.AspNetCore;
 using SmartBreadcrumbs;
 
 namespace MumanalPG
@@ -114,7 +115,7 @@ namespace MumanalPG
 	        
 	        // Configuramos Rotativa indicándole el Path RELATIVO donde se
 	        // encuentran los archivos de la herramienta wkhtmltopdf.
-	        // Rotativa.AspNetCore.RotativaConfiguration.Setup(env, "..\\Rotativa\\Windows\\");
-		}
+	        Rotativa.AspNetCore.RotativaConfiguration.Setup(env, "..\\Rotativa\\Windows\\");
+        }
 	}
 }

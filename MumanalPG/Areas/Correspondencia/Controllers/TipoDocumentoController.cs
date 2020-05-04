@@ -15,8 +15,7 @@ using SmartBreadcrumbs;
 
 namespace MumanalPG.Areas.Correspondencia.Controllers
 {
-    //[Authorize(Roles = SD.SuperAdminEndUser)]
-    [Authorize]
+    [Authorize(Roles = SD.AdminAccess)]
     [Area("Correspondencia")]
     public class TipoDocumentoController : BaseController
     {        
