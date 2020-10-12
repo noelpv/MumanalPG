@@ -1,69 +1,77 @@
-﻿@model IEnumerable<MumanalPG.Models.ApplicationUser>
+@model ReflectionIT.Mvc.Paging.PagingList<MumanalPG.Models.ApplicationUser>
+@using MumanalPG.Utility
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging
 @{
     ViewData["Title"] = "Usuarios";
+    OptionPartial options = new OptionPartial();
+    string intro_msg_search = "Puede buscar un usuario introduciendo el nombre en este campo, " +
+                              "luego presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
+                              "<i class='fas fa-search'></i></button>";
 }
-
-@*<br /><br />*@
-
-<div class="row">
-    <div class="col-6">
-        <h2 class="text-info"> Usuarios</h2>
+<!-- <div class="row">
+    <div class="col-12 text-right">
+        <a asp-action="Create" class="btn btn-info btn-sm new-btn" data-toggle="tooltip" title="Nuevo Usuario"
+           data-modal="link", data-redirect="@Url.Action("Index", new{@a=Constantes.Creado})" 
+           data-intro="Click, en este botón para crear un nuevo usuario">
+            <i class="fas fa-plus"></i><span class="d-none d-sm-inline">&nbsp; Nuevo </span>
+        </a>
     </div>
-    <div class="col-6 text-right">
-        <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-info"><i class="fas fa-plus"></i>&nbsp; Nuevo Usuario</a>
+</div> -->
+<div class="row mt-3">
+    <div class="col-12">
+        <form method="get" class="form form-search" data-intro="@intro_msg_search">
+            <div class="input-group mb-3">
+                <input name="filter" class="form-control search" placeholder="Buscar por Nombre ..."
+                       value="@Model.RouteValue["Filter"]"/>
+                <button type="submit" class="btn btn-secondary input-group-append">
+                    <span class="fas fa-search" aria-hidden="true"></span>
+                </button>
+            </div>            
+        </form>
     </div>
 </div>
 
-<br />
-<div>
-    <table class="table table-striped border">
-        <tr class="table-info">
+<div class="row table-responsive mt-4">
+    <table class="table table-hover table-striped">
+        <thead>
+        <tr>
             <th>
-                Nombre
-                @*@Html.DisplayNameFor(m => m.Name)*@
+                @Html.SortableHeaderFor(model => model.UserName)
             </th>
             <th>
-                Usuario/Correo Electrónico
-                @*@Html.DisplayNameFor(m => m.Email)*@
+                @Html.SortableHeaderFor(model => model.Name)
             </th>
-            <th>
-                Telefono
-                @*@Html.DisplayNameFor(m => m.PhoneNumber)*@
-            </th>
-            <th>
-                Desabilitado
-            </th>
-            <th></th>
         </tr>
-
+        </thead>
+        @{int index = 0;}
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(m => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(m => item.PhoneNumber)
-            </td>
-            <td>
-                @if(item.LockoutEnd!=null && item.LockoutEnd>DateTime.Now)
-                {
-                <label>Desabilitado</label>
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" title="Detalle" 
+                       data-modal="link" data-modal-read="True">
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                 
+                @{
+                    options.Id = item.Id;
+                    options.ShowIntroMessages = index == 0 ? true : false;
+                    index++;
+                    
                 }
-            </td>
-            <td>
-                @if (item.LockoutEnd == null || item.LockoutEnd < DateTime.Now)
-                {
-                    <partial name="_TableButtonPartial" model="item.Id"/>
-                }
-            </td>
-           
-        </tr>
 
+                <partial name="_TableOptionsPartial" model="options"/>
+            </tr>
         }
     </table>
 </div>
-
+<div class="row justify-content-center">
+    <nav>
+        <vc:pager paging-list="@Model"/>
+    </nav>
+</div>

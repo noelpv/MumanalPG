@@ -1,46 +1,6 @@
-﻿@model MumanalPG.Models.ApplicationUser
-@{
-    ViewData["Title"] = "Edit";
-}
-
-<br />
-<h2 class="text-info">Borrar/Disabilitar Admin User</h2>
-
-<form method="post">
-    <div class="p-4 border rounded">
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Name"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Name" readonly class="form-control" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="Email"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Email" readonly class="form-control" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="PhoneNumber"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="PhoneNumber" readonly class="form-control" />
-            </div>
-        </div>
-        <br />
-        <div class="form-group">
-            <input type="submit" class="btn btn-danger" asp-route-id="@Model.Id" value="Delete" />
-            <a asp-action="Index" class="btn btn-success">Regreso a Lista</a>
-        </div>
-    </div>
+@model MumanalPG.Models.ApplicationUser
+<partial name="_MensajeEliminar"/>
+<form asp-action="Delete">
+    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+    <input type="hidden" asp-for="Id"/>
 </form>
-
-@section Scripts{
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
-

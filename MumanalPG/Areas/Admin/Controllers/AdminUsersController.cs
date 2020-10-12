@@ -1,128 +1,173 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 using MumanalPG.Data;
 using MumanalPG.Models;
 using MumanalPG.Utility;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
-using MumanalPG.Models.Seguridad;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using ReflectionIT.Mvc.Paging;
+using SmartBreadcrumbs;
 
 namespace MumanalPG.Areas.Admin.Controllers
 {
-    [Authorize(Roles = SD.SuperAdminEndUser)]  // aqui se limita aun rol x
+    //[Authorize(Roles = SD.SuperAdminEndUser)]
+    [Authorize]
     [Area("Admin")]
-	public class AdminUsersController : Controller
-    {
-
-        private readonly ApplicationDbContext _db;
-		//UserManager<ApplicationUser> _userManager;
-		//RoleManager<IdentityRole> _roleManager;
-		//UsuarioRole _usuarioRole;
-		//public List<SelectListItem> usuarioRole;
-
-		//public AdminUsersController(ApplicationDbContext db, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
-		public AdminUsersController(ApplicationDbContext db)
-		{
-			_db = db;
-			//_userManager = userManager;
-			//_roleManager = roleManager;
-			//_usuarioRole = new UsuarioRole();
-			//usuarioRole = new List<SelectListItem>();
+    public class AdminUsersController : BaseController
+    {        
+        
+		public AdminUsersController(ApplicationDbContext db, UserManager<IdentityUser> userManager): base(db, userManager)
+        {
+            
         }
 
-        public IActionResult Index()
-        {
-            return View(_db.ApplicationUser.ToList());
+        // GET: Admin/AdminUsers
+        // [Breadcrumb("Tipos de Transaccion", FromController = "DashboardAdmin", FromAction = "Clasificadores")]
+        public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Name", string a = "")
+        { 
+            var consulta = DB.ApplicationUser.AsNoTracking().AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filter))
+			{
+                consulta = consulta.Where(m => EF.Functions.ILike(m.Name, $"%{filter}%"));
+            }
+            var resp = await PagingList.CreateAsync(consulta, Constantes.TamanoPaginacion, page, sortExpression, "Name");
+            resp.RouteValue = new RouteValueDictionary {{ "filter", filter}};
+            ShowFlash(a);
+            return View(resp);
         }
 
-		//public async Task<IActionResult> Index2()
-		//{
-		//	var ID = "";
-		//	List<Usuario> usuario = new List<Usuario>();
-		//	var appUsuario = _db.ApplicationUser.ToList();
-		//	foreach (var Data in appUsuario)
-		//	{
-		//		ID = Data.Id;
-		//		usuarioRole = await _usuarioRole.GetRole(_userManager, _roleManager, ID);
-		//	}
-
-		//	return View(usuario.ToList());
-		//}
-
-		//Get Edit
-		public async Task<IActionResult> Edit(string id)
+        // GET: Admin/AdminUsers/Details/5
+        public async Task<IActionResult> Details(String id)
         {
-            if(id==null || id.Trim().Length==0)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var userFromDb = await _db.ApplicationUser.FindAsync(id);
-            if(userFromDb==null)
+            var item = await DB.ApplicationUser.FirstOrDefaultAsync(m => m.Id  == id);
+            if (item == null)
             {
                 return NotFound();
             }
 
-            return View(userFromDb);
+            return PartialView("Details",item);
         }
 
+        // GET: Admin/AdminUsers/Create
+        public IActionResult Create()
+        {
+            var model = new Models.ApplicationUser();
+            return PartialView("Create", model);
+        }
 
-        //Post Edit
+        // POST: Admin/AdminUsers/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit (string id, ApplicationUser applicationUser)
+        public async Task<IActionResult> Create(Models.ApplicationUser item)
         {
-            if(id!=applicationUser.Id)
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                // ApplicationUser currentUser = await GetCurrentUser();
+                // item.IdUsuario = currentUser.AspNetUserId;
+                // item.IdEstadoRegistro = 1;
+                // item.FechaRegistro = DateTime.Now;
+                DB.Add(item);
+                await DB.SaveChangesAsync();
+                
             }
-
-            if(ModelState.IsValid)
-            {
-                ApplicationUser userFromDb = _db.ApplicationUser.Where(u => u.Id == id).FirstOrDefault();
-                userFromDb.Name = applicationUser.Name;
-                userFromDb.PhoneNumber = applicationUser.PhoneNumber;
-
-                await _db.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(applicationUser);
+            return PartialView("Create",item);
         }
 
-
-        //Get Delete
-        public async Task<IActionResult> Delete(string id)
+        // GET: Admin/AdminUsers/Edit/5
+        public async Task<IActionResult> Edit(String id)
         {
-            if (id == null || id.Trim().Length == 0)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var userFromDb = await _db.ApplicationUser.FindAsync(id);
-            if (userFromDb == null)
+            var item = await DB.ApplicationUser.FindAsync(id);
+            if (item == null)
             {
                 return NotFound();
             }
-
-            return View(userFromDb);
+            return PartialView( "Edit", item);
         }
 
+        // POST: Admin/AdminUsers/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(String id, Models.ApplicationUser item)
+        {
+            if (id != item.Id)
+            {
+                return NotFound();
+            }
 
-        //Post Delete
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // ApplicationUser currentUser = await GetCurrentUser();
+                    // item.IdUsuario = currentUser.AspNetUserId;
+                    // item.IdEstadoRegistro = 1;
+                    // item.FechaRegistro = DateTime.Now;
+                    DB.Update(item);
+                    await DB.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ItemExists(item.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                
+            }
+            return PartialView("Edit", item);
+        }
+
+        // GET: Admin/AdminUsers/Delete/5
+        public async Task<IActionResult> Delete(String id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var item = await DB.ApplicationUser.FirstOrDefaultAsync(m => m.Id == id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            return PartialView("Delete",item);
+        }
+
+        // POST: Admin/AdminUsers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeletePOST(string id)
+        public async Task<IActionResult> DeleteConfirmed(String id)
         {
-                ApplicationUser userFromDb = _db.ApplicationUser.Where(u => u.Id == id).FirstOrDefault();
-                userFromDb.LockoutEnd= DateTime.Now.AddYears(1000);
-
-                await _db.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+            var item = await DB.ApplicationUser.FindAsync(id);
+            item.LockoutEnd = DateTime.Now.AddYears(1000);
+            DB.ApplicationUser.Update(item);
+            await DB.SaveChangesAsync();
+            return PartialView("Delete",item);
         }
-	}
+
+        private bool ItemExists(String id)
+        {
+            return DB.ApplicationUser.Any(e => e.Id == id);
+        }
+    }
 }
