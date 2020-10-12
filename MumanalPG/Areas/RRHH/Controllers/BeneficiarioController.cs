@@ -134,27 +134,13 @@ namespace MumanalPG.Areas.RRHH.Controllers
                 var ben = DB.RRHH_Beneficiario.FirstOrDefault(b => b.DocumentoIdentidad == item.DocumentoIdentidad);
                 if (ben != null)
                 {
-                    var userCreated = _userManager.CreateAsync(new ApplicationUser
-                    {
-                        UserName = item.Username,
-                        Email = item.Email,
-                        Name = item.Denominacion,
-                        EmailConfirmed = true,
-                        AspNetUserId = ben.IdBeneficiario
-                    }, "User123*").GetAwaiter().GetResult();
+                    var user = new ApplicationUser { UserName = item.Username, Email = item.Email, Name = item.Denominacion, EmailConfirmed = true, AspNetUserId = ben.IdBeneficiario };
+                    var userCreated = await _userManager.CreateAsync(user, "User123*"); // <- Creacion de Usuario
                 
                     if (userCreated.Succeeded)
                     {
-                        var user =  DB.Users.FirstOrDefault(u => u.UserName == item.Username);
-
-                        if (user != null)
-                        {
-                            var userRole = new IdentityUserRole<string>();
-                            userRole.UserId = user.Id;
-                            userRole.RoleId = item.RolUsuario;
-                            DB.UserRoles.Add(userRole);
-                            await DB.SaveChangesAsync();
-                        }
+                        var role_name = DB.Roles.FirstOrDefault(i => i.Id == item.RolUsuario).ToString();
+                        await _userManager.AddToRoleAsync(user, role_name); // <- Asignacion de rol
                     }
                 }
                 SetFlashSuccess("Registro creado satisfactoriamente");
