@@ -1,113 +1,109 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using MumanalPG.Data;
 using MumanalPG.Models;
+using MumanalPG.Utility;
+using ReflectionIT.Mvc.Paging;
+using SmartBreadcrumbs;
 
-namespace MumanalPG.Areas.Admin
+namespace MumanalPG.Areas.Admin.Controllers
 {
+    //[Authorize(Roles = SD.SuperAdminEndUser)]
+    [Authorize]
     [Area("Admin")]
-    public class RoleViewModelController : Controller
+    public class RoleViewModelController : BaseController
     {
-		private RoleManager<IdentityRole> roleManagerM;
-
-        private readonly ApplicationDbContext _context;
-
-        public RoleViewModelController(ApplicationDbContext context, UserManager<ApplicationUser> usermanager, RoleManager<IdentityRole> rolemanager)
+        
+		public RoleViewModelController(ApplicationDbContext db, UserManager<IdentityUser> userManager): base(db, userManager)
         {
-            _context = context;
-			roleManagerM = rolemanager;
-        }
-
-        public IActionResult GetAllRoles()
-        {
-            var roles = roleManagerM.Roles.ToList();
-            var vm = new List<RoleViewModel>();
-            roles.ForEach(item => vm.Add(
-                new RoleViewModel()
-                {
-                    Id = item.Id,
-                    Name = item.Name
-                }
-            ));
-            return View(vm);
+            
         }
 
         // GET: Admin/RoleViewModel
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.RoleViewModel.ToListAsync());
+        // [Breadcrumb("Tipos de Transaccion", FromController = "DashboardFinanzas", FromAction = "Clasificadores")]
+        public async Task<IActionResult> Index(string filter, int page = 1, string sortExpression = "Name", string a = "")
+        { 
+            var consulta = DB.Roles.AsNoTracking().AsQueryable();
+            if (!string.IsNullOrWhiteSpace(filter))
+			{
+                consulta = consulta.Where(m => EF.Functions.ILike(m.Name, $"%{filter}%"));
+            }
+            var resp = await PagingList.CreateAsync(consulta, Constantes.TamanoPaginacion, page, sortExpression, "Name");
+            resp.RouteValue = new RouteValueDictionary {{ "filter", filter}};
+            ShowFlash(a);
+            return View(resp);
         }
 
         // GET: Admin/RoleViewModel/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(String id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var roleViewModel = await _context.RoleViewModel
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (roleViewModel == null)
+            var item = await DB.Roles.FirstOrDefaultAsync(m => m.Id == id);
+            if (item == null)
             {
                 return NotFound();
             }
 
-            return View(roleViewModel);
+            return PartialView("Details",item);
         }
 
         // GET: Admin/RoleViewModel/Create
         public IActionResult Create()
         {
-            return View();
+            var model = new IdentityRole();
+            return PartialView("Create", model);
         }
 
         // POST: Admin/RoleViewModel/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] RoleViewModel roleViewModel)
+        public async Task<IActionResult> Create(IdentityRole item)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(roleViewModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //ApplicationUser currentUser = await GetCurrentUser();
+                //item.IdUsuario = currentUser.AspNetUserId;
+                //item.IdEstadoRegistro = 1;
+                //item.FechaRegistro = DateTime.Now;
+                DB.Add(item);
+                await DB.SaveChangesAsync();
+                
             }
-            return View(roleViewModel);
+            return PartialView("Create",item);
         }
 
         // GET: Admin/RoleViewModel/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(String id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var roleViewModel = await _context.RoleViewModel.FindAsync(id);
-            if (roleViewModel == null)
+            var item = await DB.Roles.FindAsync(id);
+            if (item == null)
             {
                 return NotFound();
             }
-            return View(roleViewModel);
+            return PartialView( "Edit", item);
         }
 
         // POST: Admin/RoleViewModel/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Name")] RoleViewModel roleViewModel)
+        public async Task<IActionResult> Edit(String id, IdentityRole item)
         {
-            if (id != roleViewModel.Id)
+            if (id != item.Id)
             {
                 return NotFound();
             }
@@ -116,12 +112,16 @@ namespace MumanalPG.Areas.Admin
             {
                 try
                 {
-                    _context.Update(roleViewModel);
-                    await _context.SaveChangesAsync();
+                    //ApplicationUser currentUser = await GetCurrentUser();
+                    //item.IdUsuario = currentUser.AspNetUserId;
+                    //item.IdEstadoRegistro = 1;
+                    //item.FechaRegistro = DateTime.Now;
+                    DB.Update(item);
+                    await DB.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RoleViewModelExists(roleViewModel.Id))
+                    if (!ItemExists(item.Id))
                     {
                         return NotFound();
                     }
@@ -130,43 +130,42 @@ namespace MumanalPG.Areas.Admin
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                
             }
-            return View(roleViewModel);
+            return PartialView("Edit", item);
         }
 
         // GET: Admin/RoleViewModel/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(String id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var roleViewModel = await _context.RoleViewModel
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (roleViewModel == null)
+            var item = await DB.Roles.FirstOrDefaultAsync(m => m.Id == id);
+            if (item == null)
             {
                 return NotFound();
             }
 
-            return View(roleViewModel);
+            return PartialView("Delete",item);
         }
 
         // POST: Admin/RoleViewModel/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(String id)
         {
-            var roleViewModel = await _context.RoleViewModel.FindAsync(id);
-            _context.RoleViewModel.Remove(roleViewModel);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var item = await DB.Roles.FindAsync(id);
+            DB.Roles.Remove(item);
+            await DB.SaveChangesAsync();
+            return PartialView("Delete",item);
         }
 
-        private bool RoleViewModelExists(string id)
+        private bool ItemExists(String id)
         {
-            return _context.RoleViewModel.Any(e => e.Id == id);
+            return DB.Roles.Any(e => e.Id == id);
         }
     }
 }
