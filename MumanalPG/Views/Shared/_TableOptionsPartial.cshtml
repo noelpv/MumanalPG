@@ -26,7 +26,7 @@
                 <i class="ti-pencil"></i>
             </a>
             <a type="button" class="btn btn-secondary btn-outline-secondary waves-effect waves-light" data-toggle="tooltip" title="Detalle" asp-action="Details" asp-route-id="@Model.Id"
-               data-modal="link" data-modal-read="True" data-intro="@msg_detalis">
+               data-modal="link" data-modal-read="True" data-modal-print="@Model.CanPrint" data-modal-url-print="@Model.UrlPrint" data-intro="@msg_detalis">
                 <i class="ti-eye"></i>
             </a>
             <a type="button" class="btn btn-outline-secondary waves-effect waves-light"

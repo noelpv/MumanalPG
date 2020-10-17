@@ -8,5 +8,8 @@ namespace MumanalPG.Models
         public string IntroMsgDelete { get; set; }
         public bool ShowIntroMessages { get; set; }
         public string CustomBtn { get; set; }
+
+        public bool CanPrint { get; set; }
+        public string UrlPrint { get; set; }
     }
 }

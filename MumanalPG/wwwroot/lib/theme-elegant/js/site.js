@@ -10,7 +10,10 @@ $(function() {
         var dataRedirect = $(this).data('redirect');
         var onlyRead = $(this).data('modal-read') === 'True';
         var modalDelete = $(this).data('modal-delete') === 'True';
+        var modalPrint = $(this).data('modal-print') === 'True';
+        var urlPrint = $(this).data('modal-url-print');
         var btnSave =  $('#'+ modal_type + '-save');
+        var btnPrint =  $('#'+ modal_type + '-print');
         var size = $(this).data('modal-size');
         $('#' + modal_type).find('.modal-dialog').first().removeClass('modal-xl');
         if(size){
@@ -21,6 +24,13 @@ $(function() {
            btnSave.hide();
         }else {
             btnSave.show(); 
+        }
+        
+        if (modalPrint && urlPrint) {
+            btnPrint.show();
+            btnPrint.attr('href', urlPrint);
+        } else {
+            btnPrint.hide();
         }
         
         if(modalDelete) {

@@ -12,6 +12,8 @@ using MumanalPG.Models;
 using MumanalPG.Models.Correspondencia;
 using MumanalPG.Utility;
 using ReflectionIT.Mvc.Paging;
+using Rotativa.AspNetCore;
+using Rotativa.AspNetCore.Options;
 using SmartBreadcrumbs;
 
 namespace MumanalPG.Areas.Correspondencia.Controllers
@@ -102,6 +104,39 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
 
             return PartialView("_Details",item);
         }
+        
+        public async Task<IActionResult> PrintDocument(Int32? id)
+        {
+            if (id == null)
+            {
+                return PartialView("_NoEncontrado");
+            }
+
+            var item = await DB.CorrespondenciaDocumento
+                .Include(m => m.Tipo)
+                .Include(m => m.FuncionarioOrigen)
+                .Include(m => m.FuncionarioDestino)
+                .Include(m => m.FuncionarioVia)
+                .Include(m => m.FuncionarioCC)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (item == null)
+            {
+                return PartialView("_NoEncontrado");
+            }
+
+//            return PartialView("_Details",item);
+            
+            return new ViewAsPdf("_DocumentPDF", item)
+            {
+                PageMargins = new Margins(15, 10, 12, 10),
+                PageSize = Size.Letter,
+                CustomSwitches =  
+                    "--footer-left \" © Sistema Integrado Versión 1.0\" --footer-center \" Página: [page]\" --footer-right \"  Documento generado el: " +  
+                    DateTime.Now.ToString("dd/MM/yyyy HH:mm") + "\"" +  
+                    " --footer-line --footer-font-size \"7\" --footer-spacing 1 --footer-font-name \"Segoe UI\""  
+            };
+        }
+
 
         // GET: Correspondencia/Documentos/Create
         public async Task<IActionResult> Create(Int16 type, int? hrdId, string redirect = null)

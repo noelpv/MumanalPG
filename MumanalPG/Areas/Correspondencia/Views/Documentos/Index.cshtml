@@ -106,6 +106,8 @@
                                             data-toggle='tooltip' class='btn btn-secondary btn-outline-secondary waves-effect waves-light show-loader' 
                                             title='Crear Hoja de Ruta'><i class='ti-share'></i></a>";
                     options.Id = item.Id;
+                    options.CanPrint = true;
+                    options.UrlPrint = Url.Action("PrintDocument", new {id = item.Id});
                     options.ShowIntroMessages = index == 0 ? true : false;
                     index++;
                     

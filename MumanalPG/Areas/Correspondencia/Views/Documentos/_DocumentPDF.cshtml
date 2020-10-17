@@ -1,0 +1,60 @@
+@model MumanalPG.Models.Correspondencia.Documento
+@using System.Globalization;
+@{ Layout = "~/Views/Shared/_PDFLayout.cshtml";}
+
+<div class="row justify-content-center">
+    <div class="col-12">
+        <div class="card border-info">
+            <div class="card-body">
+                <div class="text-center">
+                    <h2 class="card-title text-uppercase">@Model.Tipo.Nombre</h2>
+                    <h5>@Model.Cite</h5>
+                </div>
+
+                <table class="text-uppercase mt-5" style="line-height: 1.2;">
+                    <tr>
+                        <td width="100"></td>
+                        <td class="font-bold text-right p-3"><b><label asp-for="@Model.FuncionarioDestinoId"></label>:</b></td>
+                        <td>
+                            <span class="ml-5">@Model.FuncionarioDestino.Denominacion</span><br/>
+                            <span class="ml-5 font-bold"><b>@Model.CargoFuncionarioDestino</b></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td class="font-bold text-right p-3"><b><label asp-for="@Model.FuncionarioOrigenId"></label>:</b></td>
+                        <td>
+                            <span class="ml-5">@Model.FuncionarioOrigen.Denominacion</span><br/>
+                            <span class="ml-5 font-bold"><b>@Model.CargoFuncionarioOrigen</b></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td class="font-bold text-right p-2"><b><label asp-for="@Model.Referencia"></label>:</b></td>
+                        <td><span class="ml-5">@Model.Referencia</span> </td>
+                    </tr>
+                    
+                    <tr>
+                        <td></td>
+                        <td class="font-bold text-right p-2"><b><label asp-for="@Model.Fecha"></label>:</b></td>
+                        <td>
+                            <span class="ml-5 text-capitalize">
+                                @Model.Fecha.ToString("dddd, dd 'de' MMMM  'de' yyyy", new CultureInfo("es-ES"))
+                            </span> </td>
+                    </tr>
+                </table>
+                <hr/>
+               
+               
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container content-large">
+    <div class="row justify-content-center">
+        <div class="col-11">
+            @Html.Raw(@Model.Contenido)
+        </div>
+    </div>
+        
+</div>
