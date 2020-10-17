@@ -13,20 +13,7 @@
 }
 <div class="hoja-ruta">
     
-    <div class="row mb-2">
-        <div class=" col-1">
-            <img height="65px" src="@Context.Request.PathBase/lib/theme-elegant/img/logo-80.png" alt="homepage" class="light-logo"/>
-        </div>
-        <div class="col-10 text-center">
-            <h3 class="mb-0">CORRESPONDENCIA @Model.hojaRuta.TipoHojaRuta</h3>
-            <h5 class="mb-0">@Model.hojaRuta.CiteHojaRuta</h5>
-            @if (Model.hojaRuta.CiteUE != null && Model.hojaRuta.TipoHojaRuta == Constantes.HojaRutaInterna)
-            {
-                <h6>@Model.hojaRuta.CiteUE</h6>
-            }
-            
-        </div>
-    </div>
+    <partial name="_Heading" model="@Model" />
     @{
         string bg_class = "bg-info";
         switch (Model.hojaRuta.Prioridad)
@@ -76,6 +63,7 @@
          if (i % 3 == 0 && i > 1)
          {
              <div class="page-break"></div>
+             <partial name="_Heading" model="@Model" />
              <div class="row @bg_class small">
                  <div class="col col-1 text-center">
                      <label>ASUNTO: </label>
