@@ -165,6 +165,33 @@ namespace MumanalPG.Areas.Admin.Controllers
             return PartialView("Delete",item);
         }
 
+        // Restaurar contraseña por defecto
+        public async Task<IActionResult> Restore(String id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var item = await DB.ApplicationUser.FirstOrDefaultAsync(m => m.Id == id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            return PartialView("Restore",item);
+        }
+
+        [HttpPost, ActionName("Restore")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RestoreConfirmed(String id)
+        {
+            var item = await DB.ApplicationUser.FindAsync(id);
+            item.PasswordHash = _userManager.PasswordHasher.HashPassword(item, "User123*");
+            await _userManager.UpdateAsync(item);
+            return PartialView("Delete",item);
+        }
+
         private bool ItemExists(String id)
         {
             return DB.ApplicationUser.Any(e => e.Id == id);

@@ -49,8 +49,8 @@
         {
             <tr>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.Id" title="Detalle" 
-                       data-modal="link" data-modal-read="True">
+                    <a asp-action="Restore" asp-route-id="@item.Id" title="Restaurar" data-toggle="tooltip"
+                       data-modal="link">
                         @Html.DisplayFor(modelItem => item.UserName)
                     </a>
                 </td>
