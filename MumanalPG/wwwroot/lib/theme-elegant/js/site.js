@@ -41,7 +41,10 @@ $(function() {
             btnSave.html('<i class="fas fa-check animated rollIn mr-2"></i> Guardar');            
         }
         
-        $('#' + modal_type).modal();
+        $('#' + modal_type).modal({
+            backdrop: 'static',
+            keyboard: false
+        });
         $(".preloader-modal").fadeIn();
         $('#'+ modal_type + '-title').html(title);
         $.get(url_load).done(function (data) {

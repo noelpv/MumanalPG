@@ -97,6 +97,11 @@ namespace MumanalPG.Models.RRHH
 		public string Email { get; set; }
 		
 		[NotMapped] 
+		[DisplayName("Nueva Contraseña")]
+		[Required(ErrorMessage = "El campo '{0}' no puede estar en blanco")]
+		public string Password { get; set; }
+
+		[NotMapped] 
 		[DisplayName("Rol de Usuario")]
 		public string RolUsuario { get; set; }
 

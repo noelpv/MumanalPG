@@ -5,9 +5,10 @@
 *@
 @{
     string msg_edit = "Click en este botón, para  modificar este registro";
-    string  msg_detalis = "Click en este botón, para  ver los detalles de este registro";
+    string msg_detalis = "Click en este botón, para  ver los detalles de este registro";
     string msg_delete = "Click en este botón, para  eliminar este registro";
-    
+    string msg_reset = "Click en este botón, para  definir una nueva contraseña";
+
 }
 
 @if (Model.ShowIntroMessages)
@@ -16,9 +17,9 @@
         <div class="btn-group" role="group">
             @if (Model.CustomBtn != null)
             {
-                @Html.Raw(Model.CustomBtn) 
+                @Html.Raw(Model.CustomBtn)
             }
-           
+
             <a class="btn btn-secondary btn-outline-secondary waves-effect waves-light"
                data-modal="link" data-redirect="@Url.Action("Index", new {@a = Constantes.Modificado})"
                data-toggle="tooltip" title="Editar" asp-action="Edit" asp-route-id="@Model.Id"
@@ -35,6 +36,17 @@
                data-redirect="@Url.Action("Index", new {@a = Constantes.Eliminado})" data-intro="@msg_delete">
                 <i class="ti-trash"></i>
             </a>
+
+            @if (Model.CanResetPassword)
+            {
+                <a type="button" class="btn btn-outline-secondary waves-effect waves-light"
+                   data-toggle="tooltip" title="Resetear Contraseña" asp-action="ResetPassword"
+                   asp-route-id="@Model.Id" data-modal="link"
+                   data-redirect="@Url.Action("Index", new {@a = Constantes.Modificado})" data-intro="@msg_reset">
+                    <i class="ti-key"></i>
+                </a>
+            }
+
         </div>
     </td>
 }
@@ -44,15 +56,16 @@ else
         <div class="btn-group" role="group">
             @if (Model.CustomBtn != null)
             {
-                @Html.Raw(Model.CustomBtn) 
+                @Html.Raw(Model.CustomBtn)
             }
             <a class="btn btn-secondary btn-outline-secondary waves-effect waves-light"
                data-modal="link" data-redirect="@Url.Action("Index", new {@a = Constantes.Modificado})"
                data-toggle="tooltip" title="Editar" asp-action="Edit" asp-route-id="@Model.Id">
                 <i class="ti-pencil"></i>
             </a>
+
             <a type="button" class="btn btn-secondary btn-outline-secondary waves-effect waves-light" data-toggle="tooltip" title="Detalle" asp-action="Details" asp-route-id="@Model.Id"
-               data-modal="link" data-modal-read="True">
+               data-modal="link" data-modal-read="True" data-modal-print="@Model.CanPrint" data-modal-url-print="@Model.UrlPrint">
                 <i class="ti-eye"></i>
             </a>
             <a type="button" class="btn btn-outline-secondary waves-effect waves-light"
@@ -61,6 +74,16 @@ else
                data-redirect="@Url.Action("Index", new {@a = Constantes.Eliminado})">
                 <i class="ti-trash"></i>
             </a>
+
+            @if (Model.CanResetPassword)
+            {
+                <a type="button" class="btn btn-outline-secondary waves-effect waves-light"
+                   data-toggle="tooltip" title="Resetear Contraseña" asp-action="ResetPassword"
+                   asp-route-id="@Model.Id" data-modal="link"
+                   data-redirect="@Url.Action("Index", new {@a = Constantes.Modificado})" data-intro="@msg_reset">
+                    <i class="ti-key"></i>
+                </a>
+            }
         </div>
     </td>
 }

@@ -11,5 +11,7 @@ namespace MumanalPG.Models
 
         public bool CanPrint { get; set; }
         public string UrlPrint { get; set; }
+
+        public bool CanResetPassword { get; set; }
     }
 }
