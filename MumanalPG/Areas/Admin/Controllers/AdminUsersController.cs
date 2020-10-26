@@ -189,7 +189,7 @@ namespace MumanalPG.Areas.Admin.Controllers
             var item = await DB.ApplicationUser.FindAsync(id);
             item.PasswordHash = _userManager.PasswordHasher.HashPassword(item, "User123*");
             await _userManager.UpdateAsync(item);
-            return PartialView("Delete",item);
+            return PartialView("Restore",item);
         }
 
         private bool ItemExists(String id)
