@@ -348,6 +348,10 @@ namespace MumanalPG.Areas.RRHH.Controllers
 
                 // Use the reset token to verify the provenance of the reset request and reset the password.
                 IdentityResult updateResult = await _userManager.ResetPasswordAsync(user, resetToken, item.Password);
+                
+                user.LastChangedPassword = null;
+                DB.ApplicationUser.Update(user);
+                await DB.SaveChangesAsync();
 
             }
 

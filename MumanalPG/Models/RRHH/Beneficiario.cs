@@ -99,6 +99,7 @@ namespace MumanalPG.Models.RRHH
 		[NotMapped] 
 		[DisplayName("Nueva Contraseña")]
 		[Required(ErrorMessage = "El campo '{0}' no puede estar en blanco")]
+		[StringLength(100, ErrorMessage = "La {0} debe tener al menos {2} caracteres y máximo {1} caracteres.", MinimumLength = 6)]
 		public string Password { get; set; }
 
 		[NotMapped] 
