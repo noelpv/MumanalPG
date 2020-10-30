@@ -59,7 +59,7 @@
     </div>
     <div class="col-2 text-right">
         <a asp-action="TrackingPDF" asp-route-filter="@Model.RouteValue["Filter"]"
-           asp-route-startDate="@ViewBag.startDate" asp-route-endDate="@ViewBag.endDate"
+           asp-route-startDate="@ViewBag.startDate" asp-route-endDate="@ViewBag.endDate" asp-route-typeHR="@ViewBag.typeHR"
            class="btn btn-sm btn-success p-10 waves-effect waves-light"
            data-toggle="tooltip" title="Imprimir PDF" target="_blank"
            data-intro="Click, en este botón para imprimir el reporte de seguimiento">
