@@ -61,7 +61,7 @@ namespace MumanalPG.Models.Correspondencia
 		
 		public int IdEstadoRegistro { get; set; }
 		public int IdUsuario { get; set; }
-		[DisplayName("Fecha de Registro")]
+		[DisplayName("Fecha de Emisión")]
 		public DateTime FechaRegistro { get; set; }
 
 		public string CiteUE { get; set; }

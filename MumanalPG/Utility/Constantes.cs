@@ -2,7 +2,7 @@ namespace MumanalPG.Utility
 {
     public class Constantes
     {
-        public const int TamanoPaginacion = 5;
+        public const int TamanoPaginacion = 10;
         public const int Registrado = 0;
         public const int Aprobado = 1;
         public const int Anulado = 2;

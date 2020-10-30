@@ -8,44 +8,59 @@
     string intro_msg_search = "Puede buscar una Hoja de Ruta introduciendo el cite o nombre en este campo, " +
                               "luego presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
                               "<i class='fas fa-search'></i></button>";
-    string intro_msg_search_daterange = "Puede seleccionar un rango de fechas para buscar una Hoja de Ruta, " +
+    string intro_filter_msg = "Puede seleccionar esta opción para filtrar las Hojas de Ruta por otros criterios, " +
                               "presionar la tecla <b>'Enter'</b> o el botón <button class='btn-sm btn-secondary'>" +
-                              "<i class='fas fa-search'></i></button>";
+                              "<i class='fas fa-search'></i></button> una vez que haya definido los criterios de filtro.";
 }
 
 <div class="row mt-3">
     <div class="col-12">
-        <form method="get" class="form form-search">
+        <form method="get" class="form form-search" id="search-form">
             <div class="row">
-                <div class="col-md-2 col-sm-12 text-right pr-0 mr-0 mt-3">
-                    <label>Rango de Fechas:</label> 
-                </div>
-                <div class="col-md-3 col-sm-12" data-intro="@intro_msg_search_daterange">
-                    <input type="text" name="daterange" class="form-control search" placeholder="Seleccione rango de fechas"/>
-                    <input id="start_date" type="hidden" name="startDate" class="form-control search"
-                           value="@Model.RouteValue["StartDate"]"/>
-                    <input id="end_date" type="hidden" name="endDate" class="form-control search"
-                           value="@Model.RouteValue["EndDate"]"/>
-                </div>
-                <div class="col-md-7 col-sm-12" data-intro="@intro_msg_search">
+                <div class="col-11 pr-0" data-intro="@intro_msg_search">
+                    <input id="start_date" type="hidden" name="startDate" class="range-date" value="@Model.RouteValue["StartDate"]"/>
+                    <input id="end_date" type="hidden" name="endDate" class="range-date" value="@Model.RouteValue["EndDate"]"/>
+                    <input id="type" type="hidden" name="typeHR" class="typeHR" value="@Model.RouteValue["TypeHR"]">
                     <div class="input-group mb-3">
                         <input name="filter" class="form-control search" placeholder="Buscar por Remitente, Entidad o Referencia..."
-                               value="@Model.RouteValue["Filter"]"/>
+                               value="@Model.RouteValue["Filter"]" autofocus/>
                         <button type="submit" class="btn btn-secondary input-group-append">
                             <span class="fas fa-search" aria-hidden="true"></span>
                         </button>
                     </div>
+                </div>
+                <div class="col-1 pl-0 text-right" data-intro="@intro_filter_msg">
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modal-filter">
+                        <span class="fas fa-filter" aria-hidden="true"></span>
+                    </button>
                 </div>
             </div>
         </form>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-12 text-right">
-        <a asp-action="TrackingPDF" asp-route-filter="@Model.RouteValue["Filter"]" 
+<div class="row p-0">
+    <div class="col-10">
+        @if (ViewBag.startDate != null && ViewBag.endDate != null)
+        {
+            <span class="badge badge-pill badge-secondary">
+                <b>Desde</b> @ViewBag.startDate <b>hasta</b> @ViewBag.endDate
+                <a href="#" class="remove-filter text-dark" title="Quitar este filtro" data-remove="range-date">&nbsp;X</a>
+            </span>
+        }
+
+        @if (ViewBag.typeHR != null)
+        {
+            <span class="badge badge-pill badge-secondary">
+                @ViewBag.typeHR
+                <a href="#" class="remove-filter text-dark" title="Quitar este filtro" data-remove="typeHR">&nbsp;X</a>
+            </span>
+        }
+    </div>
+    <div class="col-2 text-right">
+        <a asp-action="TrackingPDF" asp-route-filter="@Model.RouteValue["Filter"]"
            asp-route-startDate="@ViewBag.startDate" asp-route-endDate="@ViewBag.endDate"
-           class="btn btn-success m-b-20 p-10 waves-effect waves-light" 
+           class="btn btn-sm btn-success p-10 waves-effect waves-light"
            data-toggle="tooltip" title="Imprimir PDF" target="_blank"
            data-intro="Click, en este botón para imprimir el reporte de seguimiento">
             <i class="fas fa-print"></i><span>&nbsp; PDF </span>
@@ -67,18 +82,18 @@
         </tr>
 
         </thead>
-        @{int index = 0;}
+        @{ int index = 0; }
         @foreach (var item in Model)
         {
             <tr class="small">
                 <td style="width: 120px">
-                    <a asp-action="Details" asp-route-id="@item.Id" title="Detalle" 
+                    <a asp-action="Details" asp-route-hrId="@item.Id" asp-route-modal="true" title="Detalle"
                        data-modal="link" data-modal-read="True">
                         @Html.DisplayFor(modelItem => item.FechaRegistro)
                     </a>
                 </td>
                 <td>
-                    <b>Cite Tramite:</b> @Html.DisplayFor(modelItem => item.CiteTramite)<br/>
+                    <b>Cite del Documento.:</b> @Html.DisplayFor(modelItem => item.CiteTramite)<br/>
                     <b>Cite Hoja Ruta:</b> @Html.DisplayFor(modelItem => item.CiteHojaRuta)
                 </td>
                 <td>@Html.DisplayFor(modelItem => item.TipoHojaRuta)</td>
@@ -96,7 +111,7 @@
                 <td>
                     <a asp-action="Flujo" asp-route-id="0" asp-route-hrId="@item.Id" data-modal-size="modal-xl"
                        data-modal="link" data-modal-read="True" title="Flujo de Hoja de Ruta"
-                       class="btn btn-sm btn-secondary" data-toggle = "tooltip">
+                       class="btn btn-sm btn-secondary" data-toggle="tooltip">
                         <i class=" fas fa-code-branch mr-2"></i>
                     </a>
                 </td>
@@ -111,46 +126,16 @@
     </nav>
 </div>
 
+<partial name="_ModalFilter"/>
+
 <script>
 $(function() {
-      $('input[name="daterange"]').daterangepicker({
-        opens: 'right',
-        startDate: $('#start_date').val(),
-        endDate: $('#end_date').val(),
-        locale: {
-          format: 'DD/MM/YYYY',
-          "applyLabel": "Aceptar",
-          "cancelLabel": "Cancelar",
-          "fromLabel": "Desde",
-          "toLabel": "a",
-          "daysOfWeek": [
-              "Do",
-              "Lu",
-              "Ma",
-              "Mi",
-              "Ju",
-              "Vi",
-              "Sa"
-          ],
-          "monthNames": [
-              "Enero",
-              "Febrero",
-              "Marzo",
-              "Abril",
-              "Mayo",
-              "Junio",
-              "Julio",
-              "Augosto",
-              "Septiembre",
-              "Octubre",
-              "Noviembre",
-              "Deciembre"
-          ],
-        }
-      }, function(start, end, label) {
-        console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-        $('#start_date').val(start.format('YYYY-MM-DD'));
-        $('#end_date').val(end.format('YYYY-MM-DD'));
-      });
+     $('a.remove-filter').click(function(e) {
+         e.preventDefault();
+         var removeFilter = $(this).attr('data-remove');
+         console.log(removeFilter);
+         $(`input.${removeFilter}`).val('');
+         $('#search-form').submit();
+     });
 })
 </script>

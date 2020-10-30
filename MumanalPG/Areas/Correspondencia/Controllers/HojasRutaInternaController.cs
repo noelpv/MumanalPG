@@ -159,14 +159,18 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                 .Include(m => m.Origen)
                 .Where(m => (m.Id > 0));
 
-            if (startDate.Year == 1)
+            if (startDate.Year != 1)
             {
-                DateTime today = DateTime.Now;
-                startDate = new DateTime(today.Year, today.Month, 1);
-                endDate = today.AddDays(1);
+                // DateTime today = DateTime.Now;
+                // startDate = new DateTime(today.Year, today.Month, 1);
+                // endDate = today.AddDays(1);
+                consulta = consulta.Where(m => m.FechaRegistro >= startDate && m.FechaRegistro <= endDate);
             }
-
-            consulta = consulta.Where(m => m.FechaRegistro >= startDate && m.FechaRegistro <= endDate);
+            
+            if (typeHR != null)
+            {
+                consulta = consulta.Where(m => m.TipoHojaRuta == typeHR);
+            }
             
             if (!string.IsNullOrWhiteSpace(filter))
             {
@@ -182,17 +186,29 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
 
             var resp = await PagingList.CreateAsync(consulta, Constantes.TamanoPaginacion, page, sortExpression,"FechaRegistro");
             resp.Action = "Tracking";
-            resp.RouteValue = new RouteValueDictionary {{ "filter", filter}, {"startDate", startDate}, {"endDate", endDate}};
-            ViewBag.startDate = startDate.ToString("yyyy-MM-dd");
-            ViewBag.endDate = endDate.ToString("yyyy-MM-dd");
+
+            if (startDate.Year != 1)
+            {
+                resp.RouteValue = new RouteValueDictionary {{ "filter", filter}, {"startDate", startDate}, {"endDate", endDate}, {"typeHR", typeHR}};
+                ViewBag.startDate = startDate.ToString("dd/MM/yyyy");
+                ViewBag.endDate = endDate.ToString("dd/MM/yyyy");
+            }
+            else
+            {
+                resp.RouteValue = new RouteValueDictionary {{ "filter", filter}, {"typeHR", typeHR}};
+                ViewBag.startDate = null;
+                ViewBag.endDate = null;
+            }
+            
+            ViewBag.typeHR = typeHR;
             return View(resp);
         }
 
         // GET: Correspondencia/Documentos/Details/5
         [Breadcrumb("Hoja de Ruta", FromAction = "Index")]
-        public async Task<IActionResult> Details(Int32? id)
+        public async Task<IActionResult> Details(Int32? id, bool modal = false, int hrId = 0)
         {
-            if (id == null)
+            if (id == null && !modal)
             {
                 return View("_NoEncontrado");
             }
@@ -200,17 +216,36 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
             var instrucciones = DB.CorrespondenciaInstrucciones
                 .Where(i => i.IdEstadoRegistro != Constantes.Anulado).OrderBy(i =>i.Nombre).ToList();
             
-            var item = await DB.CorrespondenciaHRDetalle
-                                .Include(m => m.AreaOrigen)
-                                .Include(m => m.AreaDestino)
-                                .Include(m => m.FunOrg)
-                                .Include(m => m.FunDst)
-                                .Include(m => m.HojaRuta)
-                                .Include(m => m.HRDetalleInstrucciones)
-                                .Include(m => m.HojaRuta.Anexos).ThenInclude(t => t.Tipo)
-                                .FirstOrDefaultAsync(m => m.Id == id);
+           
+            HojaRutaDetalle item;
+            if (hrId > 0)
+            {
+                item = await DB.CorrespondenciaHRDetalle
+                    .Include(m => m.AreaOrigen)
+                    .Include(m => m.AreaDestino)
+                    .Include(m => m.FunOrg)
+                    .Include(m => m.FunDst)
+                    .Include(m => m.HojaRuta)
+                    .Include(m => m.HRDetalleInstrucciones)
+                    .Include(m => m.HojaRuta.Anexos).ThenInclude(t => t.Tipo)
+                    .FirstOrDefaultAsync(m => m.HojaRutaId == hrId);  
+            }
+            else
+            {
+                item = await DB.CorrespondenciaHRDetalle
+                    .Include(m => m.AreaOrigen)
+                    .Include(m => m.AreaDestino)
+                    .Include(m => m.FunOrg)
+                    .Include(m => m.FunDst)
+                    .Include(m => m.HojaRuta)
+                    .Include(m => m.HRDetalleInstrucciones)
+                    .Include(m => m.HojaRuta.Anexos).ThenInclude(t => t.Tipo)
+                    .FirstOrDefaultAsync(m => m.Id == id);    
+            }
+            
             if (item == null)
             {
+                if (modal) return PartialView("_NoEncontrado");
                 return View("_NoEncontrado");
             }
 
@@ -243,6 +278,9 @@ namespace MumanalPG.Areas.Correspondencia.Controllers
                 .OrderBy(d => d.FechaRegistro)
                 .Select(d => new Documento {Id = d.DocumentoId, Cite = d.Documento.Cite, Tipo = d.Documento.Tipo})
                 .ToList();
+
+            ViewBag.isModal = modal;
+            if (modal) return PartialView("_Details", item);
             
             return View("_Details",item);
         }

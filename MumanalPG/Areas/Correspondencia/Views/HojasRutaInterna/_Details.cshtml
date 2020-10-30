@@ -10,274 +10,283 @@
 }
 
 <div class="row justify-content-center">
-    <div class="col-10">
-        <div class="card border-info">
-           
-            <div class="row">
-                <div class=" col-6 btn-toolbar mb-3" role="toolbar">
-                    <div class="btn-group btn-group-sm mr-2 " role="group">
-                        <a asp-action="Index" class="btn btn-secondary" data-intro="Con esta opción podra regresar a la lista principal">
-                            <i class="ti-back-left mr-2"></i> <span class="d-none d-sm-inline">Atrás</span>
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="col-6 btn-toolbar mb-3 justify-content-end" role="toolbar">
-                   
-                   
-                    <div class="btn-group btn-group-sm mr-2" role="group">
+<div class="col-10">
+<div class="card border-info">
 
-                        @if (ViewBag.isDstUser)
-                        {
-                            if (Model.IdEstadoRegistro == Constantes.Archivado ||
-                                Model.IdEstadoRegistro == Constantes.Anulado
-                                )
-                            {
-                                opcionDerivar = "disabled";
-                            }
-                            int nuevoEstadoArchivar = Constantes.Archivado;
-                            int nuevoEstadoAnular = Constantes.Anulado;
-                            string archivarText = "Archivar";
-                            string anularText = "Anular";
-
-                            if (Model.IdEstadoRegistro == Constantes.Archivado)
-                            {
-                                archivarText = "Restaurar";
-                                nuevoEstadoArchivar = Constantes.Registrado;
-                            }
-                            else if (Model.IdEstadoRegistro == Constantes.Anulado)
-                            {
-                                anularText = "Restaurar";
-                                nuevoEstadoAnular = Constantes.Registrado;
-                            }
-                            <div class="btn-group btn-group-sm" role="group" data-intro="Click, para derivar esta hoja de ruta, creando 
-                                un nuevo documento digital o ajuntando uno físico">
-                                <button type="button" class="btn btn-secondary dropdown-toggle @opcionDerivar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="ti-share mr-2"></i> <span class="d-none d-sm-inline">Derivación</span>
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                    <a asp-action="Derivar" asp-route-id="@Model.Id" class="dropdown-item">Solo Derivar</a>
-                                    @* <div class="dropdown-divider"></div> *@
-                                    <div class="dropdown-submenu">
-                                        <a class="dropdown-item" href="#">Generar Documento Digital y Derivar</a>
-                                        <div class="dropdown-menu">
-                                            @foreach (TipoDocumento doc in ViewBag.Tipos)
-                                            {
-                                                <a asp-controller="Documentos" asp-action="Create" asp-route-type="@doc.Id"
-                                                   asp-route-redirect="@HojasRutaInternaController.RedirectHRSent" asp-route-hrdId="@Model.Id"
-                                                   class="dropdown-item" data-modal="link", title="@doc.Nombre">
-                                                    @doc.Nombre
-                                                </a>
-                                            }
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <a asp-action="CambiarEstado" asp-route-id="@Model.Id" asp-route-nuevoEstado="@nuevoEstadoArchivar"
-                               class="btn btn-secondary" data-intro="Click, para <b>Archivar</b> esta Hoja de Ruta">
-                                <i class="ti-harddrives mr-2"></i> <span class="d-none d-sm-inline">@archivarText</span>
-                            </a>
-                            <a asp-action="CambiarEstado" asp-route-id="@Model.Id" asp-route-nuevoEstado="@nuevoEstadoAnular"
-                               class="btn btn-secondary" data-intro="Click, para <b>Anular</b> esta Hoja de Ruta">
-                                <i class="ti-trash mr-2"></i> <span class="d-none d-sm-inline">@anularText</span>
-                            </a>
-
-                        }
-                       
-                        <a asp-action="HojaRutaPDF" asp-route-id="@Model.Id" title="Hoja de Ruta" target="_blank"
-                           class="btn btn-secondary" data-intro="Haciendo click sobre esta opción podra generar la hoja de Ruta en PDF para poder imprimirlo">
-                            <i class="far fa-file-pdf mr-2"></i> <span class="d-none d-sm-inline">Imprimir</span>
-                        </a>
-                        @if (Model.HojaRuta.DocumentoId > 0)
-                        {
-                            <div class="btn-group btn-group-sm" role="group" data-intro="Con esta opción podrá ver los documentos digitales anexado a esta Hoja de Ruta">
-                                <button type="button" class="btn btn-secondary dropdown-toggle @opcionDerivar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="ti-bookmark-alt mr-2"></i>  <span class="d-none d-sm-inline">Documentos</span>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    @foreach (Documento doc in ViewBag.documentosId)
-                                    {
-                                        <a asp-controller="Documentos" asp-action="Details" asp-route-id="@doc.Id"
-                                           title="@doc.Tipo.shortName() - @doc.Cite" data-modal="link" data-modal-read="True"
-                                           class="dropdown-item">
-                                            @doc.Tipo.shortName() - @doc.Cite
-                                        </a>
-                                    }
-                                </div>
-                            </div>
-                        }
-
-                        <a asp-action="Flujo" asp-route-id="@Model.Id" data-modal-size="modal-xl"
-                           data-modal="link" data-modal-read="True" title="Flujo de Hoja de Ruta" class="btn btn-secondary"
-                           data-intro="Haciendo click sobre esta opción podra ver el flujo que seguido esta Hoja de Ruta">
-                            <i class=" fas fa-code-branch mr-2"></i> <span class="d-none d-sm-inline">Flujo</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-
-            <div class="card-body">
-                <div class="col-12" data-intro="Muestra datos generales de la Hoja de Ruta">
-                    <div class="ribbon-wrapper card" >
-                        @switch (@Model.IdEstadoRegistro)
-                        {
-                            case Constantes.Archivado:
-                                <div class="ribbon ribbon-bookmark  ribbon-warning">Archivado</div>
-                                break;
-                            case Constantes.Anulado:
-                                <div class="ribbon ribbon-bookmark  ribbon-danger">Anulado</div>
-                                break;
-                            default:
-                                <div class="ribbon ribbon-bookmark  ribbon-success">Activo</div>
-                                break;
-                                
-                        }
-                        
-                        <div class="text-center text-dark">
-                            <h3>CORRESPONDENCIA @Model.HojaRuta.TipoHojaRuta</h3>
-                            <h5>@Model.HojaRuta.CiteHojaRuta</h5>
-                            @if (Model.HojaRuta.CiteUE != null && Model.HojaRuta.TipoHojaRuta == Constantes.HojaRutaInterna)
-                            {
-                                <h6>@Model.HojaRuta.CiteUE</h6>    
-                            }
-                            
-                        </div>
-                        @{
-                            string label_class = "label-info";
-                            switch (Model.HojaRuta.Prioridad)
-                            {
-                                case Constantes.PrioridadUrgente:
-                                    label_class = "label-danger";
-                                    break;
-                                case Constantes.PrioridadAlta:
-                                    label_class = "label-warning";
-                                    break;
-                                case Constantes.PrioridadBaja:
-                                    label_class = "label-inverse";
-                                    break;
-                            }
-                        }
-                    </div>
-                    <b>Prioridad:</b> 
-                    <span class="label @label_class m-r-10 text-capitalize">
-                        @Model.HojaRuta.Prioridad.ToLower()
-                    </span>
-                    <br/>
-                    <b>Fecha de Emisión:</b>
-                    @Model.FechaRegistro.ToString("dddd, dd 'de' MMMM  'de' yyyy 'a Hrs.' HH:mm", new CultureInfo("es-ES"))
-                    <br/>
-                    @if (Model.FechaRecepcion != null)
-                    {
-                        <b>Fecha de Recepción:</b>
-                        @Model.FechaRecepcion.Value.ToString("dddd, dd 'de' MMMM  'de' yyyy 'a Hrs.' HH:mm", new CultureInfo("es-ES"))
-                    }
-                    <br/>
-                    <b>Nro. Fojas: </b>
-                    @Model.HojaRuta.NroFojas
-                    <br/>
-                    <br/>     
-                </div>
-                
-                <div class="table-responsive" data-intro="Muestra datos mas especificos de la Hoja de Ruta">
-                    <table class="table table-bordered">
-                        <tr>
-                            <td class="font-bold text-right">Referencia: </td>
-                            <td colspan="5">@Model.HojaRuta.Referencia</td>
-                        </tr>
-                        @if (Model.HojaRuta.TipoHojaRuta == Constantes.HojaRutaExterna)
-                        {
-                            <tr>
-                                <td class="font-bold text-right">Remitente: </td>
-                                <td colspan="5">@Model.HojaRuta.RemitenteExterno - @Model.HojaRuta.EntidadExterna</td>
-                            </tr>
-                        }
-                        <tr>
-                            <td class="font-bold text-right">De: </td>
-                            <td class="text-capitalize">@Model.FunOrg.Denominacion.ToLower()</td>
-                            <td class="font-bold text-right">Para: </td>
-                            <td class="text-capitalize">@Model.FunDst.Denominacion.ToLower()</td>
-                            
-                        </tr>
-                        <tr>
-                            <td colspan="2">SOLICITO A USTED:</td>
-                            <td colspan="4">PROVEÍDO</td>
-                            
-                        </tr>
-                        <tr>
-                            <td colspan="2" width="150px">
-                                <div class="form-group row p-2">
-                                    @foreach (var i in ViewBag.instrucciones)
-                                    {
-                                        bool is_in = false;
-                                        foreach (var di in Model.HRDetalleInstrucciones)
-                                        {
-                                            if (di.InstruccionId == i.Id)
-                                            {
-                                                is_in = true;
-                                                break;
-                                            }
-
-                                        }
-
-                                        if (is_in)
-                                        {
-                                            <div class="col-sm-12 col-md-6 small p-0">
-                                                <label class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input"
-                                                           readonly="readonly" checked="checked">
-                                                    <span class="custom-control-label">@i.Nombre</span>
-                                                </label>
-                                            </div>
-
-
-                                        }
-                                        else
-                                        {
-                                            <div class="col-sm-12 col-md-6 small p-0">
-                                                <label class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" readonly="readonly">
-                                                    <span class="custom-control-label">@i.Nombre</span>
-                                                </label>
-                                            </div>
-                                        }
-
-                                    }
-                                </div>
-                            </td>
-                            <td colspan="4">
-                                <div class="comentarios-adicionales">
-                                    @Model.Proveido
-                                </div>
-                            </td>
-
-                        </tr>
-                    </table>
-                </div>
-                <div class="row" data-intro="Muestra los anexos relacionados a la Hoja de Ruta">
-                    <table class="table table-bordered table-sm table-striped">
-                        <thead><h4>ANEXOS:</h4></thead>
-                        <th>Tipo</th>
-                        <th>Descripción</th>
-                        <th>Archivo</th>
-                        <th>Tamaño</th>
-                        <th></th>
-                        @foreach (var a in Model.HojaRuta.Anexos)
-                        {
-                            <tr>
-                              <td>@a.Tipo.Nombre</td>
-                              <td>@a.Descripcion</td>
-                                <td><a target="_blank" href="/@a.PathArchivo">@a.NombreArchivo</a></td>
-                                <td>@SD.BytesToString(a.Size)</td>
-                                <td><a class="btn btn-sm btn-secondary" target="_blank" href="/@a.PathArchivo"><i class="ti-download"></i></a></td>
-                            </tr>
-                        }
-                    </table>
-                </div>
-            </div>
+<div class="row">
+    <div class=" col-6 btn-toolbar mb-3" role="toolbar">
+        <div class="btn-group btn-group-sm mr-2 " role="group">
+            @if (!ViewBag.isModal)
+            {
+                <a asp-action="Index" class="btn btn-secondary" data-intro="Con esta opción podra regresar a la lista principal">
+                    <i class="ti-back-left mr-2"></i> <span class="d-none d-sm-inline">Atrás</span>
+                </a>
+            }
         </div>
     </div>
+
+    <div class="col-6 btn-toolbar mb-3 justify-content-end" role="toolbar">
+
+
+        <div class="btn-group btn-group-sm mr-2" role="group">
+
+            @if (ViewBag.isDstUser)
+            {
+                if (Model.IdEstadoRegistro == Constantes.Archivado ||
+                    Model.IdEstadoRegistro == Constantes.Anulado
+                    )
+                {
+                    opcionDerivar = "disabled";
+                }
+                int nuevoEstadoArchivar = Constantes.Archivado;
+                int nuevoEstadoAnular = Constantes.Anulado;
+                string archivarText = "Archivar";
+                string anularText = "Anular";
+
+                if (Model.IdEstadoRegistro == Constantes.Archivado)
+                {
+                    archivarText = "Restaurar";
+                    nuevoEstadoArchivar = Constantes.Registrado;
+                }
+                else if (Model.IdEstadoRegistro == Constantes.Anulado)
+                {
+                    anularText = "Restaurar";
+                    nuevoEstadoAnular = Constantes.Registrado;
+                }
+                <div class="btn-group btn-group-sm" role="group" data-intro="Click, para derivar esta hoja de ruta, creando 
+                                un nuevo documento digital o ajuntando uno físico">
+                    <button type="button" class="btn btn-secondary dropdown-toggle @opcionDerivar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="ti-share mr-2"></i> <span class="d-none d-sm-inline">Derivación</span>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <a asp-action="Derivar" asp-route-id="@Model.Id" class="dropdown-item">Solo Derivar</a>
+                        @* <div class="dropdown-divider"></div> *@
+                        <div class="dropdown-submenu">
+                            <a class="dropdown-item" href="#">Generar Documento Digital y Derivar</a>
+                            <div class="dropdown-menu">
+                                @foreach (TipoDocumento doc in ViewBag.Tipos)
+                                {
+                                    <a asp-controller="Documentos" asp-action="Create" asp-route-type="@doc.Id"
+                                       asp-route-redirect="@HojasRutaInternaController.RedirectHRSent" asp-route-hrdId="@Model.Id"
+                                       class="dropdown-item" data-modal="link", title="@doc.Nombre">
+                                        @doc.Nombre
+                                    </a>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <a asp-action="CambiarEstado" asp-route-id="@Model.Id" asp-route-nuevoEstado="@nuevoEstadoArchivar"
+                   class="btn btn-secondary" data-intro="Click, para <b>Archivar</b> esta Hoja de Ruta">
+                    <i class="ti-harddrives mr-2"></i> <span class="d-none d-sm-inline">@archivarText</span>
+                </a>
+                <a asp-action="CambiarEstado" asp-route-id="@Model.Id" asp-route-nuevoEstado="@nuevoEstadoAnular"
+                   class="btn btn-secondary" data-intro="Click, para <b>Anular</b> esta Hoja de Ruta">
+                    <i class="ti-trash mr-2"></i> <span class="d-none d-sm-inline">@anularText</span>
+                </a>
+            }
+
+            <a asp-action="HojaRutaPDF" asp-route-id="@Model.Id" title="Hoja de Ruta" target="_blank"
+               class="btn btn-secondary" data-intro="Haciendo click sobre esta opción podra generar la hoja de Ruta en PDF para poder imprimirlo">
+                <i class="far fa-file-pdf mr-2"></i> <span class="d-none d-sm-inline">Imprimir</span>
+            </a>
+            @if (Model.HojaRuta.DocumentoId > 0)
+            {
+                <div class="btn-group btn-group-sm" role="group" data-intro="Con esta opción podrá ver los documentos digitales anexado a esta Hoja de Ruta">
+                    <button type="button" class="btn btn-secondary dropdown-toggle @opcionDerivar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="ti-bookmark-alt mr-2"></i> <span class="d-none d-sm-inline">Documentos</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        @foreach (Documento doc in ViewBag.documentosId)
+                        {
+                            <a asp-controller="Documentos" asp-action="Details" asp-route-id="@doc.Id"
+                               title="@doc.Tipo.shortName() - @doc.Cite" data-modal="link" data-modal-read="True"
+                               class="dropdown-item">
+                                @doc.Tipo.shortName() - @doc.Cite
+                            </a>
+                        }
+                    </div>
+                </div>
+            }
+
+            @if (!ViewBag.isModal)
+            {
+                <a asp-action="Flujo" asp-route-id="@Model.Id" data-modal-size="modal-xl"
+                   data-modal="link" data-modal-read="True" title="Flujo de Hoja de Ruta" class="btn btn-secondary"
+                   data-intro="Haciendo click sobre esta opción podra ver el flujo que seguido esta Hoja de Ruta">
+                    <i class=" fas fa-code-branch mr-2"></i> <span class="d-none d-sm-inline">Flujo</span>
+                </a>
+            }
+
+        </div>
+    </div>
+</div>
+
+
+<div class="card-body">
+    <div class="col-12" data-intro="Muestra datos generales de la Hoja de Ruta">
+        <div class="ribbon-wrapper card">
+            @switch (@Model.IdEstadoRegistro)
+            {
+                case Constantes.Archivado:
+                    <div class="ribbon ribbon-bookmark  ribbon-warning">Archivado</div>
+                    break;
+                case Constantes.Anulado:
+                    <div class="ribbon ribbon-bookmark  ribbon-danger">Anulado</div>
+                    break;
+                default:
+                    <div class="ribbon ribbon-bookmark  ribbon-success">Activo</div>
+                    break;
+            }
+
+            <div class="text-center text-dark">
+                <h3>CORRESPONDENCIA @Model.HojaRuta.TipoHojaRuta</h3>
+                <h5>@Model.HojaRuta.CiteHojaRuta</h5>
+                @if (Model.HojaRuta.CiteUE != null && Model.HojaRuta.TipoHojaRuta == Constantes.HojaRutaInterna)
+                {
+                    <h6>@Model.HojaRuta.CiteUE</h6>
+                }
+
+            </div>
+            @{
+                string label_class = "label-info";
+                switch (Model.HojaRuta.Prioridad)
+                {
+                    case Constantes.PrioridadUrgente:
+                        label_class = "label-danger";
+                        break;
+                    case Constantes.PrioridadAlta:
+                        label_class = "label-warning";
+                        break;
+                    case Constantes.PrioridadBaja:
+                        label_class = "label-inverse";
+                        break;
+                }
+            }
+        </div>
+        <b>Prioridad:</b>
+        <span class="label @label_class m-r-10 text-capitalize">
+            @Model.HojaRuta.Prioridad.ToLower()
+        </span>
+        <br/>
+        <b>Fecha de Emisión:</b>
+        @Model.FechaRegistro.ToString("dddd, dd 'de' MMMM  'de' yyyy 'a Hrs.' HH:mm", new CultureInfo("es-ES"))
+        <br/>
+        @if (Model.FechaRecepcion != null)
+        {
+            <b>Fecha de Recepción:</b>
+            @Model.FechaRecepcion.Value.ToString("dddd, dd 'de' MMMM  'de' yyyy 'a Hrs.' HH:mm", new CultureInfo("es-ES"))
+        }
+        <br/>
+        <b>Nro. Fojas: </b>
+        @Model.HojaRuta.NroFojas
+        <br/>
+        <br/>
+    </div>
+
+    <div class="table-responsive" data-intro="Muestra datos mas especificos de la Hoja de Ruta">
+        <table class="table table-bordered">
+            <tr>
+                <td class="font-bold text-right">Referencia: </td>
+                <td colspan="5">@Model.HojaRuta.Referencia</td>
+            </tr>
+            @if (Model.HojaRuta.TipoHojaRuta == Constantes.HojaRutaExterna)
+            {
+                <tr>
+                    <td class="font-bold text-right">Remitente: </td>
+                    <td colspan="5">@Model.HojaRuta.RemitenteExterno - @Model.HojaRuta.EntidadExterna</td>
+                </tr>
+            }
+            <tr>
+                <td class="font-bold text-right">De: </td>
+                <td class="text-capitalize">@Model.FunOrg.Denominacion.ToLower()</td>
+                <td class="font-bold text-right">Para: </td>
+                <td class="text-capitalize">@Model.FunDst.Denominacion.ToLower()</td>
+
+            </tr>
+            <tr>
+                <td colspan="2">SOLICITO A USTED:</td>
+                <td colspan="4">PROVEÍDO</td>
+
+            </tr>
+            <tr>
+                <td colspan="2" width="150px">
+                    <div class="form-group row p-2">
+                        @foreach (var i in ViewBag.instrucciones)
+                        {
+                            bool is_in = false;
+                            foreach (var di in Model.HRDetalleInstrucciones)
+                            {
+                                if (di.InstruccionId == i.Id)
+                                {
+                                    is_in = true;
+                                    break;
+                                }
+                            }
+
+                            if (is_in)
+                            {
+                                <div class="col-sm-12 col-md-6 small p-0">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input"
+                                               readonly="readonly" checked="checked">
+                                        <span class="custom-control-label">@i.Nombre</span>
+                                    </label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-sm-12 col-md-6 small p-0">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" readonly="readonly">
+                                        <span class="custom-control-label">@i.Nombre</span>
+                                    </label>
+                                </div>
+                            }
+                        }
+                    </div>
+                </td>
+                <td colspan="4">
+                    <div class="comentarios-adicionales">
+                        @Model.Proveido
+                    </div>
+                </td>
+
+            </tr>
+        </table>
+    </div>
+    <div class="row" data-intro="Muestra los anexos relacionados a la Hoja de Ruta">
+        <table class="table table-bordered table-sm table-striped">
+            <thead>
+            <h4>ANEXOS:</h4>
+            </thead>
+            <th>Tipo</th>
+            <th>Descripción</th>
+            <th>Archivo</th>
+            <th>Tamaño</th>
+            <th></th>
+            @foreach (var a in Model.HojaRuta.Anexos)
+            {
+                <tr>
+                    <td>@a.Tipo.Nombre</td>
+                    <td>@a.Descripcion</td>
+                    <td>
+                        <a target="_blank" href="/@a.PathArchivo">@a.NombreArchivo</a>
+                    </td>
+                    <td>@SD.BytesToString(a.Size)</td>
+                    <td>
+                        <a class="btn btn-sm btn-secondary" target="_blank" href="/@a.PathArchivo">
+                            <i class="ti-download"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+</div>
+</div>
 </div>
 <script>
     $(document).ready(function(){
