@@ -30,7 +30,7 @@
 
         <div class="btn-group btn-group-sm mr-2" role="group">
 
-            @if (ViewBag.isDstUser)
+            @if (ViewBag.isDstUser && !ViewBag.isModal)
             {
                 if (Model.IdEstadoRegistro == Constantes.Archivado ||
                     Model.IdEstadoRegistro == Constantes.Anulado
@@ -91,7 +91,7 @@
                class="btn btn-secondary" data-intro="Haciendo click sobre esta opción podra generar la hoja de Ruta en PDF para poder imprimirlo">
                 <i class="far fa-file-pdf mr-2"></i> <span class="d-none d-sm-inline">Imprimir</span>
             </a>
-            @if (Model.HojaRuta.DocumentoId > 0)
+            @if (Model.HojaRuta.DocumentoId > 0 && !ViewBag.isModal)
             {
                 <div class="btn-group btn-group-sm" role="group" data-intro="Con esta opción podrá ver los documentos digitales anexado a esta Hoja de Ruta">
                     <button type="button" class="btn btn-secondary dropdown-toggle @opcionDerivar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -102,7 +102,8 @@
                         {
                             <a asp-controller="Documentos" asp-action="Details" asp-route-id="@doc.Id"
                                title="@doc.Tipo.shortName() - @doc.Cite" data-modal="link" data-modal-read="True"
-                               class="dropdown-item">
+                               class="dropdown-item" data-modal-print="True" 
+                               data-modal-url-print="@Url.Action("PrintDocument", "Documentos", new {id = doc.Id})">
                                 @doc.Tipo.shortName() - @doc.Cite
                             </a>
                         }

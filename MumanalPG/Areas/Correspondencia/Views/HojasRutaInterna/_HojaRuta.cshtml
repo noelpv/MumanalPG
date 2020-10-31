@@ -53,12 +53,47 @@
             </div>   
         }
     </div>
-    <div class="box margin-box destinatario pt-0 pb-0 mb-0">
-        <label>@literal[0] DESTINATARIO</label>
-    </div>
-    <partial name="_HojaRutaSeccionPrimera" model="@Model" />
+    @{
+        int index = 0;
+    }
+    @foreach (HojaRutaDetalle detalle in Model.derivaciones)
+    {
+        if (index % 3 == 0 && index > 1)
+        {
+            <div class="page-break"></div>
+            <partial name="_Heading" model="@Model" />
+            <div class="row @bg_class small">
+                <div class="col col-1 text-center">
+                    <label>ASUNTO: </label>
+                </div>
+                 
+                <div class="col @class_col">
+                    <p class="bg-light">
+                        @Model.hojaRuta.Referencia
+                    </p>
+                </div>
+                @if (Model.hojaRuta.TipoHojaRuta == Constantes.HojaRutaExterna)
+                {
+                    <div class="col col-1 text-center">
+                        <label>REMITENTE: </label>
+                    </div>
+                    <div class="col col-5">
+                        <p class="bg-light">
+                            @Model.hojaRuta.RemitenteExterno - @Model.hojaRuta.EntidadExterna
+                        </p>
+                    </div>   
+                }
+            </div>
+        }
+        <div class="box margin-box destinatario pt-0 pb-0 mb-0">
+            <label>@literal[index] DESTINATARIO</label>
+        </div>
+        <partial name="_HojaRutaSeccionPrimera" model="@detalle" />
+        index++;
+    }
     
-    @for (int i = Model.derivaciones.Count; i < 12; i++)
+    
+    @for (int i = Model.derivaciones.Count; i < 21; i++)
     {
          if (i % 3 == 0 && i > 1)
          {
